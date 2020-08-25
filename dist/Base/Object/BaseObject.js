@@ -21,6 +21,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var ObjectTypes_1 = require("./ObjectTypes");
 function DefaultValue(value) {
@@ -52,6 +55,9 @@ var ArrayObject = /** @class */ (function (_super) {
     ArrayObject.prototype.last = function () {
         return this[this.length - 1];
     };
+    ArrayObject.prototype.valueOf = function (index) {
+        return this[index];
+    };
     __decorate([
         ObjectTypes_1.attribute(),
         __metadata("design:type", Function),
@@ -71,6 +77,13 @@ var ArrayObject = /** @class */ (function (_super) {
         __metadata("design:returntype", Object)
     ], ArrayObject.prototype, "last", null);
     __decorate([
+        ObjectTypes_1.attribute(),
+        __param(0, ObjectTypes_1.Params("index")),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Number]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "valueOf", null);
+    __decorate([
         DefaultValue(Object.prototype.toString.call([])),
         __metadata("design:type", String)
     ], ArrayObject, "type", void 0);
@@ -87,12 +100,22 @@ var MapObject = /** @class */ (function (_super) {
     MapObject.prototype.len = function () {
         return this.size;
     };
+    MapObject.prototype.get = function (key) {
+        return this.get(key);
+    };
     __decorate([
         ObjectTypes_1.attribute(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Number)
     ], MapObject.prototype, "len", null);
+    __decorate([
+        ObjectTypes_1.attribute(),
+        __param(0, ObjectTypes_1.Params("key")),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", Object)
+    ], MapObject.prototype, "get", null);
     __decorate([
         DefaultValue(Object.prototype.toString.call(new Map())),
         __metadata("design:type", String)
@@ -110,8 +133,8 @@ var SetObject = /** @class */ (function (_super) {
     SetObject.prototype.len = function () {
         return this.size;
     };
-    SetObject.prototype.has = function (tar) {
-        return _super.prototype.has.call(this, tar);
+    SetObject.prototype.has = function (value) {
+        return _super.prototype.has.call(this, value);
     };
     __decorate([
         ObjectTypes_1.attribute(),
@@ -121,6 +144,7 @@ var SetObject = /** @class */ (function (_super) {
     ], SetObject.prototype, "len", null);
     __decorate([
         ObjectTypes_1.attribute(),
+        __param(0, ObjectTypes_1.Params("value")),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", Boolean)

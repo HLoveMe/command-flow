@@ -1,6 +1,6 @@
 import { Stream } from "stream";
 
-export type BaseType = number | string
+export type BaseType = number | string ;
 
 export type AbleJson = { [key: string]: BaseType } | BaseType[]
 

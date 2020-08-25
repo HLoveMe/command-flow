@@ -1,2 +1,4 @@
 
-export declare interface Input{}
+export declare interface Input{
+  value();
+}

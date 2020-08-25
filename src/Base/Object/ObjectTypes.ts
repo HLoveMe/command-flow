@@ -1,13 +1,15 @@
 
 
-export declare interface ArrayAble {
+export declare interface ArrayAble<T> {
   len(): number;
   first(): any;
   last(): any;
+  valueOf(index:number):T;
 }
 
-export declare interface MapAble {
+export declare interface MapAble<T,U> {
   len(): number;
+  get(key:T):U;
 }
 
 export declare interface SetAble {

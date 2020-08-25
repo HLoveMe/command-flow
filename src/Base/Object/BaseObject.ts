@@ -1,4 +1,4 @@
-import { ArrayAble, attribute, MapAble, SetAble } from "./ObjectTypes";
+import { ArrayAble, attribute, MapAble, SetAble, Params } from "./ObjectTypes";
 export function DefaultValue(value: string) {
   return function (target: any, propertyName: string) {
     target[propertyName] = value;
@@ -11,7 +11,7 @@ class BaseObject {
 }
 
 
-export class ArrayObject<T> extends Array<T> implements ArrayAble {
+export class ArrayObject<T> extends Array<T> implements ArrayAble<T> {
   attributes: Set<string> = new Set();
   @DefaultValue(Object.prototype.toString.call([])) static type: string;
   @attribute()
@@ -26,15 +26,23 @@ export class ArrayObject<T> extends Array<T> implements ArrayAble {
   last(): T {
     return this[this.length - 1]
   }
+  @attribute()
+  valueOf(@Params("index") index: number): T {
+    return this[index]
+  }
 }
 
 
-export class MapObject<T, U> extends Map<T, U> implements MapAble {
+export class MapObject<T, U> extends Map<T, U> implements MapAble<T, U> {
   attributes: Set<string> = new Set();
   @DefaultValue(Object.prototype.toString.call(new Map())) static type: string;
   @attribute()
   len(): number {
     return this.size;
+  }
+  @attribute()
+  get(@Params("key") key: T): U {
+    return this.get(key);
   }
 }
 
@@ -46,7 +54,7 @@ export class SetObject<T> extends Set<T> implements SetAble {
     return this.size;
   }
   @attribute()
-  has(tar: T): boolean {
-    return super.has(tar);
+  has(@Params("value") value: T): boolean {
+    return super.has(value);
   }
 }
