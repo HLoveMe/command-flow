@@ -1,1 +1,1 @@
-{"version":3,"file":"Input.js","sourceRoot":"","sources":["../../src/Base/Input.ts"],"names":[],"mappings":""}
+{"version":3,"file":"Input.js","sourceRoot":"","sources":["../../src/Base/Input.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;AACA,6BAAqC;AAKrC;IAAiC,+BAAM;IAAvC;;IAIA,CAAC;IAHC,2BAAK,GAAL;QACE,OAAO,SAAE,CAAC,IAAI,CAAC,OAAO,EAAE,CAAC,CAAA;IAC3B,CAAC;IACH,kBAAC;AAAD,CAAC,AAJD,CAAiC,MAAM,GAItC;AAJY,kCAAW;AAKxB;IAAiC,+BAAM;IAAvC;;IAIA,CAAC;IAHC,2BAAK,GAAL;QACE,OAAO,SAAE,CAAC,IAAI,CAAC,QAAQ,EAAE,CAAC,CAAA;IAC5B,CAAC;IACH,kBAAC;AAAD,CAAC,AAJD,CAAiC,MAAM,GAItC;AAJY,kCAAW"}

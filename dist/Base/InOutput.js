@@ -14,26 +14,26 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var rxjs_1 = require("rxjs");
-var InputNumber = /** @class */ (function (_super) {
-    __extends(InputNumber, _super);
-    function InputNumber() {
+var InOutNumber = /** @class */ (function (_super) {
+    __extends(InOutNumber, _super);
+    function InOutNumber() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    InputNumber.prototype.value = function () {
+    InOutNumber.prototype.value = function () {
         return rxjs_1.of(this.valueOf());
     };
-    return InputNumber;
+    return InOutNumber;
 }(Number));
-exports.InputNumber = InputNumber;
-var InputString = /** @class */ (function (_super) {
-    __extends(InputString, _super);
-    function InputString() {
+exports.InOutNumber = InOutNumber;
+var InOutString = /** @class */ (function (_super) {
+    __extends(InOutString, _super);
+    function InOutString() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    InputString.prototype.value = function () {
+    InOutString.prototype.value = function () {
         return rxjs_1.of(this.toString());
     };
-    return InputString;
+    return InOutString;
 }(String));
-exports.InputString = InputString;
-//# sourceMappingURL=Input.js.map
+exports.InOutString = InOutString;
+//# sourceMappingURL=InOutput.js.map

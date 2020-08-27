@@ -1,5 +1,5 @@
 import { ArrayAble, attribute, MapAble, SetAble, Params } from "./ObjectTypes";
-export function DefaultValue(value: string) {
+function DefaultValue(value: string) {
   return function (target: any, propertyName: string) {
     target[propertyName] = value;
     BaseObject.types.add(value);
