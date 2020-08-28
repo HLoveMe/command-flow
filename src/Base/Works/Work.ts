@@ -61,3 +61,12 @@ export class MultipleInstruction extends SingleInstruction {
     this.pools.push(sub);
   }
 }
+/**
+ * 没有输入输出的任务
+ */
+export class AloneInstruction extends SingleInstruction {
+  name: string = "AloneInstruction";
+  handleInput() {
+    this.run(null);
+  }
+}
