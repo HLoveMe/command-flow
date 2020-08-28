@@ -15,7 +15,14 @@ const ObjectMap = {
 const decide = function (value: any) {
   const key = Object.prototype.toString.call(value);
   const Target = ObjectMap[key];
-  if (Target) return new Target(value);
+  if (Target){
+    switch (key){
+      case '[object Array]':
+        return new Target(...value);
+      default:
+        return new Target(value);   
+    }
+  }
   return null;
 }
 
