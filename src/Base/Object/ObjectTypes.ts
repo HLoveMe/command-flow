@@ -4,16 +4,24 @@ export declare interface ArrayAble<T> {
   len(): number;
   first(): any;
   last(): any;
-  valueOf(index:number):T;
+  valueOf(index: number): T;
 }
 
-export declare interface MapAble<T,U> {
+export declare interface MapAble<T, U> {
   len(): number;
-  get(key:T):U;
+  get(key: T): U;
 }
 
-export declare interface SetAble {
+export declare interface SetAble<T> {
   len(): number;
+}
+
+export declare interface NumberAble{
+  valueOf(): number;
+}
+
+export declare interface StringAble{
+  valueOf(): string;
 }
 
 

@@ -1,4 +1,4 @@
-import { } from "./InOutput";
+import { } from "./InOutputValue";
 import { WorkConstant, WorkUUID, BaseType } from "./Type";
 import { Work, ContextImpl } from "./Type";
 

@@ -32,7 +32,6 @@ function DefaultValue(value) {
         BaseObject.types.add(value);
     };
 }
-exports.DefaultValue = DefaultValue;
 var BaseObject = /** @class */ (function () {
     function BaseObject() {
     }
