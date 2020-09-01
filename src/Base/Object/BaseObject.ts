@@ -6,17 +6,22 @@ function DefaultValue(value: string) {
   }
 }
 
-class BaseObject {
+export class BaseObject {
   static types: Set<string> = new Set();
 }
 
 
-export class ArrayObject<T> extends Array<T> implements ArrayAble<T> {
+export class ArrayObject<T> extends Object implements ArrayAble<T> {
   static attributes: Set<string> = new Set();
   @DefaultValue(Object.prototype.toString.call([])) static type: string;
+  _value: Array<T>;
+  constructor(value: Array<T>) {
+    super();
+    this._value = value;
+  }
   @attribute()
   len(): number {
-    return this.length;
+    return this._value.length;
   }
   @attribute()
   first(): T {
@@ -24,38 +29,57 @@ export class ArrayObject<T> extends Array<T> implements ArrayAble<T> {
   }
   @attribute()
   last(): T {
-    return this[this.length - 1]
+    return this[this._value.length - 1]
   }
   @attribute()
-  valueOf(@Params("index") index: number): T {
+  valueOfIndex(@Params("index") index: number): T {
     return this[index]
+  }
+  valueOf(): Array<T> {
+    return this._value;
   }
 }
 
 
-export class MapObject<T, U> extends Map<T, U> implements MapAble<T, U> {
+export class MapObject<T, U> extends Object implements MapAble<T, U> {
   static attributes: Set<string> = new Set();
   @DefaultValue(Object.prototype.toString.call(new Map())) static type: string;
+  _value: Map<T, U>;
+  constructor(value: Map<T, U>) {
+    super();
+    this._value = value;
+  }
   @attribute()
   len(): number {
-    return this.size;
+    return this._value.size;
   }
   @attribute()
   get(@Params("key") key: T): U {
     return this.get(key);
   }
+  valueOf(): Map<T, U> {
+    throw this._value;
+  }
 }
 
-export class SetObject<T> extends Set<T> implements SetAble<T>{
+export class SetObject<T> extends Object implements SetAble<T>{
   static attributes: Set<string> = new Set();
   @DefaultValue(Object.prototype.toString.call(new Set())) static type: string;
+  _value: Set<T>;
+  constructor(value: Set<T>) {
+    super();
+    this._value = value;
+  }
   @attribute()
   len(): number {
-    return this.size;
+    return this._value.size;
   }
   @attribute()
   has(@Params("value") value: T): boolean {
-    return super.has(value);
+    return this._value.has(value);
+  }
+  valueOf(): Set<T> {
+    throw this._value;
   }
 }
 

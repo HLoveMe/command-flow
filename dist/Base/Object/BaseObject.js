@@ -38,22 +38,28 @@ var BaseObject = /** @class */ (function () {
     BaseObject.types = new Set();
     return BaseObject;
 }());
+exports.BaseObject = BaseObject;
 var ArrayObject = /** @class */ (function (_super) {
     __extends(ArrayObject, _super);
-    function ArrayObject() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function ArrayObject(value) {
+        var _this = _super.call(this) || this;
+        _this._value = value;
+        return _this;
     }
     ArrayObject.prototype.len = function () {
-        return this.length;
+        return this._value.length;
     };
     ArrayObject.prototype.first = function () {
         return this[0];
     };
     ArrayObject.prototype.last = function () {
-        return this[this.length - 1];
+        return this[this._value.length - 1];
     };
-    ArrayObject.prototype.valueOf = function (index) {
+    ArrayObject.prototype.valueOfIndex = function (index) {
         return this[index];
+    };
+    ArrayObject.prototype.valueOf = function () {
+        return this._value;
     };
     ArrayObject.attributes = new Set();
     __decorate([
@@ -80,24 +86,29 @@ var ArrayObject = /** @class */ (function (_super) {
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Number]),
         __metadata("design:returntype", Object)
-    ], ArrayObject.prototype, "valueOf", null);
+    ], ArrayObject.prototype, "valueOfIndex", null);
     __decorate([
         DefaultValue(Object.prototype.toString.call([])),
         __metadata("design:type", String)
     ], ArrayObject, "type", void 0);
     return ArrayObject;
-}(Array));
+}(Object));
 exports.ArrayObject = ArrayObject;
 var MapObject = /** @class */ (function (_super) {
     __extends(MapObject, _super);
-    function MapObject() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function MapObject(value) {
+        var _this = _super.call(this) || this;
+        _this._value = value;
+        return _this;
     }
     MapObject.prototype.len = function () {
-        return this.size;
+        return this._value.size;
     };
     MapObject.prototype.get = function (key) {
         return this.get(key);
+    };
+    MapObject.prototype.valueOf = function () {
+        throw this._value;
     };
     MapObject.attributes = new Set();
     __decorate([
@@ -118,18 +129,23 @@ var MapObject = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], MapObject, "type", void 0);
     return MapObject;
-}(Map));
+}(Object));
 exports.MapObject = MapObject;
 var SetObject = /** @class */ (function (_super) {
     __extends(SetObject, _super);
-    function SetObject() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function SetObject(value) {
+        var _this = _super.call(this) || this;
+        _this._value = value;
+        return _this;
     }
     SetObject.prototype.len = function () {
-        return this.size;
+        return this._value.size;
     };
     SetObject.prototype.has = function (value) {
-        return _super.prototype.has.call(this, value);
+        return this._value.has(value);
+    };
+    SetObject.prototype.valueOf = function () {
+        throw this._value;
     };
     SetObject.attributes = new Set();
     __decorate([
@@ -150,7 +166,7 @@ var SetObject = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], SetObject, "type", void 0);
     return SetObject;
-}(Set));
+}(Object));
 exports.SetObject = SetObject;
 var NumberObj = /** @class */ (function (_super) {
     __extends(NumberObj, _super);

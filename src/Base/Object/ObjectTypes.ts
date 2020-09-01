@@ -1,21 +1,24 @@
 
-// export declare interface ValueAble{
-
-// }
-export declare interface ArrayAble<T> {
+export declare interface ValueAble{
+  valueOf():any;
+}
+export declare interface ArrayAble<T> extends ValueAble{
   len(): number;
   first(): any;
   last(): any;
-  valueOf(index: number): T;
+  valueOfIndex(index: number): T;
+  valueOf():Array<T>;
 }
 
-export declare interface MapAble<T, U> {
+export declare interface MapAble<T, U> extends ValueAble{
   len(): number;
   get(key: T): U;
+  valueOf():Map<T, U>;
 }
 
-export declare interface SetAble<T> {
+export declare interface SetAble<T> extends ValueAble{
   len(): number;
+  valueOf():Set<T>;
 }
 
 export declare interface NumberAble{
