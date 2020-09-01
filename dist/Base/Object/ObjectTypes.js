@@ -1,8 +1,9 @@
 "use strict";
+// export declare interface ValueAble{
 Object.defineProperty(exports, "__esModule", { value: true });
 function attribute() {
     return function ($1, $2, descriptor) {
-        $1.attributes.add($2);
+        $1.constructor.attributes.add($2);
     };
 }
 exports.attribute = attribute;

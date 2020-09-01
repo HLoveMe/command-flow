@@ -1,5 +1,7 @@
 
+// export declare interface ValueAble{
 
+// }
 export declare interface ArrayAble<T> {
   len(): number;
   first(): any;
@@ -27,7 +29,7 @@ export declare interface StringAble{
 
 export function attribute() {
   return function ($1: any, $2: string, descriptor: PropertyDescriptor) {
-    ($1.attributes as Set<string>).add($2);
+    ($1.constructor.attributes as Set<string>).add($2);
   }
 }
 

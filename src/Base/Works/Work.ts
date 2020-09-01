@@ -1,7 +1,8 @@
 import { InOutputAbleOrNil, WorkUUID, Work, ContextImpl, BaseType } from "../Type";
-import { Subject, from, Subscription, Observable, isObservable, of } from "rxjs";
-import { takeLast } from "rxjs/operators";
-import UUID from "uuid/v5";
+import { Subject, from, Subscription, Observable, isObservable, of, BehaviorSubject, PartialObserver } from "rxjs";
+import { takeLast, tap, map } from "rxjs/operators";
+import { ExecError } from "../Error";
+const UUID = require("uuid/v4")
 /**
  * 1:输入形式
  * 2:多次执行
@@ -14,7 +15,7 @@ export class SingleInstruction implements Work {
   id: number = SingleInstruction._id++;
   pools: Subscription[] = [];
   uuid: WorkUUID;
-  input: Observable<InOutputAbleOrNil>;
+  input: BehaviorSubject<InOutputAbleOrNil>;
   output: Subject<InOutputAbleOrNil>;
   before?: Work;
   next?: Work;
@@ -23,20 +24,41 @@ export class SingleInstruction implements Work {
   constructor() {
     this.uuid = UUID();
   }
+  error(err: Error): void {
+    this.context && this.context.msgChannel.error(new ExecError(this, err));
+  }
   addVariable(name: string, value: BaseType): void {
     this.context && this.context.addVariable(this, name, value)
   }
 
   prepare(input: InOutputAbleOrNil | Observable<InOutputAbleOrNil>, before: Work, next: Work) {
+    const that = this;
     this.before = before;
     this.next = next;
-    this.output = new Subject();
-    this.input = isObservable(input) ? from(input as Observable<InOutputAbleOrNil>) : of(input as InOutputAbleOrNil);
+    this.output = new Subject<InOutputAbleOrNil>();
+    this.input = new BehaviorSubject<InOutputAbleOrNil>(undefined);
+    const sub = (isObservable(input) ? input : of(input)).subscribe((value) => that.input.next(value));
+    this.pools.push(sub);
     this.handleInput();
   }
   handleInput() {
-    const sub: Subscription = takeLast(1)(this.input).subscribe((value: InOutputAbleOrNil) => this.run(value));
+    const that = this;
+    const sub: Subscription = this.input.pipe(
+      tap((value) => this.context?.msgChannel.next(value)),
+      takeLast(1)
+    ).subscribe({
+      error: (error) => that.error(error),
+      next: (value: InOutputAbleOrNil) => that.run(value)
+    });
     this.pools.push(sub);
+  }
+  getOutoutObserver(): PartialObserver<InOutputAbleOrNil> {
+    const that = this;
+    return {
+      next: (value) => that.output.next(value),
+      complete: () => that.output.complete(),
+      error: (error) => { that.context?.msgChannel.error(error); that.output.error(error) }
+    } as PartialObserver<InOutputAbleOrNil>
   }
   run(input: InOutputAbleOrNil) {
     this.output.next(input);
@@ -57,7 +79,10 @@ export class MultipleInstruction extends SingleInstruction {
   name: string = "MultipleInstruction";
 
   handleInput() {
-    const sub: Subscription = this.input.subscribe((value: InOutputAbleOrNil) => this.run(value));
+    const that = this;
+    const sub: Subscription = this.input.pipe(
+      tap((value) => this.context?.msgChannel.next(value)),
+    ).subscribe((value: InOutputAbleOrNil) => that.run(value), (error) => that.error(error));
     this.pools.push(sub);
   }
 }

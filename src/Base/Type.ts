@@ -29,7 +29,7 @@ export declare interface Work {
   name: string;
   id: number;
   uuid: WorkUUID;
-  input: Observable<InOutputAbleOrNil>;
+  input: Subject<InOutputAbleOrNil>;
   output: Subject<InOutputAbleOrNil>;
   pools: Subscription[];
   before?: Work;
@@ -41,13 +41,18 @@ export declare interface Work {
   stop(): void;
   clear(): void;
   addVariable(name: string, value: BaseType): void;
+  error(err: Error): void;
 }
 
 
 export declare interface ContextImpl {
   runConstant: Map<WorkUUID, WorkConstant>;
   works: Work[];
+  msgChannel: Subject<InOutputAbleOrNil>;
+  pools: Subscription[];
   addWork(work: Work): void;
+  addWorks(...works: Work[]): void;
   run(): void;
   addVariable(from: Work, name: string, value: BaseType): void;
+  clear(): void;
 }

@@ -2,8 +2,9 @@
 import { SingleInstruction } from "./Work";
 import { InOutputAbleOrNil, InOutData, InOutputAble } from "../Type";
 import { Observable, of } from "rxjs";
-import { flatMap, takeLast, map } from "rxjs/operators";
+import { flatMap, takeLast, map, tap } from "rxjs/operators";
 import { toInOutValue } from "../Util/rxjs_operators";
+import { StringAble } from "../Object/ObjectTypes";
 
 //解码
 class Base64EnCodeWork extends SingleInstruction {
@@ -36,11 +37,11 @@ class Base64DecodeWork extends SingleInstruction {
       const subp = (input as InOutputAble).value()
         .pipe(
           takeLast(1),
-          map((value) => Buffer.from(value.toString(), "utf-8").toString("base64")),
+          map((value) => Buffer.from((value as StringAble).valueOf(), "utf-8").toString("base64")),
           toInOutValue,
-          // flatMap(()=>)
+          tap((value) => this.context?.msgChannel.next(value)),
         )
-        .subscribe(this.output);
+        .subscribe(this.getOutoutObserver());
       this.pools.push(subp);
     }
   }

@@ -12,7 +12,7 @@ class BaseObject {
 
 
 export class ArrayObject<T> extends Array<T> implements ArrayAble<T> {
-  attributes: Set<string> = new Set();
+  static attributes: Set<string> = new Set();
   @DefaultValue(Object.prototype.toString.call([])) static type: string;
   @attribute()
   len(): number {
@@ -34,7 +34,7 @@ export class ArrayObject<T> extends Array<T> implements ArrayAble<T> {
 
 
 export class MapObject<T, U> extends Map<T, U> implements MapAble<T, U> {
-  attributes: Set<string> = new Set();
+  static attributes: Set<string> = new Set();
   @DefaultValue(Object.prototype.toString.call(new Map())) static type: string;
   @attribute()
   len(): number {
@@ -47,7 +47,7 @@ export class MapObject<T, U> extends Map<T, U> implements MapAble<T, U> {
 }
 
 export class SetObject<T> extends Set<T> implements SetAble<T>{
-  attributes: Set<string> = new Set();
+  static attributes: Set<string> = new Set();
   @DefaultValue(Object.prototype.toString.call(new Set())) static type: string;
   @attribute()
   len(): number {
@@ -60,15 +60,27 @@ export class SetObject<T> extends Set<T> implements SetAble<T>{
 }
 
 export class NumberObj extends Number implements NumberAble {
+  static attributes: Set<string> = new Set();
+  _value: number;
+  constructor(value: number) {
+    super();
+    this._value = value
+  }
   @attribute()
   valueOf(): number {
-    return Number(this.toString());
+    return this._value;
   }
 }
 
 export class StringObj extends String implements StringAble {
+  static attributes: Set<string> = new Set();
+  _value: string;
+  constructor(value: string) {
+    super();
+    this._value = value
+  }
   @attribute()
   valueOf(): string {
-    return String(this.toString())
+    return this._value;
   }
 }

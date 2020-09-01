@@ -15,7 +15,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
-var v5_1 = require("uuid/v5");
+var Error_1 = require("../Error");
+var UUID = require("uuid/v4");
 /**
  * 1:输入形式
  * 2:多次执行
@@ -26,22 +27,40 @@ var SingleInstruction = /** @class */ (function () {
         this.name = "SingleInstruction";
         this.id = SingleInstruction._id++;
         this.pools = [];
-        this.uuid = v5_1.default();
+        this.uuid = UUID();
     }
+    SingleInstruction.prototype.error = function (err) {
+        this.context && this.context.msgChannel.error(new Error_1.ExecError(this, err));
+    };
     SingleInstruction.prototype.addVariable = function (name, value) {
         this.context && this.context.addVariable(this, name, value);
     };
     SingleInstruction.prototype.prepare = function (input, before, next) {
+        var that = this;
         this.before = before;
         this.next = next;
         this.output = new rxjs_1.Subject();
-        this.input = rxjs_1.isObservable(input) ? rxjs_1.from(input) : rxjs_1.of(input);
+        this.input = new rxjs_1.BehaviorSubject(undefined);
+        var sub = (rxjs_1.isObservable(input) ? input : rxjs_1.of(input)).subscribe(function (value) { return that.input.next(value); });
+        this.pools.push(sub);
         this.handleInput();
     };
     SingleInstruction.prototype.handleInput = function () {
         var _this = this;
-        var sub = operators_1.takeLast(1)(this.input).subscribe(function (value) { return _this.run(value); });
+        var that = this;
+        var sub = this.input.pipe(operators_1.tap(function (value) { var _a; return (_a = _this.context) === null || _a === void 0 ? void 0 : _a.msgChannel.next(value); }), operators_1.takeLast(1)).subscribe({
+            error: function (error) { return that.error(error); },
+            next: function (value) { return that.run(value); }
+        });
         this.pools.push(sub);
+    };
+    SingleInstruction.prototype.getOutoutObserver = function () {
+        var that = this;
+        return {
+            next: function (value) { return that.output.next(value); },
+            complete: function () { return that.output.complete(); },
+            error: function (error) { var _a; (_a = that.context) === null || _a === void 0 ? void 0 : _a.msgChannel.error(error); that.output.error(error); }
+        };
     };
     SingleInstruction.prototype.run = function (input) {
         this.output.next(input);
@@ -68,10 +87,27 @@ var MultipleInstruction = /** @class */ (function (_super) {
     }
     MultipleInstruction.prototype.handleInput = function () {
         var _this = this;
-        var sub = this.input.subscribe(function (value) { return _this.run(value); });
+        var that = this;
+        var sub = this.input.pipe(operators_1.tap(function (value) { var _a; return (_a = _this.context) === null || _a === void 0 ? void 0 : _a.msgChannel.next(value); })).subscribe(function (value) { return that.run(value); }, function (error) { return that.error(error); });
         this.pools.push(sub);
     };
     return MultipleInstruction;
 }(SingleInstruction));
 exports.MultipleInstruction = MultipleInstruction;
+/**
+ * 没有输入输出的任务
+ */
+var AloneInstruction = /** @class */ (function (_super) {
+    __extends(AloneInstruction, _super);
+    function AloneInstruction() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = "AloneInstruction";
+        return _this;
+    }
+    AloneInstruction.prototype.handleInput = function () {
+        this.run(null);
+    };
+    return AloneInstruction;
+}(SingleInstruction));
+exports.AloneInstruction = AloneInstruction;
 //# sourceMappingURL=Work.js.map
