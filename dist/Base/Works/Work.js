@@ -111,7 +111,11 @@ var AloneInstruction = /** @class */ (function (_super) {
         return _this;
     }
     AloneInstruction.prototype.handleInput = function () {
+        // this.output.complete();
         this.run(null);
+    };
+    AloneInstruction.prototype.run = function (input) {
+        this.output.complete();
     };
     return AloneInstruction;
 }(SingleInstruction));

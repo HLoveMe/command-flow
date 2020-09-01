@@ -62,7 +62,7 @@ export class SingleInstruction implements Work {
     return {
       next: (value) => { console.log(that.name, "next"); that.output.next(value) },
       complete: () => { console.log(that.name, "complete"); that.output.complete() },
-      error: (error) => { console.log(that.name, "error",error); that.context?.msgChannel.error(error); that.output.error(error) }
+      error: (error) => { console.log(that.name, "error", error); that.context?.msgChannel.error(error); that.output.error(error) }
     } as PartialObserver<InOutputAbleOrNil>
   }
   run(input: InOutputAbleOrNil) {
@@ -95,6 +95,11 @@ export class MultipleInstruction extends SingleInstruction {
 export class AloneInstruction extends SingleInstruction {
   name: string = "AloneInstruction";
   handleInput() {
+    // this.output.complete();
     this.run(null);
+  }
+  run(input:InOutputAbleOrNil){
+    
+    this.output.complete();
   }
 }
