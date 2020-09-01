@@ -37,14 +37,19 @@ export class SingleInstruction implements Work {
     this.next = next;
     this.output = new Subject<InOutputAbleOrNil>();
     this.input = new BehaviorSubject<InOutputAbleOrNil>(undefined);
-    const sub = (isObservable(input) ? input : of(input)).subscribe((value) => that.input.next(value));
-    this.pools.push(sub);
     this.handleInput();
+    var sub: Subscription;
+    if (isObservable(input)) {
+      sub = input.subscribe((value) => that.input.next(value), null, () => that.input.complete())
+    } else {
+      sub = of(input).subscribe((value) => that.input.next(value))
+    }
+    this.pools.push(sub);
   }
   handleInput() {
     const that = this;
     const sub: Subscription = this.input.pipe(
-      tap((value) => this.context?.msgChannel.next(value)),
+      // tap((value) => this.context?.msgChannel.next(value)),
       takeLast(1)
     ).subscribe({
       error: (error) => that.error(error),
@@ -55,9 +60,9 @@ export class SingleInstruction implements Work {
   getOutoutObserver(): PartialObserver<InOutputAbleOrNil> {
     const that = this;
     return {
-      next: (value) => that.output.next(value),
-      complete: () => that.output.complete(),
-      error: (error) => { that.context?.msgChannel.error(error); that.output.error(error) }
+      next: (value) => { console.log(that.name, "next"); that.output.next(value) },
+      complete: () => { console.log(that.name, "complete"); that.output.complete() },
+      error: (error) => { console.log(that.name, "error",error); that.context?.msgChannel.error(error); that.output.error(error) }
     } as PartialObserver<InOutputAbleOrNil>
   }
   run(input: InOutputAbleOrNil) {
@@ -80,9 +85,7 @@ export class MultipleInstruction extends SingleInstruction {
 
   handleInput() {
     const that = this;
-    const sub: Subscription = this.input.pipe(
-      tap((value) => this.context?.msgChannel.next(value)),
-    ).subscribe((value: InOutputAbleOrNil) => that.run(value), (error) => that.error(error));
+    const sub: Subscription = this.input.subscribe((value: InOutputAbleOrNil) => that.run(value), (error) => that.error(error));
     this.pools.push(sub);
   }
 }

@@ -17,6 +17,7 @@
     "@types/ws": "^7.2.6",
     "babel-loader": "^8.1.0",
     "babel-preset-stage-0": "^6.24.1",
+    "js-base64": "^3.4.5",
     "node-fetch": "^2.6.0",
     "rxjs": "^6.6.2",
     "webpack": "^4.44.1",

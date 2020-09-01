@@ -5,6 +5,7 @@ import { BehaviorSubject } from "rxjs";
 import { takeLast } from "rxjs/operators";
 
 const context = new Context();
+context.addWork(new Base64EnCodeWork())
 context.addWork(new Base64DecodeWork())
-// context.addWork(new Base64EnCodeWork())
+
 context.testRun(new InOutString("zzzh"))

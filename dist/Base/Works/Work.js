@@ -41,14 +41,21 @@ var SingleInstruction = /** @class */ (function () {
         this.next = next;
         this.output = new rxjs_1.Subject();
         this.input = new rxjs_1.BehaviorSubject(undefined);
-        var sub = (rxjs_1.isObservable(input) ? input : rxjs_1.of(input)).subscribe(function (value) { return that.input.next(value); });
-        this.pools.push(sub);
         this.handleInput();
+        var sub;
+        if (rxjs_1.isObservable(input)) {
+            sub = input.subscribe(function (value) { return that.input.next(value); }, null, function () { return that.input.complete(); });
+        }
+        else {
+            sub = rxjs_1.of(input).subscribe(function (value) { return that.input.next(value); });
+        }
+        this.pools.push(sub);
     };
     SingleInstruction.prototype.handleInput = function () {
-        var _this = this;
         var that = this;
-        var sub = this.input.pipe(operators_1.tap(function (value) { var _a; return (_a = _this.context) === null || _a === void 0 ? void 0 : _a.msgChannel.next(value); }), operators_1.takeLast(1)).subscribe({
+        var sub = this.input.pipe(
+        // tap((value) => this.context?.msgChannel.next(value)),
+        operators_1.takeLast(1)).subscribe({
             error: function (error) { return that.error(error); },
             next: function (value) { return that.run(value); }
         });
@@ -57,9 +64,9 @@ var SingleInstruction = /** @class */ (function () {
     SingleInstruction.prototype.getOutoutObserver = function () {
         var that = this;
         return {
-            next: function (value) { return that.output.next(value); },
-            complete: function () { return that.output.complete(); },
-            error: function (error) { var _a; (_a = that.context) === null || _a === void 0 ? void 0 : _a.msgChannel.error(error); that.output.error(error); }
+            next: function (value) { console.log(that.name, "next"); that.output.next(value); },
+            complete: function () { console.log(that.name, "complete"); that.output.complete(); },
+            error: function (error) { var _a; console.log(that.name, "error", error); (_a = that.context) === null || _a === void 0 ? void 0 : _a.msgChannel.error(error); that.output.error(error); }
         };
     };
     SingleInstruction.prototype.run = function (input) {
@@ -86,9 +93,8 @@ var MultipleInstruction = /** @class */ (function (_super) {
         return _this;
     }
     MultipleInstruction.prototype.handleInput = function () {
-        var _this = this;
         var that = this;
-        var sub = this.input.pipe(operators_1.tap(function (value) { var _a; return (_a = _this.context) === null || _a === void 0 ? void 0 : _a.msgChannel.next(value); })).subscribe(function (value) { return that.run(value); }, function (error) { return that.error(error); });
+        var sub = this.input.subscribe(function (value) { return that.run(value); }, function (error) { return that.error(error); });
         this.pools.push(sub);
     };
     return MultipleInstruction;
