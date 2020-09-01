@@ -1,4 +1,4 @@
-import { ArrayAble, attribute, MapAble, SetAble, Params, NumberAble, StringAble } from "./ObjectTypes";
+import { ArrayAble, attribute, MapAble, SetAble, Params, NumberAble, StringAble, ValueAble } from "./ObjectTypes";
 function DefaultValue(value: string) {
   return function (target: any, propertyName: string) {
     target[propertyName] = value;
@@ -38,6 +38,9 @@ export class ArrayObject<T> extends Object implements ArrayAble<T> {
   valueOf(): Array<T> {
     return this._value;
   }
+  equal(target: ArrayObject<T>): Boolean {
+    return this == target;
+  }
 }
 
 
@@ -60,6 +63,9 @@ export class MapObject<T, U> extends Object implements MapAble<T, U> {
   valueOf(): Map<T, U> {
     throw this._value;
   }
+  equal(target: MapObject<T, U>): Boolean {
+    return this == target;
+  }
 }
 
 export class SetObject<T> extends Object implements SetAble<T>{
@@ -81,6 +87,9 @@ export class SetObject<T> extends Object implements SetAble<T>{
   valueOf(): Set<T> {
     throw this._value;
   }
+  equal(target: SetObject<T>): Boolean {
+    return this == target
+  }
 }
 
 export class NumberObj extends Number implements NumberAble {
@@ -94,6 +103,9 @@ export class NumberObj extends Number implements NumberAble {
   valueOf(): number {
     return this._value;
   }
+  equal(target: NumberObj): Boolean {
+    return this._value == target._value
+  }
 }
 
 export class StringObj extends String implements StringAble {
@@ -106,5 +118,8 @@ export class StringObj extends String implements StringAble {
   @attribute()
   valueOf(): string {
     return this._value;
+  }
+  equal(target: StringObj): Boolean {
+    return this._value == target._value
   }
 }

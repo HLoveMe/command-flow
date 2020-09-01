@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/HLoveMe/CommandFlow/issues"
   },
-  "homepage": "https://github.com/HLoveMe/CommandFlow#readme"
+  "homepage": "https://github.com/HLoveMe/CommandFlow#readme",
+  "devDependencies": {
+    "@types/react-native": "^0.63.13"
+  }
 }

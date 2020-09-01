@@ -79,7 +79,7 @@ function getJSEnvironment() {
     if (navigator.userAgent) {
         var userAgent = navigator.userAgent;
         var platform, result;
-        function getDesktopOS() {
+        var getDesktopOS = function () {
             var pf = navigator.platform;
             if (pf.indexOf("Win") != -1) { // 说明当前是Windows操作系统
                 var rVersion = /Windows NT (\d+).(\d)/i;
@@ -105,7 +105,7 @@ function getJSEnvironment() {
                 return { "name": exports.EnvirType.LINUX, "versionStr": "" }; // 说明当前运行在Linux操作系统
             }
             return null;
-        }
+        };
         platform = /Windows Phone (?:OS )?([\d.]*)/; // windows phone的正则表达式
         result = userAgent.match(platform);
         if (result) {

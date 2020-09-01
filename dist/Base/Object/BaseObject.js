@@ -61,6 +61,9 @@ var ArrayObject = /** @class */ (function (_super) {
     ArrayObject.prototype.valueOf = function () {
         return this._value;
     };
+    ArrayObject.prototype.equal = function (target) {
+        return this == target;
+    };
     ArrayObject.attributes = new Set();
     __decorate([
         ObjectTypes_1.attribute(),
@@ -110,6 +113,9 @@ var MapObject = /** @class */ (function (_super) {
     MapObject.prototype.valueOf = function () {
         throw this._value;
     };
+    MapObject.prototype.equal = function (target) {
+        return this == target;
+    };
     MapObject.attributes = new Set();
     __decorate([
         ObjectTypes_1.attribute(),
@@ -147,6 +153,9 @@ var SetObject = /** @class */ (function (_super) {
     SetObject.prototype.valueOf = function () {
         throw this._value;
     };
+    SetObject.prototype.equal = function (target) {
+        return this == target;
+    };
     SetObject.attributes = new Set();
     __decorate([
         ObjectTypes_1.attribute(),
@@ -178,6 +187,9 @@ var NumberObj = /** @class */ (function (_super) {
     NumberObj.prototype.valueOf = function () {
         return this._value;
     };
+    NumberObj.prototype.equal = function (target) {
+        return this._value == target._value;
+    };
     NumberObj.attributes = new Set();
     __decorate([
         ObjectTypes_1.attribute(),
@@ -197,6 +209,9 @@ var StringObj = /** @class */ (function (_super) {
     }
     StringObj.prototype.valueOf = function () {
         return this._value;
+    };
+    StringObj.prototype.equal = function (target) {
+        return this._value == target._value;
     };
     StringObj.attributes = new Set();
     __decorate([

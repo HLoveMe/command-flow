@@ -1,6 +1,7 @@
 
 export declare interface ValueAble{
   valueOf():any;
+  equal(target:ValueAble):Boolean;
 }
 export declare interface ArrayAble<T> extends ValueAble{
   len(): number;
@@ -21,11 +22,11 @@ export declare interface SetAble<T> extends ValueAble{
   valueOf():Set<T>;
 }
 
-export declare interface NumberAble{
+export declare interface NumberAble extends ValueAble{
   valueOf(): number;
 }
 
-export declare interface StringAble{
+export declare interface StringAble extends ValueAble{
   valueOf(): string;
 }
 
