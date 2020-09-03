@@ -35,6 +35,9 @@ export declare interface Work {
   context?: ContextImpl;
   option?: any;
   run(input: InOutputAbleOrNil): void;
+  rn_run?(input: InOutputAbleOrNil): void;
+  web_run?(input: InOutputAbleOrNil): void;
+  node_run?(input: InOutputAbleOrNil): void;
   prepare(input: InOutputAbleOrNil | Observable<InOutputAbleOrNil>, before: Work, next: Work): void;
   stop(): void;
   clear(): void;

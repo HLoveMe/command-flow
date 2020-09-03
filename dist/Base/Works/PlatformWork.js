@@ -14,6 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Work_1 = require("./Work");
+var WorkTypes_1 = require("./WorkTypes");
 var operators_1 = require("rxjs/operators");
 var Equipment_1 = require("../Util/Equipment");
 var FlashWork = /** @class */ (function (_super) {
@@ -24,14 +25,31 @@ var FlashWork = /** @class */ (function (_super) {
         return _this;
     }
     FlashWork.prototype.switch = function (value) {
+        var RNFlash = require('react-native-flash');
+        if (value.equal(WorkTypes_1.SwitchStatus.CLOSE)) {
+            RNFlash.turnOffFlash(); // turn off flash
+        }
+        else if (value.equal(WorkTypes_1.SwitchStatus.OPEN)) {
+            RNFlash.turnOnFlash(); // turn on flash
+        }
+        else {
+            //SwitchStatus.TOGGLE
+            RNFlash.turnOffFlash(); // turn off flash
+        }
     };
     FlashWork.prototype.run = function (input) {
-        //react-native-camera
+        var _this = this;
+        //react-native-camera  react-native-flash
         var that = this;
         if (Equipment_1.isRN) {
-            var Camera = require("react-native-camera");
-            if (Camera) {
-                input.value().pipe(operators_1.takeLast(1)).subscribe(this.getOutoutObserver());
+            var Flash = require('react-native-flash');
+            if (Flash) {
+                var sub = input.value().pipe(operators_1.takeLast(1)).subscribe(function (value) { return that.switch(value); }, null, function () {
+                    _this.output.next(null);
+                    _this.output.complete();
+                });
+                this.pools.push(sub);
+                return;
             }
         }
         this.output.next(null);

@@ -7,4 +7,7 @@ var context = new Context_1.Context();
 context.addWork(new Base64Work_1.Base64EnCodeWork());
 context.addWork(new Base64Work_1.Base64DecodeWork());
 context.testRun(new InOutputValue_1.InOutString("zzzh"));
+// var qr = require('qr-image');
+// const a = qr.imageSync("AAAA", { type: "svg" })
+// console.log(Buffer.from(a).toString('base64'))
 //# sourceMappingURL=index.js.map

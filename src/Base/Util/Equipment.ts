@@ -56,7 +56,12 @@ const EnvirType = {
  * 是否为 rn 代码
  */
 export function isReactNative() {
-    let GLOBAL = window || global || globalThis;
+    var GLOBAL;
+    try {
+        GLOBAL = window;
+    } catch (error) {
+        GLOBAL = global || globalThis;
+    }
     return GLOBAL && (GLOBAL as any).ReactNative && (GLOBAL as any).ReactNative.NativeModules
 }
 
@@ -192,9 +197,9 @@ const isNode = currentEnir == JSRUNEnvirType.NODE ||
 
 const isRN = isReactNative()
 
-export type PlatformOSType = 'react' | 'web' | 'node';
+export type PlatformOSType = 'reactnative' | 'web' | 'node';
 
-type Select<T> = (select: { [platform in PlatformOSType]: T }) => void;
+type Select<T> = (select: { [platform in PlatformOSType]: T }) => T;
 
 const PlatformSelect: Select<any> = (select) => {
     if (isWeb) {
@@ -202,7 +207,7 @@ const PlatformSelect: Select<any> = (select) => {
     } else if (isNode) {
         return select.node;
     } else
-        return select.react
+        return select.reactnative
 }
 export {
     currentEnir,

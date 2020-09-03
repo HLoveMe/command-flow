@@ -9,3 +9,9 @@ context.addWork(new Base64EnCodeWork())
 context.addWork(new Base64DecodeWork())
 
 context.testRun(new InOutString("zzzh"))
+
+// var qr = require('qr-image');
+
+
+// const a = qr.imageSync("AAAA", { type: "svg" })
+// console.log(Buffer.from(a).toString('base64'))

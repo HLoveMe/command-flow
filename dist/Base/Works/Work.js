@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
 var Error_1 = require("../Error");
+var Equipment_1 = require("../Util/Equipment");
 var UUID = require("uuid/v4");
 /**
  * 1:输入形式
@@ -51,13 +52,21 @@ var SingleInstruction = /** @class */ (function () {
         }
         this.pools.push(sub);
     };
+    SingleInstruction.prototype._run = function (value) {
+        var that = this;
+        Equipment_1.PlatformSelect({
+            reactnative: function () { return that.rn_run ? that.rn_run(value) : that.run(value); },
+            web: function () { return that.web_run ? that.web_run(value) : that.run(value); },
+            node: function () { return that.node_run ? that.node_run(value) : that.run(value); },
+        })();
+    };
     SingleInstruction.prototype.handleInput = function () {
         var that = this;
         var sub = this.input.pipe(
         // tap((value) => this.context?.msgChannel.next(value)),
         operators_1.takeLast(1)).subscribe({
             error: function (error) { return that.error(error); },
-            next: function (value) { return that.run(value); }
+            next: function (value) { return that._run(value); }
         });
         this.pools.push(sub);
     };
@@ -95,14 +104,14 @@ var MultipleInstruction = /** @class */ (function (_super) {
     }
     MultipleInstruction.prototype.handleInput = function () {
         var that = this;
-        var sub = this.input.subscribe(function (value) { return that.run(value); }, function (error) { return that.error(error); });
+        var sub = this.input.subscribe(function (value) { return that._run(value); }, function (error) { return that.error(error); });
         this.pools.push(sub);
     };
     return MultipleInstruction;
 }(SingleInstruction));
 exports.MultipleInstruction = MultipleInstruction;
 /**
- * 没有输入输出的任务
+ * 没有输出的任务
  */
 var AloneInstruction = /** @class */ (function (_super) {
     __extends(AloneInstruction, _super);

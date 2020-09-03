@@ -8,24 +8,24 @@ import { isRN } from "../Util/Equipment";
 
 
 export class FlashWork extends AloneInstruction {
-
   name: string = "FlashWork";
   switch(value: BaseType) {
+    const RNFlash = require('react-native-flash');
     if (value.equal(SwitchStatus.CLOSE)) {
-
+      RNFlash.turnOffFlash(); // turn off flash
     } else if (value.equal(SwitchStatus.OPEN)) {
-
+      RNFlash.turnOnFlash(); // turn on flash
     } else {
       //SwitchStatus.TOGGLE
-
+      RNFlash.turnOffFlash(); // turn off flash
     }
   }
   run(input: InOutputAbleOrNil) {
     //react-native-camera  react-native-flash
     const that = this;
     if (isRN) {
-      const Camera = require("react-native-camera");
-      if (Camera) {
+      const Flash = require('react-native-flash');
+      if (Flash) {
         const sub = input.value().pipe(
           takeLast(1),
         ).subscribe(
@@ -37,8 +37,8 @@ export class FlashWork extends AloneInstruction {
           }
         )
         this.pools.push(sub);
+        return;
       }
-      return;
     }
     this.output.next(null);
     this.output.complete();

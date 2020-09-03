@@ -58,7 +58,13 @@ var EnvirType = {
  * 是否为 rn 代码
  */
 function isReactNative() {
-    var GLOBAL = window || global || globalThis;
+    var GLOBAL;
+    try {
+        GLOBAL = window;
+    }
+    catch (error) {
+        GLOBAL = global || globalThis;
+    }
     return GLOBAL && GLOBAL.ReactNative && GLOBAL.ReactNative.NativeModules;
 }
 exports.isReactNative = isReactNative;
@@ -212,7 +218,7 @@ var PlatformSelect = function (select) {
         return select.node;
     }
     else
-        return select.react;
+        return select.reactnative;
 };
 exports.PlatformSelect = PlatformSelect;
 //# sourceMappingURL=Equipment.js.map

@@ -2,6 +2,7 @@ import { InOutputAbleOrNil, WorkUUID, Work, ContextImpl, BaseType } from "../Typ
 import { Subject, from, Subscription, Observable, isObservable, of, BehaviorSubject, PartialObserver } from "rxjs";
 import { takeLast, tap, map } from "rxjs/operators";
 import { ExecError } from "../Error";
+import { PlatformSelect } from "../Util/Equipment";
 const UUID = require("uuid/v4")
 /**
  * 1:输入形式
@@ -46,6 +47,14 @@ export class SingleInstruction implements Work {
     }
     this.pools.push(sub);
   }
+  _run(value: InOutputAbleOrNil) {
+    const that = this;
+    PlatformSelect({
+      reactnative: () => (that as Work).rn_run ? (that as Work).rn_run(value) : that.run(value),
+      web: () => (that as Work).web_run ? (that as Work).web_run(value) : that.run(value),
+      node: () => (that as Work).node_run ? (that as Work).node_run(value) : that.run(value),
+    })()
+  }
   handleInput() {
     const that = this;
     const sub: Subscription = this.input.pipe(
@@ -53,7 +62,7 @@ export class SingleInstruction implements Work {
       takeLast(1)
     ).subscribe({
       error: (error) => that.error(error),
-      next: (value: InOutputAbleOrNil) => that.run(value)
+      next: (value: InOutputAbleOrNil) => that._run(value);
     });
     this.pools.push(sub);
   }
@@ -85,7 +94,7 @@ export class MultipleInstruction extends SingleInstruction {
 
   handleInput() {
     const that = this;
-    const sub: Subscription = this.input.subscribe((value: InOutputAbleOrNil) => that.run(value), (error) => that.error(error));
+    const sub: Subscription = this.input.subscribe((value: InOutputAbleOrNil) => that._run(value), (error) => that.error(error));
     this.pools.push(sub);
   }
 }
