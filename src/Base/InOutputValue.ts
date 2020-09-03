@@ -1,17 +1,18 @@
-import { InOutputAble, AbleType, InOutData } from "./Type";
+import { InOutputAble, BaseType, InOutData } from "./Type";
 import { of, Observable, range, fromEvent, empty } from "rxjs"
 import { statSync, existsSync, PathLike } from "fs";
 import { takeUntil, reduce, map } from "rxjs/operators";
 import { StringObj, NumberObj, MapObject, ArrayObject, SetObject } from "./Object/BaseObject";
+import { toInOutValue } from "./Util/rxjs_operators";
 const readline = require("readline");
 
 export class InOutNumber extends NumberObj implements InOutputAble {
-  value(): Observable<AbleType> {
+  value(): Observable<BaseType> {
     return of(this)
   }
 }
 export class InOutString extends StringObj implements InOutputAble {
-  value(): Observable<AbleType> {
+  value(): Observable<BaseType> {
     return of(this)
   }
 }
@@ -44,10 +45,11 @@ export class FileSource implements InOutputAble {
   value(): InOutData {
     if (this.file) {
       const fileLine = readline(this.file, "utf-8");
-      return fromEvent(fileLine, "line").pipe(
-        takeUntil(fromEvent(fileLine, "close")),
-        reduce(($1, $2) => $1 + $2, "")
-      )
+      // return fromEvent(fileLine, "line").pipe(
+      //   takeUntil(fromEvent(fileLine, "close")),
+      //   // reduce(($1, $2) => $1 + $2, "")
+        
+      // )
     } else {
       return empty()
     }

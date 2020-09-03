@@ -82,7 +82,10 @@ var FileSource = /** @class */ (function () {
     FileSource.prototype.value = function () {
         if (this.file) {
             var fileLine = readline(this.file, "utf-8");
-            return rxjs_1.fromEvent(fileLine, "line").pipe(operators_1.takeUntil(rxjs_1.fromEvent(fileLine, "close")), operators_1.reduce(function ($1, $2) { return $1 + $2; }, ""));
+            // return fromEvent(fileLine, "line").pipe(
+            //   takeUntil(fromEvent(fileLine, "close")),
+            //   // reduce(($1, $2) => $1 + $2, "")
+            // )
         }
         else {
             return rxjs_1.empty();

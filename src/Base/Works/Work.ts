@@ -57,12 +57,12 @@ export class SingleInstruction implements Work {
     });
     this.pools.push(sub);
   }
-  getOutoutObserver(): PartialObserver<InOutputAbleOrNil> {
+  getOutoutObserver(next?: Function, error?: Function, complete?: Function): PartialObserver<InOutputAbleOrNil> {
     const that = this;
     return {
-      next: (value) => { console.log(that.name, "next"); that.output.next(value) },
-      complete: () => { console.log(that.name, "complete"); that.output.complete() },
-      error: (error) => { console.log(that.name, "error", error); that.context?.msgChannel.error(error); that.output.error(error) }
+      next: (next as any) ?? ((value) => { console.log(that.name, "next"); that.output.next(value) }),
+      complete: (complete as any) ?? (() => { console.log(that.name, "complete"); that.output.complete() }),
+      error: error ?? ((error) => { console.log(that.name, "error", error); that.context?.msgChannel.error(error); that.output.error(error) }),
     } as PartialObserver<InOutputAbleOrNil>
   }
   run(input: InOutputAbleOrNil) {
@@ -90,7 +90,7 @@ export class MultipleInstruction extends SingleInstruction {
   }
 }
 /**
- * 没有输入输出的任务
+ * 没有输出的任务
  */
 export class AloneInstruction extends SingleInstruction {
   name: string = "AloneInstruction";
@@ -98,8 +98,8 @@ export class AloneInstruction extends SingleInstruction {
     // this.output.complete();
     this.run(null);
   }
-  run(input:InOutputAbleOrNil){
-    
+  run(input: InOutputAbleOrNil) {
+
     this.output.complete();
   }
 }

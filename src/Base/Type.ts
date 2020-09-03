@@ -6,17 +6,15 @@ import { ArrayAble, MapAble, SetAble, StringAble, NumberAble } from "./Object/Ob
 // export type BaseType = null | number | string | Object ;
 export type BaseType = ArrayAble<any> | MapAble<any, any> | SetAble<any> | StringAble | NumberAble;
 
-export type AbleJson = { [key: string]: BaseType } | BaseType[]
+// export type AbleType = BaseType | Readable 
 
-export type AbleType = BaseType | Readable | AbleJson
-
-export type InOutData = Observable<AbleType>;
+export type InOutData = Observable<BaseType>;
 
 export type WorkUUID = string;
 
 export type WorkConstantKey = string;
 
-export type WorkConstant = Map<WorkConstantKey, AbleType>
+export type WorkConstant = Map<WorkConstantKey, BaseType>
 
 export declare interface InOutputAble {
   value(): InOutData;

@@ -14,6 +14,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Work_1 = require("./Work");
+var operators_1 = require("rxjs/operators");
+var Equipment_1 = require("../Util/Equipment");
 var FlashWork = /** @class */ (function (_super) {
     __extends(FlashWork, _super);
     function FlashWork() {
@@ -21,7 +23,19 @@ var FlashWork = /** @class */ (function (_super) {
         _this.name = "FlashWork";
         return _this;
     }
+    FlashWork.prototype.switch = function (value) {
+    };
     FlashWork.prototype.run = function (input) {
+        //react-native-camera
+        var that = this;
+        if (Equipment_1.isRN) {
+            var Camera = require("react-native-camera");
+            if (Camera) {
+                input.value().pipe(operators_1.takeLast(1)).subscribe(this.getOutoutObserver());
+            }
+        }
+        this.output.next(null);
+        this.output.complete();
     };
     return FlashWork;
 }(Work_1.AloneInstruction));

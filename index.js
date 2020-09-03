@@ -1,17 +1,11 @@
-const { of, range } = require('rxjs');
-const { map } = require("rxjs/operators")
+const { of, range, Subject } = require('rxjs');
+const { map, takeLast } = require("rxjs/operators")
 
-range(1, 10).pipe(
-  map(x=>{
-    if(x==5)throw "RRR";
-    else return x
-  })
-).subscribe({
-  next:(x)=>{
-    if(x==3)throw "AAA"
-    console.log(x,1111)
-  },
-  error:(err)=>{
-    console.log(err,2222)
-  }
+var a = new Subject();
+a.pipe(
+  takeLast(1)
+).subscribe(x=>{
+  console.log("90909090",x);
 })
+
+a.complete()

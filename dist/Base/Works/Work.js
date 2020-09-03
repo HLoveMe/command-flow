@@ -61,12 +61,13 @@ var SingleInstruction = /** @class */ (function () {
         });
         this.pools.push(sub);
     };
-    SingleInstruction.prototype.getOutoutObserver = function () {
+    SingleInstruction.prototype.getOutoutObserver = function (next, error, complete) {
+        var _a, _b;
         var that = this;
         return {
-            next: function (value) { console.log(that.name, "next"); that.output.next(value); },
-            complete: function () { console.log(that.name, "complete"); that.output.complete(); },
-            error: function (error) { var _a; console.log(that.name, "error", error); (_a = that.context) === null || _a === void 0 ? void 0 : _a.msgChannel.error(error); that.output.error(error); }
+            next: (_a = next, (_a !== null && _a !== void 0 ? _a : (function (value) { console.log(that.name, "next"); that.output.next(value); }))),
+            complete: (_b = complete, (_b !== null && _b !== void 0 ? _b : (function () { console.log(that.name, "complete"); that.output.complete(); }))),
+            error: (error !== null && error !== void 0 ? error : (function (error) { var _a; console.log(that.name, "error", error); (_a = that.context) === null || _a === void 0 ? void 0 : _a.msgChannel.error(error); that.output.error(error); })),
         };
     };
     SingleInstruction.prototype.run = function (input) {
