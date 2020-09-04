@@ -21,9 +21,14 @@ export declare interface InOutputAble {
 }
 export type InOutputAbleOrNil = InOutputAble | null | undefined;
 
+type WorkFunction = (input: InOutputAbleOrNil) => void;
 
+type WorkTypes = "rn_run" | "web_run" | "node_run";
 
-export declare interface Work {
+export type WorkOperation = {
+  [P in WorkTypes]?: WorkFunction
+}
+export declare interface Work extends WorkOperation {
   name: string;
   id: number;
   uuid: WorkUUID;
@@ -34,10 +39,10 @@ export declare interface Work {
   next?: Work;
   context?: ContextImpl;
   option?: any;
-  run(input: InOutputAbleOrNil): void;
-  rn_run?(input: InOutputAbleOrNil): void;
-  web_run?(input: InOutputAbleOrNil): void;
-  node_run?(input: InOutputAbleOrNil): void;
+  run: WorkFunction;
+  // rn_run?: WorkFunction
+  // web_run?: WorkFunction
+  // node_run?: WorkFunction
   prepare(input: InOutputAbleOrNil | Observable<InOutputAbleOrNil>, before: Work, next: Work): void;
   stop(): void;
   clear(): void;
