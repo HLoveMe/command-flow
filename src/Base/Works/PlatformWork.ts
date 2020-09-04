@@ -20,27 +20,27 @@ export class FlashWork extends AloneInstruction {
       RNFlash.turnOffFlash(); // turn off flash
     }
   }
-  run(input: InOutputAbleOrNil) {
-    //react-native-camera  react-native-flash
+  rn_run(input: InOutputAbleOrNil) {
     const that = this;
-    if (isRN) {
-      const Flash = require('react-native-flash');
-      if (Flash) {
-        const sub = input.value().pipe(
-          takeLast(1),
-        ).subscribe(
-          (value) => that.switch(value),
-          null,
-          () => {
-            this.output.next(null);
-            this.output.complete();
-          }
-        )
-        this.pools.push(sub);
-        return;
-      }
+    const Flash = require('react-native-flash');
+    if (Flash) {
+      const sub = input.value().pipe(
+        takeLast(1),
+      ).subscribe(
+        (value) => that.switch(value),
+        null,
+        () => {
+          this.output.next(null);
+          this.output.complete();
+        }
+      )
+      this.pools.push(sub);
+      return;
     }
     this.output.next(null);
     this.output.complete();
+  }
+  run(input: InOutputAbleOrNil) {
+    //react-native-camera  react-native-flash
   }
 }

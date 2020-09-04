@@ -62,7 +62,7 @@ export class SingleInstruction implements Work {
       takeLast(1)
     ).subscribe({
       error: (error) => that.error(error),
-      next: (value: InOutputAbleOrNil) => that._run(value);
+      next: (value: InOutputAbleOrNil) => that._run(value)
     });
     this.pools.push(sub);
   }
