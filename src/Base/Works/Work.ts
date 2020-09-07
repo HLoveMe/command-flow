@@ -25,6 +25,7 @@ export class SingleInstruction implements Work {
   constructor() {
     this.uuid = UUID();
   }
+  config: { [key: string]: string; } = {};
   error(err: Error): void {
     this.context && this.context.msgChannel.error(new ExecError(this, err));
   }

@@ -28,6 +28,7 @@ var SingleInstruction = /** @class */ (function () {
         this.name = "SingleInstruction";
         this.id = SingleInstruction._id++;
         this.pools = [];
+        this.config = {};
         this.uuid = UUID();
     }
     SingleInstruction.prototype.error = function (err) {

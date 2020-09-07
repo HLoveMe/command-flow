@@ -28,16 +28,24 @@ type WorkTypes = "rn_run" | "web_run" | "node_run";
 export type WorkOperation = {
   [P in WorkTypes]?: WorkFunction
 }
-export declare interface Work extends WorkOperation {
-  name: string;
-  id: number;
-  uuid: WorkUUID;
-  input: Subject<InOutputAbleOrNil>;
-  output: Subject<InOutputAbleOrNil>;
-  pools: Subscription[];
+export interface WorkContext {
   before?: Work;
   next?: Work;
   context?: ContextImpl;
+}
+export interface WorkChain {
+  input: Subject<InOutputAbleOrNil>;
+  output: Subject<InOutputAbleOrNil>;
+  pools: Subscription[];
+}
+export interface WorkStep {
+  //根据该属性 控制Work 工作流程
+  config: { [key: string]: string }
+}
+export declare interface Work extends WorkOperation, WorkContext, WorkChain, WorkStep {
+  name: string;
+  id: number;
+  uuid: WorkUUID;
   option?: any;
   run: WorkFunction;
   // rn_run?: WorkFunction
