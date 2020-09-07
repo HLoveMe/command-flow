@@ -3,10 +3,12 @@ import { Base64DecodeWork, Base64EnCodeWork } from "./Base/Works/Base64Work";
 import { InOutString } from "./Base/InOutputValue";
 import { BehaviorSubject } from "rxjs";
 import { takeLast } from "rxjs/operators";
+import { QRCodeWork } from "./Base/Works/QRCodeWork";
 
 const context = new Context();
 context.addWork(new Base64EnCodeWork())
 context.addWork(new Base64DecodeWork())
+context.addWork(new QRCodeWork())
 
 context.testRun(new InOutString("zzzh"))
 
