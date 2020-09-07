@@ -39,6 +39,27 @@ var BaseObject = /** @class */ (function () {
     return BaseObject;
 }());
 exports.BaseObject = BaseObject;
+var ObjectTarget = /** @class */ (function (_super) {
+    __extends(ObjectTarget, _super);
+    function ObjectTarget(value) {
+        var _this = _super.call(this) || this;
+        _this._value = value;
+        return _this;
+    }
+    ObjectTarget.prototype.equal = function (target) {
+        return this._value == target._value;
+    };
+    ObjectTarget.prototype.valueOf = function () {
+        return this._value;
+    };
+    ObjectTarget.attributes = new Set();
+    __decorate([
+        DefaultValue(Object.prototype.toString.call({})),
+        __metadata("design:type", String)
+    ], ObjectTarget, "type", void 0);
+    return ObjectTarget;
+}(Object));
+exports.ObjectTarget = ObjectTarget;
 var ArrayObject = /** @class */ (function (_super) {
     __extends(ArrayObject, _super);
     function ArrayObject(value) {

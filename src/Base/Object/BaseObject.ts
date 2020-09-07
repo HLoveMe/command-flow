@@ -1,4 +1,4 @@
-import { ArrayAble, attribute, MapAble, SetAble, Params, NumberAble, StringAble, ValueAble } from "./ObjectTypes";
+import { ArrayAble, attribute, MapAble, SetAble, Params, NumberAble, StringAble, ValueAble, ObjectAble } from "./ObjectTypes";
 function DefaultValue(value: string) {
   return function (target: any, propertyName: string) {
     target[propertyName] = value;
@@ -9,7 +9,22 @@ function DefaultValue(value: string) {
 export class BaseObject {
   static types: Set<string> = new Set();
 }
+export class ObjectTarget extends Object implements ObjectAble {
+  static attributes: Set<string> = new Set();
+  @DefaultValue(Object.prototype.toString.call({})) static type: string;
+  _value: any;
+  constructor(value: any) {
+    super();
+    this._value = value;
+  }
+  equal(target: ObjectTarget): Boolean {
+    return this._value == target._value;
+  }
+  valueOf(): any {
+    return this._value;
+  }
 
+}
 
 export class ArrayObject<T> extends Object implements ArrayAble<T> {
   static attributes: Set<string> = new Set();

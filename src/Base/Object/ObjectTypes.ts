@@ -1,32 +1,35 @@
 
-export declare interface ValueAble{
-  valueOf():any;
-  equal(target:ValueAble):Boolean;
+export declare interface ValueAble {
+  valueOf(): any;
+  equal(target: ValueAble): Boolean;
 }
-export declare interface ArrayAble<T> extends ValueAble{
+export declare interface ObjectAble extends ValueAble {
+
+}
+export declare interface ArrayAble<T> extends ValueAble {
   len(): number;
   first(): any;
   last(): any;
   valueOfIndex(index: number): T;
-  valueOf():Array<T>;
+  valueOf(): Array<T>;
 }
 
-export declare interface MapAble<T, U> extends ValueAble{
+export declare interface MapAble<T, U> extends ValueAble {
   len(): number;
   get(key: T): U;
-  valueOf():Map<T, U>;
+  valueOf(): Map<T, U>;
 }
 
-export declare interface SetAble<T> extends ValueAble{
+export declare interface SetAble<T> extends ValueAble {
   len(): number;
-  valueOf():Set<T>;
+  valueOf(): Set<T>;
 }
 
-export declare interface NumberAble extends ValueAble{
+export declare interface NumberAble extends ValueAble {
   valueOf(): number;
 }
 
-export declare interface StringAble extends ValueAble{
+export declare interface StringAble extends ValueAble {
   valueOf(): string;
 }
 
