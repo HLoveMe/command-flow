@@ -26,14 +26,17 @@ var Base64DecodeWork = /** @class */ (function (_super) {
         return _this;
     }
     Base64DecodeWork.prototype.run = function (input) {
-        var _this = this;
         if (input == null) {
             this.output.next(null);
             this.output.complete();
         }
         else {
             var subp = input.value()
-                .pipe(operators_1.takeLast(1), operators_1.map(function (value) { return js_base64_1.Base64.decode(value.valueOf()); }), rxjs_operators_1.toInOutValue, operators_1.tap(function (value) { var _a; return (_a = _this.context) === null || _a === void 0 ? void 0 : _a.msgChannel.next(value); }), operators_1.catchError(function (err) { throw err; }))
+                .pipe(operators_1.takeLast(1), operators_1.map(function (value) { return js_base64_1.Base64.decode(value.valueOf()); }), rxjs_operators_1.ValueSwitchTapCatch(this)
+            // toInOutValue,
+            // tap((value) => this.context?.msgChannel.next(value)),
+            // catchError(err=>{throw err})
+            )
                 .subscribe(this.getOutoutObserver());
             this.pools.push(subp);
         }
@@ -50,14 +53,17 @@ var Base64EnCodeWork = /** @class */ (function (_super) {
         return _this;
     }
     Base64EnCodeWork.prototype.run = function (input) {
-        var _this = this;
         if (input == null) {
             this.output.next(null);
             this.output.complete();
         }
         else {
             var subp = input.value()
-                .pipe(operators_1.takeLast(1), operators_1.map(function (value) { return js_base64_1.Base64.encode(value.valueOf()); }), rxjs_operators_1.toInOutValue, operators_1.tap(function (value) { var _a; return (_a = _this.context) === null || _a === void 0 ? void 0 : _a.msgChannel.next(value); }), operators_1.catchError(function (err) { throw err; }))
+                .pipe(operators_1.takeLast(1), operators_1.map(function (value) { return js_base64_1.Base64.encode(value.valueOf()); }), 
+            // toInOutValue,
+            // tap((value) => this.context?.msgChannel.next(value)),
+            // catchError(err=>{throw err})
+            rxjs_operators_1.ValueSwitchTapCatch(this))
                 .subscribe(this.getOutoutObserver());
             this.pools.push(subp);
         }

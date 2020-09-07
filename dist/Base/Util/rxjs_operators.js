@@ -31,7 +31,20 @@ var decide = function (value) {
     }
     return null;
 };
+/**
+ *
+ * @param source Object 值转为   ValueAble;
+ */
 exports.toInOutValue = function (source) {
     return source.pipe(operators_1.map(function (value) { return decide(value); }));
+};
+/**
+ * Object 值转为   ValueAble;  记录Tap  ;Catch
+ * @param work
+ */
+exports.ValueSwitchTapCatch = function (work) {
+    return function (source) {
+        return source.pipe(exports.toInOutValue, operators_1.tap(function (value) { var _a; return (_a = work.context) === null || _a === void 0 ? void 0 : _a.msgChannel.next(value); }), operators_1.catchError(function (err) { throw err; }));
+    };
 };
 //# sourceMappingURL=rxjs_operators.js.map
