@@ -29,16 +29,16 @@ var ObjectTypes_1 = require("./ObjectTypes");
 function DefaultValue(value) {
     return function (target, propertyName) {
         target[propertyName] = value;
-        BaseObject.types.add(value);
+        ObjectManager.types.add(value);
     };
 }
-var BaseObject = /** @class */ (function () {
-    function BaseObject() {
+var ObjectManager = /** @class */ (function () {
+    function ObjectManager() {
     }
-    BaseObject.types = new Set();
-    return BaseObject;
+    ObjectManager.types = new Set();
+    return ObjectManager;
 }());
-exports.BaseObject = BaseObject;
+exports.ObjectManager = ObjectManager;
 var ObjectTarget = /** @class */ (function (_super) {
     __extends(ObjectTarget, _super);
     function ObjectTarget(value) {

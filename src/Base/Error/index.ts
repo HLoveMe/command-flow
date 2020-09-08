@@ -1,10 +1,10 @@
-import { Work } from "../Type";
+import { WorkType } from "../Type";
 
 
 export class ExecError extends Error {
   date: Date = new Date();
-  work: Work;
-  constructor(work: Work, error: Error) {
+  work: WorkType.Work;
+  constructor(work: WorkType.Work, error: Error) {
     super()
     this.message = error.message;
     this.name = error.name;

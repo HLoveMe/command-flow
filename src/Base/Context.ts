@@ -1,18 +1,17 @@
 import { } from "./Object/InOutputValue";
-import { WorkConstant, WorkUUID, BaseType, InOutputAbleOrNil } from "./Type";
-import { Work, ContextImpl } from "./Type";
+import { WorkType, BaseType, InOutputAbleOrNil ,ContextImpl} from "./Type";
 import { Subject, Subscription } from "rxjs";
 
 export class Context implements ContextImpl {
-  runConstant: Map<WorkUUID, WorkConstant> = new Map();
-  works: Work[] = [];
+  runConstant: Map<WorkType.WorkUUID, WorkType.WorkConstant> = new Map();
+  works: WorkType.Work[] = [];
   msgChannel: Subject<InOutputAbleOrNil> = new Subject()
   constructor() {
     const sub = this.msgChannel.subscribe(this.workMessage,this.workError)
     this.pools.push(sub);
   }
   pools: Subscription[] = [];
-  addVariable(from: Work, name: string, value: BaseType): void {
+  addVariable(from: WorkType.Work, name: string, value: BaseType): void {
     const w_map = this.runConstant.get(from.uuid);
     !w_map && (this.runConstant.set(from.uuid, new Map()));
     this.runConstant.get(from.uuid).set(name, value);
@@ -23,17 +22,17 @@ export class Context implements ContextImpl {
   workError(error){
     console.log("msgChannelError",error)
   }
-  addWork(work: Work) {
+  addWork(work: WorkType.Work) {
     work.context = this;
     this.works.push(work);
   }
-  addWorks(...works: Work[]): void {
+  addWorks(...works: WorkType.Work[]): void {
     works.forEach(this.addWork);
   }
   prepareWorks() {
-    this.works.forEach(($1: Work, index: number, souce: Work[]) => {
-      const before: Work = souce[index - 1];
-      const after: Work = souce[index + 1];
+    this.works.forEach(($1: WorkType.Work, index: number, souce: WorkType.Work[]) => {
+      const before: WorkType.Work = souce[index - 1];
+      const after: WorkType.Work = souce[index + 1];
       const input = index == 0 ? null : before.output
       $1.prepare(input, before, after);
     })

@@ -1,4 +1,4 @@
-import { InOutputAbleOrNil, WorkUUID, Work, ContextImpl, BaseType } from "../Type";
+import { InOutputAbleOrNil, ContextImpl, BaseType, WorkType } from "../Type";
 import { Subject, from, Subscription, Observable, isObservable, of, BehaviorSubject, PartialObserver } from "rxjs";
 import { takeLast, tap, map } from "rxjs/operators";
 import { ExecError } from "../Error";
@@ -10,16 +10,16 @@ const UUID = require("uuid/v4")
  * 3:
  */
 
-export class SingleInstruction implements Work {
+export class SingleInstruction implements WorkType.Work {
   name: string = "SingleInstruction";
   static _id: number = 0;
   id: number = SingleInstruction._id++;
   pools: Subscription[] = [];
-  uuid: WorkUUID;
+  uuid: WorkType.WorkUUID;
   input: BehaviorSubject<InOutputAbleOrNil>;
   output: Subject<InOutputAbleOrNil>;
-  before?: Work;
-  next?: Work;
+  before?: WorkType.Work;
+  next?: WorkType.Work;
   context?: ContextImpl;
   option?: any;
   config: { [key: string]: string; } = {};
@@ -33,7 +33,7 @@ export class SingleInstruction implements Work {
     this.context && this.context.addVariable(this, name, value)
   }
 
-  prepare(input: InOutputAbleOrNil | Observable<InOutputAbleOrNil>, before: Work, next: Work) {
+  prepare(input: InOutputAbleOrNil | Observable<InOutputAbleOrNil>, before: WorkType.Work, next: WorkType.Work) {
     const that = this;
     this.before = before;
     this.next = next;
@@ -51,9 +51,9 @@ export class SingleInstruction implements Work {
   _run(value: InOutputAbleOrNil) {
     const that = this;
     PlatformSelect({
-      reactnative: () => (that as Work).rn_run ? (that as Work).rn_run(value) : that.run(value),
-      web: () => (that as Work).web_run ? (that as Work).web_run(value) : that.run(value),
-      node: () => (that as Work).node_run ? (that as Work).node_run(value) : that.run(value),
+      reactnative: () => (that as WorkType.Work).rn_run ? (that as WorkType.Work).rn_run(value) : that.run(value),
+      web: () => (that as WorkType.Work).web_run ? (that as WorkType.Work).web_run(value) : that.run(value),
+      node: () => (that as WorkType.Work).node_run ? (that as WorkType.Work).node_run(value) : that.run(value),
     })()
   }
   handleInput() {

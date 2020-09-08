@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 import * as InOutValue from "../Object/InOutputValue";
 import { map, tap, catchError } from "rxjs/operators";
-import { InOutputAbleOrNil, Work } from "../Type";
+import { InOutputAbleOrNil, WorkType } from "../Type";
 import { ValueAble } from "../Object/ObjectTypes";
 
 const ObjectMap = {
@@ -42,7 +42,7 @@ export const toInOutValue = (source: Observable<any>): Observable<InOutputAbleOr
  * Object 值转为   ValueAble;  记录Tap  ;Catch
  * @param work 
  */
-export const ValueSwitchTapCatch = (work: Work) => {
+export const ValueSwitchTapCatch = (work: WorkType.Work) => {
   return (source: Observable<any>) => {
     return source.pipe(
       toInOutValue,

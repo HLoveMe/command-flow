@@ -1,12 +1,14 @@
 import { ArrayAble, attribute, MapAble, SetAble, Params, NumberAble, StringAble, ValueAble, ObjectAble } from "./ObjectTypes";
+
 function DefaultValue(value: string) {
   return function (target: any, propertyName: string) {
     target[propertyName] = value;
-    BaseObject.types.add(value);
+    ObjectManager.types.add(value);
   }
 }
 
-export class BaseObject {
+
+export class ObjectManager {
   static types: Set<string> = new Set();
 }
 export class ObjectTarget extends Object implements ObjectAble {

@@ -1,5 +1,5 @@
 import { SingleInstruction } from "./Work";
-import { InOutputAbleOrNil, ConfigInfo } from "../Type";
+import { InOutputAbleOrNil } from "../Type";
 import { ValueAble, ObjectAble } from "../Object/ObjectTypes";
 import { takeLast, map, flatMap } from "rxjs/operators";
 import { ValueSwitchTapCatch } from "../Util/rxjs_operators";
