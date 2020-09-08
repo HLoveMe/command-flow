@@ -21,6 +21,8 @@ export declare interface InOutputAble {
 }
 export type InOutputAbleOrNil = InOutputAble | null | undefined;
 
+export declare type ConfigInfo = { [key: string]: any }
+
 type WorkFunction = (input: InOutputAbleOrNil) => void;
 
 type WorkTypes = "rn_run" | "web_run" | "node_run";
@@ -40,7 +42,7 @@ export interface WorkChain {
 }
 export interface WorkStep {
   //根据该属性 控制Work 工作流程
-  config: { [key: string]: string }
+  config: ConfigInfo
 }
 export declare interface Work extends WorkOperation, WorkContext, WorkChain, WorkStep {
   name: string;

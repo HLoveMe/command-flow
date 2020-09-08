@@ -22,10 +22,10 @@ export class SingleInstruction implements Work {
   next?: Work;
   context?: ContextImpl;
   option?: any;
+  config: { [key: string]: string; } = {};
   constructor() {
     this.uuid = UUID();
   }
-  config: { [key: string]: string; } = {};
   error(err: Error): void {
     this.context && this.context.msgChannel.error(new ExecError(this, err));
   }

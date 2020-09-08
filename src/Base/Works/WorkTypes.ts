@@ -2,7 +2,6 @@ import { InOutNumber, InOutString } from "../InOutputValue";
 import { ValueAble, ObjectAble } from "../Object/ObjectTypes";
 
 export declare type SwitchStatusValue = InOutNumber;
-
 export class SwitchStatus {
   static OPEN: SwitchStatusValue = new InOutNumber(0);
   static CLOSE: SwitchStatusValue = new InOutNumber(1);

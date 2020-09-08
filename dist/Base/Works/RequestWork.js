@@ -14,15 +14,34 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Work_1 = require("./Work");
+var operators_1 = require("rxjs/operators");
+var rxjs_operators_1 = require("../Util/rxjs_operators");
 var RequestWork = /** @class */ (function (_super) {
     __extends(RequestWork, _super);
     function RequestWork() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = "RequestWork";
+        _this.config = {
+            json: true,
+            text: false
+        };
         return _this;
     }
+    RequestWork.prototype.setConfigOfResponse = function (json) {
+        if (json === void 0) { json = true; }
+        this.config.json = json;
+        this.config.text = !json;
+    };
+    RequestWork.prototype.validationInput = function (value) {
+        return true;
+    };
     RequestWork.prototype.run = function (input) {
         if (input != null) {
+            var that_1 = this;
+            input.value().pipe(operators_1.takeLast(1), operators_1.map(function (value) {
+                if (!that_1.validationInput(value))
+                    throw "参数验证失败";
+            }), rxjs_operators_1.ValueSwitchTapCatch(that_1));
             return;
         }
         this.output.next(null);
