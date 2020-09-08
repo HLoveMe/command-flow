@@ -5,6 +5,7 @@ import { InOutputAbleOrNil, Work } from "../Type";
 import { ValueAble } from "../Object/ObjectTypes";
 
 const ObjectMap = {
+  '[object Object]': InOutValue.InOutObject,
   '[object Map]': InOutValue.InOutMap,
   '[object Set]': InOutValue.InOutSet,
   '[object Array]': InOutValue.InOutArray,

@@ -33,4 +33,5 @@ export interface RequestOption {
   Params: Request_Params;
   header:Request_Header;
   Body: Request_Body;
+  Timeout:number
 }

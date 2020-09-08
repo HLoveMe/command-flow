@@ -18,6 +18,17 @@ var fs_1 = require("fs");
 var operators_1 = require("rxjs/operators");
 var BaseObject_1 = require("./Object/BaseObject");
 var readline = require("readline");
+var InOutObject = /** @class */ (function (_super) {
+    __extends(InOutObject, _super);
+    function InOutObject() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    InOutObject.prototype.value = function () {
+        return rxjs_1.of(this);
+    };
+    return InOutObject;
+}(BaseObject_1.ObjectTarget));
+exports.InOutObject = InOutObject;
 var InOutNumber = /** @class */ (function (_super) {
     __extends(InOutNumber, _super);
     function InOutNumber() {

@@ -10,6 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var InOutValue = require("../InOutputValue");
 var operators_1 = require("rxjs/operators");
 var ObjectMap = {
+    '[object Object]': InOutValue.InOutObject,
     '[object Map]': InOutValue.InOutMap,
     '[object Set]': InOutValue.InOutSet,
     '[object Array]': InOutValue.InOutArray,
