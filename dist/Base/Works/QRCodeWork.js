@@ -27,7 +27,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Work_1 = require("./Work");
 var operators_1 = require("rxjs/operators");
 var rxjs_operators_1 = require("../Util/rxjs_operators");
-var InOutputValue_1 = require("../InOutputValue");
+var InOutputValue_1 = require("../Object/InOutputValue");
 var QRCodeWork = /** @class */ (function (_super) {
     __extends(QRCodeWork, _super);
     function QRCodeWork() {

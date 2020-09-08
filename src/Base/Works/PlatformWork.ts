@@ -1,5 +1,5 @@
 import { AloneInstruction } from "./Work";
-import { InOutNumber } from "../InOutputValue";
+import { InOutNumber } from "../Object/InOutputValue";
 import { SwitchStatusValue, SwitchStatus } from "./WorkTypes";
 import { InOutputAbleOrNil, BaseType } from "../Type";
 import { } from "react-native";

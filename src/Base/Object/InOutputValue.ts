@@ -1,9 +1,9 @@
-import { InOutputAble, BaseType, InOutData } from "./Type";
+import { InOutputAble, BaseType, InOutData } from "../Type";
 import { of, Observable, range, fromEvent, empty } from "rxjs"
 import { statSync, existsSync, PathLike } from "fs";
 import { takeUntil, reduce, map } from "rxjs/operators";
-import { StringObj, NumberObj, MapObject, ArrayObject, SetObject, ObjectTarget } from "./Object/BaseObject";
-import { toInOutValue } from "./Util/rxjs_operators";
+import { StringObj, NumberObj, MapObject, ArrayObject, SetObject, ObjectTarget } from "./BaseObject";
+import { toInOutValue } from "../Util/rxjs_operators";
 const readline = require("readline");
 
 export class InOutObject extends ObjectTarget implements InOutputAble {

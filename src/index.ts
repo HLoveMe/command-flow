@@ -1,6 +1,6 @@
 import { Context } from "./Base/Context";
 import { Base64DecodeWork, Base64EnCodeWork } from "./Base/Works/Base64Work";
-import { InOutString } from "./Base/InOutputValue";
+import { InOutString } from "./Base/Object/InOutputValue";
 import { BehaviorSubject } from "rxjs";
 import { takeLast } from "rxjs/operators";
 import { QRCodeWork } from "./Base/Works/QRCodeWork";
@@ -10,7 +10,7 @@ context.addWork(new Base64EnCodeWork())
 context.addWork(new Base64DecodeWork())
 context.addWork(new QRCodeWork())
 
-context.testRun(new InOutString("zzzh"))
+context.testRun(new InOutString("https://www.baidu.com/s?ie=UTF-8&wd=jimp"))
 
 // var qr = require('qr-image');
 

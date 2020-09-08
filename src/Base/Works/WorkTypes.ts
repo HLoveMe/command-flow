@@ -1,4 +1,4 @@
-import { InOutNumber, InOutString } from "../InOutputValue";
+import { InOutNumber, InOutString } from "../Object/InOutputValue";
 import { ValueAble, ObjectAble } from "../Object/ObjectTypes";
 
 export declare type SwitchStatusValue = InOutNumber;

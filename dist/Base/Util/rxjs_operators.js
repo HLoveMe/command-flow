@@ -7,7 +7,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var InOutValue = require("../InOutputValue");
+var InOutValue = require("../Object/InOutputValue");
 var operators_1 = require("rxjs/operators");
 var ObjectMap = {
     '[object Object]': InOutValue.InOutObject,

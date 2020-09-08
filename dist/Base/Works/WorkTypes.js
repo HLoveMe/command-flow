@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var InOutputValue_1 = require("../InOutputValue");
+var InOutputValue_1 = require("../Object/InOutputValue");
 var SwitchStatus = /** @class */ (function () {
     function SwitchStatus() {
     }

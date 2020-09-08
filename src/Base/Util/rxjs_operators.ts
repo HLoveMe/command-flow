@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import * as InOutValue from "../InOutputValue";
+import * as InOutValue from "../Object/InOutputValue";
 import { map, tap, catchError } from "rxjs/operators";
 import { InOutputAbleOrNil, Work } from "../Type";
 import { ValueAble } from "../Object/ObjectTypes";
