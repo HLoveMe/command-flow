@@ -87,12 +87,14 @@ export namespace ControlFlow {
     "less_equal" = "less_equal",
     "contain" = "contain"
   }
+  export declare type CompareExec = <T extends ControlEnum>(type: T,target:ValueAble)=> boolean;
+
   export declare type CompareFunction = (target: ValueAble) => Boolean;
 
   declare type CompareAble = {
     [T in ControlEnum]?: CompareFunction
   }
   export interface Compare extends CompareAble {
-    compare<T extends ControlEnum>(type: T,target:ValueAble): boolean;
+    compare?<T extends ControlEnum>(type: T,target:ValueAble): boolean;
   }
 }

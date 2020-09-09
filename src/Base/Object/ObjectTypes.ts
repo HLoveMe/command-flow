@@ -1,12 +1,10 @@
 
 export declare interface ValueAble {
-  _value:any;
+  _value: any;
   valueOf(): any;
   equal(target: ValueAble): Boolean;
 }
-export declare interface ObjectAble extends ValueAble {
-
-}
+export declare interface ObjectAble extends ValueAble { }
 export declare interface ArrayAble<T> extends ValueAble {
   len(): number;
   first(): any;
@@ -34,6 +32,11 @@ export declare interface StringAble extends ValueAble {
   valueOf(): string;
 }
 
+export declare interface BooleanAble extends ValueAble { }
+
+export declare interface DateAble extends ValueAble { 
+  timestamp():number;
+}
 
 export function attribute() {
   return function ($1: any, $2: string, descriptor: PropertyDescriptor) {

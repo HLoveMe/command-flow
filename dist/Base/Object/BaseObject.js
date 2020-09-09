@@ -1,17 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -40,12 +27,9 @@ var ObjectManager = /** @class */ (function () {
     return ObjectManager;
 }());
 exports.ObjectManager = ObjectManager;
-var ObjectTarget = /** @class */ (function (_super) {
-    __extends(ObjectTarget, _super);
+var ObjectTarget = /** @class */ (function () {
     function ObjectTarget(value) {
-        var _this = _super.call(this) || this;
-        _this._value = value;
-        return _this;
+        this._value = value;
     }
     ObjectTarget.prototype.equal = function (target) {
         return this._value == target._value;
@@ -53,28 +37,17 @@ var ObjectTarget = /** @class */ (function (_super) {
     ObjectTarget.prototype.valueOf = function () {
         return this._value;
     };
-    ObjectTarget.prototype.compare = function (type, target) {
-        var compareFunc = this[type];
-        if (typeof compareFunc == "function") {
-            return compareFunc.bind(this)(target);
-        }
-        return false;
-    };
     ObjectTarget.attributes = new Set();
     __decorate([
         DefaultValue(Object.prototype.toString.call({})),
         __metadata("design:type", String)
     ], ObjectTarget, "type", void 0);
     return ObjectTarget;
-}(Object));
+}());
 exports.ObjectTarget = ObjectTarget;
-// new ObjectTarget({}).compare(ControlFlow.ControlEnum.less)
-var ArrayObject = /** @class */ (function (_super) {
-    __extends(ArrayObject, _super);
+var ArrayObject = /** @class */ (function () {
     function ArrayObject(value) {
-        var _this = _super.call(this) || this;
-        _this._value = value;
-        return _this;
+        this._value = value;
     }
     ArrayObject.prototype.len = function () {
         return this._value.length;
@@ -93,13 +66,6 @@ var ArrayObject = /** @class */ (function (_super) {
     };
     ArrayObject.prototype.equal = function (target) {
         return this._value == target._value;
-    };
-    ArrayObject.prototype.compare = function (type, target) {
-        var compareFunc = this[type];
-        if (typeof compareFunc == "function") {
-            return compareFunc.bind(this)(target);
-        }
-        return false;
     };
     ArrayObject.attributes = new Set();
     __decorate([
@@ -132,14 +98,11 @@ var ArrayObject = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], ArrayObject, "type", void 0);
     return ArrayObject;
-}(Object));
+}());
 exports.ArrayObject = ArrayObject;
-var MapObject = /** @class */ (function (_super) {
-    __extends(MapObject, _super);
+var MapObject = /** @class */ (function () {
     function MapObject(value) {
-        var _this = _super.call(this) || this;
-        _this._value = value;
-        return _this;
+        this._value = value;
     }
     MapObject.prototype.len = function () {
         return this._value.size;
@@ -152,13 +115,6 @@ var MapObject = /** @class */ (function (_super) {
     };
     MapObject.prototype.equal = function (target) {
         return this._value == target._value;
-    };
-    MapObject.prototype.compare = function (type, target) {
-        var compareFunc = this[type];
-        if (typeof compareFunc == "function") {
-            return compareFunc.bind(this)(target);
-        }
-        return false;
     };
     MapObject.attributes = new Set();
     __decorate([
@@ -179,14 +135,11 @@ var MapObject = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], MapObject, "type", void 0);
     return MapObject;
-}(Object));
+}());
 exports.MapObject = MapObject;
-var SetObject = /** @class */ (function (_super) {
-    __extends(SetObject, _super);
+var SetObject = /** @class */ (function () {
     function SetObject(value) {
-        var _this = _super.call(this) || this;
-        _this._value = value;
-        return _this;
+        this._value = value;
     }
     SetObject.prototype.len = function () {
         return this._value.size;
@@ -199,13 +152,6 @@ var SetObject = /** @class */ (function (_super) {
     };
     SetObject.prototype.equal = function (target) {
         return this._value == target._value;
-    };
-    SetObject.prototype.compare = function (type, target) {
-        var compareFunc = this[type];
-        if (typeof compareFunc == "function") {
-            return compareFunc.bind(this)(target);
-        }
-        return false;
     };
     SetObject.attributes = new Set();
     __decorate([
@@ -226,27 +172,17 @@ var SetObject = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], SetObject, "type", void 0);
     return SetObject;
-}(Object));
+}());
 exports.SetObject = SetObject;
-var NumberObj = /** @class */ (function (_super) {
-    __extends(NumberObj, _super);
+var NumberObj = /** @class */ (function () {
     function NumberObj(value) {
-        var _this = _super.call(this) || this;
-        _this._value = value;
-        return _this;
+        this._value = value;
     }
     NumberObj.prototype.valueOf = function () {
         return this._value;
     };
     NumberObj.prototype.equal = function (target) {
         return this._value == target._value;
-    };
-    NumberObj.prototype.compare = function (type, target) {
-        var compareFunc = this[type];
-        if (typeof compareFunc == "function") {
-            return compareFunc.bind(this)(target);
-        }
-        return false;
     };
     NumberObj.attributes = new Set();
     __decorate([
@@ -255,28 +191,22 @@ var NumberObj = /** @class */ (function (_super) {
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Number)
     ], NumberObj.prototype, "valueOf", null);
+    __decorate([
+        DefaultValue(Object.prototype.toString.call(new Number())),
+        __metadata("design:type", String)
+    ], NumberObj, "type", void 0);
     return NumberObj;
-}(Number));
+}());
 exports.NumberObj = NumberObj;
-var StringObj = /** @class */ (function (_super) {
-    __extends(StringObj, _super);
+var StringObj = /** @class */ (function () {
     function StringObj(value) {
-        var _this = _super.call(this) || this;
-        _this._value = value;
-        return _this;
+        this._value = value;
     }
     StringObj.prototype.valueOf = function () {
         return this._value;
     };
     StringObj.prototype.equal = function (target) {
         return this._value == target._value;
-    };
-    StringObj.prototype.compare = function (type, target) {
-        var compareFunc = this[type];
-        if (typeof compareFunc == "function") {
-            return compareFunc.bind(this)(target);
-        }
-        return false;
     };
     StringObj.attributes = new Set();
     __decorate([
@@ -285,9 +215,64 @@ var StringObj = /** @class */ (function (_super) {
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", String)
     ], StringObj.prototype, "valueOf", null);
+    __decorate([
+        DefaultValue(Object.prototype.toString.call(new String())),
+        __metadata("design:type", String)
+    ], StringObj, "type", void 0);
     return StringObj;
-}(String));
+}());
 exports.StringObj = StringObj;
+var BooleanObj = /** @class */ (function () {
+    function BooleanObj(value) {
+        this._value = value;
+    }
+    BooleanObj.prototype.valueOf = function () {
+        return Boolean(this._value);
+    };
+    BooleanObj.prototype.equal = function (target) {
+        return this.valueOf() == target.valueOf();
+    };
+    BooleanObj.attributes = new Set();
+    __decorate([
+        ObjectTypes_1.attribute(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", Boolean)
+    ], BooleanObj.prototype, "valueOf", null);
+    __decorate([
+        DefaultValue(Object.prototype.toString.call(new Boolean(1))),
+        __metadata("design:type", String)
+    ], BooleanObj, "type", void 0);
+    return BooleanObj;
+}());
+exports.BooleanObj = BooleanObj;
+var DateObj = /** @class */ (function () {
+    function DateObj(value) {
+        this._value = value;
+    }
+    DateObj.prototype.timestamp = function () {
+        return this.valueOf().getTime();
+    };
+    DateObj.prototype.valueOf = function () {
+        return new Date(this._value);
+    };
+    DateObj.prototype.equal = function (target) {
+        return this._value == target._value;
+    };
+    DateObj.attributes = new Set();
+    __decorate([
+        ObjectTypes_1.attribute(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", Date)
+    ], DateObj.prototype, "valueOf", null);
+    __decorate([
+        DefaultValue(Object.prototype.toString.call(new Date())),
+        __metadata("design:type", String)
+    ], DateObj, "type", void 0);
+    return DateObj;
+}());
+exports.DateObj = DateObj;
 var keys = Object.keys(Type_1.ControlFlow.ControlEnum);
 Object.keys(module.exports).forEach(function ($1) {
     if ($1 != "ObjectManager") {
@@ -296,6 +281,13 @@ Object.keys(module.exports).forEach(function ($1) {
             !Target_1.prototype[key] && (Target_1.prototype[key] = function (target) {
                 return this._value == target._value;
             });
+        });
+        !Target_1.prototype["compare"] && (Target_1.prototype["compare"] = function compare(type, target) {
+            var compareFunc = this[type];
+            if (typeof compareFunc == "function") {
+                return compareFunc.bind(this)(target);
+            }
+            return false;
         });
     }
 });
