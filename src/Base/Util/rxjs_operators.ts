@@ -9,8 +9,8 @@ const ObjectMap = {
   '[object Map]': InOutValue.InOutMap,
   '[object Set]': InOutValue.InOutSet,
   '[object Array]': InOutValue.InOutArray,
-  '[object Boolean]': Boolean,
-  '[object Date]': Date,
+  '[object Boolean]': InOutValue.InOutBoolean,
+  '[object Date]': InOutValue.InOutDate,
   '[object Number]': InOutValue.InOutNumber,
   '[object String]': InOutValue.InOutString
 }

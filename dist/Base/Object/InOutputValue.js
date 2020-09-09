@@ -84,6 +84,28 @@ var InOutSet = /** @class */ (function (_super) {
     return InOutSet;
 }(BaseObject_1.SetObject));
 exports.InOutSet = InOutSet;
+var InOutBoolean = /** @class */ (function (_super) {
+    __extends(InOutBoolean, _super);
+    function InOutBoolean() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    InOutBoolean.prototype.value = function () {
+        return rxjs_1.of(this);
+    };
+    return InOutBoolean;
+}(BaseObject_1.BooleanObj));
+exports.InOutBoolean = InOutBoolean;
+var InOutDate = /** @class */ (function (_super) {
+    __extends(InOutDate, _super);
+    function InOutDate() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    InOutDate.prototype.value = function () {
+        return rxjs_1.of(this);
+    };
+    return InOutDate;
+}(BaseObject_1.DateObj));
+exports.InOutDate = InOutDate;
 var FileSource = /** @class */ (function () {
     function FileSource(file) {
         if (fs_1.existsSync(file) && fs_1.statSync(file).isFile()) {

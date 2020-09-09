@@ -1,10 +1,10 @@
 import { Readable } from "stream";
 import { Observable, Subject, Subscription } from "rxjs";
-import { ArrayAble, MapAble, SetAble, StringAble, NumberAble, ValueAble } from "./Object/ObjectTypes";
+import { ArrayAble, MapAble, SetAble, StringAble, NumberAble, ValueAble, BooleanAble, DateAble } from "./Object/ObjectTypes";
 
 // ArrayAble<any> | MapAble<any, any> | SetAble<any>;
 // export type BaseType = null | number | string | Object ;
-export type BaseType = ArrayAble<any> | MapAble<any, any> | SetAble<any> | StringAble | NumberAble;
+export type BaseType = ArrayAble<any> | MapAble<any, any> | SetAble<any> | StringAble | NumberAble | BooleanAble | DateAble;
 
 // export type AbleType = BaseType | Readable 
 

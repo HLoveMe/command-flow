@@ -2,7 +2,7 @@ import { InOutputAble, BaseType, InOutData } from "../Type";
 import { of, Observable, range, fromEvent, empty } from "rxjs"
 import { statSync, existsSync, PathLike } from "fs";
 import { takeUntil, reduce, map } from "rxjs/operators";
-import { StringObj, NumberObj, MapObject, ArrayObject, SetObject, ObjectTarget } from "./BaseObject";
+import { StringObj, NumberObj, MapObject, ArrayObject, SetObject, ObjectTarget, BooleanObj, DateObj } from "./BaseObject";
 const readline = require("readline");
 
 export class InOutObject extends ObjectTarget implements InOutputAble {
@@ -36,6 +36,16 @@ export class InOutArray<T> extends ArrayObject<T> implements InOutputAble {
 export class InOutSet<T> extends SetObject<T> implements InOutputAble {
   value(): InOutData {
     return of(this as SetObject<T>)
+  }
+}
+export class InOutBoolean extends BooleanObj implements InOutputAble {
+  value(): InOutData {
+    return of(this as BooleanObj)
+  }
+}
+export class InOutDate extends DateObj implements InOutputAble {
+  value(): InOutData {
+    return of(this as DateObj)
   }
 }
 
