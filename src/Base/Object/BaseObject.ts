@@ -13,9 +13,9 @@ export class ObjectManager {
   static types: Set<string> = new Set();
 }
 
-export class ObjectTarget  implements ObjectAble, ControlFlow.Compare {
+export class ObjectTarget implements ObjectAble, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
-  compare?:ControlFlow.CompareExec;
+  compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call({})) static type: string;
   _value: any;
   constructor(value: any) {
@@ -29,9 +29,9 @@ export class ObjectTarget  implements ObjectAble, ControlFlow.Compare {
   }
 }
 
-export class ArrayObject<T>  implements ArrayAble<T>, ControlFlow.Compare {
+export class ArrayObject<T> implements ArrayAble<T>, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
-  compare?:ControlFlow.CompareExec;
+  compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call([])) static type: string;
   _value: Array<T>;
   constructor(value: Array<T>) {
@@ -64,7 +64,7 @@ export class ArrayObject<T>  implements ArrayAble<T>, ControlFlow.Compare {
 
 export class MapObject<T, U> implements MapAble<T, U>, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
-  compare?:ControlFlow.CompareExec;
+  compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Map())) static type: string;
   _value: Map<T, U>;
   constructor(value: Map<T, U>) {
@@ -86,9 +86,9 @@ export class MapObject<T, U> implements MapAble<T, U>, ControlFlow.Compare {
   }
 }
 
-export class SetObject<T>  implements SetAble<T>, ControlFlow.Compare {
+export class SetObject<T> implements SetAble<T>, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
-  compare?:ControlFlow.CompareExec;
+  compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Set())) static type: string;
   _value: Set<T>;
   constructor(value: Set<T>) {
@@ -110,9 +110,9 @@ export class SetObject<T>  implements SetAble<T>, ControlFlow.Compare {
   }
 }
 
-export class NumberObj  implements NumberAble, ControlFlow.Compare {
+export class NumberObj implements NumberAble, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
-  compare?:ControlFlow.CompareExec;
+  compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Number())) static type: string;
   _value: number;
   constructor(value: number) {
@@ -127,9 +127,9 @@ export class NumberObj  implements NumberAble, ControlFlow.Compare {
   }
 }
 
-export class StringObj  implements StringAble, ControlFlow.Compare {
+export class StringObj implements StringAble, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
-  compare?:ControlFlow.CompareExec;
+  compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new String())) static type: string;
   _value: string;
   constructor(value: string) {
@@ -145,9 +145,9 @@ export class StringObj  implements StringAble, ControlFlow.Compare {
 }
 
 
-export class BooleanObj  implements BooleanAble, ControlFlow.Compare {
+export class BooleanObj implements BooleanAble, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
-  compare?:ControlFlow.CompareExec;
+  compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Boolean(1))) static type: string;
   _value: any;
   constructor(value: any) {
@@ -165,12 +165,13 @@ export class BooleanObj  implements BooleanAble, ControlFlow.Compare {
 
 export class DateObj implements DateAble, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
-  compare?:ControlFlow.CompareExec;
+  compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Date())) static type: string;
   _value: any;
   constructor(value: any) {
     this._value = value
   }
+  @attribute()
   timestamp(): number {
     return this.valueOf().getTime();
   }
@@ -179,7 +180,7 @@ export class DateObj implements DateAble, ControlFlow.Compare {
     return new Date(this._value);
   }
   equal(target: DateObj): Boolean {
-    return this._value == target._value
+    return this.timestamp() == target.timestamp()
   }
 
 }

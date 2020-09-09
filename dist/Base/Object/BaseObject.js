@@ -257,9 +257,15 @@ var DateObj = /** @class */ (function () {
         return new Date(this._value);
     };
     DateObj.prototype.equal = function (target) {
-        return this._value == target._value;
+        return this.timestamp() == target.timestamp();
     };
     DateObj.attributes = new Set();
+    __decorate([
+        ObjectTypes_1.attribute(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", Number)
+    ], DateObj.prototype, "timestamp", null);
     __decorate([
         ObjectTypes_1.attribute(),
         __metadata("design:type", Function),
