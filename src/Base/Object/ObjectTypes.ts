@@ -1,5 +1,6 @@
 
 export declare interface ValueAble {
+  _value:any;
   valueOf(): any;
   equal(target: ValueAble): Boolean;
 }

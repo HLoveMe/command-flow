@@ -78,16 +78,21 @@ export declare interface ContextImpl {
   clear(): void;
 }
 
-export namespace ControlType {
-  export declare type ControlType = "more" | "equal" | "less" | "more_equal" | "less_equal" | "contain"
-
-  declare type CompareFunction = (target: ValueAble) => Boolean;
-
-  declare type ControlBase = {
-    [T in ControlType]: CompareFunction
+export namespace ControlFlow {
+  export enum ControlEnum {
+    "more" = "more",
+    "equal" = "equal",
+    "less" = "less",
+    "more_equal" = "more_equal",
+    "less_equal" = "less_equal",
+    "contain" = "contain"
   }
-  export interface Control extends ControlBase {
-    run<T extends ControlType>(type: T): boolean;
-  }
+  export declare type CompareFunction = (target: ValueAble) => Boolean;
 
+  declare type CompareAble = {
+    [T in ControlEnum]?: CompareFunction
+  }
+  export interface Compare extends CompareAble {
+    compare<T extends ControlEnum>(type: T,target:ValueAble): boolean;
+  }
 }

@@ -26,6 +26,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var ObjectTypes_1 = require("./ObjectTypes");
+var Type_1 = require("../Type");
 function DefaultValue(value) {
     return function (target, propertyName) {
         target[propertyName] = value;
@@ -52,6 +53,13 @@ var ObjectTarget = /** @class */ (function (_super) {
     ObjectTarget.prototype.valueOf = function () {
         return this._value;
     };
+    ObjectTarget.prototype.compare = function (type, target) {
+        var compareFunc = this[type];
+        if (typeof compareFunc == "function") {
+            return compareFunc.bind(this)(target);
+        }
+        return false;
+    };
     ObjectTarget.attributes = new Set();
     __decorate([
         DefaultValue(Object.prototype.toString.call({})),
@@ -60,6 +68,7 @@ var ObjectTarget = /** @class */ (function (_super) {
     return ObjectTarget;
 }(Object));
 exports.ObjectTarget = ObjectTarget;
+// new ObjectTarget({}).compare(ControlFlow.ControlEnum.less)
 var ArrayObject = /** @class */ (function (_super) {
     __extends(ArrayObject, _super);
     function ArrayObject(value) {
@@ -83,7 +92,14 @@ var ArrayObject = /** @class */ (function (_super) {
         return this._value;
     };
     ArrayObject.prototype.equal = function (target) {
-        return this == target;
+        return this._value == target._value;
+    };
+    ArrayObject.prototype.compare = function (type, target) {
+        var compareFunc = this[type];
+        if (typeof compareFunc == "function") {
+            return compareFunc.bind(this)(target);
+        }
+        return false;
     };
     ArrayObject.attributes = new Set();
     __decorate([
@@ -135,7 +151,14 @@ var MapObject = /** @class */ (function (_super) {
         throw this._value;
     };
     MapObject.prototype.equal = function (target) {
-        return this == target;
+        return this._value == target._value;
+    };
+    MapObject.prototype.compare = function (type, target) {
+        var compareFunc = this[type];
+        if (typeof compareFunc == "function") {
+            return compareFunc.bind(this)(target);
+        }
+        return false;
     };
     MapObject.attributes = new Set();
     __decorate([
@@ -175,7 +198,14 @@ var SetObject = /** @class */ (function (_super) {
         throw this._value;
     };
     SetObject.prototype.equal = function (target) {
-        return this == target;
+        return this._value == target._value;
+    };
+    SetObject.prototype.compare = function (type, target) {
+        var compareFunc = this[type];
+        if (typeof compareFunc == "function") {
+            return compareFunc.bind(this)(target);
+        }
+        return false;
     };
     SetObject.attributes = new Set();
     __decorate([
@@ -211,6 +241,13 @@ var NumberObj = /** @class */ (function (_super) {
     NumberObj.prototype.equal = function (target) {
         return this._value == target._value;
     };
+    NumberObj.prototype.compare = function (type, target) {
+        var compareFunc = this[type];
+        if (typeof compareFunc == "function") {
+            return compareFunc.bind(this)(target);
+        }
+        return false;
+    };
     NumberObj.attributes = new Set();
     __decorate([
         ObjectTypes_1.attribute(),
@@ -234,6 +271,13 @@ var StringObj = /** @class */ (function (_super) {
     StringObj.prototype.equal = function (target) {
         return this._value == target._value;
     };
+    StringObj.prototype.compare = function (type, target) {
+        var compareFunc = this[type];
+        if (typeof compareFunc == "function") {
+            return compareFunc.bind(this)(target);
+        }
+        return false;
+    };
     StringObj.attributes = new Set();
     __decorate([
         ObjectTypes_1.attribute(),
@@ -244,4 +288,15 @@ var StringObj = /** @class */ (function (_super) {
     return StringObj;
 }(String));
 exports.StringObj = StringObj;
+var keys = Object.keys(Type_1.ControlFlow.ControlEnum);
+Object.keys(module.exports).forEach(function ($1) {
+    if ($1 != "ObjectManager") {
+        var Target_1 = module.exports[$1];
+        keys.forEach(function (key) {
+            !Target_1.prototype[key] && (Target_1.prototype[key] = function (target) {
+                return this._value == target._value;
+            });
+        });
+    }
+});
 //# sourceMappingURL=BaseObject.js.map
