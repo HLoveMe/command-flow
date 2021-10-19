@@ -22,7 +22,7 @@ class Base64DecodeWork extends SingleInstruction {
           // tap((value) => this.context?.msgChannel.next(value)),
           // catchError(err=>{throw err})
         )
-        .subscribe(this.getOutputObserver());
+        .subscribe(this._getOutputObserver());
       this.pools.push(subp);
     }
   }
@@ -44,7 +44,7 @@ class Base64EnCodeWork extends SingleInstruction {
           // catchError(err=>{throw err})
           ValueSwitchTapCatch(this)
         )
-        .subscribe(this.getOutputObserver());
+        .subscribe(this._getOutputObserver());
       this.pools.push(subp);
     }
   }

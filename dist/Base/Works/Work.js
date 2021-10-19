@@ -31,7 +31,7 @@ var SingleInstruction = /** @class */ (function () {
         this.name = "SingleInstruction";
         this.id = SingleInstruction._id++;
         this.pools = [];
-        // 运行配置 config:OPTION
+        // 运行配置 config:OPTION todo
         this.config = {};
         this.uuid = UUID();
     }
@@ -61,20 +61,11 @@ var SingleInstruction = /** @class */ (function () {
     SingleInstruction.prototype._run = function (value) {
         var that = this;
         (0, Equipment_1.PlatformSelect)({
-            reactNative: function () {
-                return that.rn_run
-                    ? that.rn_run(value)
-                    : that.run(value);
-            },
-            web: function () {
-                return that.web_run
-                    ? that.web_run(value)
-                    : that.run(value);
-            },
+            reactNative: function () { var _a; return ((_a = that.rn_run) !== null && _a !== void 0 ? _a : that.run)(value); },
+            web: function () { var _a; return ((_a = that.web_run) !== null && _a !== void 0 ? _a : that.run)(value); },
             node: function () {
-                return that.node_run
-                    ? that.node_run(value)
-                    : that.run(value);
+                var _a;
+                return ((_a = that.node_run) !== null && _a !== void 0 ? _a : that.run)(value);
             },
         })();
     };
@@ -90,26 +81,25 @@ var SingleInstruction = /** @class */ (function () {
         });
         this.pools.push(sub);
     };
-    SingleInstruction.prototype.getOutputObserver = function (next, error, complete) {
+    //
+    SingleInstruction.prototype._getOutputObserver = function (next, error, complete) {
         var _a, _b;
         var that = this;
         return {
             next: (_a = next) !== null && _a !== void 0 ? _a : (function (value) {
-                console.log(that.name, "next");
                 that.output.next(value);
             }),
             complete: (_b = complete) !== null && _b !== void 0 ? _b : (function () {
-                console.log(that.name, "complete");
                 that.output.complete();
             }),
             error: error !== null && error !== void 0 ? error : (function (error) {
                 var _a;
-                console.log(that.name, "error", error);
                 (_a = that.context) === null || _a === void 0 ? void 0 : _a.msgChannel.error(error);
                 that.output.error(error);
             }),
         };
     };
+    // 接受上一个的值
     SingleInstruction.prototype.run = function (input) {
         this.output.next(input);
         this.output.complete();

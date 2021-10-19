@@ -21,7 +21,7 @@ const UUID = require("uuid/v4");
  */
 
 export class SingleInstruction implements WorkType.Work {
-  // 声明可以进行配置的属性
+  // 声明可以进行配置的属性 todo
   static OPTION: WorkRunOption;
   name: string = "SingleInstruction";
   static _id: number = 0;
@@ -34,7 +34,7 @@ export class SingleInstruction implements WorkType.Work {
   next?: WorkType.Work;
   context?: ContextImpl;
   option?: any;
-  // 运行配置 config:OPTION
+  // 运行配置 config:OPTION todo
   config: { [key: string]: string } = {};
   constructor() {
     this.uuid = UUID();
@@ -73,17 +73,13 @@ export class SingleInstruction implements WorkType.Work {
     const that = this;
     PlatformSelect({
       reactNative: () =>
-        (that as WorkType.Work).rn_run
-          ? (that as WorkType.Work).rn_run(value)
-          : that.run(value),
+        ((that as WorkType.Work).rn_run ?? (that as WorkType.Work).run)(value),
       web: () =>
-        (that as WorkType.Work).web_run
-          ? (that as WorkType.Work).web_run(value)
-          : that.run(value),
+        ((that as WorkType.Work).web_run ?? (that as WorkType.Work).run)(value),
       node: () =>
-        (that as WorkType.Work).node_run
-          ? (that as WorkType.Work).node_run(value)
-          : that.run(value),
+        ((that as WorkType.Work).node_run ?? (that as WorkType.Work).run)(
+          value
+        ),
     })();
   }
   handleInput() {
@@ -99,7 +95,9 @@ export class SingleInstruction implements WorkType.Work {
       });
     this.pools.push(sub);
   }
-  getOutputObserver(
+
+  //
+  _getOutputObserver(
     next?: Function,
     error?: Function,
     complete?: Function
@@ -109,24 +107,23 @@ export class SingleInstruction implements WorkType.Work {
       next:
         (next as any) ??
         ((value) => {
-          console.log(that.name, "next");
           that.output.next(value);
         }),
       complete:
         (complete as any) ??
         (() => {
-          console.log(that.name, "complete");
           that.output.complete();
         }),
       error:
         error ??
         ((error) => {
-          console.log(that.name, "error", error);
           that.context?.msgChannel.error(error);
           that.output.error(error);
         }),
     } as PartialObserver<InOutputAbleOrNil>;
   }
+
+  // 接受上一个的值
   run(input: InOutputAbleOrNil) {
     this.output.next(input);
     this.output.complete();
