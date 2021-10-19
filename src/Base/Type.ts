@@ -1,13 +1,29 @@
 import { Readable } from "stream";
-import { Observable, Subject, Subscription } from "rxjs";
-import { ArrayAble, MapAble, SetAble, StringAble, NumberAble, ValueAble, BooleanAble, DateAble } from "./Object/ObjectTypes";
+import { AsyncSubject, Observable, Subject, Subscription } from "rxjs";
+import {
+  ArrayAble,
+  MapAble,
+  SetAble,
+  StringAble,
+  NumberAble,
+  ValueAble,
+  BooleanAble,
+  DateAble,
+} from "./Object/ObjectTypes";
 import { ContextRunOption } from "./Configs";
 
 // ArrayAble<any> | MapAble<any, any> | SetAble<any>;
 // export type BaseType = null | number | string | Object ;
-export type BaseType = ArrayAble<any> | MapAble<any, any> | SetAble<any> | StringAble | NumberAble | BooleanAble | DateAble;
+export type BaseType =
+  | ArrayAble<any>
+  | MapAble<any, any>
+  | SetAble<any>
+  | StringAble
+  | NumberAble
+  | BooleanAble
+  | DateAble;
 
-// export type AbleType = BaseType | Readable 
+// export type AbleType = BaseType | Readable
 
 export type InOutData = Observable<BaseType>;
 
@@ -16,56 +32,61 @@ export declare interface InOutputAble {
 }
 export type InOutputAbleOrNil = InOutputAble | null | undefined;
 
-
-
 export namespace WorkType {
-  export declare type ConfigInfo = { [key: string]: any }
+  export declare type ConfigInfo = { [key: string]: any };
 
   export type WorkUUID = string;
 
   export type WorkConstantKey = string;
 
-  export type WorkConstant = Map<WorkConstantKey, BaseType>
+  export type WorkConstant = Map<WorkConstantKey, BaseType>;
 
-  type WorkFunction = (input: InOutputAbleOrNil) => void;
+  export type WorkFunction = (
+    input: InOutputAbleOrNil
+  ) => Observable<InOutputAbleOrNil>;
 
   type WorkTypes = "rn_run" | "web_run" | "node_run";
 
   export type WorkOperation = {
-    [P in WorkTypes]?: WorkFunction
-  }
+    [P in WorkTypes]?: WorkFunction;
+  };
   export interface WorkContext {
-    before?: Work;
-    next?: Work;
+    beforeWork?: Work;
+    nextWork?: Work;
     context?: ContextImpl;
   }
-  export interface WorkChain {
-    input: Subject<InOutputAbleOrNil>;
-    output: Subject<InOutputAbleOrNil>;
+  export interface WorkChain extends Subject<InOutputAbleOrNil> {
     pools: Subscription[];
   }
   export interface WorkStep {
     //根据该属性 控制Work 工作流程
-    config: ConfigInfo
+    config: ConfigInfo;
   }
-  export declare interface Work extends WorkOperation, WorkContext, WorkChain, WorkStep {
+  export declare interface Work
+    extends WorkOperation,
+      WorkContext,
+      WorkChain,
+      WorkStep {
     name: string;
     id: number;
     uuid: WorkUUID;
     option?: any;
+    handleMessageNext: (value: InOutputAbleOrNil) => void;
     run: WorkFunction;
-    // rn_run?: WorkFunction
-    // web_run?: WorkFunction
-    // node_run?: WorkFunction
-    prepare(input: InOutputAbleOrNil | Observable<InOutputAbleOrNil>, before: Work, next: Work): void;
+    rn_run?: WorkFunction;
+    web_run?: WorkFunction;
+    node_run?: WorkFunction;
+    prepare(
+      input: InOutputAbleOrNil | Observable<InOutputAbleOrNil>,
+      before: Work,
+      next: Work
+    ): void;
     stop(): void;
     clear(): void;
     addVariable(name: string, value: BaseType): void;
     error(err: Error): void;
   }
 }
-
-
 
 export declare interface ContextImpl {
   runOptions: ContextRunOption;
@@ -75,7 +96,7 @@ export declare interface ContextImpl {
   pools: Subscription[];
   addWork(work: WorkType.Work): void;
   addWorks(...works: WorkType.Work[]): void;
-  run(initOption:any): void;
+  run(initOption: any): void;
   addVariable(from: WorkType.Work, name: string, value: BaseType): void;
   clear(): void;
 }
@@ -87,16 +108,19 @@ export namespace ControlFlow {
     "less" = "less",
     "more_equal" = "more_equal",
     "less_equal" = "less_equal",
-    "contain" = "contain"
+    "contain" = "contain",
   }
-  export declare type CompareExec = <T extends ControlEnum>(type: T,target:ValueAble)=> boolean;
+  export declare type CompareExec = <T extends ControlEnum>(
+    type: T,
+    target: ValueAble
+  ) => boolean;
 
   export declare type CompareFunction = (target: ValueAble) => Boolean;
 
   declare type CompareAble = {
-    [T in ControlEnum]?: CompareFunction
-  }
+    [T in ControlEnum]?: CompareFunction;
+  };
   export interface Compare extends CompareAble {
-    compare?<T extends ControlEnum>(type: T,target:ValueAble): boolean;
+    compare?<T extends ControlEnum>(type: T, target: ValueAble): boolean;
   }
 }

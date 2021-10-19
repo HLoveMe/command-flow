@@ -60,7 +60,7 @@ export class Context implements ContextImpl {
       ($1: WorkType.Work, index: number, source: WorkType.Work[]) => {
         const before: WorkType.Work = source[index - 1];
         const after: WorkType.Work = source[index + 1];
-        const input = index == 0 ? initOption : before.output;
+        const input = index == 0 ? initOption : before;
         $1.prepare(input, before, after);
       }
     );
@@ -75,8 +75,8 @@ export class Context implements ContextImpl {
    */
   testRun(input: InOutputAbleOrNil) {
     this.prepareWorks();
-    this.works[0].input.next(input);
-    this.works[0].input.complete();
+    // this.works[0].input.next(input);
+    // this.works[0].input.complete();
   }
 
   clear(): void {

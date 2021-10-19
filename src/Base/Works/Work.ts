@@ -28,14 +28,14 @@ export class SingleInstruction implements WorkType.Work {
   id: number = SingleInstruction._id++;
   pools: Subscription[] = [];
   uuid: WorkType.WorkUUID;
-  input: BehaviorSubject<InOutputAbleOrNil>;
+  input: Subject<InOutputAbleOrNil>;
   output: Subject<InOutputAbleOrNil>;
   before?: WorkType.Work;
   next?: WorkType.Work;
   context?: ContextImpl;
   option?: any;
   // 运行配置 config:OPTION todo
-  config: { [key: string]: string } = {};
+  config: { [key: string]: any } = { dev: true };
   constructor() {
     this.uuid = UUID();
   }
@@ -46,32 +46,26 @@ export class SingleInstruction implements WorkType.Work {
     this.context && this.context.addVariable(this, name, value);
   }
   // 运行
+  /**
+   * @param input 为上一个Work 的输出
+   * @param before 上一个Worke
+   * @param next 下一个
+   */
   prepare(
     input: InOutputAbleOrNil | Observable<InOutputAbleOrNil>,
     before: WorkType.Work,
     next: WorkType.Work
   ) {
-    const that = this;
     this.before = before;
     this.next = next;
     this.output = new Subject<InOutputAbleOrNil>();
-    this.input = new BehaviorSubject<InOutputAbleOrNil>(undefined);
-    this.handleInput();
-    var sub: Subscription;
-    if (isObservable(input)) {
-      sub = input.subscribe(
-        (value) => that.input.next(value),
-        null,
-        () => that.input.complete()
-      );
-    } else {
-      sub = of(input).subscribe((value) => that.input.next(value));
-    }
-    this.pools.push(sub);
+    this.input = new Subject<InOutputAbleOrNil>();
+    this.handleInput(input);
   }
+
   _run(value: InOutputAbleOrNil) {
     const that = this;
-    PlatformSelect({
+    const execFunc = PlatformSelect({
       reactNative: () =>
         ((that as WorkType.Work).rn_run ?? (that as WorkType.Work).run)(value),
       web: () =>
@@ -80,40 +74,47 @@ export class SingleInstruction implements WorkType.Work {
         ((that as WorkType.Work).node_run ?? (that as WorkType.Work).run)(
           value
         ),
-    })();
+    });
+    execFunc(value).then((res: InOutputAbleOrNil) => {
+      this.output.next(res);
+    });
   }
-  handleInput() {
+
+  // 处理上一个的传入
+  handleInput(input: InOutputAbleOrNil | Observable<InOutputAbleOrNil>) {
     const that = this;
-    const sub: Subscription = this.input
-      .pipe(
-        // tap((value) => this.context?.msgChannel.next(value)),
-        takeLast(1)
-      )
-      .subscribe({
-        error: (error) => that.error(error),
-        next: (value: InOutputAbleOrNil) => that._run(value),
-      });
-    this.pools.push(sub);
+    // 连接上一个的输出
+    const observer: PartialObserver<any> = {
+      next: (value) => that.input.next(value),
+      error: null,
+      complete: null,
+    };
+    var sub1: Subscription = (
+      isObservable(input) ? input : of(input)
+    ).subscribe(observer);
+    this.pools.push(sub1);
+    // 处理数据
+    const sub2: Subscription = this.input.pipe(takeLast(1)).subscribe({
+      complete: () => {
+        // 这里要处理 如果是异步run 怎么处理complete和then的回调时机
+        // this.getAncestorWorks().forEach(($1) => $1.stop());
+      },
+      error: (error) => that.error(error),
+      next: (value: InOutputAbleOrNil) => that._run(value),
+    });
+    this.pools.push(sub2);
   }
 
   //
-  _getOutputObserver(
+  getOutputObserver(
     next?: Function,
     error?: Function,
     complete?: Function
   ): PartialObserver<InOutputAbleOrNil> {
     const that = this;
     return {
-      next:
-        (next as any) ??
-        ((value) => {
-          that.output.next(value);
-        }),
-      complete:
-        (complete as any) ??
-        (() => {
-          that.output.complete();
-        }),
+      next: next ?? ((value) => that.output.next(value)),
+      complete: complete ?? (() => that.output.complete()),
       error:
         error ??
         ((error) => {
@@ -122,14 +123,21 @@ export class SingleInstruction implements WorkType.Work {
         }),
     } as PartialObserver<InOutputAbleOrNil>;
   }
-
-  // 接受上一个的值
-  run(input: InOutputAbleOrNil) {
-    this.output.next(input);
-    this.output.complete();
+  // 获取之前的所有Work
+  getAncestorWorks(): WorkType.Work[] {
+    return this.before
+      ? [this.before, ...(this.before as SingleInstruction).getAncestorWorks()]
+      : [];
   }
+
+  // 处理
+  async run(input: InOutputAbleOrNil): Promise<InOutputAbleOrNil> {
+    return null;
+  }
+
   stop(): void {
-    // throw new Error("Method not implemented.");
+    this.input.unsubscribe();
+    this.output.unsubscribe();
   }
   clear(): void {
     this.pools && this.pools.forEach(($1) => $1.unsubscribe());
@@ -159,7 +167,8 @@ export class AloneInstruction extends SingleInstruction {
     // this.output.complete();
     this.run(null);
   }
-  run(input: InOutputAbleOrNil) {
-    this.output.complete();
+
+  async run(input: InOutputAbleOrNil): Promise<InOutputAbleOrNil> {
+    return null;
   }
 }

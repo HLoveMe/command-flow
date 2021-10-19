@@ -40,7 +40,7 @@ var Base64DecodeWork = /** @class */ (function (_super) {
             // tap((value) => this.context?.msgChannel.next(value)),
             // catchError(err=>{throw err})
             )
-                .subscribe(this._getOutputObserver());
+                .subscribe(this.getOutputObserver());
             this.pools.push(subp);
         }
     };
@@ -67,7 +67,7 @@ var Base64EnCodeWork = /** @class */ (function (_super) {
             // tap((value) => this.context?.msgChannel.next(value)),
             // catchError(err=>{throw err})
             (0, rxjs_operators_1.ValueSwitchTapCatch)(this))
-                .subscribe(this._getOutputObserver());
+                .subscribe(this.getOutputObserver());
             this.pools.push(subp);
         }
     };

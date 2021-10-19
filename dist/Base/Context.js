@@ -58,7 +58,7 @@ var Context = /** @class */ (function () {
         this.works.forEach(function ($1, index, source) {
             var before = source[index - 1];
             var after = source[index + 1];
-            var input = index == 0 ? initOption : before.output;
+            var input = index == 0 ? initOption : before;
             $1.prepare(input, before, after);
         });
     };
@@ -71,8 +71,8 @@ var Context = /** @class */ (function () {
      */
     Context.prototype.testRun = function (input) {
         this.prepareWorks();
-        this.works[0].input.next(input);
-        this.works[0].input.complete();
+        // this.works[0].input.next(input);
+        // this.works[0].input.complete();
     };
     Context.prototype.clear = function () {
         this.pools.forEach(function ($1) { return $1.unsubscribe(); });

@@ -35,7 +35,7 @@ class QRCodeWork extends SingleInstruction {
           return qr.createDataURL(option.cellSize || QRCodeWork.defaultOption.cellSize, option.margin || QRCodeWork.defaultOption.margin);
         }),
         ValueSwitchTapCatch(this)
-      ).subscribe(this._getOutputObserver());
+      ).subscribe(this.getOutputObserver());
       this.pools.push(sub);
       return;
     }
