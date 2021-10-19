@@ -232,7 +232,7 @@ var PlatformSelect = function (select) {
         return select.node;
     }
     else
-        return select.reactnative;
+        return select.reactNative;
 };
 exports.PlatformSelect = PlatformSelect;
 //# sourceMappingURL=Equipment.js.map

@@ -47,6 +47,6 @@ var FileSource = /** @class */ (function (_super) {
 exports.default = (0, Equipment_1.PlatformSelect)({
     web: null,
     node: FileSource,
-    reactnative: null,
+    reactNative: null,
 });
 //# sourceMappingURL=FileSource.js.map

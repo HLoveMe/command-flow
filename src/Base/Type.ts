@@ -1,6 +1,7 @@
 import { Readable } from "stream";
 import { Observable, Subject, Subscription } from "rxjs";
 import { ArrayAble, MapAble, SetAble, StringAble, NumberAble, ValueAble, BooleanAble, DateAble } from "./Object/ObjectTypes";
+import { ContextRunOption } from "./Configs";
 
 // ArrayAble<any> | MapAble<any, any> | SetAble<any>;
 // export type BaseType = null | number | string | Object ;
@@ -67,13 +68,14 @@ export namespace WorkType {
 
 
 export declare interface ContextImpl {
+  runOptions: ContextRunOption;
   runConstant: Map<WorkType.WorkUUID, WorkType.WorkConstant>;
   works: WorkType.Work[];
   msgChannel: Subject<InOutputAbleOrNil>;
   pools: Subscription[];
   addWork(work: WorkType.Work): void;
   addWorks(...works: WorkType.Work[]): void;
-  run(): void;
+  run(initOption:any): void;
   addVariable(from: WorkType.Work, name: string, value: BaseType): void;
   clear(): void;
 }

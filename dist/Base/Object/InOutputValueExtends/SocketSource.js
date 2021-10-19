@@ -38,6 +38,6 @@ var SocketSource = /** @class */ (function (_super) {
 exports.default = (0, Equipment_1.PlatformSelect)({
     web: SocketSource,
     node: SocketSource,
-    reactnative: SocketSource,
+    reactNative: SocketSource,
 });
 //# sourceMappingURL=SocketSource.js.map

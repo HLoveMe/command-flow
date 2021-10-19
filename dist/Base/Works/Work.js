@@ -31,6 +31,7 @@ var SingleInstruction = /** @class */ (function () {
         this.name = "SingleInstruction";
         this.id = SingleInstruction._id++;
         this.pools = [];
+        // 运行配置 config:OPTION
         this.config = {};
         this.uuid = UUID();
     }
@@ -40,6 +41,7 @@ var SingleInstruction = /** @class */ (function () {
     SingleInstruction.prototype.addVariable = function (name, value) {
         this.context && this.context.addVariable(this, name, value);
     };
+    // 运行
     SingleInstruction.prototype.prepare = function (input, before, next) {
         var that = this;
         this.before = before;
@@ -59,28 +61,53 @@ var SingleInstruction = /** @class */ (function () {
     SingleInstruction.prototype._run = function (value) {
         var that = this;
         (0, Equipment_1.PlatformSelect)({
-            reactnative: function () { return that.rn_run ? that.rn_run(value) : that.run(value); },
-            web: function () { return that.web_run ? that.web_run(value) : that.run(value); },
-            node: function () { return that.node_run ? that.node_run(value) : that.run(value); },
+            reactNative: function () {
+                return that.rn_run
+                    ? that.rn_run(value)
+                    : that.run(value);
+            },
+            web: function () {
+                return that.web_run
+                    ? that.web_run(value)
+                    : that.run(value);
+            },
+            node: function () {
+                return that.node_run
+                    ? that.node_run(value)
+                    : that.run(value);
+            },
         })();
     };
     SingleInstruction.prototype.handleInput = function () {
         var that = this;
-        var sub = this.input.pipe(
+        var sub = this.input
+            .pipe(
         // tap((value) => this.context?.msgChannel.next(value)),
-        (0, operators_1.takeLast)(1)).subscribe({
+        (0, operators_1.takeLast)(1))
+            .subscribe({
             error: function (error) { return that.error(error); },
-            next: function (value) { return that._run(value); }
+            next: function (value) { return that._run(value); },
         });
         this.pools.push(sub);
     };
-    SingleInstruction.prototype.getOutoutObserver = function (next, error, complete) {
+    SingleInstruction.prototype.getOutputObserver = function (next, error, complete) {
         var _a, _b;
         var that = this;
         return {
-            next: (_a = next) !== null && _a !== void 0 ? _a : (function (value) { console.log(that.name, "next"); that.output.next(value); }),
-            complete: (_b = complete) !== null && _b !== void 0 ? _b : (function () { console.log(that.name, "complete"); that.output.complete(); }),
-            error: error !== null && error !== void 0 ? error : (function (error) { var _a; console.log(that.name, "error", error); (_a = that.context) === null || _a === void 0 ? void 0 : _a.msgChannel.error(error); that.output.error(error); }),
+            next: (_a = next) !== null && _a !== void 0 ? _a : (function (value) {
+                console.log(that.name, "next");
+                that.output.next(value);
+            }),
+            complete: (_b = complete) !== null && _b !== void 0 ? _b : (function () {
+                console.log(that.name, "complete");
+                that.output.complete();
+            }),
+            error: error !== null && error !== void 0 ? error : (function (error) {
+                var _a;
+                console.log(that.name, "error", error);
+                (_a = that.context) === null || _a === void 0 ? void 0 : _a.msgChannel.error(error);
+                that.output.error(error);
+            }),
         };
     };
     SingleInstruction.prototype.run = function (input) {

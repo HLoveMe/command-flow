@@ -31,5 +31,5 @@ class FileSource extends JSForNodeJs implements InOutputAble {
 export default PlatformSelect({
   web: null,
   node: FileSource,
-  reactnative: null,
+  reactNative: null,
 }) as InOutputAble;

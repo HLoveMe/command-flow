@@ -212,7 +212,7 @@ const isNode =
 
 const isRN = isReactNative();
 
-export type PlatformOSType = "reactnative" | "web" | "node";
+export type PlatformOSType = "reactNative" | "web" | "node";
 
 type Select<T> = (select: { [platform in PlatformOSType]: T }) => T;
 
@@ -221,6 +221,6 @@ const PlatformSelect: Select<any> = (select) => {
     return select.web;
   } else if (isNode) {
     return select.node;
-  } else return select.reactnative;
+  } else return select.reactNative;
 };
 export { JSRUNEnvirType, currentEnir, isWeb, isNode, isRN, PlatformSelect };

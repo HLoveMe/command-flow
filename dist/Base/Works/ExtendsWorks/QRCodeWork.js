@@ -55,7 +55,7 @@ var QRCodeWork = /** @class */ (function (_super) {
                 qr.addData(option.value || QRCodeWork.defaultOption.value);
                 qr.make();
                 return qr.createDataURL(option.cellSize || QRCodeWork.defaultOption.cellSize, option.margin || QRCodeWork.defaultOption.margin);
-            }), (0, rxjs_operators_1.ValueSwitchTapCatch)(this)).subscribe(this.getOutoutObserver());
+            }), (0, rxjs_operators_1.ValueSwitchTapCatch)(this)).subscribe(this.getOutputObserver());
             this.pools.push(sub);
             return;
         }

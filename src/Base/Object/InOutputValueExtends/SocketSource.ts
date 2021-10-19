@@ -26,5 +26,5 @@ class SocketSource extends BaseRunTime implements InOutputAble {
 export default PlatformSelect({
   web: SocketSource,
   node: SocketSource,
-  reactnative: SocketSource,
+  reactNative: SocketSource,
 }) as InOutputAble;
