@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Params = exports.attribute = void 0;
 function attribute() {
     return function ($1, $2, descriptor) {
         $1.constructor.attributes.add($2);

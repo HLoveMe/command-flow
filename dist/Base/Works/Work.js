@@ -3,16 +3,19 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AloneInstruction = exports.MultipleInstruction = exports.SingleInstruction = void 0;
 var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
 var Error_1 = require("../Error");
@@ -45,17 +48,17 @@ var SingleInstruction = /** @class */ (function () {
         this.input = new rxjs_1.BehaviorSubject(undefined);
         this.handleInput();
         var sub;
-        if (rxjs_1.isObservable(input)) {
+        if ((0, rxjs_1.isObservable)(input)) {
             sub = input.subscribe(function (value) { return that.input.next(value); }, null, function () { return that.input.complete(); });
         }
         else {
-            sub = rxjs_1.of(input).subscribe(function (value) { return that.input.next(value); });
+            sub = (0, rxjs_1.of)(input).subscribe(function (value) { return that.input.next(value); });
         }
         this.pools.push(sub);
     };
     SingleInstruction.prototype._run = function (value) {
         var that = this;
-        Equipment_1.PlatformSelect({
+        (0, Equipment_1.PlatformSelect)({
             reactnative: function () { return that.rn_run ? that.rn_run(value) : that.run(value); },
             web: function () { return that.web_run ? that.web_run(value) : that.run(value); },
             node: function () { return that.node_run ? that.node_run(value) : that.run(value); },
@@ -65,7 +68,7 @@ var SingleInstruction = /** @class */ (function () {
         var that = this;
         var sub = this.input.pipe(
         // tap((value) => this.context?.msgChannel.next(value)),
-        operators_1.takeLast(1)).subscribe({
+        (0, operators_1.takeLast)(1)).subscribe({
             error: function (error) { return that.error(error); },
             next: function (value) { return that._run(value); }
         });
@@ -75,9 +78,9 @@ var SingleInstruction = /** @class */ (function () {
         var _a, _b;
         var that = this;
         return {
-            next: (_a = next, (_a !== null && _a !== void 0 ? _a : (function (value) { console.log(that.name, "next"); that.output.next(value); }))),
-            complete: (_b = complete, (_b !== null && _b !== void 0 ? _b : (function () { console.log(that.name, "complete"); that.output.complete(); }))),
-            error: (error !== null && error !== void 0 ? error : (function (error) { var _a; console.log(that.name, "error", error); (_a = that.context) === null || _a === void 0 ? void 0 : _a.msgChannel.error(error); that.output.error(error); })),
+            next: (_a = next) !== null && _a !== void 0 ? _a : (function (value) { console.log(that.name, "next"); that.output.next(value); }),
+            complete: (_b = complete) !== null && _b !== void 0 ? _b : (function () { console.log(that.name, "complete"); that.output.complete(); }),
+            error: error !== null && error !== void 0 ? error : (function (error) { var _a; console.log(that.name, "error", error); (_a = that.context) === null || _a === void 0 ? void 0 : _a.msgChannel.error(error); that.output.error(error); }),
         };
     };
     SingleInstruction.prototype.run = function (input) {

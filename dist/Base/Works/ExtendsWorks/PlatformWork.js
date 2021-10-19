@@ -16,8 +16,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FlashWork = void 0;
-var Work_1 = require("./Work");
-var WorkTypes_1 = require("./WorkTypes");
+var Work_1 = require("../Work");
+var WorkTypes_1 = require("../WorkTypes");
 var operators_1 = require("rxjs/operators");
 var FlashWork = /** @class */ (function (_super) {
     __extends(FlashWork, _super);

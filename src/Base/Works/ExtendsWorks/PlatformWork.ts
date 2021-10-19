@@ -1,10 +1,10 @@
-import { AloneInstruction } from "./Work";
-import { InOutNumber } from "../Object/InOutputValue";
-import { SwitchStatusValue, SwitchStatus } from "./WorkTypes";
-import { InOutputAbleOrNil, BaseType } from "../Type";
+import { AloneInstruction } from "../Work";
+import { InOutNumber } from "../../Object/InOutputValue";
+import { SwitchStatusValue, SwitchStatus } from "../WorkTypes";
+import { InOutputAbleOrNil, BaseType } from "../../Type";
 import { } from "react-native";
 import { map, takeLast } from "rxjs/operators";
-import { isRN } from "../Util/Equipment";
+import { isRN } from "../../Util/Equipment";
 
 
 export class FlashWork extends AloneInstruction {

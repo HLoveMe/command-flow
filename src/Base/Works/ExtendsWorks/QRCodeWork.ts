@@ -1,10 +1,10 @@
-import { SingleInstruction } from "./Work";
-import { InOutputAbleOrNil } from "../Type";
+import { SingleInstruction } from "../Work";
+import { InOutputAbleOrNil } from "../../Type";
 import { takeLast, map, tap, catchError } from "rxjs/operators";
-import { toInOutValue, ValueSwitchTapCatch } from "../Util/rxjs_operators";
-import { StringAble, ObjectAble } from "../Object/ObjectTypes";
-import { InOutString } from "../Object/InOutputValue";
-import { QROption } from "./WorkTypes";
+import { toInOutValue, ValueSwitchTapCatch } from "../../Util/rxjs_operators";
+import { StringAble, ObjectAble } from "../../Object/ObjectTypes";
+import { InOutString } from "../../Object/InOutputValue";
+import { QROption } from "../WorkTypes";
 class QRCodeWork extends SingleInstruction {
   name: string = "QRCodeWork"
   static defaultOption: QROption = {

@@ -16,9 +16,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RequestWork = void 0;
-var Work_1 = require("./Work");
+var Work_1 = require("../Work");
 var operators_1 = require("rxjs/operators");
-var rxjs_operators_1 = require("../Util/rxjs_operators");
+var rxjs_operators_1 = require("../../Util/rxjs_operators");
 var axios_1 = require("axios");
 var RequestWork = /** @class */ (function (_super) {
     __extends(RequestWork, _super);

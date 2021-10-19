@@ -16,9 +16,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Base64EnCodeWork = exports.Base64DecodeWork = void 0;
-var Work_1 = require("./Work");
+var Work_1 = require("../Work");
 var operators_1 = require("rxjs/operators");
-var rxjs_operators_1 = require("../Util/rxjs_operators");
+var rxjs_operators_1 = require("../../Util/rxjs_operators");
 var js_base64_1 = require("js-base64");
 //解码
 var Base64DecodeWork = /** @class */ (function (_super) {

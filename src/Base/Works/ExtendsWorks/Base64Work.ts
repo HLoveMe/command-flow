@@ -1,9 +1,9 @@
 
-import { SingleInstruction } from "./Work";
-import { InOutputAbleOrNil, InOutData, InOutputAble } from "../Type";
+import { SingleInstruction } from "../Work";
+import { InOutputAbleOrNil, InOutData, InOutputAble } from "../../Type";
 import { flatMap, takeLast, map, tap,catchError } from "rxjs/operators";
-import { toInOutValue ,ValueSwitchTapCatch} from "../Util/rxjs_operators";
-import { StringAble } from "../Object/ObjectTypes";
+import { toInOutValue ,ValueSwitchTapCatch} from "../../Util/rxjs_operators";
+import { StringAble } from "../../Object/ObjectTypes";
 import { Base64 } from 'js-base64';
 //解码
 class Base64DecodeWork extends SingleInstruction {

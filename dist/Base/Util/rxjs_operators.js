@@ -1,12 +1,15 @@
 "use strict";
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ValueSwitchTapCatch = exports.toInOutValue = void 0;
 var InOutValue = require("../Object/InOutputValue");
 var operators_1 = require("rxjs/operators");
 var ObjectMap = {
@@ -25,7 +28,7 @@ var decide = function (value) {
     if (Target) {
         switch (key) {
             case '[object Array]':
-                return new (Target.bind.apply(Target, __spreadArrays([void 0], value)))();
+                return new (Target.bind.apply(Target, __spreadArray([void 0], value, false)))();
             default:
                 return new Target(value);
         }
@@ -36,16 +39,18 @@ var decide = function (value) {
  *
  * @param source Object 值转为   ValueAble;
  */
-exports.toInOutValue = function (source) {
-    return source.pipe(operators_1.map(function (value) { return decide(value); }));
+var toInOutValue = function (source) {
+    return source.pipe((0, operators_1.map)(function (value) { return decide(value); }));
 };
+exports.toInOutValue = toInOutValue;
 /**
  * Object 值转为   ValueAble;  记录Tap  ;Catch
  * @param work
  */
-exports.ValueSwitchTapCatch = function (work) {
+var ValueSwitchTapCatch = function (work) {
     return function (source) {
-        return source.pipe(exports.toInOutValue, operators_1.tap(function (value) { var _a; return (_a = work.context) === null || _a === void 0 ? void 0 : _a.msgChannel.next(value); }), operators_1.catchError(function (err) { throw err; }));
+        return source.pipe(exports.toInOutValue, (0, operators_1.tap)(function (value) { var _a; return (_a = work.context) === null || _a === void 0 ? void 0 : _a.msgChannel.next(value); }), (0, operators_1.catchError)(function (err) { throw err; }));
     };
 };
+exports.ValueSwitchTapCatch = ValueSwitchTapCatch;
 //# sourceMappingURL=rxjs_operators.js.map

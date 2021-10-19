@@ -16,7 +16,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlayBase64MusicWork = void 0;
-var Work_1 = require("./Work");
+var Work_1 = require("../Work");
 var PlayBase64MusicWork = /** @class */ (function (_super) {
     __extends(PlayBase64MusicWork, _super);
     function PlayBase64MusicWork() {

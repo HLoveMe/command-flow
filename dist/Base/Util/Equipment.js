@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.PlatformSelect = exports.isRN = exports.isNode = exports.isWeb = exports.currentEnir = exports.JSRUNEnvirType = exports.getJSEnvironment = exports.isReactNative = void 0;
 var JSRUNEnvirType;
 (function (JSRUNEnvirType) {
     JSRUNEnvirType[JSRUNEnvirType["NODE"] = 10] = "NODE";
@@ -18,7 +19,8 @@ var JSRUNEnvirType;
     JSRUNEnvirType[JSRUNEnvirType["RN_WIN"] = 32] = "RN_WIN";
     JSRUNEnvirType[JSRUNEnvirType["RN_IOS"] = 33] = "RN_IOS";
     JSRUNEnvirType[JSRUNEnvirType["RN_ANDROID"] = 34] = "RN_ANDROID";
-})(JSRUNEnvirType = exports.JSRUNEnvirType || (exports.JSRUNEnvirType = {}));
+})(JSRUNEnvirType || (JSRUNEnvirType = {}));
+exports.JSRUNEnvirType = JSRUNEnvirType;
 var EnvirType = {
     /**
      * WIndow 浏览器 运行环境
@@ -52,7 +54,7 @@ var EnvirType = {
      * React-Native 运行环境
      * 直接运行在手机上的React-native环境
      */
-    REACTNATIVE: "react-native"
+    REACTNATIVE: "react-native",
 };
 /**
  * 是否为 rn 代码
@@ -65,7 +67,9 @@ function isReactNative() {
     catch (error) {
         GLOBAL = global || globalThis;
     }
-    return GLOBAL && GLOBAL.ReactNative && GLOBAL.ReactNative.NativeModules;
+    return (GLOBAL &&
+        GLOBAL.ReactNative &&
+        GLOBAL.ReactNative.NativeModules);
 }
 exports.isReactNative = isReactNative;
 function getJSEnvironment() {
@@ -74,7 +78,8 @@ function getJSEnvironment() {
         var platform, result;
         var getDesktopOS = function () {
             var pf = navigator.platform;
-            if (pf.indexOf("Win") != -1) { // 说明当前是Windows操作系统
+            if (pf.indexOf("Win") != -1) {
+                // 说明当前是Windows操作系统
                 var rVersion = /Windows NT (\d+).(\d)/i;
                 var uaResult = userAgent.match(rVersion);
                 var sVersionStr = "";
@@ -89,61 +94,65 @@ function getJSEnvironment() {
                 else {
                     sVersionStr = uaResult[1];
                 }
-                return { "name": EnvirType.WINDOWS, "versionStr": sVersionStr };
+                return { name: EnvirType.WINDOWS, versionStr: sVersionStr };
             }
             else if (pf.indexOf("Mac") != -1) {
-                return { "name": EnvirType.MACINTOSH, "versionStr": "" }; // Macintosh操作系统
+                return { name: EnvirType.MACINTOSH, versionStr: "" }; // Macintosh操作系统
             }
             else if (pf.indexOf("Linux") != -1) {
-                return { "name": EnvirType.LINUX, "versionStr": "" }; // 说明当前运行在Linux操作系统
+                return { name: EnvirType.LINUX, versionStr: "" }; // 说明当前运行在Linux操作系统
             }
             return null;
         };
         platform = /Windows Phone (?:OS )?([\d.]*)/; // windows phone的正则表达式
         result = userAgent.match(platform);
         if (result) {
-            return ({ "name": EnvirType.WINDOWS_PHONE, "versionStr": result[1] });
+            return { name: EnvirType.WINDOWS_PHONE, versionStr: result[1] };
         }
         // BlackBerry 10
         if (userAgent.indexOf("(BB10;") > 0) {
             platform = /\sVersion\/([\d.]+)\s/; // BlackBerry的regular expression
             result = userAgent.match(platform);
             if (result) {
-                return { "name": EnvirType.BLACKBERRY, "versionStr": result[1] };
+                return { name: EnvirType.BLACKBERRY, versionStr: result[1] };
             }
             else {
-                return { "name": EnvirType.BLACKBERRY, "versionStr": '10' };
+                return { name: EnvirType.BLACKBERRY, versionStr: "10" };
             }
         }
         // iOS, Android, BlackBerry 6.0+:
-        platform = /\(([a-zA-Z ]+);\s(?:[U]?[;]?)([\D]+)((?:[\d._]*))(?:.*[\)][^\d]*)([\d.]*)\s/;
+        platform =
+            /\(([a-zA-Z ]+);\s(?:[U]?[;]?)([\D]+)((?:[\d._]*))(?:.*[\)][^\d]*)([\d.]*)\s/;
         result = userAgent.match(platform);
         if (result) {
             var appleDevices = /iPhone|iPad|iPod/;
             var bbDevices = /PlayBook|BlackBerry/;
             if (result[0].match(appleDevices)) {
                 result[3] = result[3].replace(/_/g, ".");
-                return ({ "name": EnvirType.IOS, "versionStr": result[3] }); // iOS操作系统
+                return { name: EnvirType.IOS, versionStr: result[3] }; // iOS操作系统
             }
             else if (result[2].match(/Android/)) {
                 result[2] = result[2].replace(/\s/g, "");
-                return ({ "name": EnvirType.ANDROID, "versionStr": result[3] }); // Android操作系统
+                return { name: EnvirType.ANDROID, versionStr: result[3] }; // Android操作系统
             }
             else if (result[0].match(bbDevices)) {
-                return ({ "name": EnvirType.BLACKBERRY, "versionStr": result[4] }); // Blackberry
+                return { name: EnvirType.BLACKBERRY, versionStr: result[4] }; // Blackberry
             }
         }
         //Android平台上的Firefox浏览器
         platform = /\((Android)[\s]?([\d][.\d]*)?;.*Firefox\/[\d][.\d]*/;
         result = userAgent.match(platform);
         if (result) {
-            return ({ "name": EnvirType.ANDROID, "versionStr": result.length == 3 ? result[2] : "" });
+            return {
+                name: EnvirType.ANDROID,
+                versionStr: result.length == 3 ? result[2] : "",
+            };
         }
         // Desktop
         return getDesktopOS();
     }
     else {
-        return { "name": EnvirType.REACTNATIVE, "versionStr": "" };
+        return { name: EnvirType.REACTNATIVE, versionStr: "" };
     }
 }
 exports.getJSEnvironment = getJSEnvironment;
@@ -151,7 +160,12 @@ var currentEnir;
 exports.currentEnir = currentEnir;
 if (process && process.env && process.title != "node") {
     var type = require("os").type();
-    exports.currentEnir = currentEnir = type == "Windows_NT" ? JSRUNEnvirType.NODE_WIN : (type == "Darwin" ? JSRUNEnvirType.NODE_MAC : JSRUNEnvirType.NODE_LINUX);
+    exports.currentEnir = currentEnir =
+        type == "Windows_NT"
+            ? JSRUNEnvirType.NODE_WIN
+            : type == "Darwin"
+                ? JSRUNEnvirType.NODE_MAC
+                : JSRUNEnvirType.NODE_LINUX;
 }
 else {
     var typeName = getJSEnvironment().name;
@@ -195,18 +209,18 @@ else {
         }
     }
 }
-var isWeb = currentEnir == JSRUNEnvirType.WEB ||
-    JSRUNEnvirType.WEB_WIN ||
-    JSRUNEnvirType.WEB_MAC ||
-    JSRUNEnvirType.WEB_LINUX ||
-    JSRUNEnvirType.WEB_IOS ||
-    JSRUNEnvirType.WEB_ANDROID ||
-    JSRUNEnvirType.WEB_OTHER;
+var isWeb = currentEnir === JSRUNEnvirType.WEB ||
+    currentEnir === JSRUNEnvirType.WEB_WIN ||
+    currentEnir === JSRUNEnvirType.WEB_MAC ||
+    currentEnir === JSRUNEnvirType.WEB_LINUX ||
+    currentEnir === JSRUNEnvirType.WEB_IOS ||
+    currentEnir === JSRUNEnvirType.WEB_ANDROID ||
+    currentEnir === JSRUNEnvirType.WEB_OTHER;
 exports.isWeb = isWeb;
-var isNode = currentEnir == JSRUNEnvirType.NODE ||
-    JSRUNEnvirType.NODE_WIN ||
-    JSRUNEnvirType.NODE_MAC ||
-    JSRUNEnvirType.NODE_LINUX;
+var isNode = currentEnir === JSRUNEnvirType.NODE ||
+    currentEnir === JSRUNEnvirType.NODE_WIN ||
+    currentEnir === JSRUNEnvirType.NODE_MAC ||
+    currentEnir === JSRUNEnvirType.NODE_LINUX;
 exports.isNode = isNode;
 var isRN = isReactNative();
 exports.isRN = isRN;

@@ -1,10 +1,10 @@
-import { SingleInstruction } from "./Work";
-import { InOutputAbleOrNil } from "../Type";
-import { ValueAble, ObjectAble } from "../Object/ObjectTypes";
+import { SingleInstruction } from "../Work";
+import { InOutputAbleOrNil } from "../../Type";
+import { ValueAble, ObjectAble } from "../../Object/ObjectTypes";
 import { takeLast, map, flatMap } from "rxjs/operators";
-import { ValueSwitchTapCatch } from "../Util/rxjs_operators";
+import { ValueSwitchTapCatch } from "../../Util/rxjs_operators";
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { RequestOption } from "./WorkTypes";
+import { RequestOption } from "../WorkTypes";
 class RequestWork extends SingleInstruction {
   name: string = "RequestWork";
   validationInput(value: ValueAble): boolean {
