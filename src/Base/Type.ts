@@ -95,10 +95,10 @@ export namespace WorkType {
     uuid: WorkUUID;
     handleMessageNext: (value: BaseType) => void;
     // run: WorkFunction;
-    run?(input: BaseType): Observable<BaseType>;
-    rn_run?(input: BaseType): Observable<BaseType>;
-    web_run?(input: BaseType): Observable<BaseType>;
-    node_run?(input: BaseType): Observable<BaseType>;
+    run?(input: BaseType, option?: any): Observable<BaseType>;
+    rn_run?(input: BaseType, option?: any): Observable<BaseType>;
+    web_run?(input: BaseType, option?: any): Observable<BaseType>;
+    node_run?(input: BaseType, option?: any): Observable<BaseType>;
     prepare(before?: Work, next?: Work): void;
     // 停止接受上一任务的消息
     stop(): void;

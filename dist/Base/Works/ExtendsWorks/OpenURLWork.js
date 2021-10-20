@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OpenURLWork = void 0;
 var Instruction_1 = require("../Instruction");
+var rxjs_1 = require("rxjs");
 var OpenURLWork = /** @class */ (function (_super) {
     __extends(OpenURLWork, _super);
     function OpenURLWork() {
@@ -24,6 +25,20 @@ var OpenURLWork = /** @class */ (function (_super) {
         _this.name = "OpenURLWork";
         return _this;
     }
+    OpenURLWork.prototype.run = function (input, option) {
+        return new rxjs_1.Observable(function (subscriber) {
+            var target;
+            if (input === null || input === undefined)
+                target = "";
+            else {
+                target = input.valueOf().toString();
+            }
+            subscriber.complete();
+            return {
+                unsubscribe: function () { return subscriber.unsubscribe(); },
+            };
+        });
+    };
     return OpenURLWork;
 }(Instruction_1.InstructionOTO));
 exports.OpenURLWork = OpenURLWork;

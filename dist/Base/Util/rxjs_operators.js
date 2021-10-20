@@ -13,21 +13,21 @@ exports.ValueSwitchTapCatch = exports.toInOutValue = void 0;
 var InOutValue = require("../Object/InOutputValue");
 var operators_1 = require("rxjs/operators");
 var ObjectMap = {
-    '[object Object]': InOutValue.InOutObject,
-    '[object Map]': InOutValue.InOutMap,
-    '[object Set]': InOutValue.InOutSet,
-    '[object Array]': InOutValue.InOutArray,
-    '[object Boolean]': InOutValue.InOutBoolean,
-    '[object Date]': InOutValue.InOutDate,
-    '[object Number]': InOutValue.InOutNumber,
-    '[object String]': InOutValue.InOutString
+    "[object Object]": InOutValue.InOutObject,
+    "[object Map]": InOutValue.InOutMap,
+    "[object Set]": InOutValue.InOutSet,
+    "[object Array]": InOutValue.InOutArray,
+    "[object Boolean]": InOutValue.InOutBoolean,
+    "[object Date]": InOutValue.InOutDate,
+    "[object Number]": InOutValue.InOutNumber,
+    "[object String]": InOutValue.InOutString,
 };
 var decide = function (value) {
     var key = Object.prototype.toString.call(value);
     var Target = ObjectMap[key];
     if (Target) {
         switch (key) {
-            case '[object Array]':
+            case "[object Array]":
                 return new (Target.bind.apply(Target, __spreadArray([void 0], value, false)))();
             default:
                 return new Target(value);

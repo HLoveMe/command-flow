@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlatformSelect = exports.isRN = exports.isNode = exports.isWeb = exports.currentEnir = exports.JSRUNEnvirType = exports.getJSEnvironment = exports.isReactNative = void 0;
+exports.PlatformSelect = exports.isMobile = exports.isPC = exports.isRN = exports.isNode = exports.isWeb = exports.currentEnir = exports.JSRUNEnvirType = exports.getJSEnvironment = exports.isReactNative = void 0;
 var JSRUNEnvirType;
 (function (JSRUNEnvirType) {
     JSRUNEnvirType[JSRUNEnvirType["NODE"] = 10] = "NODE";
@@ -224,6 +224,17 @@ var isNode = currentEnir === JSRUNEnvirType.NODE ||
 exports.isNode = isNode;
 var isRN = isReactNative();
 exports.isRN = isRN;
+var isPC = currentEnir === JSRUNEnvirType.NODE_LINUX ||
+    currentEnir === JSRUNEnvirType.NODE_MAC ||
+    currentEnir === JSRUNEnvirType.NODE_WIN ||
+    currentEnir === JSRUNEnvirType.WEB_WIN ||
+    currentEnir === JSRUNEnvirType.WEB_MAC ||
+    currentEnir === JSRUNEnvirType.WEB_LINUX ||
+    currentEnir === JSRUNEnvirType.RN_MAC ||
+    currentEnir === JSRUNEnvirType.RN_WIN;
+exports.isPC = isPC;
+var isMobile = !isPC;
+exports.isMobile = isMobile;
 var PlatformSelect = function (select) {
     if (isWeb) {
         return select.web;

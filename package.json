@@ -19,6 +19,7 @@
     "babel-loader": "^8.1.0",
     "babel-preset-stage-0": "^6.24.1",
     "js-base64": "^3.4.5",
+    "open": "^8.3.0",
     "qrcode-generator": "^1.4.4",
     "rxjs": "^6.6.2",
     "uuid": "^8.3.2",

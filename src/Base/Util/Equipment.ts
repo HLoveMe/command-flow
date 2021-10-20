@@ -212,6 +212,18 @@ const isNode =
 
 const isRN = isReactNative();
 
+const isPC =
+  currentEnir === JSRUNEnvirType.NODE_LINUX ||
+  currentEnir === JSRUNEnvirType.NODE_MAC ||
+  currentEnir === JSRUNEnvirType.NODE_WIN ||
+  currentEnir === JSRUNEnvirType.WEB_WIN ||
+  currentEnir === JSRUNEnvirType.WEB_MAC ||
+  currentEnir === JSRUNEnvirType.WEB_LINUX ||
+  currentEnir === JSRUNEnvirType.RN_MAC ||
+  currentEnir === JSRUNEnvirType.RN_WIN;
+
+const isMobile = !isPC;
+
 export type PlatformOSType = "reactNative" | "web" | "node";
 
 type Select<T> = (select: { [platform in PlatformOSType]: T }) => T;
@@ -223,4 +235,13 @@ const PlatformSelect: Select<any> = (select) => {
     return select.node;
   } else return select.reactNative;
 };
-export { JSRUNEnvirType, currentEnir, isWeb, isNode, isRN, PlatformSelect };
+export {
+  JSRUNEnvirType,
+  currentEnir,
+  isWeb,
+  isNode,
+  isRN,
+  isPC,
+  isMobile,
+  PlatformSelect,
+};
