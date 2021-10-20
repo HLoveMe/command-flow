@@ -48,9 +48,13 @@ exports.toInOutValue = toInOutValue;
  * @param work
  */
 var ValueSwitchTapCatch = function (work) {
-    return function (source) {
-        return source.pipe(exports.toInOutValue, (0, operators_1.tap)(function (value) { var _a; return (_a = work.context) === null || _a === void 0 ? void 0 : _a.msgChannel.next(value); }), (0, operators_1.catchError)(function (err) { throw err; }));
-    };
+    // return (source: Observable<any>) => {
+    //   return source.pipe(
+    //     toInOutValue,
+    //     tap((value) => work.context?.msgChannel.next(value)),
+    //     catchError(err => { throw err })
+    //   )
+    // }
 };
 exports.ValueSwitchTapCatch = ValueSwitchTapCatch;
 //# sourceMappingURL=rxjs_operators.js.map

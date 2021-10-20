@@ -1,10 +1,8 @@
-import { SingleInstruction } from "../Work";
-import { InOutputAbleOrNil } from "../../Type";
 
-class PlayBase64MusicWork extends SingleInstruction {
-  run(input: InOutputAbleOrNil) {
-    this.output.complete();
-  }
+import { InstructionOTO } from "../Instruction";
+
+class PlayBase64MusicWork extends InstructionOTO {
+  
 }
 
 

@@ -16,37 +16,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Base64EnCodeWork = exports.Base64DecodeWork = void 0;
-var Work_1 = require("../Work");
-var operators_1 = require("rxjs/operators");
-var rxjs_operators_1 = require("../../Util/rxjs_operators");
 var js_base64_1 = require("js-base64");
-//解码
-var Base64DecodeWork = /** @class */ (function (_super) {
-    __extends(Base64DecodeWork, _super);
-    function Base64DecodeWork() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.name = "Base64DecodeWork";
-        return _this;
-    }
-    Base64DecodeWork.prototype.run = function (input) {
-        if (input == null) {
-            this.output.next(null);
-            this.output.complete();
-        }
-        else {
-            var subp = input.value()
-                .pipe((0, operators_1.takeLast)(1), (0, operators_1.map)(function (value) { return js_base64_1.Base64.decode(value.valueOf()); }), (0, rxjs_operators_1.ValueSwitchTapCatch)(this)
-            // toInOutValue,
-            // tap((value) => this.context?.msgChannel.next(value)),
-            // catchError(err=>{throw err})
-            )
-                .subscribe(this.getOutputObserver());
-            this.pools.push(subp);
-        }
-    };
-    return Base64DecodeWork;
-}(Work_1.SingleInstruction));
-exports.Base64DecodeWork = Base64DecodeWork;
+var Instruction_1 = require("../Instruction");
+var rxjs_1 = require("rxjs");
+var BaseObject_1 = require("../../Object/BaseObject");
 //编码
 var Base64EnCodeWork = /** @class */ (function (_super) {
     __extends(Base64EnCodeWork, _super);
@@ -56,22 +29,49 @@ var Base64EnCodeWork = /** @class */ (function (_super) {
         return _this;
     }
     Base64EnCodeWork.prototype.run = function (input) {
-        if (input == null) {
-            this.output.next(null);
-            this.output.complete();
-        }
-        else {
-            var subp = input.value()
-                .pipe((0, operators_1.takeLast)(1), (0, operators_1.map)(function (value) { return js_base64_1.Base64.encode(value.valueOf()); }), 
-            // toInOutValue,
-            // tap((value) => this.context?.msgChannel.next(value)),
-            // catchError(err=>{throw err})
-            (0, rxjs_operators_1.ValueSwitchTapCatch)(this))
-                .subscribe(this.getOutputObserver());
-            this.pools.push(subp);
-        }
+        return new rxjs_1.Observable(function (subscriber) {
+            console.log('编码');
+            var target;
+            if (input === null || input === undefined)
+                target = '';
+            else {
+                target = input.valueOf().toString();
+            }
+            subscriber.next(new BaseObject_1.StringObj(js_base64_1.Base64.encode(target)));
+            subscriber.complete();
+            return {
+                unsubscribe: function () { return subscriber.unsubscribe(); },
+            };
+        });
     };
     return Base64EnCodeWork;
-}(Work_1.SingleInstruction));
+}(Instruction_1.InstructionMTM));
 exports.Base64EnCodeWork = Base64EnCodeWork;
+//解码
+var Base64DecodeWork = /** @class */ (function (_super) {
+    __extends(Base64DecodeWork, _super);
+    function Base64DecodeWork() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = "Base64DecodeWork";
+        return _this;
+    }
+    Base64DecodeWork.prototype.run = function (input) {
+        console.log('解码');
+        return new rxjs_1.Observable(function (subscriber) {
+            var target;
+            if (input === null || input === undefined)
+                target = '';
+            else {
+                target = input.valueOf().toString();
+            }
+            subscriber.next(new BaseObject_1.StringObj(js_base64_1.Base64.decode(target)));
+            subscriber.complete();
+            return {
+                unsubscribe: function () { return subscriber.unsubscribe(); },
+            };
+        });
+    };
+    return Base64DecodeWork;
+}(Instruction_1.InstructionMTM));
+exports.Base64DecodeWork = Base64DecodeWork;
 //# sourceMappingURL=Base64Work.js.map

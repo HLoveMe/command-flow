@@ -12,7 +12,6 @@ import {
   BooleanObj,
   DateObj,
 } from "./BaseObject";
-const readline = require("readline");
 
 export class InOutObject extends ObjectTarget implements InOutputAble {
   value(): Observable<BaseType> {
@@ -55,45 +54,5 @@ export class InOutBoolean extends BooleanObj implements InOutputAble {
 export class InOutDate extends DateObj implements InOutputAble {
   value(): InOutData {
     return of(this as DateObj);
-  }
-}
-
-export class FileSource implements InOutputAble {
-  file: PathLike;
-  constructor(file: string) {
-    if (existsSync(file) && statSync(file).isFile()) {
-      this.file = file;
-    }
-  }
-  value(): InOutData {
-    if (this.file) {
-      const fileLine = readline(this.file, "utf-8");
-      // return fromEvent(fileLine, "line").pipe(
-      //   takeUntil(fromEvent(fileLine, "close")),
-      //   // reduce(($1, $2) => $1 + $2, "")
-
-      // )
-    } else {
-      return empty();
-    }
-    throw new Error("Method not implemented.");
-  }
-}
-
-export class SocketSource implements InOutputAble {
-  socket: WebSocket;
-  constructor(socket: WebSocket) {
-    this.socket = socket;
-  }
-  value(): InOutData {
-    if (this.socket && this.socket.readyState == 1) {
-      return fromEvent(this.socket, "message").pipe(
-        takeUntil(fromEvent(this.socket, "close")),
-        map((event) => (event as MessageEvent).data)
-      );
-    }
-    return empty();
-
-    throw new Error("Method not implemented.");
   }
 }

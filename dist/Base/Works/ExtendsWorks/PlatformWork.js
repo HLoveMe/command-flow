@@ -16,48 +16,49 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FlashWork = void 0;
-var Work_1 = require("../Work");
-var WorkTypes_1 = require("../WorkTypes");
-var operators_1 = require("rxjs/operators");
+var Instruction_1 = require("../Instruction");
 var FlashWork = /** @class */ (function (_super) {
     __extends(FlashWork, _super);
     function FlashWork() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = "FlashWork";
         return _this;
+        // switch(value: BaseType) {
+        //   const RNFlash = require('react-native-flash');
+        //   if (value.equal(SwitchStatus.CLOSE)) {
+        //     RNFlash.turnOffFlash(); // turn off flash
+        //   } else if (value.equal(SwitchStatus.OPEN)) {
+        //     RNFlash.turnOnFlash(); // turn on flash
+        //   } else {
+        //     //SwitchStatus.TOGGLE
+        //     RNFlash.turnOffFlash(); // turn off flash
+        //   }
+        // }
+        // rn_run(input: InOutputAbleOrNil) {
+        //   const that = this;
+        //   const Flash = require('react-native-flash');
+        //   if (Flash) {
+        //     const sub = input.value().pipe(
+        //       takeLast(1),
+        //     ).subscribe(
+        //       (value) => that.switch(value),
+        //       null,
+        //       () => {
+        //         this.output.next(null);
+        //         this.output.complete();
+        //       }
+        //     )
+        //     this.pools.push(sub);
+        //     return;
+        //   }
+        //   this.output.next(null);
+        //   this.output.complete();
+        // }
+        // run(input: InOutputAbleOrNil) {
+        //   //react-native-camera  react-native-flash
+        // }
     }
-    FlashWork.prototype.switch = function (value) {
-        var RNFlash = require('react-native-flash');
-        if (value.equal(WorkTypes_1.SwitchStatus.CLOSE)) {
-            RNFlash.turnOffFlash(); // turn off flash
-        }
-        else if (value.equal(WorkTypes_1.SwitchStatus.OPEN)) {
-            RNFlash.turnOnFlash(); // turn on flash
-        }
-        else {
-            //SwitchStatus.TOGGLE
-            RNFlash.turnOffFlash(); // turn off flash
-        }
-    };
-    FlashWork.prototype.rn_run = function (input) {
-        var _this = this;
-        var that = this;
-        var Flash = require('react-native-flash');
-        if (Flash) {
-            var sub = input.value().pipe((0, operators_1.takeLast)(1)).subscribe(function (value) { return that.switch(value); }, null, function () {
-                _this.output.next(null);
-                _this.output.complete();
-            });
-            this.pools.push(sub);
-            return;
-        }
-        this.output.next(null);
-        this.output.complete();
-    };
-    FlashWork.prototype.run = function (input) {
-        //react-native-camera  react-native-flash
-    };
     return FlashWork;
-}(Work_1.AloneInstruction));
+}(Instruction_1.InstructionOTO));
 exports.FlashWork = FlashWork;
 //# sourceMappingURL=PlatformWork.js.map

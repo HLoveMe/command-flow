@@ -1,7 +1,6 @@
 import {
-  InOutputAbleOrNil,
-  ContextImpl,
   BaseType,
+  ContextImpl,
   WorkType,
   InOutputAble,
 } from "../Type";
@@ -13,20 +12,20 @@ import {
   isObservable,
   of,
   PartialObserver,
-  AsyncSubject,
+  empty,
 } from "rxjs";
-import { takeLast, tap, map } from "rxjs/operators";
 import { ExecError } from "../Error";
 import { PlatformSelect } from "../Util/Equipment";
 import { WorkRunOption } from "../Configs";
-const UUID = require("uuid/v4");
+import { tap } from "rxjs/operators";
+import { v4 as UUID } from 'uuid'
 
-/**
- * 一次输入--->一次输出
- * 一次输入--->多次输出 Instruction,MultipleInstruction
- * n次输入---->m次输出
+/** 
+ * 一次输入--->一次输出 InstructionOTO
+ * 一次输入--->多次输出 InstructionOTM
+ * n次输入---->m次输出 InstructionMTM
  */
-class Instruction extends Subject<InOutputAbleOrNil> implements WorkType.Work {
+class Instruction extends Subject<BaseType> implements WorkType.Work {
   static OPTION: WorkRunOption;
   name: string = "Instruction";
   static _id: number = 0;
@@ -36,50 +35,59 @@ class Instruction extends Subject<InOutputAbleOrNil> implements WorkType.Work {
   beforeWork?: WorkType.Work;
   nextWork?: WorkType.Work;
   context?: ContextImpl;
-  option?: any;
+  inputSubject: Subject<BaseType> = new Subject<BaseType>();
+  inputSubscription: Subscription;
   // 运行配置 config:OPTION todo
   config: { [key: string]: any } = { dev: true };
   constructor() {
     super();
     this.uuid = UUID();
   }
-  rn_run?: (input: InOutputAble) => Observable<InOutputAble>;
-  web_run?: (input: InOutputAble) => Observable<InOutputAble>;
-  node_run?: (input: InOutputAble) => Observable<InOutputAble>;
+  // run(input: InOutputAble): Observable<InOutputAble> {
+  //   throw new Error("Method not implemented.");
+  // }
+  // rn_run?(input: InOutputAble): Observable<InOutputAble> {
+  //   throw new Error("Method not implemented.");
+  // }
+  // web_run?(input: InOutputAble): Observable<InOutputAble> {
+  //   throw new Error("Method not implemented.");
+  // }
+  // node_run?(input: InOutputAble): Observable<InOutputAble> {
+  //   throw new Error("Method not implemented.");
+  // }
+
   prepare(
-    input: InOutputAble | Observable<InOutputAble>,
-    before: WorkType.Work,
-    next: WorkType.Work
+    before?: WorkType.Work,
+    next?: WorkType.Work
   ): void {
     this.beforeWork = before;
     this.nextWork = next;
-    this._connectChannel(input);
+    this._connectChannel();
   }
 
 
   // 处理上一个的传入
-  _connectChannel(input: InOutputAbleOrNil | Observable<InOutputAbleOrNil>) {
+  _connectChannel() {
     const that = this;
-    // 连接上一个的输出
+    // 处理启动指令 仅仅头部work会触发
     const observer: PartialObserver<any> = {
       next: (value) => that.next(value),
       error: null,
       complete: null,
     };
-    var sub1: Subscription = (
-      isObservable(input) ? input : of(input)
-    ).subscribe(observer);
+    var sub1: Subscription = this.inputSubject.subscribe(observer);
+    this.inputSubscription = sub1;
     this.pools.push(sub1);
     // // 处理数据
     const sub2: Subscription = that.subscribe({
-      complete: () => {},
+      complete: () => { },
       error: (error) => that.error(error),
-      next: (value: InOutputAbleOrNil) => that._run(value),
+      next: (value: BaseType) => that._run(value),
     });
     this.pools.push(sub2);
   }
 
-  _run(value: InOutputAbleOrNil) {
+  _run(value: BaseType) {
     const that = this;
     const execFunc: WorkType.WorkFunction = PlatformSelect({
       reactNative: () =>
@@ -91,32 +99,40 @@ class Instruction extends Subject<InOutputAbleOrNil> implements WorkType.Work {
           value
         ),
     });
+    this.config?.dev && that.context?.sendLog(that, { 'desc': '[Work:run]->入口', value: value })
     execFunc &&
-      execFunc(value).subscribe({
-        complete: () => {},
-        next: (res) => this.nextWork.next(res),
+      execFunc(value).pipe(tap((_value: BaseType) => {
+        this.config?.dev && that.context?.sendLog(that, { 'desc': '[Work:run]->结果', value: _value.valueOf() })
+      })).subscribe({
+        complete: () => { },
+        next: (res) => {
+          this.config?.dev && that.context?.sendLog(that, { 'desc': '[Work:run]->下一个Work', value: res.valueOf() });
+          that.nextWork?.next(res);
+        },
       });
   }
 
   // 接受处理上一个work的值
-  handleMessageNext(value:InOutputAbleOrNil){
+  handleMessageNext(value: BaseType) {
     this.next(value);
-    //不在接受值
-    。。。。
   }
 
-  run(input: InOutputAble): Observable<InOutputAble> {
-    return new Observable((subscriber) => {
-      subscriber.next(input);
-      subscriber.next(input);
-      subscriber.complete();
-      return {
-        unsubscribe: () => subscriber.unsubscribe(),
-      };
-    });
+  stop(): void {
+    this.inputSubscription.unsubscribe();
   }
 
-  stop(): void {}
+  /**
+   * 运行
+   * @param value 
+   */
+  startRun(value: BaseType) {
+    this.inputSubject.next(value)
+  }
+  complete() {
+    super.complete();
+    this.inputSubject.complete()
+  }
+
   clear(): void {
     this.pools && this.pools.forEach(($1) => $1.unsubscribe());
     this.pools.length = 0;
@@ -130,15 +146,56 @@ class Instruction extends Subject<InOutputAbleOrNil> implements WorkType.Work {
   }
 }
 
-export class MultipleInstruction extends Instruction {
+export class InstructionOTO extends Instruction {
+  handleMessageNext(value: BaseType) {
+    this.next(value);
+    this.stop()
+  }
+
+  run(input: BaseType): Observable<BaseType> {
+    return new Observable((subscriber) => {
+      subscriber.next(input);
+      subscriber.complete();
+      return {
+        unsubscribe: () => subscriber.unsubscribe(),
+      };
+    });
+  }
+}
+
+export class InstructionOTM extends Instruction {
   // 声明可以进行配置的属性 todo
   static OPTION: WorkRunOption;
   name: string = "MultipleInstruction";
+  handleMessageNext(value: BaseType) {
+    this.next(value);
+    this.stop()
+  }
+  run(input: BaseType): Observable<BaseType> {
+    return new Observable((subscriber) => {
+      subscriber.next(input);
+      // 输出多次
+      subscriber.next(input);
+      subscriber.complete();
+      return {
+        unsubscribe: () => subscriber.unsubscribe(),
+      };
+    });
+  }
 }
 
-export class SingleInstruction extends Instruction {
-  run(input: InOutputAble): Observable<InOutputAble> {
+export class InstructionMTM extends Instruction {
+  // 声明可以进行配置的属性 todo
+  static OPTION: WorkRunOption;
+  name: string = "MultipleInstruction";
+
+  handleMessageNext(value: BaseType) {
+    this.next(value);
+  }
+  run(input: BaseType): Observable<BaseType> {
     return new Observable((subscriber) => {
+      subscriber.next(input);
+      // 输出多次
       subscriber.next(input);
       subscriber.complete();
       return {

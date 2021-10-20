@@ -21,7 +21,9 @@ export type BaseType =
   | StringAble
   | NumberAble
   | BooleanAble
-  | DateAble;
+  | DateAble
+  | undefined
+  | null;
 
 // export type AbleType = BaseType | Readable
 
@@ -42,8 +44,8 @@ export namespace WorkType {
   export type WorkConstant = Map<WorkConstantKey, BaseType>;
 
   export type WorkFunction = (
-    input: InOutputAbleOrNil
-  ) => Observable<InOutputAbleOrNil>;
+    input: BaseType
+  ) => Observable<BaseType>;
 
   type WorkTypes = "rn_run" | "web_run" | "node_run";
 
@@ -55,31 +57,45 @@ export namespace WorkType {
     nextWork?: Work;
     context?: ContextImpl;
   }
-  export interface WorkChain extends Subject<InOutputAbleOrNil> {
+  export interface WorkChain extends Subject<BaseType> {
+    inputSubject: Subject<BaseType>
+    inputSubscription: Subscription;
     pools: Subscription[];
   }
-  export interface WorkStep {
+  // 入口
+  export interface WorkEntrance {
+    // 仅仅头部work 有效
+    startRun(value: BaseType): void;
+  }
+  export interface WorkConfig {
     //根据该属性 控制Work 工作流程
     config: ConfigInfo;
   }
   export declare interface Work
     extends WorkOperation,
-      WorkContext,
-      WorkChain,
-      WorkStep {
+    WorkContext,
+    WorkChain,
+    WorkConfig, WorkEntrance {
     name: string;
     id: number;
     uuid: WorkUUID;
-    option?: any;
-    handleMessageNext: (value: InOutputAbleOrNil) => void;
-    run: WorkFunction;
-    rn_run?: WorkFunction;
-    web_run?: WorkFunction;
-    node_run?: WorkFunction;
+    handleMessageNext: (value: BaseType) => void;
+    // run: WorkFunction;
+    run?(
+      input: BaseType
+    ): Observable<BaseType>
+    rn_run?(
+      input: BaseType
+    ): Observable<BaseType>
+    web_run?(
+      input: BaseType
+    ): Observable<BaseType>
+    node_run?(
+      input: BaseType
+    ): Observable<BaseType>
     prepare(
-      input: InOutputAbleOrNil | Observable<InOutputAbleOrNil>,
-      before: Work,
-      next: Work
+      before?: Work,
+      next?: Work
     ): void;
     stop(): void;
     clear(): void;
@@ -92,12 +108,13 @@ export declare interface ContextImpl {
   runOptions: ContextRunOption;
   runConstant: Map<WorkType.WorkUUID, WorkType.WorkConstant>;
   works: WorkType.Work[];
-  msgChannel: Subject<InOutputAbleOrNil>;
+  msgChannel: Subject<BaseType>;
   pools: Subscription[];
   addWork(work: WorkType.Work): void;
   addWorks(...works: WorkType.Work[]): void;
-  run(initOption: any): void;
+  run(input: BaseType, initOption?: any):void;
   addVariable(from: WorkType.Work, name: string, value: BaseType): void;
+  sendLog(work: WorkType.Work, info: any): void;
   clear(): void;
 }
 

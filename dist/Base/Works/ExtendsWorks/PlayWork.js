@@ -16,16 +16,13 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlayBase64MusicWork = void 0;
-var Work_1 = require("../Work");
+var Instruction_1 = require("../Instruction");
 var PlayBase64MusicWork = /** @class */ (function (_super) {
     __extends(PlayBase64MusicWork, _super);
     function PlayBase64MusicWork() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    PlayBase64MusicWork.prototype.run = function (input) {
-        this.output.complete();
-    };
     return PlayBase64MusicWork;
-}(Work_1.SingleInstruction));
+}(Instruction_1.InstructionOTO));
 exports.PlayBase64MusicWork = PlayBase64MusicWork;
 //# sourceMappingURL=PlayWork.js.map

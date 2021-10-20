@@ -43,11 +43,11 @@ export const toInOutValue = (source: Observable<any>): Observable<InOutputAbleOr
  * @param work 
  */
 export const ValueSwitchTapCatch = (work: WorkType.Work) => {
-  return (source: Observable<any>) => {
-    return source.pipe(
-      toInOutValue,
-      tap((value) => work.context?.msgChannel.next(value)),
-      catchError(err => { throw err })
-    )
-  }
+  // return (source: Observable<any>) => {
+  //   return source.pipe(
+  //     toInOutValue,
+  //     tap((value) => work.context?.msgChannel.next(value)),
+  //     catchError(err => { throw err })
+  //   )
+  // }
 }

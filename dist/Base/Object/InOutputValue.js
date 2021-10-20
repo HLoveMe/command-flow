@@ -15,12 +15,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SocketSource = exports.FileSource = exports.InOutDate = exports.InOutBoolean = exports.InOutSet = exports.InOutArray = exports.InOutMap = exports.InOutString = exports.InOutNumber = exports.InOutObject = void 0;
+exports.InOutDate = exports.InOutBoolean = exports.InOutSet = exports.InOutArray = exports.InOutMap = exports.InOutString = exports.InOutNumber = exports.InOutObject = void 0;
 var rxjs_1 = require("rxjs");
-var fs_1 = require("fs");
-var operators_1 = require("rxjs/operators");
 var BaseObject_1 = require("./BaseObject");
-var readline = require("readline");
 var InOutObject = /** @class */ (function (_super) {
     __extends(InOutObject, _super);
     function InOutObject() {
@@ -109,40 +106,4 @@ var InOutDate = /** @class */ (function (_super) {
     return InOutDate;
 }(BaseObject_1.DateObj));
 exports.InOutDate = InOutDate;
-var FileSource = /** @class */ (function () {
-    function FileSource(file) {
-        if ((0, fs_1.existsSync)(file) && (0, fs_1.statSync)(file).isFile()) {
-            this.file = file;
-        }
-    }
-    FileSource.prototype.value = function () {
-        if (this.file) {
-            var fileLine = readline(this.file, "utf-8");
-            // return fromEvent(fileLine, "line").pipe(
-            //   takeUntil(fromEvent(fileLine, "close")),
-            //   // reduce(($1, $2) => $1 + $2, "")
-            // )
-        }
-        else {
-            return (0, rxjs_1.empty)();
-        }
-        throw new Error("Method not implemented.");
-    };
-    return FileSource;
-}());
-exports.FileSource = FileSource;
-var SocketSource = /** @class */ (function () {
-    function SocketSource(socket) {
-        this.socket = socket;
-    }
-    SocketSource.prototype.value = function () {
-        if (this.socket && this.socket.readyState == 1) {
-            return (0, rxjs_1.fromEvent)(this.socket, "message").pipe((0, operators_1.takeUntil)((0, rxjs_1.fromEvent)(this.socket, "close")), (0, operators_1.map)(function (event) { return event.data; }));
-        }
-        return (0, rxjs_1.empty)();
-        throw new Error("Method not implemented.");
-    };
-    return SocketSource;
-}());
-exports.SocketSource = SocketSource;
 //# sourceMappingURL=InOutputValue.js.map

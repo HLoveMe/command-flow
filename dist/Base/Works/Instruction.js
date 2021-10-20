@@ -15,15 +15,16 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SingleInstruction = exports.MultipleInstruction = void 0;
+exports.InstructionMTM = exports.InstructionOTM = exports.InstructionOTO = void 0;
 var rxjs_1 = require("rxjs");
 var Error_1 = require("../Error");
 var Equipment_1 = require("../Util/Equipment");
-var UUID = require("uuid/v4");
+var operators_1 = require("rxjs/operators");
+var uuid_1 = require("uuid");
 /**
- * 一次输入--->一次输出
- * 一次输入--->多次输出 Instruction,MultipleInstruction
- * n次输入---->m次输出
+ * 一次输入--->一次输出 InstructionOTO
+ * 一次输入--->多次输出 InstructionOTM
+ * n次输入---->m次输出 InstructionMTM
  */
 var Instruction = /** @class */ (function (_super) {
     __extends(Instruction, _super);
@@ -32,26 +33,40 @@ var Instruction = /** @class */ (function (_super) {
         _this.name = "Instruction";
         _this.id = Instruction._id++;
         _this.pools = [];
+        _this.inputSubject = new rxjs_1.Subject();
         // 运行配置 config:OPTION todo
         _this.config = { dev: true };
-        _this.uuid = UUID();
+        _this.uuid = (0, uuid_1.v4)();
         return _this;
     }
-    Instruction.prototype.prepare = function (input, before, next) {
+    // run(input: InOutputAble): Observable<InOutputAble> {
+    //   throw new Error("Method not implemented.");
+    // }
+    // rn_run?(input: InOutputAble): Observable<InOutputAble> {
+    //   throw new Error("Method not implemented.");
+    // }
+    // web_run?(input: InOutputAble): Observable<InOutputAble> {
+    //   throw new Error("Method not implemented.");
+    // }
+    // node_run?(input: InOutputAble): Observable<InOutputAble> {
+    //   throw new Error("Method not implemented.");
+    // }
+    Instruction.prototype.prepare = function (before, next) {
         this.beforeWork = before;
         this.nextWork = next;
-        this._connectChannel(input);
+        this._connectChannel();
     };
     // 处理上一个的传入
-    Instruction.prototype._connectChannel = function (input) {
+    Instruction.prototype._connectChannel = function () {
         var that = this;
-        // 连接上一个的输出
+        // 处理启动指令 仅仅头部work会触发
         var observer = {
             next: function (value) { return that.next(value); },
             error: null,
             complete: null,
         };
-        var sub1 = ((0, rxjs_1.isObservable)(input) ? input : (0, rxjs_1.of)(input)).subscribe(observer);
+        var sub1 = this.inputSubject.subscribe(observer);
+        this.inputSubscription = sub1;
         this.pools.push(sub1);
         // // 处理数据
         var sub2 = that.subscribe({
@@ -63,6 +78,7 @@ var Instruction = /** @class */ (function (_super) {
     };
     Instruction.prototype._run = function (value) {
         var _this = this;
+        var _a, _b;
         var that = this;
         var execFunc = (0, Equipment_1.PlatformSelect)({
             reactNative: function () { var _a; return ((_a = that.rn_run) !== null && _a !== void 0 ? _a : that.run)(value); },
@@ -72,27 +88,38 @@ var Instruction = /** @class */ (function (_super) {
                 return ((_a = that.node_run) !== null && _a !== void 0 ? _a : that.run)(value);
             },
         });
+        ((_a = this.config) === null || _a === void 0 ? void 0 : _a.dev) && ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog(that, { 'desc': '[Work:run]->入口', value: value }));
         execFunc &&
-            execFunc(value).subscribe({
+            execFunc(value).pipe((0, operators_1.tap)(function (_value) {
+                var _a, _b;
+                ((_a = _this.config) === null || _a === void 0 ? void 0 : _a.dev) && ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog(that, { 'desc': '[Work:run]->结果', value: _value.valueOf() }));
+            })).subscribe({
                 complete: function () { },
-                next: function (res) { return _this.nextWork.next(res); },
+                next: function (res) {
+                    var _a, _b, _c;
+                    ((_a = _this.config) === null || _a === void 0 ? void 0 : _a.dev) && ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog(that, { 'desc': '[Work:run]->下一个Work', value: res.valueOf() }));
+                    (_c = that.nextWork) === null || _c === void 0 ? void 0 : _c.next(res);
+                },
             });
     };
     // 接受处理上一个work的值
     Instruction.prototype.handleMessageNext = function (value) {
         this.next(value);
     };
-    Instruction.prototype.run = function (input) {
-        return new rxjs_1.Observable(function (subscriber) {
-            subscriber.next(input);
-            subscriber.next(input);
-            subscriber.complete();
-            return {
-                unsubscribe: function () { return subscriber.unsubscribe(); },
-            };
-        });
+    Instruction.prototype.stop = function () {
+        this.inputSubscription.unsubscribe();
     };
-    Instruction.prototype.stop = function () { };
+    /**
+     * 运行
+     * @param value
+     */
+    Instruction.prototype.startRun = function (value) {
+        this.inputSubject.next(value);
+    };
+    Instruction.prototype.complete = function () {
+        _super.prototype.complete.call(this);
+        this.inputSubject.complete();
+    };
     Instruction.prototype.clear = function () {
         this.pools && this.pools.forEach(function ($1) { return $1.unsubscribe(); });
         this.pools.length = 0;
@@ -107,22 +134,16 @@ var Instruction = /** @class */ (function (_super) {
     Instruction._id = 0;
     return Instruction;
 }(rxjs_1.Subject));
-var MultipleInstruction = /** @class */ (function (_super) {
-    __extends(MultipleInstruction, _super);
-    function MultipleInstruction() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.name = "MultipleInstruction";
-        return _this;
-    }
-    return MultipleInstruction;
-}(Instruction));
-exports.MultipleInstruction = MultipleInstruction;
-var SingleInstruction = /** @class */ (function (_super) {
-    __extends(SingleInstruction, _super);
-    function SingleInstruction() {
+var InstructionOTO = /** @class */ (function (_super) {
+    __extends(InstructionOTO, _super);
+    function InstructionOTO() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    SingleInstruction.prototype.run = function (input) {
+    InstructionOTO.prototype.handleMessageNext = function (value) {
+        this.next(value);
+        this.stop();
+    };
+    InstructionOTO.prototype.run = function (input) {
         return new rxjs_1.Observable(function (subscriber) {
             subscriber.next(input);
             subscriber.complete();
@@ -131,7 +152,56 @@ var SingleInstruction = /** @class */ (function (_super) {
             };
         });
     };
-    return SingleInstruction;
+    return InstructionOTO;
 }(Instruction));
-exports.SingleInstruction = SingleInstruction;
+exports.InstructionOTO = InstructionOTO;
+var InstructionOTM = /** @class */ (function (_super) {
+    __extends(InstructionOTM, _super);
+    function InstructionOTM() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = "MultipleInstruction";
+        return _this;
+    }
+    InstructionOTM.prototype.handleMessageNext = function (value) {
+        this.next(value);
+        this.stop();
+    };
+    InstructionOTM.prototype.run = function (input) {
+        return new rxjs_1.Observable(function (subscriber) {
+            subscriber.next(input);
+            // 输出多次
+            subscriber.next(input);
+            subscriber.complete();
+            return {
+                unsubscribe: function () { return subscriber.unsubscribe(); },
+            };
+        });
+    };
+    return InstructionOTM;
+}(Instruction));
+exports.InstructionOTM = InstructionOTM;
+var InstructionMTM = /** @class */ (function (_super) {
+    __extends(InstructionMTM, _super);
+    function InstructionMTM() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = "MultipleInstruction";
+        return _this;
+    }
+    InstructionMTM.prototype.handleMessageNext = function (value) {
+        this.next(value);
+    };
+    InstructionMTM.prototype.run = function (input) {
+        return new rxjs_1.Observable(function (subscriber) {
+            subscriber.next(input);
+            // 输出多次
+            subscriber.next(input);
+            subscriber.complete();
+            return {
+                unsubscribe: function () { return subscriber.unsubscribe(); },
+            };
+        });
+    };
+    return InstructionMTM;
+}(Instruction));
+exports.InstructionMTM = InstructionMTM;
 //# sourceMappingURL=Instruction.js.map
