@@ -105,7 +105,7 @@ class Instruction extends Subject<BaseType> implements WorkType.Work {
       that.context?.sendLog({
         work: that,
         content: this.context,
-        desc: "[Work:run]->入口",
+        desc: "[Work][Func:run]->入口",
         value: value,
       });
     if (execFunc) {
@@ -117,7 +117,7 @@ class Instruction extends Subject<BaseType> implements WorkType.Work {
               that.context?.sendLog({
                 work: that,
                 content: this.context,
-                desc: "[Work:run]->结果",
+                desc: "[Work][Func:run]->结果",
                 value: _value?.valueOf(),
               });
           })
@@ -129,7 +129,7 @@ class Instruction extends Subject<BaseType> implements WorkType.Work {
               that.context?.sendLog({
                 work: that,
                 content: this.context,
-                desc: "[Work:run]->下一个Work",
+                desc: "[Work][Func:run]->下一个Work",
                 value: res?.valueOf(),
               });
             that.nextWork?.next(res);

@@ -106,7 +106,7 @@ var Instruction = /** @class */ (function (_super) {
             ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                 work: that,
                 content: this.context,
-                desc: "[Work:run]->入口",
+                desc: "[Work][Func:run]->入口",
                 value: value,
             }));
         if (execFunc) {
@@ -118,7 +118,7 @@ var Instruction = /** @class */ (function (_super) {
                     ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                         work: that,
                         content: _this.context,
-                        desc: "[Work:run]->结果",
+                        desc: "[Work][Func:run]->结果",
                         value: _value === null || _value === void 0 ? void 0 : _value.valueOf(),
                     }));
             }))
@@ -130,7 +130,7 @@ var Instruction = /** @class */ (function (_super) {
                         ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                             work: that,
                             content: _this.context,
-                            desc: "[Work:run]->下一个Work",
+                            desc: "[Work][Func:run]->下一个Work",
                             value: res === null || res === void 0 ? void 0 : res.valueOf(),
                         }));
                     (_c = that.nextWork) === null || _c === void 0 ? void 0 : _c.next(res);
