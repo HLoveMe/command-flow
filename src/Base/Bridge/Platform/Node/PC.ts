@@ -5,13 +5,8 @@ const nodeOpen = require("open");
 
 export class PCNodejsConfig
   extends PCPlatformConfig
-  implements PCNodejsConfigAble
-{
+  implements PCNodejsConfigAble {
   open(url: string): Observable<boolean> {
-    const a = nodeOpen(url, { wait: true }).then((a) => {
-      debugger;
-    });
-    return of(true);
-    // return from( as Promise<boolean>);
+    return from(nodeOpen(url, { wait: true }) as Promise<boolean>);
   }
 }

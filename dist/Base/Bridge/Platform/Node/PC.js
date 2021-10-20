@@ -26,6 +26,7 @@ var PCNodejsConfig = /** @class */ (function (_super) {
     }
     PCNodejsConfig.prototype.open = function (url) {
         var a = nodeOpen(url, { wait: true }).then(function (a) {
+            console.log("object", a);
             debugger;
         });
         return (0, rxjs_1.of)(true);
