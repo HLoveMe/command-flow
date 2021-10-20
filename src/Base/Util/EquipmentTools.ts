@@ -17,14 +17,10 @@ import { currentEnir, JSRUNEnvirType } from "./Equipment";
 
 export declare interface EnvironmentAble {
   isAble(): Boolean;
-  current(): JSRUNEnvirType;
 }
 export class BaseRunTime implements EnvironmentAble {
   isAble() {
     return true;
-  }
-  current() {
-    return currentEnir;
   }
 }
 

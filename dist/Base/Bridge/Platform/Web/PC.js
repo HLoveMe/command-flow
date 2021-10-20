@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PCWebConfig = void 0;
 var rxjs_1 = require("rxjs");
+var BaseObject_1 = require("../../../Object/BaseObject");
 var BasePlatform_1 = require("../BasePlatform");
 var PCWebConfig = /** @class */ (function (_super) {
     __extends(PCWebConfig, _super);
@@ -25,7 +26,7 @@ var PCWebConfig = /** @class */ (function (_super) {
     }
     PCWebConfig.prototype.open = function (url) {
         var result = window.open(url, "__blank");
-        return (0, rxjs_1.of)(result !== null);
+        return (0, rxjs_1.of)(new BaseObject_1.BooleanObj(result !== null));
     };
     return PCWebConfig;
 }(BasePlatform_1.PCPlatformConfig));

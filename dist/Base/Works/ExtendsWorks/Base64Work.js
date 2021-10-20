@@ -43,6 +43,9 @@ var Base64EnCodeWork = /** @class */ (function (_super) {
             };
         });
     };
+    Base64EnCodeWork.isAble = function () {
+        return true;
+    };
     return Base64EnCodeWork;
 }(Instruction_1.InstructionMTM));
 exports.Base64EnCodeWork = Base64EnCodeWork;
@@ -68,6 +71,9 @@ var Base64DecodeWork = /** @class */ (function (_super) {
                 unsubscribe: function () { return subscriber.unsubscribe(); },
             };
         });
+    };
+    Base64DecodeWork.isAble = function () {
+        return true;
     };
     return Base64DecodeWork;
 }(Instruction_1.InstructionMTM));

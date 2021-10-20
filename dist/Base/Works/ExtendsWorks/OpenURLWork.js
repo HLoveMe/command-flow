@@ -19,6 +19,12 @@ exports.OpenURLWork = void 0;
 var Instruction_1 = require("../Instruction");
 var rxjs_1 = require("rxjs");
 var BaseObject_1 = require("../../Object/BaseObject");
+var Equipment_1 = require("../../Util/Equipment");
+/**
+ * 打开路径
+ * http://www.baidu.com
+ * window: file:///C:/Users/Administrator    file:///C:/Users/Administrator/Desktop/116513f379bd664b7cfe5b3b40f5737d.jpg
+ */
 var OpenURLWork = /** @class */ (function (_super) {
     __extends(OpenURLWork, _super);
     function OpenURLWork() {
@@ -38,7 +44,7 @@ var OpenURLWork = /** @class */ (function (_super) {
             var sub = that.context.platform
                 .open(target)
                 .subscribe({
-                next: function (res) { return subscriber.next(new BaseObject_1.BooleanObj(res)); },
+                next: function (_) { return subscriber.next(new BaseObject_1.BooleanObj(true)); },
                 complete: function () { return subscriber.complete(); },
             });
             return {
@@ -48,6 +54,9 @@ var OpenURLWork = /** @class */ (function (_super) {
                 },
             };
         });
+    };
+    OpenURLWork.isAble = function () {
+        return Equipment_1.isNode || Equipment_1.isWeb || Equipment_1.isRN;
     };
     return OpenURLWork;
 }(Instruction_1.InstructionOTO));

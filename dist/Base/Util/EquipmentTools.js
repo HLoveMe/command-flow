@@ -36,9 +36,6 @@ var BaseRunTime = /** @class */ (function () {
     BaseRunTime.prototype.isAble = function () {
         return true;
     };
-    BaseRunTime.prototype.current = function () {
-        return Equipment_2.currentEnir;
-    };
     return BaseRunTime;
 }());
 exports.BaseRunTime = BaseRunTime;

@@ -41,12 +41,6 @@ var Instruction = /** @class */ (function (_super) {
         _this.uuid = (0, uuid_1.v4)();
         return _this;
     }
-    Instruction.prototype.isAble = function () {
-        return true;
-    };
-    Instruction.prototype.current = function () {
-        return Equipment_1.currentEnir;
-    };
     // run(input: InOutputAble): Observable<InOutputAble> {
     //   throw new Error("Method not implemented.");
     // }
@@ -188,6 +182,12 @@ var Instruction = /** @class */ (function (_super) {
     };
     Instruction.prototype.addVariable = function (name, value) {
         this.context && this.context.addVariable(this, name, value);
+    };
+    Instruction.prototype.isAble = function () {
+        return this.__proto__.isAble();
+    };
+    Instruction.isAble = function () {
+        return Equipment_1.isPC || Equipment_1.isMobile;
     };
     Instruction._id = 0;
     return Instruction;

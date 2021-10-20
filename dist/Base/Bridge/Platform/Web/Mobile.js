@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MobileWebConfig = void 0;
 var rxjs_1 = require("rxjs");
+var BaseObject_1 = require("../../../Object/BaseObject");
 var BasePlatform_1 = require("../BasePlatform");
 var MobileWebConfig = /** @class */ (function (_super) {
     __extends(MobileWebConfig, _super);
@@ -24,7 +25,7 @@ var MobileWebConfig = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     MobileWebConfig.prototype.open = function (url) {
-        return (0, rxjs_1.of)(false);
+        return (0, rxjs_1.of)(new BaseObject_1.BooleanObj(false));
     };
     return MobileWebConfig;
 }(BasePlatform_1.PCPlatformConfig));

@@ -24,6 +24,9 @@ class Base64EnCodeWork extends InstructionMTM {
       };
     });
   }
+  static isAble() {
+    return true;
+  }
 }
 //解码
 class Base64DecodeWork extends InstructionMTM {
@@ -42,6 +45,9 @@ class Base64DecodeWork extends InstructionMTM {
         unsubscribe: () => subscriber.unsubscribe(),
       };
     });
+  }
+  static isAble() {
+    return true;
   }
 }
 export {

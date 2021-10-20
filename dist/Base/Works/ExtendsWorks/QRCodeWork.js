@@ -17,11 +17,44 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QRCodeWork = void 0;
 var Instruction_1 = require("../Instruction");
+var rxjs_1 = require("rxjs");
+var Equipment_1 = require("../../Util/Equipment");
+/**
+ * 字符串生产QRcode base64
+ */
 var QRCodeWork = /** @class */ (function (_super) {
     __extends(QRCodeWork, _super);
     function QRCodeWork() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = "OpenURLWork";
+        return _this;
     }
+    QRCodeWork.prototype.run = function (input, option) {
+        var that = this;
+        return new rxjs_1.Observable(function (subscriber) {
+            var target;
+            if (input === null || input === undefined)
+                target = "";
+            else {
+                target = input.valueOf().toString();
+            }
+            var sub = that.context.platform
+                .createQrCode(target)
+                .subscribe({
+                next: function (res) { return subscriber.next(res); },
+                complete: function () { return subscriber.complete(); },
+            });
+            return {
+                unsubscribe: function () {
+                    sub.unsubscribe();
+                    subscriber.unsubscribe();
+                },
+            };
+        });
+    };
+    QRCodeWork.isAble = function () {
+        return Equipment_1.isNode || Equipment_1.isWeb || Equipment_1.isRN;
+    };
     return QRCodeWork;
 }(Instruction_1.InstructionOTO));
 exports.QRCodeWork = QRCodeWork;

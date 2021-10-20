@@ -1,47 +1,42 @@
-import { InOutputAbleOrNil } from "../../Type";
-import { takeLast, map, tap, catchError } from "rxjs/operators";
-import { toInOutValue, ValueSwitchTapCatch } from "../../Util/rxjs_operators";
-import { StringAble, ObjectAble } from "../../Object/ObjectTypes";
-import { InOutString } from "../../Object/InOutputValue";
+import { BaseType, ContextImpl } from "../../Type";
+import { StringAble, ValueAble } from "../../Object/ObjectTypes";
 import { QROption } from "../WorkTypes";
 import { InstructionOTO } from "../Instruction";
-class QRCodeWork extends InstructionOTO {
-  // name: string = "QRCodeWork"
-  // static defaultOption: QROption = {
-  //   typeNumber: 4,
-  //   errorCorrectionLevel: "L",
-  //   cellSize: 4,
-  //   margin: null,
-  //   value: ""
-  // } as unknown as QROption;
+import { Observable, Subscriber } from "rxjs";
+import { BooleanObj, StringObj } from "../../Object/BaseObject";
+import { isNode, isRN, isWeb } from "../../Util/Equipment";
 
-  // run(input: InOutputAbleOrNil) {
-  //   if (input != null) {
-  //     const sub = input.value().pipe(
-  //       takeLast(1),
-  //       map(value => {
-  //         var option = QRCodeWork.defaultOption;
-  //         if (value instanceof InOutString) {
-  //           option.value = (value as InOutString).valueOf();
-  //         } else {
-  //           option = { ...option, ...(value as ObjectAble).valueOf() }
-  //         }
-  //         const QRCode = require("qrcode-generator")
-  //         const typeNumber = option.typeNumber || QRCodeWork.defaultOption.typeNumber;
-  //         const errorCorrectionLevel = option.errorCorrectionLevel || QRCodeWork.defaultOption.errorCorrectionLevel;
-  //         const qr = QRCode(typeNumber, errorCorrectionLevel);
-  //         qr.addData(option.value || QRCodeWork.defaultOption.value);
-  //         qr.make();
-  //         return qr.createDataURL(option.cellSize || QRCodeWork.defaultOption.cellSize, option.margin || QRCodeWork.defaultOption.margin);
-  //       }),
-  //       ValueSwitchTapCatch(this)
-  //     ).subscribe(this.getOutputObserver());
-  //     this.pools.push(sub);
-  //     return;
-  //   }
-  //   this.output.next(null)
-  //   this.output.complete();
-  // }
+
+/**
+ * 字符串生产QRcode base64
+ */
+class QRCodeWork extends InstructionOTO {
+  name: string = "OpenURLWork";
+  run(input: BaseType, option?: any): Observable<StringAble> {
+    const that = this;
+    return new Observable((subscriber: Subscriber<StringAble>) => {
+      let target: string;
+      if (input === null || input === undefined) target = "";
+      else {
+        target = ((input as ValueAble).valueOf() as Object).toString();
+      }
+      const sub = (that.context as ContextImpl).platform
+        .createQrCode(target)
+        .subscribe({
+          next: (res) => subscriber.next(res),
+          complete: () => subscriber.complete(),
+        });
+      return {
+        unsubscribe: () => {
+          sub.unsubscribe();
+          subscriber.unsubscribe();
+        },
+      };
+    });
+  }
+  static isAble() {
+    return isNode || isWeb || isRN
+  }
 }
 
 

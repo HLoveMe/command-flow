@@ -1,4 +1,5 @@
 import { Observable } from "rxjs";
+import { BooleanObj, StringObj } from "../Object/BaseObject";
 
 export interface RunTimeInfo {
   name: string;
@@ -13,6 +14,14 @@ export interface CommandStatus {
   error?: Error;
   result?: string;
 }
+
+export interface QRcodeOption {
+  type: TypeNumber;
+  Level: ErrorCorrectionLevel;
+  SideLength: number;
+}
+
+
 export declare interface PlatformConfigAble {
   //计算机运行相关硬件
   loadRunInfo(): Observable<RunTimeInfo>;
@@ -20,19 +29,22 @@ export declare interface PlatformConfigAble {
   runCommand(command: CommandLike): Observable<CommandStatus>;
 
   //计算机操作
-  open(url: String): Observable<boolean>;
+  open(url: String): Observable<BooleanObj>;
 
   //文件相关
   loadFile(url: PathLike): Observable<Buffer>;
+
+  // 工具
+  createQrCode(context: String, option?: QRcodeOption): Observable<StringObj>;
 }
 
-export interface PCPlatformConfigAble extends PlatformConfigAble {}
+export interface PCPlatformConfigAble extends PlatformConfigAble { }
 
-export interface PCWebConfigAble extends PCPlatformConfigAble {}
-export interface PCNodejsConfigAble extends PCPlatformConfigAble {}
-export interface PCRnConfigAble extends PCPlatformConfigAble {}
+export interface PCWebConfigAble extends PCPlatformConfigAble { }
+export interface PCNodejsConfigAble extends PCPlatformConfigAble { }
+export interface PCRnConfigAble extends PCPlatformConfigAble { }
 
-export interface MobilePlatformConfigAble extends PlatformConfigAble {}
-export interface MobileWebConfigAble extends MobilePlatformConfigAble {}
-export interface MobileNodejsConfigAble extends MobilePlatformConfigAble {}
-export interface MobileRnConfigAble extends MobilePlatformConfigAble {}
+export interface MobilePlatformConfigAble extends PlatformConfigAble { }
+export interface MobileWebConfigAble extends MobilePlatformConfigAble { }
+export interface MobileNodejsConfigAble extends MobilePlatformConfigAble { }
+export interface MobileRnConfigAble extends MobilePlatformConfigAble { }

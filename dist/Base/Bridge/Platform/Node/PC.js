@@ -19,18 +19,14 @@ exports.PCNodejsConfig = void 0;
 var rxjs_1 = require("rxjs");
 var BasePlatform_1 = require("../BasePlatform");
 var nodeOpen = require("open");
+/*** */
 var PCNodejsConfig = /** @class */ (function (_super) {
     __extends(PCNodejsConfig, _super);
     function PCNodejsConfig() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     PCNodejsConfig.prototype.open = function (url) {
-        var a = nodeOpen(url, { wait: true }).then(function (a) {
-            console.log("object", a);
-            debugger;
-        });
-        return (0, rxjs_1.of)(true);
-        // return from( as Promise<boolean>);
+        return (0, rxjs_1.from)(nodeOpen(url, { wait: true }));
     };
     return PCNodejsConfig;
 }(BasePlatform_1.PCPlatformConfig));

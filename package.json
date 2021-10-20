@@ -20,14 +20,14 @@
     "babel-preset-stage-0": "^6.24.1",
     "js-base64": "^3.4.5",
     "open": "^8.3.0",
+    "qrcode": "^1.4.4",
     "qrcode-generator": "^1.4.4",
     "rxjs": "^6.6.2",
     "uuid": "^8.3.2",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },
-  "pack": {
-  },
+  "pack": {},
   "author": "",
   "license": "ISC",
   "bugs": {
