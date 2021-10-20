@@ -1,8 +1,9 @@
-import { } from "./Object/InOutputValue";
+import {} from "./Object/InOutputValue";
 import { WorkType, BaseType, ContextImpl } from "./Type";
-import { Subject, Subscription } from "rxjs";
+import { forkJoin, Observable, Subject, Subscription } from "rxjs";
 import { ContextRunOption } from "./Configs";
 import { StringObj } from "./Object/BaseObject";
+import { takeLast } from "rxjs/operators";
 
 export class Context implements ContextImpl {
   /**
@@ -49,13 +50,15 @@ export class Context implements ContextImpl {
     console.log("msgChannelError", error);
   }
 
-  sendLog(work: WorkType.Work, info: any) {
+  sendLog(status: WorkType.WorkStatus) {
     const log = {
       date: new Date().getDate(),
-      work: work.name,
-      info,
-    }
-    this.msgChannel.next(new StringObj(JSON.stringify(log)))
+      work: (Array.isArray(status.work) ? status.work : [status.work]).forEach(
+        ($1) => $1.name
+      ),
+      info: status.desc,
+    };
+    this.msgChannel.next(new StringObj(JSON.stringify(log)));
   }
 
   addWork(work: WorkType.Work) {
@@ -66,7 +69,7 @@ export class Context implements ContextImpl {
     works.forEach(this.addWork);
   }
   // 执行works
-  prepareWorks(initOption: any = null) {
+  prepareWorks() {
     this.works.forEach(
       ($1: WorkType.Work, index: number, source: WorkType.Work[]) => {
         const before: WorkType.Work = source[index - 1];
@@ -77,12 +80,48 @@ export class Context implements ContextImpl {
   }
 
   run(input: BaseType, initOption?: any) {
-    this.prepareWorks(initOption);
+    this.prepareWorks();
     const inputWork = this.works[0];
     if (inputWork) {
       inputWork.startRun(input);
-      inputWork.complete()
+      // inputWork.complete()
     }
+  }
+
+  /**
+   * 停止执行
+   * 关闭
+   */
+  stopWorkChain(): Observable<boolean> {
+    return new Observable((subscribe) => {
+      const taskUns: Observable<Boolean>[] = this.works.map(($1) =>
+        $1.stopWork()
+      );
+      let isSuccess: boolean = false;
+      let errors: WorkType.Work[] = [];
+      const sub = forkJoin(taskUns).subscribe({
+        next: (values) =>
+          (isSuccess = values.every(($1, index) => {
+            if ($1 === true) return true;
+            errors.push(this.works[index]);
+            return false;
+          })),
+        error: () => {
+          // 关闭报错
+        },
+        complete: () => {
+          this.sendLog({});
+          subscribe.next(isSuccess);
+          subscribe.complete();
+        },
+      });
+      return {
+        unsubscribe: () => {
+          subscribe.unsubscribe();
+          sub.unsubscribe();
+        },
+      };
+    });
   }
 
   clear(): void {

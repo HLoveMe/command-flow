@@ -145,7 +145,7 @@ export function getJSEnvironment() {
 }
 
 var currentEnir: JSRUNEnvirType;
-if (process && process.env && process.title === "node") {
+if (process && process.env && process.title) {
   const type = require("os").type();
   currentEnir =
     type == "Windows_NT"

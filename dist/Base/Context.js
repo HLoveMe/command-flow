@@ -42,11 +42,11 @@ var Context = /** @class */ (function () {
     Context.prototype.workError = function (error) {
         console.log("msgChannelError", error);
     };
-    Context.prototype.sendLog = function (work, info) {
+    Context.prototype.sendLog = function (status) {
         var log = {
             date: new Date().getDate(),
-            work: work.name,
-            info: info,
+            work: (Array.isArray(status.work) ? status.work : [status.work]).forEach(function ($1) { return $1.name; }),
+            info: status.desc,
         };
         this.msgChannel.next(new BaseObject_1.StringObj(JSON.stringify(log)));
     };
@@ -62,8 +62,7 @@ var Context = /** @class */ (function () {
         works.forEach(this.addWork);
     };
     // 执行works
-    Context.prototype.prepareWorks = function (initOption) {
-        if (initOption === void 0) { initOption = null; }
+    Context.prototype.prepareWorks = function () {
         this.works.forEach(function ($1, index, source) {
             var before = source[index - 1];
             var after = source[index + 1];
@@ -71,12 +70,50 @@ var Context = /** @class */ (function () {
         });
     };
     Context.prototype.run = function (input, initOption) {
-        this.prepareWorks(initOption);
+        this.prepareWorks();
         var inputWork = this.works[0];
         if (inputWork) {
             inputWork.startRun(input);
-            inputWork.complete();
+            // inputWork.complete()
         }
+    };
+    /**
+     * 停止执行
+     * 关闭
+     */
+    Context.prototype.stopWorkChain = function () {
+        var _this = this;
+        return new rxjs_1.Observable(function (subscribe) {
+            var taskUns = _this.works.map(function ($1) {
+                return $1.stopWork();
+            });
+            var isSuccess = false;
+            var errors = [];
+            var sub = (0, rxjs_1.forkJoin)(taskUns).subscribe({
+                next: function (values) {
+                    return (isSuccess = values.every(function ($1, index) {
+                        if ($1 === true)
+                            return true;
+                        errors.push(_this.works[index]);
+                        return false;
+                    }));
+                },
+                error: function () {
+                    // 关闭报错
+                },
+                complete: function () {
+                    _this.sendLog({});
+                    subscribe.next(isSuccess);
+                    subscribe.complete();
+                },
+            });
+            return {
+                unsubscribe: function () {
+                    subscribe.unsubscribe();
+                    sub.unsubscribe();
+                },
+            };
+        });
     };
     Context.prototype.clear = function () {
         this.pools.forEach(function ($1) { return $1.unsubscribe(); });

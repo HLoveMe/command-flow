@@ -43,9 +43,15 @@ export namespace WorkType {
 
   export type WorkConstant = Map<WorkConstantKey, BaseType>;
 
-  export type WorkFunction = (
-    input: BaseType
-  ) => Observable<BaseType>;
+  export type WorkFunction = (input: BaseType) => Observable<BaseType>;
+
+  export interface WorkStatus {
+    content?: ContextImpl;
+    work?: Work | Work[];
+    desc?: any;
+    value?: BaseType;
+    date?: Date;
+  }
 
   type WorkTypes = "rn_run" | "web_run" | "node_run";
 
@@ -58,7 +64,8 @@ export namespace WorkType {
     context?: ContextImpl;
   }
   export interface WorkChain extends Subject<BaseType> {
-    inputSubject: Subject<BaseType>
+    runSubscriptions: Map<string, WorkUnitImpl>;
+    inputSubject: Subject<BaseType>;
     inputSubscription: Subscription;
     pools: Subscription[];
   }
@@ -71,33 +78,32 @@ export namespace WorkType {
     //根据该属性 控制Work 工作流程
     config: ConfigInfo;
   }
+  export interface WorkUnitImpl {
+    context?: ContextImpl;
+    work?: WorkType.Work;
+    uuid: string;
+    sub: Subscription;
+  }
   export declare interface Work
     extends WorkOperation,
-    WorkContext,
-    WorkChain,
-    WorkConfig, WorkEntrance {
+      WorkContext,
+      WorkChain,
+      WorkConfig,
+      WorkEntrance {
     name: string;
     id: number;
     uuid: WorkUUID;
     handleMessageNext: (value: BaseType) => void;
     // run: WorkFunction;
-    run?(
-      input: BaseType
-    ): Observable<BaseType>
-    rn_run?(
-      input: BaseType
-    ): Observable<BaseType>
-    web_run?(
-      input: BaseType
-    ): Observable<BaseType>
-    node_run?(
-      input: BaseType
-    ): Observable<BaseType>
-    prepare(
-      before?: Work,
-      next?: Work
-    ): void;
+    run?(input: BaseType): Observable<BaseType>;
+    rn_run?(input: BaseType): Observable<BaseType>;
+    web_run?(input: BaseType): Observable<BaseType>;
+    node_run?(input: BaseType): Observable<BaseType>;
+    prepare(before?: Work, next?: Work): void;
+    // 停止接受上一任务的消息
     stop(): void;
+    // 关闭Work
+    stopWork(): Observable<Boolean>;
     clear(): void;
     addVariable(name: string, value: BaseType): void;
     error(err: Error): void;
@@ -112,10 +118,11 @@ export declare interface ContextImpl {
   pools: Subscription[];
   addWork(work: WorkType.Work): void;
   addWorks(...works: WorkType.Work[]): void;
-  run(input: BaseType, initOption?: any):void;
+  run(input: BaseType, initOption?: any): void;
   addVariable(from: WorkType.Work, name: string, value: BaseType): void;
-  sendLog(work: WorkType.Work, info: any): void;
+  sendLog(status: WorkType.WorkStatus): void;
   clear(): void;
+  stopWorkChain(): Observable<boolean>;
 }
 
 export namespace ControlFlow {

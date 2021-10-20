@@ -1,4 +1,3 @@
-
 import { InOutputAbleOrNil } from "../../Type";
 import { takeLast, map, tap, catchError } from "rxjs/operators";
 import { toInOutValue, ValueSwitchTapCatch } from "../../Util/rxjs_operators";

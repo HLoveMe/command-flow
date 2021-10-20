@@ -12,7 +12,9 @@ context.addWork(new Base64Work_1.Base64EnCodeWork());
 context.addWork(new Base64Work_1.Base64DecodeWork());
 context.addWork(new Base64Work_1.Base64DecodeWork());
 // context.addWork(new QRCodeWork())
-context.run(new BaseObject_1.StringObj("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
+setInterval(function () {
+    context.run(new BaseObject_1.StringObj("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
+}, 5000);
 // // var qr = require('qr-image');
 // // const a = qr.imageSync("AAAA", { type: "svg" })
 // // console.log(Buffer.from(a).toString('base64'))

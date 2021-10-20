@@ -1,26 +1,19 @@
-import {
-  BaseType,
-  ContextImpl,
-  WorkType,
-  InOutputAble,
-} from "../Type";
+import { BaseType, ContextImpl, WorkType } from "../Type";
 import {
   Subject,
-  from,
   Subscription,
   Observable,
-  isObservable,
-  of,
   PartialObserver,
-  empty,
+  Subscriber,
 } from "rxjs";
 import { ExecError } from "../Error";
 import { PlatformSelect } from "../Util/Equipment";
 import { WorkRunOption } from "../Configs";
 import { tap } from "rxjs/operators";
-import { v4 as UUID } from 'uuid'
+import { v4 as UUID } from "uuid";
+import { WorkUnit } from "./WorkUnit";
 
-/** 
+/**
  * 一次输入--->一次输出 InstructionOTO
  * 一次输入--->多次输出 InstructionOTM
  * n次输入---->m次输出 InstructionMTM
@@ -30,13 +23,14 @@ class Instruction extends Subject<BaseType> implements WorkType.Work {
   name: string = "Instruction";
   static _id: number = 0;
   id: number = Instruction._id++;
-  pools: Subscription[] = [];
   uuid: WorkType.WorkUUID;
   beforeWork?: WorkType.Work;
   nextWork?: WorkType.Work;
   context?: ContextImpl;
   inputSubject: Subject<BaseType> = new Subject<BaseType>();
   inputSubscription: Subscription;
+  runSubscriptions: Map<string, WorkUnit> = new Map();
+  pools: Subscription[] = [];
   // 运行配置 config:OPTION todo
   config: { [key: string]: any } = { dev: true };
   constructor() {
@@ -56,15 +50,11 @@ class Instruction extends Subject<BaseType> implements WorkType.Work {
   //   throw new Error("Method not implemented.");
   // }
 
-  prepare(
-    before?: WorkType.Work,
-    next?: WorkType.Work
-  ): void {
+  prepare(before?: WorkType.Work, next?: WorkType.Work): void {
     this.beforeWork = before;
     this.nextWork = next;
     this._connectChannel();
   }
-
 
   // 处理上一个的传入
   _connectChannel() {
@@ -79,11 +69,23 @@ class Instruction extends Subject<BaseType> implements WorkType.Work {
     this.inputSubscription = sub1;
     this.pools.push(sub1);
     // // 处理数据
-    const sub2: Subscription = that.subscribe({
-      complete: () => { },
-      error: (error) => that.error(error),
-      next: (value: BaseType) => that._run(value),
-    });
+    const sub2: Subscription = that
+      .pipe(
+        tap((value) => {
+          this.config?.dev &&
+            that.context?.sendLog({
+              work: that,
+              content: this.context,
+              desc: "[Work:preRun]->接受到数据",
+              value: value,
+            });
+        })
+      )
+      .subscribe({
+        complete: () => {},
+        error: (error) => that.error(error),
+        next: (value: BaseType) => that._run(value),
+      });
     this.pools.push(sub2);
   }
 
@@ -99,22 +101,62 @@ class Instruction extends Subject<BaseType> implements WorkType.Work {
           value
         ),
     });
-    this.config?.dev && that.context?.sendLog(that, { 'desc': '[Work:run]->入口', value: value })
-    execFunc &&
-      execFunc(value).pipe(tap((_value: BaseType) => {
-        this.config?.dev && that.context?.sendLog(that, { 'desc': '[Work:run]->结果', value: _value.valueOf() })
-      })).subscribe({
-        complete: () => { },
-        next: (res) => {
-          this.config?.dev && that.context?.sendLog(that, { 'desc': '[Work:run]->下一个Work', value: res.valueOf() });
-          that.nextWork?.next(res);
-        },
+    this.config?.dev &&
+      that.context?.sendLog({
+        work: that,
+        content: this.context,
+        desc: "[Work:run]->入口",
+        value: value,
       });
+    if (execFunc) {
+      const uuid = UUID();
+      const runSub: Subscription = execFunc(value)
+        .pipe(
+          tap((_value: BaseType) => {
+            this.config?.dev &&
+              that.context?.sendLog({
+                work: that,
+                content: this.context,
+                desc: "[Work:run]->结果",
+                value: _value?.valueOf(),
+              });
+          })
+        )
+        .subscribe({
+          complete: () => {},
+          next: (res) => {
+            this.config?.dev &&
+              that.context?.sendLog({
+                work: that,
+                content: this.context,
+                desc: "[Work:run]->下一个Work",
+                value: res?.valueOf(),
+              });
+            that.nextWork?.next(res);
+          },
+        });
+      const unit = new WorkUnit(that.context, that, runSub, uuid);
+      this.runSubscriptions.set(unit.uuid, unit);
+    }
   }
 
   // 接受处理上一个work的值
   handleMessageNext(value: BaseType) {
     this.next(value);
+  }
+
+  stopWork(): Observable<Boolean> {
+    return new Observable<Boolean>((subscribe: Subscriber<Boolean>) => {
+      this.stop();
+      this.runSubscriptions.forEach((value) => {
+        value.sub.unsubscribe();
+      });
+      subscribe.next(true);
+      subscribe.complete();
+      return {
+        unsubscribe: () => subscribe.unsubscribe(),
+      };
+    });
   }
 
   stop(): void {
@@ -123,14 +165,15 @@ class Instruction extends Subject<BaseType> implements WorkType.Work {
 
   /**
    * 运行
-   * @param value 
+   * @param value
    */
   startRun(value: BaseType) {
-    this.inputSubject.next(value)
+    this.inputSubject.next(value);
   }
+
   complete() {
     super.complete();
-    this.inputSubject.complete()
+    this.inputSubject.complete();
   }
 
   clear(): void {
@@ -149,7 +192,7 @@ class Instruction extends Subject<BaseType> implements WorkType.Work {
 export class InstructionOTO extends Instruction {
   handleMessageNext(value: BaseType) {
     this.next(value);
-    this.stop()
+    this.stop();
   }
 
   run(input: BaseType): Observable<BaseType> {
@@ -169,7 +212,7 @@ export class InstructionOTM extends Instruction {
   name: string = "MultipleInstruction";
   handleMessageNext(value: BaseType) {
     this.next(value);
-    this.stop()
+    this.stop();
   }
   run(input: BaseType): Observable<BaseType> {
     return new Observable((subscriber) => {
