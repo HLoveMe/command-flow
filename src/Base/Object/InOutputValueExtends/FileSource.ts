@@ -1,7 +1,7 @@
 import { InOutputAble, BaseType, InOutData } from "../../Type";
 import { of, Observable, fromEvent, empty } from "rxjs";
 import { statSync, existsSync, PathLike } from "fs";
-import { JSForNodeJs } from "../Environment";
+import { JSForNodeJs } from "../../Util/EquipmentTools";
 import { PlatformSelect } from "../../Util/Equipment";
 const readline = require("readline");
 

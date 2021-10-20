@@ -12,7 +12,7 @@ import {
   DateAble,
 } from "./ObjectTypes";
 import { ControlFlow } from "../Type";
-import { BaseRunTime } from "./Environment";
+import { BaseRunTime } from "../Util/EquipmentTools";
 
 function DefaultValue(value: string) {
   return function (target: any, propertyName: string) {

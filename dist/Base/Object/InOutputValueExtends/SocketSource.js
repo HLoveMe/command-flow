@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
 var Equipment_1 = require("../../Util/Equipment");
-var Environment_1 = require("../Environment");
+var EquipmentTools_1 = require("../../Util/EquipmentTools");
 var SocketSource = /** @class */ (function (_super) {
     __extends(SocketSource, _super);
     function SocketSource(socket) {
@@ -34,7 +34,7 @@ var SocketSource = /** @class */ (function (_super) {
         throw new Error("Method not implemented.");
     };
     return SocketSource;
-}(Environment_1.BaseRunTime));
+}(EquipmentTools_1.BaseRunTime));
 exports.default = (0, Equipment_1.PlatformSelect)({
     web: SocketSource,
     node: SocketSource,

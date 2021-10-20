@@ -2,7 +2,7 @@ import {} from "./Object/InOutputValue";
 import { WorkType, BaseType, ContextImpl } from "./Type";
 import { forkJoin, Observable, Subject, Subscription } from "rxjs";
 import { ContextRunOption } from "./Configs";
-import { StringObj } from "./Object/BaseObject";
+import { BooleanObj, StringObj } from "./Object/BaseObject";
 import { takeLast } from "rxjs/operators";
 
 export class Context implements ContextImpl {
@@ -93,6 +93,7 @@ export class Context implements ContextImpl {
    * 关闭
    */
   stopWorkChain(): Observable<boolean> {
+    const that = this;
     return new Observable((subscribe) => {
       const taskUns: Observable<Boolean>[] = this.works.map(($1) =>
         $1.stopWork()
@@ -110,7 +111,12 @@ export class Context implements ContextImpl {
           // 关闭报错
         },
         complete: () => {
-          this.sendLog({});
+          this.sendLog({
+            content: that,
+            work: errors,
+            desc: "[content][Func:stopWorkChain]",
+            value: new BooleanObj(isSuccess),
+          });
           subscribe.next(isSuccess);
           subscribe.complete();
         },

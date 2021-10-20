@@ -12,7 +12,6 @@ class Base64EnCodeWork extends InstructionMTM {
 
   run(input: BaseType): Observable<StringAble> {
     return new Observable((subscriber: Subscriber<StringAble>) => {
-      console.log('编码')
       let target: string
       if (input === null || input === undefined) target = ''
       else {
@@ -31,7 +30,6 @@ class Base64DecodeWork extends InstructionMTM {
   name: string = "Base64DecodeWork";
 
   run(input: BaseType): Observable<StringAble> {
-    console.log('解码')
     return new Observable((subscriber: Subscriber<StringAble>) => {
       let target: string
       if (input === null || input === undefined) target = ''

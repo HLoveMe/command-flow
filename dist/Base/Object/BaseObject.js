@@ -30,7 +30,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DateObj = exports.BooleanObj = exports.StringObj = exports.NumberObj = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = exports.ObjectManager = void 0;
 var ObjectTypes_1 = require("./ObjectTypes");
 var Type_1 = require("../Type");
-var Environment_1 = require("./Environment");
+var EquipmentTools_1 = require("../Util/EquipmentTools");
 function DefaultValue(value) {
     return function (target, propertyName) {
         target[propertyName] = value;
@@ -63,7 +63,7 @@ var ObjectTarget = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], ObjectTarget, "type", void 0);
     return ObjectTarget;
-}(Environment_1.BaseRunTime));
+}(EquipmentTools_1.BaseRunTime));
 exports.ObjectTarget = ObjectTarget;
 var ArrayObject = /** @class */ (function (_super) {
     __extends(ArrayObject, _super);
@@ -121,7 +121,7 @@ var ArrayObject = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], ArrayObject, "type", void 0);
     return ArrayObject;
-}(Environment_1.BaseRunTime));
+}(EquipmentTools_1.BaseRunTime));
 exports.ArrayObject = ArrayObject;
 var MapObject = /** @class */ (function (_super) {
     __extends(MapObject, _super);
@@ -161,7 +161,7 @@ var MapObject = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], MapObject, "type", void 0);
     return MapObject;
-}(Environment_1.BaseRunTime));
+}(EquipmentTools_1.BaseRunTime));
 exports.MapObject = MapObject;
 var SetObject = /** @class */ (function (_super) {
     __extends(SetObject, _super);
@@ -201,7 +201,7 @@ var SetObject = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], SetObject, "type", void 0);
     return SetObject;
-}(Environment_1.BaseRunTime));
+}(EquipmentTools_1.BaseRunTime));
 exports.SetObject = SetObject;
 var NumberObj = /** @class */ (function (_super) {
     __extends(NumberObj, _super);
@@ -228,7 +228,7 @@ var NumberObj = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], NumberObj, "type", void 0);
     return NumberObj;
-}(Environment_1.BaseRunTime));
+}(EquipmentTools_1.BaseRunTime));
 exports.NumberObj = NumberObj;
 var StringObj = /** @class */ (function (_super) {
     __extends(StringObj, _super);
@@ -255,7 +255,7 @@ var StringObj = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], StringObj, "type", void 0);
     return StringObj;
-}(Environment_1.BaseRunTime));
+}(EquipmentTools_1.BaseRunTime));
 exports.StringObj = StringObj;
 var BooleanObj = /** @class */ (function (_super) {
     __extends(BooleanObj, _super);
@@ -282,7 +282,7 @@ var BooleanObj = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], BooleanObj, "type", void 0);
     return BooleanObj;
-}(Environment_1.BaseRunTime));
+}(EquipmentTools_1.BaseRunTime));
 exports.BooleanObj = BooleanObj;
 var DateObj = /** @class */ (function (_super) {
     __extends(DateObj, _super);
@@ -318,7 +318,7 @@ var DateObj = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], DateObj, "type", void 0);
     return DateObj;
-}(Environment_1.BaseRunTime));
+}(EquipmentTools_1.BaseRunTime));
 exports.DateObj = DateObj;
 var keys = Object.keys(Type_1.ControlFlow.ControlEnum);
 Object.keys(module.exports).forEach(function ($1) {

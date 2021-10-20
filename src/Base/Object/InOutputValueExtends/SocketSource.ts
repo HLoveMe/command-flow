@@ -2,7 +2,7 @@ import { empty, fromEvent } from "rxjs";
 import { map, takeUntil } from "rxjs/operators";
 import { InOutData, InOutputAble } from "../../Type";
 import { PlatformSelect } from "../../Util/Equipment";
-import { BaseRunTime } from "../Environment";
+import { BaseRunTime } from "../../Util/EquipmentTools";
 
 class SocketSource extends BaseRunTime implements InOutputAble {
   socket: WebSocket;

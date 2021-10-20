@@ -83,6 +83,7 @@ var Context = /** @class */ (function () {
      */
     Context.prototype.stopWorkChain = function () {
         var _this = this;
+        var that = this;
         return new rxjs_1.Observable(function (subscribe) {
             var taskUns = _this.works.map(function ($1) {
                 return $1.stopWork();
@@ -102,7 +103,12 @@ var Context = /** @class */ (function () {
                     // 关闭报错
                 },
                 complete: function () {
-                    _this.sendLog({});
+                    _this.sendLog({
+                        content: that,
+                        work: errors,
+                        desc: "[content][Func:stopWorkChain]",
+                        value: new BaseObject_1.BooleanObj(isSuccess),
+                    });
                     subscribe.next(isSuccess);
                     subscribe.complete();
                 },

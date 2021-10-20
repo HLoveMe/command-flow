@@ -30,7 +30,6 @@ var Base64EnCodeWork = /** @class */ (function (_super) {
     }
     Base64EnCodeWork.prototype.run = function (input) {
         return new rxjs_1.Observable(function (subscriber) {
-            console.log('编码');
             var target;
             if (input === null || input === undefined)
                 target = '';
@@ -56,7 +55,6 @@ var Base64DecodeWork = /** @class */ (function (_super) {
         return _this;
     }
     Base64DecodeWork.prototype.run = function (input) {
-        console.log('解码');
         return new rxjs_1.Observable(function (subscriber) {
             var target;
             if (input === null || input === undefined)

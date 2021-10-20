@@ -15,21 +15,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JSForReactNative = exports.JSForNodeJs = exports.JSForIosAndroidPCWeb = exports.BaseRunTime = exports.isRunRN = exports.isRunNode = exports.isRunWeb = void 0;
-var Equipment_1 = require("./Equipment");
-function isRunWeb($1, $2, descriptor) {
-    descriptor.value = function () { return Equipment_1.isWeb; };
-}
-exports.isRunWeb = isRunWeb;
-function isRunNode($1, $2, descriptor) {
-    descriptor.value = function () { return Equipment_1.isNode; };
-}
-exports.isRunNode = isRunNode;
-function isRunRN($1, $2, descriptor) {
-    descriptor.value = function () { return (0, Equipment_1.isReactNative)(); };
-}
-exports.isRunRN = isRunRN;
-var Equipment_2 = require("./Equipment");
+exports.JSForReactNative = exports.JSForNodeJs = exports.JSForIosAndroidPCWeb = exports.BaseRunTime = void 0;
+var Equipment_1 = require("../Util/Equipment");
 var BaseRunTime = /** @class */ (function () {
     function BaseRunTime() {
     }
@@ -37,7 +24,7 @@ var BaseRunTime = /** @class */ (function () {
         return true;
     };
     BaseRunTime.prototype.current = function () {
-        return Equipment_2.currentEnir;
+        return Equipment_1.currentEnir;
     };
     return BaseRunTime;
 }());
@@ -48,13 +35,13 @@ var JSForIosAndroidPCWeb = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     JSForIosAndroidPCWeb.prototype.isAble = function () {
-        if (Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.WEB ||
-            Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.WEB_WIN ||
-            Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.WEB_MAC ||
-            Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.WEB_LINUX ||
-            Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.WEB_IOS ||
-            Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.WEB_ANDROID ||
-            Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.WEB_OTHER)
+        if (Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.WEB ||
+            Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.WEB_WIN ||
+            Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.WEB_MAC ||
+            Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.WEB_LINUX ||
+            Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.WEB_IOS ||
+            Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.WEB_ANDROID ||
+            Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.WEB_OTHER)
             return true;
         return false;
     };
@@ -67,10 +54,10 @@ var JSForNodeJs = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     JSForNodeJs.prototype.isAble = function () {
-        if (Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.NODE ||
-            Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.NODE_WIN ||
-            Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.NODE_MAC ||
-            Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.NODE_LINUX)
+        if (Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.NODE ||
+            Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.NODE_WIN ||
+            Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.NODE_MAC ||
+            Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.NODE_LINUX)
             return true;
         return false;
     };
@@ -83,15 +70,15 @@ var JSForReactNative = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     JSForReactNative.prototype.isAble = function () {
-        if (Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.RN ||
-            Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.RN_MAC ||
-            Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.RN_WIN ||
-            Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.RN_IOS ||
-            Equipment_2.currentEnir === Equipment_2.JSRUNEnvirType.RN_ANDROID)
+        if (Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.RN ||
+            Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.RN_MAC ||
+            Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.RN_WIN ||
+            Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.RN_IOS ||
+            Equipment_1.currentEnir === Equipment_1.JSRUNEnvirType.RN_ANDROID)
             return true;
         return false;
     };
     return JSForReactNative;
 }(BaseRunTime));
 exports.JSForReactNative = JSForReactNative;
-//# sourceMappingURL=EquipmentTools.js.map
+//# sourceMappingURL=Environment.js.map

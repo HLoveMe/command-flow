@@ -7,18 +7,22 @@ import {
   Subscriber,
 } from "rxjs";
 import { ExecError } from "../Error";
-import { PlatformSelect } from "../Util/Equipment";
+import { currentEnir, JSRUNEnvirType, PlatformSelect } from "../Util/Equipment";
 import { WorkRunOption } from "../Configs";
 import { tap } from "rxjs/operators";
 import { v4 as UUID } from "uuid";
 import { WorkUnit } from "./WorkUnit";
+import { EnvironmentAble } from "../Util/EquipmentTools";
 
 /**
  * 一次输入--->一次输出 InstructionOTO
  * 一次输入--->多次输出 InstructionOTM
  * n次输入---->m次输出 InstructionMTM
  */
-class Instruction extends Subject<BaseType> implements WorkType.Work {
+class Instruction
+  extends Subject<BaseType>
+  implements WorkType.Work, EnvironmentAble
+{
   static OPTION: WorkRunOption;
   name: string = "Instruction";
   static _id: number = 0;
@@ -36,6 +40,12 @@ class Instruction extends Subject<BaseType> implements WorkType.Work {
   constructor() {
     super();
     this.uuid = UUID();
+  }
+  isAble(): Boolean {
+    return true;
+  }
+  current(): JSRUNEnvirType {
+    return currentEnir;
   }
   // run(input: InOutputAble): Observable<InOutputAble> {
   //   throw new Error("Method not implemented.");

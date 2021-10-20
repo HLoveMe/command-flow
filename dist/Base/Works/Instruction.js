@@ -41,6 +41,12 @@ var Instruction = /** @class */ (function (_super) {
         _this.uuid = (0, uuid_1.v4)();
         return _this;
     }
+    Instruction.prototype.isAble = function () {
+        return true;
+    };
+    Instruction.prototype.current = function () {
+        return Equipment_1.currentEnir;
+    };
     // run(input: InOutputAble): Observable<InOutputAble> {
     //   throw new Error("Method not implemented.");
     // }

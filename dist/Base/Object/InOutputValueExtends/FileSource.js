@@ -17,7 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var rxjs_1 = require("rxjs");
 var fs_1 = require("fs");
-var Environment_1 = require("../Environment");
+var EquipmentTools_1 = require("../../Util/EquipmentTools");
 var Equipment_1 = require("../../Util/Equipment");
 var readline = require("readline");
 var FileSource = /** @class */ (function (_super) {
@@ -43,7 +43,7 @@ var FileSource = /** @class */ (function (_super) {
         throw new Error("Method not implemented.");
     };
     return FileSource;
-}(Environment_1.JSForNodeJs));
+}(EquipmentTools_1.JSForNodeJs));
 exports.default = (0, Equipment_1.PlatformSelect)({
     web: null,
     node: FileSource,
