@@ -18,14 +18,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PCNodejsConfig = void 0;
 var rxjs_1 = require("rxjs");
 var BasePlatform_1 = require("../BasePlatform");
-var NodeOpen = require("open");
+var nodeOpen = require("open");
 var PCNodejsConfig = /** @class */ (function (_super) {
     __extends(PCNodejsConfig, _super);
     function PCNodejsConfig() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     PCNodejsConfig.prototype.open = function (url) {
-        return (0, rxjs_1.from)(NodeOpen(url, { wait: true }));
+        var a = nodeOpen(url, { wait: true }).then(function (a) {
+            debugger;
+        });
+        return (0, rxjs_1.of)(true);
+        // return from( as Promise<boolean>);
     };
     return PCNodejsConfig;
 }(BasePlatform_1.PCPlatformConfig));

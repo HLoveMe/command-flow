@@ -4,8 +4,11 @@ import { forkJoin, Observable, Subject, Subscription } from "rxjs";
 import { ContextRunOption } from "./Configs";
 import { BooleanObj, StringObj } from "./Object/BaseObject";
 import { takeLast } from "rxjs/operators";
+import { PCPlatformConfig } from "./Bridge/Platform/BasePlatform";
+import Platform from "./Bridge/Index";
 
 export class Context implements ContextImpl {
+  platform:PCPlatformConfig = Platform
   /**
    * 运行配置文件 todo
    */

@@ -27,9 +27,6 @@
     "webpack-cli": "^3.3.12"
   },
   "pack": {
-    "rn": [
-      "react-native-flash"
-    ]
   },
   "author": "",
   "license": "ISC",

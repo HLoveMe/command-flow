@@ -1,13 +1,17 @@
-import { from, Observable } from "rxjs";
+import { from, Observable, of } from "rxjs";
 import { PCNodejsConfigAble } from "../../ConfigTypes";
 import { PCPlatformConfig } from "../BasePlatform";
-const NodeOpen = require("open");
+const nodeOpen = require("open");
 
 export class PCNodejsConfig
   extends PCPlatformConfig
   implements PCNodejsConfigAble
 {
   open(url: string): Observable<boolean> {
-    return from(NodeOpen(url, { wait: true }) as Promise<boolean>);
+    const a = nodeOpen(url, { wait: true }).then((a) => {
+      debugger;
+    });
+    return of(true);
+    // return from( as Promise<boolean>);
   }
 }

@@ -3,8 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Context = void 0;
 var rxjs_1 = require("rxjs");
 var BaseObject_1 = require("./Object/BaseObject");
+var Index_1 = require("./Bridge/Index");
 var Context = /** @class */ (function () {
     function Context(runOptions) {
+        this.platform = Index_1.default;
         /**
          * 上下文变量
          */

@@ -101,11 +101,11 @@ var Instruction = /** @class */ (function (_super) {
         var _a, _b;
         var that = this;
         var execFunc = (0, Equipment_1.PlatformSelect)({
-            reactNative: function () { var _a; return ((_a = that.rn_run) !== null && _a !== void 0 ? _a : that.run)(value); },
-            web: function () { var _a; return ((_a = that.web_run) !== null && _a !== void 0 ? _a : that.run)(value); },
+            reactNative: function () { var _a; return ((_a = that.rn_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value); },
+            web: function () { var _a; return ((_a = that.web_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value); },
             node: function () {
                 var _a;
-                return ((_a = that.node_run) !== null && _a !== void 0 ? _a : that.run)(value);
+                return ((_a = that.node_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value);
             },
         });
         ((_a = this.config) === null || _a === void 0 ? void 0 : _a.dev) &&

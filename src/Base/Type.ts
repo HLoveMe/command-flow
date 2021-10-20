@@ -11,6 +11,7 @@ import {
   DateAble,
 } from "./Object/ObjectTypes";
 import { ContextRunOption } from "./Configs";
+import { PlatformConfigAble } from "./Bridge/ConfigTypes";
 
 // ArrayAble<any> | MapAble<any, any> | SetAble<any>;
 // export type BaseType = null | number | string | Object ;
@@ -111,6 +112,7 @@ export namespace WorkType {
 }
 
 export declare interface ContextImpl {
+  platform:PlatformConfigAble;
   runOptions: ContextRunOption;
   runConstant: Map<WorkType.WorkUUID, WorkType.WorkConstant>;
   works: WorkType.Work[];

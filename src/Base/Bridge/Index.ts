@@ -12,5 +12,6 @@ const runConfig = PlatformSelect({
   node: { pc: PCNodejsConfig, mobile: MobileNodejsConfig },
   reactNative: { pc: PCRnConfig, mobile: MobileRnConfig },
 });
-const PlatformConfig: PCPlatformConfig = runConfig[isPC ? "pc" : "mobile"];
-export default PlatformConfig;
+const Target = runConfig[isPC ? "pc" : "mobile"];
+const Platform: PCPlatformConfig = new Target();
+export default Platform;

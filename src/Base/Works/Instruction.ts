@@ -103,11 +103,11 @@ class Instruction
     const that = this;
     const execFunc: WorkType.WorkFunction = PlatformSelect({
       reactNative: () =>
-        ((that as WorkType.Work).rn_run ?? (that as WorkType.Work).run)(value),
+        ((that as WorkType.Work).rn_run ?? (that as WorkType.Work).run).bind(that)(value),
       web: () =>
-        ((that as WorkType.Work).web_run ?? (that as WorkType.Work).run)(value),
+        ((that as WorkType.Work).web_run ?? (that as WorkType.Work).run).bind(that)(value),
       node: () =>
-        ((that as WorkType.Work).node_run ?? (that as WorkType.Work).run)(
+        ((that as WorkType.Work).node_run ?? (that as WorkType.Work).run).bind(that)(
           value
         ),
     });

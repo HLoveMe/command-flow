@@ -12,6 +12,7 @@ var runConfig = (0, Equipment_1.PlatformSelect)({
     node: { pc: PC_1.PCNodejsConfig, mobile: Mobile_1.MobileNodejsConfig },
     reactNative: { pc: PC_2.PCRnConfig, mobile: Mobile_2.MobileRnConfig },
 });
-var PlatformConfig = runConfig[Equipment_1.isPC ? "pc" : "mobile"];
-exports.default = PlatformConfig;
+var Target = runConfig[Equipment_1.isPC ? "pc" : "mobile"];
+var Platform = new Target();
+exports.default = Platform;
 //# sourceMappingURL=Index.js.map
