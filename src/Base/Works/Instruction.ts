@@ -7,7 +7,13 @@ import {
   Subscriber,
 } from "rxjs";
 import { ExecError } from "../Error";
-import { currentEnir, isMobile, isPC, JSRUNEnvirType, PlatformSelect } from "../Util/Equipment";
+import {
+  currentEnir,
+  isMobile,
+  isPC,
+  JSRUNEnvirType,
+  PlatformSelect,
+} from "../Util/Equipment";
 import { WorkRunOption } from "../Configs";
 import { tap } from "rxjs/operators";
 import { v4 as UUID } from "uuid";
@@ -21,7 +27,8 @@ import { EnvironmentAble } from "../Util/EquipmentTools";
  */
 class Instruction
   extends Subject<BaseType>
-  implements WorkType.Work, EnvironmentAble {
+  implements WorkType.Work, EnvironmentAble
+{
   static OPTION: WorkRunOption;
   name: string = "Instruction";
   static _id: number = 0;
@@ -85,7 +92,7 @@ class Instruction
         })
       )
       .subscribe({
-        complete: () => { },
+        complete: () => {},
         error: (error) => that.error(error),
         next: (value: BaseType) => that._run(value),
       });
@@ -96,13 +103,17 @@ class Instruction
     const that = this;
     const execFunc: WorkType.WorkFunction = PlatformSelect({
       reactNative: () =>
-        ((that as WorkType.Work).rn_run ?? (that as WorkType.Work).run).bind(that)(value),
+        ((that as WorkType.Work).rn_run ?? (that as WorkType.Work).run).bind(
+          that
+        )(value),
       web: () =>
-        ((that as WorkType.Work).web_run ?? (that as WorkType.Work).run).bind(that)(value),
+        ((that as WorkType.Work).web_run ?? (that as WorkType.Work).run).bind(
+          that
+        )(value),
       node: () =>
-        ((that as WorkType.Work).node_run ?? (that as WorkType.Work).run).bind(that)(
-          value
-        ),
+        ((that as WorkType.Work).node_run ?? (that as WorkType.Work).run).bind(
+          that
+        )(value),
     });
     this.config?.dev &&
       that.context?.sendLog({
@@ -126,7 +137,11 @@ class Instruction
           })
         )
         .subscribe({
-          complete: () => { },
+          complete: () => {
+            const unit = that.runSubscriptions.get(uuid);
+            unit.sub.unsubscribe();
+            this.runSubscriptions.delete(uuid);
+          },
           next: (res) => {
             this.config?.dev &&
               that.context?.sendLog({
@@ -191,13 +206,12 @@ class Instruction
     this.context && this.context.addVariable(this, name, value);
   }
 
-
   isAble(): Boolean {
     return (this as any).__proto__.isAble();
   }
 
   static isAble() {
-    return isPC || isMobile
+    return isPC || isMobile;
   }
 }
 

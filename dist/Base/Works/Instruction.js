@@ -95,8 +95,14 @@ var Instruction = /** @class */ (function (_super) {
         var _a, _b;
         var that = this;
         var execFunc = (0, Equipment_1.PlatformSelect)({
-            reactNative: function () { var _a; return ((_a = that.rn_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value); },
-            web: function () { var _a; return ((_a = that.web_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value); },
+            reactNative: function () {
+                var _a;
+                return ((_a = that.rn_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value);
+            },
+            web: function () {
+                var _a;
+                return ((_a = that.web_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value);
+            },
             node: function () {
                 var _a;
                 return ((_a = that.node_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value);
@@ -110,7 +116,7 @@ var Instruction = /** @class */ (function (_super) {
                 value: value,
             }));
         if (execFunc) {
-            var uuid = (0, uuid_1.v4)();
+            var uuid_2 = (0, uuid_1.v4)();
             var runSub = execFunc(value)
                 .pipe((0, operators_1.tap)(function (_value) {
                 var _a, _b;
@@ -123,7 +129,11 @@ var Instruction = /** @class */ (function (_super) {
                     }));
             }))
                 .subscribe({
-                complete: function () { },
+                complete: function () {
+                    var unit = that.runSubscriptions.get(uuid_2);
+                    unit.sub.unsubscribe();
+                    _this.runSubscriptions.delete(uuid_2);
+                },
                 next: function (res) {
                     var _a, _b, _c;
                     ((_a = _this.config) === null || _a === void 0 ? void 0 : _a.dev) &&
@@ -136,7 +146,7 @@ var Instruction = /** @class */ (function (_super) {
                     (_c = that.nextWork) === null || _c === void 0 ? void 0 : _c.next(res);
                 },
             });
-            var unit = new WorkUnit_1.WorkUnit(that.context, that, runSub, uuid);
+            var unit = new WorkUnit_1.WorkUnit(that.context, that, runSub, uuid_2);
             this.runSubscriptions.set(unit.uuid, unit);
         }
     };

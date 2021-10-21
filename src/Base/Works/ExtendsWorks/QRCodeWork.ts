@@ -9,6 +9,8 @@ import { isNode, isRN, isWeb } from "../../Util/Equipment";
 
 /**
  * 字符串生产QRcode base64
+ * input => StringObj
+ * output => StringObj
  */
 class QRCodeWork extends InstructionOTO {
   name: string = "OpenURLWork";

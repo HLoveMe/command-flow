@@ -21,6 +21,8 @@ var rxjs_1 = require("rxjs");
 var Equipment_1 = require("../../Util/Equipment");
 /**
  * 字符串生产QRcode base64
+ * input => StringObj
+ * output => StringObj
  */
 var QRCodeWork = /** @class */ (function (_super) {
     __extends(QRCodeWork, _super);
