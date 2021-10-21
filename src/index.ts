@@ -4,7 +4,7 @@ import {
   Base64DecodeWork,
   Base64EnCodeWork,
 } from "./Base/Works/ExtendsWorks/Base64Work";
-import { OpenURLWork } from "./Base/Works/ExtendsWorks/OpenURLWork";
+import OpenURLWork from "./Base/Works/ExtendsWorks/OpenURLWork";
 import { QRCodeWork } from "./Base/Works/ExtendsWorks/QRCodeWork";
 // import { InOutString } from "./Base/Object/InOutputValue";
 // import { BehaviorSubject } from "rxjs";

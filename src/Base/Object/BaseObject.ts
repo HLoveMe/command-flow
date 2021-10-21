@@ -10,6 +10,7 @@ import {
   ObjectAble,
   BooleanAble,
   DateAble,
+  DataAble,
 } from "./ObjectTypes";
 import { ControlFlow } from "../Type";
 import { BaseRunTime } from "../Util/EquipmentTools";
@@ -27,8 +28,7 @@ export class ObjectManager {
 
 export class ObjectTarget
   extends BaseRunTime
-  implements ObjectAble, ControlFlow.Compare
-{
+  implements ObjectAble, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call({})) static type: string;
@@ -47,8 +47,7 @@ export class ObjectTarget
 
 export class ArrayObject<T>
   extends BaseRunTime
-  implements ArrayAble<T>, ControlFlow.Compare
-{
+  implements ArrayAble<T>, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call([])) static type: string;
@@ -83,8 +82,7 @@ export class ArrayObject<T>
 
 export class MapObject<T, U>
   extends BaseRunTime
-  implements MapAble<T, U>, ControlFlow.Compare
-{
+  implements MapAble<T, U>, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Map())) static type: string;
@@ -111,8 +109,7 @@ export class MapObject<T, U>
 
 export class SetObject<T>
   extends BaseRunTime
-  implements SetAble<T>, ControlFlow.Compare
-{
+  implements SetAble<T>, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Set())) static type: string;
@@ -139,8 +136,7 @@ export class SetObject<T>
 
 export class NumberObj
   extends BaseRunTime
-  implements NumberAble, ControlFlow.Compare
-{
+  implements NumberAble, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Number()))
@@ -161,8 +157,7 @@ export class NumberObj
 
 export class StringObj
   extends BaseRunTime
-  implements StringAble, ControlFlow.Compare
-{
+  implements StringAble, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new String()))
@@ -183,8 +178,7 @@ export class StringObj
 
 export class BooleanObj
   extends BaseRunTime
-  implements BooleanAble, ControlFlow.Compare
-{
+  implements BooleanAble, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Boolean(1)))
@@ -205,8 +199,7 @@ export class BooleanObj
 
 export class DateObj
   extends BaseRunTime
-  implements DateAble, ControlFlow.Compare
-{
+  implements DateAble, ControlFlow.Compare {
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Date())) static type: string;
@@ -226,6 +219,29 @@ export class DateObj
   equal(target: DateObj): Boolean {
     return this.timestamp() == target.timestamp();
   }
+}
+
+export class DataObj extends BaseRunTime implements DataAble {
+
+  static attributes: Set<string> = new Set();
+  _value: Buffer;
+  constructor(value: Buffer) {
+    super();
+    this._value = value;
+  }
+  data(): Buffer {
+    return this.valueOf()
+  }
+
+  @attribute()
+  valueOf(): Buffer {
+    return this._value;
+  }
+
+  equal(target: ValueAble): Boolean {
+    return false
+  }
+
 }
 
 const keys = Object.keys(ControlFlow.ControlEnum);

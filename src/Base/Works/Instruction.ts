@@ -19,6 +19,7 @@ import { tap } from "rxjs/operators";
 import { v4 as UUID } from "uuid";
 import { WorkUnit } from "./WorkUnit";
 import { EnvironmentAble } from "../Util/EquipmentTools";
+import { StringObj } from "../Object/BaseObject";
 
 /**
  * 一次输入--->一次输出 InstructionOTO
@@ -27,8 +28,7 @@ import { EnvironmentAble } from "../Util/EquipmentTools";
  */
 class Instruction
   extends Subject<BaseType>
-  implements WorkType.Work, EnvironmentAble
-{
+  implements WorkType.Work, EnvironmentAble {
   static OPTION: WorkRunOption;
   name: string = "Instruction";
   static _id: number = 0;
@@ -92,7 +92,7 @@ class Instruction
         })
       )
       .subscribe({
-        complete: () => {},
+        complete: () => { },
         error: (error) => that.error(error),
         next: (value: BaseType) => that._run(value),
       });
@@ -141,6 +141,9 @@ class Instruction
             const unit = that.runSubscriptions.get(uuid);
             unit.sub.unsubscribe();
             this.runSubscriptions.delete(uuid);
+          },
+          error: (err) => {
+            this.context.msgChannel.error(new ExecError(that, err))
           },
           next: (res) => {
             this.config?.dev &&
@@ -200,7 +203,13 @@ class Instruction
     this.unsubscribe();
   }
   error(err: Error): void {
-    this.context && this.context.msgChannel.error(new ExecError(this, err));
+    this.context && this.context.sendLog({
+      work: this,
+      content: this.context,
+      desc: "[Work:preRun]-接受上一个消息错误",
+      date: new Date(),
+      value: new StringObj(err.message),
+    });
   }
   addVariable(name: string, value: BaseType): void {
     this.context && this.context.addVariable(this, name, value);

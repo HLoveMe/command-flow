@@ -32,12 +32,16 @@ export declare interface StringAble extends ValueAble {
   valueOf(): string;
 }
 
-export declare interface BooleanAble extends ValueAble { 
+export declare interface BooleanAble extends ValueAble {
   valueOf(): Boolean;
 }
 
-export declare interface DateAble extends ValueAble { 
-  timestamp():number;
+export declare interface DateAble extends ValueAble {
+  timestamp(): number;
+}
+
+export declare interface DataAble extends ValueAble {
+  data(): Buffer;
 }
 
 export function attribute() {

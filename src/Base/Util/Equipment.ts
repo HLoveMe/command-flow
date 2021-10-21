@@ -204,6 +204,7 @@ const isWeb =
   currentEnir === JSRUNEnvirType.WEB_ANDROID ||
   currentEnir === JSRUNEnvirType.WEB_OTHER;
 
+
 const isNode =
   currentEnir === JSRUNEnvirType.NODE ||
   currentEnir === JSRUNEnvirType.NODE_WIN ||

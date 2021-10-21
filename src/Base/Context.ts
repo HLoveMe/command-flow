@@ -51,6 +51,7 @@ export class Context implements ContextImpl {
   }
   workError(error) {
     console.log("msgChannelError", error);
+    this.stopWorkChain()
   }
 
   sendLog(status: WorkType.WorkStatus) {

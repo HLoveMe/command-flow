@@ -9,6 +9,7 @@ import {
   ValueAble,
   BooleanAble,
   DateAble,
+  DataAble,
 } from "./Object/ObjectTypes";
 import { ContextRunOption } from "./Configs";
 import { PlatformConfigAble } from "./Bridge/ConfigTypes";
@@ -23,6 +24,7 @@ export type BaseType =
   | NumberAble
   | BooleanAble
   | DateAble
+  | DataAble
   | undefined
   | null;
 
@@ -87,10 +89,10 @@ export namespace WorkType {
   }
   export declare interface Work
     extends WorkOperation,
-      WorkContext,
-      WorkChain,
-      WorkConfig,
-      WorkEntrance {
+    WorkContext,
+    WorkChain,
+    WorkConfig,
+    WorkEntrance {
     name: string;
     id: number;
     uuid: WorkUUID;
@@ -112,7 +114,7 @@ export namespace WorkType {
 }
 
 export declare interface ContextImpl {
-  platform:PlatformConfigAble;
+  platform: PlatformConfigAble;
   runOptions: ContextRunOption;
   runConstant: Map<WorkType.WorkUUID, WorkType.WorkConstant>;
   works: WorkType.Work[];
@@ -135,6 +137,7 @@ export namespace ControlFlow {
     "more_equal" = "more_equal",
     "less_equal" = "less_equal",
     "contain" = "contain",
+    'add' = 'add'
   }
   export declare type CompareExec = <T extends ControlEnum>(
     type: T,

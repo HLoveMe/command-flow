@@ -27,6 +27,7 @@ class QRCodeWork extends InstructionOTO {
         .subscribe({
           next: (res) => subscriber.next(res),
           complete: () => subscriber.complete(),
+          error: (err) => subscriber.error(err)
         });
       return {
         unsubscribe: () => {

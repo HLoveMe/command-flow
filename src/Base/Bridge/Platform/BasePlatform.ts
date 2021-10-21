@@ -1,13 +1,17 @@
 import { Observable, Subscriber } from "rxjs";
-import { BooleanObj, StringObj } from "../../Object/BaseObject";
+import { BooleanObj, DataObj, StringObj } from "../../Object/BaseObject";
 import {
   CommandLike,
   CommandStatus,
+  FileOption,
+  FileType,
   PCPlatformConfigAble,
   QRcodeOption,
   RunTimeInfo,
 } from "../ConfigTypes";
 import * as QRCode from 'qrcode-generator'
+import { isPC, PlatformSelect } from "../../Util/Equipment";
+import { DataAble } from "../../Object/ObjectTypes";
 
 export class PCPlatformConfig implements PCPlatformConfigAble {
   createQrCode(context: String, option?: QRcodeOption): Observable<StringObj> {
@@ -31,13 +35,13 @@ export class PCPlatformConfig implements PCPlatformConfigAble {
   loadRunInfo(): Observable<RunTimeInfo> {
     throw new Error("Method not implemented.");
   }
-  runCommand(command: CommandLike): Observable<CommandStatus> {
+  runCommand(command: CommandLike, option?: any): Observable<CommandStatus> {
     throw new Error("Method not implemented.");
   }
-  open(url: String): Observable<BooleanObj> {
+  open(url: String, option?: any): Observable<BooleanObj> {
     throw new Error("Method not implemented.");
   }
-  loadFile(url: CommandLike): Observable<Buffer> {
+  loadFile(url: CommandLike, option?: FileOption): Observable<DataAble> {
     throw new Error("Method not implemented.");
   }
 }
