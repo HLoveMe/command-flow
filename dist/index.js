@@ -21,7 +21,7 @@ function test01() {
 // test01()
 function test02() {
     var context = new Context_1.Context();
-    context.addWork(new OpenURLWork_1.OpenURLWork());
+    context.addWork(new OpenURLWork_1.default());
     // context.run(new StringObj("file:///C:/Users/Administrator/AppData/Local/Programs/Python/Python310/"));
     context.run(new BaseObject_1.StringObj("file:///C:/Users/Administrator/Desktop/116513f379bd664b7cfe5b3b40f5737d.jpg"));
     //d:\元气壁纸缓存\img\116513f379bd664b7cfe5b3b40f5737d.jpg

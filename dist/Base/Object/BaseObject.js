@@ -27,7 +27,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DateObj = exports.BooleanObj = exports.StringObj = exports.NumberObj = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = exports.ObjectManager = void 0;
+exports.DataObj = exports.DateObj = exports.BooleanObj = exports.StringObj = exports.NumberObj = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = exports.ObjectManager = void 0;
 var ObjectTypes_1 = require("./ObjectTypes");
 var Type_1 = require("../Type");
 var EquipmentTools_1 = require("../Util/EquipmentTools");
@@ -320,6 +320,32 @@ var DateObj = /** @class */ (function (_super) {
     return DateObj;
 }(EquipmentTools_1.BaseRunTime));
 exports.DateObj = DateObj;
+var DataObj = /** @class */ (function (_super) {
+    __extends(DataObj, _super);
+    function DataObj(value) {
+        var _this = _super.call(this) || this;
+        _this._value = value;
+        return _this;
+    }
+    DataObj.prototype.data = function () {
+        return this.valueOf();
+    };
+    DataObj.prototype.valueOf = function () {
+        return this._value;
+    };
+    DataObj.prototype.equal = function (target) {
+        return false;
+    };
+    DataObj.attributes = new Set();
+    __decorate([
+        (0, ObjectTypes_1.attribute)(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", Buffer)
+    ], DataObj.prototype, "valueOf", null);
+    return DataObj;
+}(EquipmentTools_1.BaseRunTime));
+exports.DataObj = DataObj;
 var keys = Object.keys(Type_1.ControlFlow.ControlEnum);
 Object.keys(module.exports).forEach(function ($1) {
     if ($1 != "ObjectManager") {

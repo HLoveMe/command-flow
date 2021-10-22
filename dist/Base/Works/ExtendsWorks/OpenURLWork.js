@@ -15,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OpenURLWork = void 0;
 var Instruction_1 = require("../Instruction");
 var rxjs_1 = require("rxjs");
 var BaseObject_1 = require("../../Object/BaseObject");
@@ -46,6 +45,7 @@ var OpenURLWork = /** @class */ (function (_super) {
                 .subscribe({
                 next: function (_) { return subscriber.next(new BaseObject_1.BooleanObj(true)); },
                 complete: function () { return subscriber.complete(); },
+                error: function (err) { return subscriber.error(err); }
             });
             return {
                 unsubscribe: function () {
@@ -60,5 +60,5 @@ var OpenURLWork = /** @class */ (function (_super) {
     };
     return OpenURLWork;
 }(Instruction_1.InstructionOTO));
-exports.OpenURLWork = OpenURLWork;
+exports.default = OpenURLWork;
 //# sourceMappingURL=OpenURLWork.js.map

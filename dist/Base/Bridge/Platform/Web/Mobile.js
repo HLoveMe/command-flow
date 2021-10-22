@@ -27,6 +27,9 @@ var MobileWebConfig = /** @class */ (function (_super) {
     MobileWebConfig.prototype.open = function (url) {
         return (0, rxjs_1.of)(new BaseObject_1.BooleanObj(false));
     };
+    MobileWebConfig.prototype.loadFile = function (url, option) {
+        return (0, rxjs_1.of)(new BaseObject_1.DataObj(Buffer.from([])));
+    };
     return MobileWebConfig;
 }(BasePlatform_1.PCPlatformConfig));
 exports.MobileWebConfig = MobileWebConfig;

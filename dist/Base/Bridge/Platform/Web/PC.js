@@ -28,6 +28,29 @@ var PCWebConfig = /** @class */ (function (_super) {
         var result = window.open(url, "__blank");
         return (0, rxjs_1.of)(new BaseObject_1.BooleanObj(result !== null));
     };
+    PCWebConfig.prototype.loadFile = function (url, option) {
+        return new rxjs_1.Observable(function (subscriber) {
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.id = '_temp_input_select';
+            input.accept = (option === null || option === void 0 ? void 0 : option.type) || '*';
+            input.style.display = 'none';
+            document.body.append(input);
+            input.addEventListener('change', function (_) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var data = Buffer.from(reader.result);
+                    subscriber.next(new BaseObject_1.DataObj(data));
+                    subscriber.complete();
+                };
+                reader.readAsArrayBuffer(input.files[0]);
+            });
+            input.click();
+            return {
+                unsubscribe: function () { return subscriber.unsubscribe(); }
+            };
+        });
+    };
     return PCWebConfig;
 }(BasePlatform_1.PCPlatformConfig));
 exports.PCWebConfig = PCWebConfig;

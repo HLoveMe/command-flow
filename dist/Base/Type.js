@@ -11,6 +11,7 @@ var ControlFlow;
         ControlEnum["more_equal"] = "more_equal";
         ControlEnum["less_equal"] = "less_equal";
         ControlEnum["contain"] = "contain";
+        ControlEnum["add"] = "add";
     })(ControlEnum = ControlFlow.ControlEnum || (ControlFlow.ControlEnum = {}));
 })(ControlFlow = exports.ControlFlow || (exports.ControlFlow = {}));
 //# sourceMappingURL=Type.js.map

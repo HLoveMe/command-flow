@@ -45,6 +45,7 @@ var QRCodeWork = /** @class */ (function (_super) {
                 .subscribe({
                 next: function (res) { return subscriber.next(res); },
                 complete: function () { return subscriber.complete(); },
+                error: function (err) { return subscriber.error(err); }
             });
             return {
                 unsubscribe: function () {

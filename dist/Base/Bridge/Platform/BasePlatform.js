@@ -29,13 +29,13 @@ var PCPlatformConfig = /** @class */ (function () {
     PCPlatformConfig.prototype.loadRunInfo = function () {
         throw new Error("Method not implemented.");
     };
-    PCPlatformConfig.prototype.runCommand = function (command) {
+    PCPlatformConfig.prototype.runCommand = function (command, option) {
         throw new Error("Method not implemented.");
     };
-    PCPlatformConfig.prototype.open = function (url) {
+    PCPlatformConfig.prototype.open = function (url, option) {
         throw new Error("Method not implemented.");
     };
-    PCPlatformConfig.prototype.loadFile = function (url) {
+    PCPlatformConfig.prototype.loadFile = function (url, option) {
         throw new Error("Method not implemented.");
     };
     return PCPlatformConfig;

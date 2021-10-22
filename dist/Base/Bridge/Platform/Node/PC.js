@@ -17,7 +17,9 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PCNodejsConfig = void 0;
 var rxjs_1 = require("rxjs");
+var BaseObject_1 = require("../../../Object/BaseObject");
 var BasePlatform_1 = require("../BasePlatform");
+var fs = require("fs");
 var nodeOpen = require("open");
 /*** */
 var PCNodejsConfig = /** @class */ (function (_super) {
@@ -27,6 +29,38 @@ var PCNodejsConfig = /** @class */ (function (_super) {
     }
     PCNodejsConfig.prototype.open = function (url) {
         return (0, rxjs_1.from)(nodeOpen(url, { wait: true }));
+    };
+    PCNodejsConfig.prototype.loadFile = function (url, option) {
+        return new rxjs_1.Observable(function (subscriber) {
+            var stat = fs.lstatSync(url);
+            var subs = [];
+            if (stat.isDirectory()) {
+                subscriber.error(new Error(url.toString() + " is not file"));
+            }
+            else {
+                var rs = fs.createReadStream(url, 'binary');
+                var data_1 = Buffer.of();
+                var sub1 = (0, rxjs_1.fromEvent)(rs, 'data').subscribe({
+                    next: function (chunk) {
+                        data_1 = Buffer.concat([data_1, chunk]);
+                    }
+                });
+                var sub2 = (0, rxjs_1.fromEvent)(rs, 'end').subscribe({
+                    next: function () {
+                        subscriber.next(new BaseObject_1.DataObj(data_1));
+                        subscriber.complete();
+                    },
+                });
+                subs.push(sub1);
+                subs.push(sub2);
+            }
+            return {
+                unsubscribe: function () {
+                    subscriber.unsubscribe();
+                    subs.forEach(function ($1) { return $1.unsubscribe(); });
+                }
+            };
+        });
     };
     return PCNodejsConfig;
 }(BasePlatform_1.PCPlatformConfig));

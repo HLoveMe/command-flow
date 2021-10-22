@@ -43,6 +43,7 @@ var Context = /** @class */ (function () {
     };
     Context.prototype.workError = function (error) {
         console.log("msgChannelError", error);
+        this.stopWorkChain();
     };
     Context.prototype.sendLog = function (status) {
         var log = {

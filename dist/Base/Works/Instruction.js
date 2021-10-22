@@ -22,6 +22,7 @@ var Equipment_1 = require("../Util/Equipment");
 var operators_1 = require("rxjs/operators");
 var uuid_1 = require("uuid");
 var WorkUnit_1 = require("./WorkUnit");
+var BaseObject_1 = require("../Object/BaseObject");
 /**
  * 一次输入--->一次输出 InstructionOTO
  * 一次输入--->多次输出 InstructionOTM
@@ -134,6 +135,9 @@ var Instruction = /** @class */ (function (_super) {
                     unit.sub.unsubscribe();
                     _this.runSubscriptions.delete(uuid_2);
                 },
+                error: function (err) {
+                    _this.context.msgChannel.error(new Error_1.ExecError(that, err));
+                },
                 next: function (res) {
                     var _a, _b, _c;
                     ((_a = _this.config) === null || _a === void 0 ? void 0 : _a.dev) &&
@@ -188,7 +192,13 @@ var Instruction = /** @class */ (function (_super) {
         this.unsubscribe();
     };
     Instruction.prototype.error = function (err) {
-        this.context && this.context.msgChannel.error(new Error_1.ExecError(this, err));
+        this.context && this.context.sendLog({
+            work: this,
+            content: this.context,
+            desc: "[Work:preRun]-接受上一个消息错误",
+            date: new Date(),
+            value: new BaseObject_1.StringObj(err.message),
+        });
     };
     Instruction.prototype.addVariable = function (name, value) {
         this.context && this.context.addVariable(this, name, value);
