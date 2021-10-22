@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Context_1 = require("./Base/Context");
 var BaseObject_1 = require("./Base/Object/BaseObject");
 var Base64Work_1 = require("./Base/Works/ExtendsWorks/Base64Work");
+var LoadFileWork_1 = require("./Base/Works/ExtendsWorks/LoadFileWork");
 var OpenURLWork_1 = require("./Base/Works/ExtendsWorks/OpenURLWork");
 var QRCodeWork_1 = require("./Base/Works/ExtendsWorks/QRCodeWork");
 // import { InOutString } from "./Base/Object/InOutputValue";
@@ -27,7 +28,7 @@ function test02() {
     //d:\元气壁纸缓存\img\116513f379bd664b7cfe5b3b40f5737d.jpg
     // context.run(new StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
 }
-test02();
+// test02()
 function test03() {
     var context = new Context_1.Context();
     context.addWork(new QRCodeWork_1.QRCodeWork());
@@ -35,4 +36,10 @@ function test03() {
     // context.run(new StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
 }
 // test03()
+function test04() {
+    var context = new Context_1.Context();
+    context.addWork(new LoadFileWork_1.default());
+    context.run(new BaseObject_1.StringObject("C:\\Users\\zihao.zhu\\Desktop\\chrome\\bocbaocobfecmglnmeaeppambideimao_2.1.3_chrome.zzzmh.cn.crx"));
+}
+test04();
 //# sourceMappingURL=index.js.map

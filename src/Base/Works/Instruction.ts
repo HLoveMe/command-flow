@@ -49,18 +49,6 @@ class Instruction
     super();
     this.uuid = UUID();
   }
-  run?(input: BaseType, option?: any): Observable<BaseType> {
-    throw new Error("Method not implemented.");
-  }
-  rn_run?(input: BaseType, option?: any): Observable<BaseType> {
-    throw new Error("Method not implemented.");
-  }
-  web_run?(input: BaseType, option?: any): Observable<BaseType> {
-    throw new Error("Method not implemented.");
-  }
-  node_run?(input: BaseType, option?: any): Observable<BaseType> {
-    throw new Error("Method not implemented.");
-  }
   // run(input: InOutputAble): Observable<InOutputAble> {
   //   throw new Error("Method not implemented.");
   // }
@@ -141,7 +129,7 @@ class Instruction
       const runSub: Subscription = execFunc(value)
         .pipe(
           tap((_value: ValueAble<any>) => {
-            this.config?.dev &&
+            that.config?.dev &&
               that.context?.sendLog({
                 work: that,
                 content: this.context,
@@ -154,16 +142,16 @@ class Instruction
           complete: () => {
             const unit = that.runSubscriptions.get(uuid);
             unit.sub.unsubscribe();
-            this.runSubscriptions.delete(uuid);
+            that.runSubscriptions.delete(uuid);
           },
           error: (err) => {
-            this.context.msgChannel.error(new ExecError(that, err));
+            that.context.msgChannel.error(new ExecError(that, err));
           },
           next: (res) => {
-            this.config?.dev &&
+            that.config?.dev &&
               that.context?.sendLog({
                 work: that,
-                content: this.context,
+                content: that.context,
                 desc: "[Work][Func:run]->下一个Work",
                 value: res?.valueOf(),
               });
@@ -237,6 +225,11 @@ class Instruction
         desc: msg,
       });
   }
+
+  toString() {
+    return `[${this.name}:${this.id}]`;
+  }
+
   isAble(): Boolean {
     return (this as any).__proto__.isAble();
   }

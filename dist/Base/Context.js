@@ -24,7 +24,7 @@ var Context = /** @class */ (function () {
          */
         this.pools = [];
         this.runOptions = runOptions || {};
-        var sub = this.msgChannel.subscribe(this.workMessage, this.workError);
+        var sub = this.msgChannel.subscribe(this.workMessage.bind(this), this.workError.bind(this));
         this.pools.push(sub);
     }
     /**
@@ -39,7 +39,7 @@ var Context = /** @class */ (function () {
         this.runConstant.get(from.uuid).set(name, value);
     };
     Context.prototype.workMessage = function (input) {
-        console.log("msgChannel", input);
+        console.log("msgChannel", input.valueOf());
     };
     Context.prototype.workError = function (error) {
         console.log("msgChannelError", error);
@@ -47,7 +47,7 @@ var Context = /** @class */ (function () {
     };
     Context.prototype.sendLog = function (status) {
         var log = {
-            date: new Date().getDate(),
+            date: new Date().getTime(),
             work: (Array.isArray(status.work) ? status.work : [status.work]).forEach(function ($1) { return $1.name; }),
             info: status.desc,
         };

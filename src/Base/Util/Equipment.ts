@@ -213,10 +213,10 @@ const isNode =
 const isRN = isReactNative();
 
 const isElectron =
-  window &&
-  window.process &&
-  window.process.versions &&
-  window.process.versions["electron"];
+  (global || window) &&
+  (global || window).process &&
+  (global || window).process.versions &&
+  (global || window).process.versions["electron"];
 
 const isPC =
   currentEnir === JSRUNEnvirType.NODE_LINUX ||

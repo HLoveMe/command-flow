@@ -48,11 +48,11 @@ export namespace WorkType {
 
   export type WorkFunction = (input: BaseType) => Observable<BaseType>;
 
-  export interface WorkStatus {
+  export interface WorkStatus<T extends BaseType> {
     content?: ContextImpl;
     work?: Work | Work[];
     desc?: any;
-    value?: BaseType;
+    value?: T;
     date?: Date;
   }
 
@@ -125,7 +125,7 @@ export declare interface ContextImpl {
   addWorks(...works: WorkType.Work[]): void;
   run(input: BaseType, initOption?: any): void;
   addVariable(from: WorkType.Work, name: string, value: BaseType): void;
-  sendLog(status: WorkType.WorkStatus): void;
+  sendLog(status: WorkType.WorkStatus<BaseType>): void;
   clear(): void;
   stopWorkChain(): Observable<boolean>;
 }

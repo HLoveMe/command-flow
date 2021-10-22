@@ -34,12 +34,14 @@ var PCNodejsConfig = /** @class */ (function (_super) {
         return new rxjs_1.Observable(function (subscriber) {
             var stat = fs.lstatSync(url);
             var subs = [];
-            if (stat.isDirectory()) {
+            if (!fs.existsSync(url)) {
+                subscriber.error(new Error(url.toString() + " is not exists"));
+            }
+            else if (stat.isDirectory()) {
                 subscriber.error(new Error(url.toString() + " is not file"));
             }
             else {
-                var rs = fs.createReadStream(url, "binary");
-                rs.addListener;
+                var rs = fs.createReadStream(url);
                 var data_1 = Buffer.of();
                 var sub1 = (0, rxjs_1.fromEvent)(rs, "data").subscribe({
                     next: function (chunk) {
@@ -53,11 +55,6 @@ var PCNodejsConfig = /** @class */ (function (_super) {
                 });
                 var sub2 = (0, rxjs_1.fromEvent)(rs, "end").subscribe({
                     next: function () {
-                        subscriber.next(new BaseObject_1.ObjectTarget({
-                            loaded: data_1.length,
-                            total: stat.size,
-                            data: data_1,
-                        }));
                         subscriber.complete();
                     },
                 });

@@ -1,8 +1,5 @@
 import { from, fromEvent, Observable, of, Subscription } from "rxjs";
-import {
-  BooleanObject,
-  ObjectTarget,
-} from "../../../Object/BaseObject";
+import { BooleanObject, ObjectTarget } from "../../../Object/BaseObject";
 import {
   CommandLike,
   FileLoadEvent,
@@ -31,11 +28,12 @@ export class PCNodejsConfig
     return new Observable((subscriber) => {
       const stat = fs.lstatSync(url as unknown as fs.PathLike);
       const subs: Subscription[] = [];
-      if (stat.isDirectory()) {
+      if (!fs.existsSync(url as unknown as fs.PathLike)) {
+        subscriber.error(new Error(`${url.toString()} is not exists`));
+      } else if (stat.isDirectory()) {
         subscriber.error(new Error(`${url.toString()} is not file`));
       } else {
-        const rs = fs.createReadStream(url as unknown as fs.PathLike, "binary");
-        rs.addListener;
+        const rs = fs.createReadStream(url as unknown as fs.PathLike);
         let data = Buffer.of();
         const sub1 = fromEvent(rs, "data").subscribe({
           next: (chunk: Buffer) => {
@@ -51,13 +49,6 @@ export class PCNodejsConfig
         });
         const sub2 = fromEvent(rs, "end").subscribe({
           next: () => {
-            subscriber.next(
-              new ObjectTarget<FileLoadEvent>({
-                loaded: data.length,
-                total: stat.size,
-                data,
-              })
-            );
             subscriber.complete();
           },
         });

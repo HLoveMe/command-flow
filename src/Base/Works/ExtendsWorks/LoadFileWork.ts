@@ -13,6 +13,7 @@ import { takeLast, tap } from "rxjs/operators";
 
 export default class LoadFileWork extends InstructionOTO {
   name: string = "LoadFileWork";
+  
   run(input: BaseType, option?: FileOption): Observable<DataObject> {
     const that = this;
     return new Observable((subscriber: Subscriber<DataObject>) => {

@@ -42,18 +42,6 @@ var Instruction = /** @class */ (function (_super) {
         _this.uuid = (0, uuid_1.v4)();
         return _this;
     }
-    Instruction.prototype.run = function (input, option) {
-        throw new Error("Method not implemented.");
-    };
-    Instruction.prototype.rn_run = function (input, option) {
-        throw new Error("Method not implemented.");
-    };
-    Instruction.prototype.web_run = function (input, option) {
-        throw new Error("Method not implemented.");
-    };
-    Instruction.prototype.node_run = function (input, option) {
-        throw new Error("Method not implemented.");
-    };
     // run(input: InOutputAble): Observable<InOutputAble> {
     //   throw new Error("Method not implemented.");
     // }
@@ -133,7 +121,7 @@ var Instruction = /** @class */ (function (_super) {
             var runSub = execFunc(value)
                 .pipe((0, operators_1.tap)(function (_value) {
                 var _a, _b;
-                ((_a = _this.config) === null || _a === void 0 ? void 0 : _a.dev) &&
+                ((_a = that.config) === null || _a === void 0 ? void 0 : _a.dev) &&
                     ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                         work: that,
                         content: _this.context,
@@ -145,17 +133,17 @@ var Instruction = /** @class */ (function (_super) {
                 complete: function () {
                     var unit = that.runSubscriptions.get(uuid_2);
                     unit.sub.unsubscribe();
-                    _this.runSubscriptions.delete(uuid_2);
+                    that.runSubscriptions.delete(uuid_2);
                 },
                 error: function (err) {
-                    _this.context.msgChannel.error(new Error_1.ExecError(that, err));
+                    that.context.msgChannel.error(new Error_1.ExecError(that, err));
                 },
                 next: function (res) {
                     var _a, _b, _c;
-                    ((_a = _this.config) === null || _a === void 0 ? void 0 : _a.dev) &&
+                    ((_a = that.config) === null || _a === void 0 ? void 0 : _a.dev) &&
                         ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                             work: that,
-                            content: _this.context,
+                            content: that.context,
                             desc: "[Work][Func:run]->下一个Work",
                             value: res === null || res === void 0 ? void 0 : res.valueOf(),
                         }));
@@ -224,6 +212,9 @@ var Instruction = /** @class */ (function (_super) {
                 content: this.context,
                 desc: msg,
             }));
+    };
+    Instruction.prototype.toString = function () {
+        return "[" + this.name + ":" + this.id + "]";
     };
     Instruction.prototype.isAble = function () {
         return this.__proto__.isAble();

@@ -6,9 +6,10 @@ import { BooleanObject, StringObject } from "./Object/BaseObject";
 import { takeLast } from "rxjs/operators";
 import { PCPlatformConfig } from "./Bridge/Platform/BasePlatform";
 import Platform from "./Bridge/Index";
+import { ValueAble } from "./Object/ObjectTypes";
 
 export class Context implements ContextImpl {
-  platform:PCPlatformConfig = Platform
+  platform: PCPlatformConfig = Platform;
   /**
    * 运行配置文件 todo
    */
@@ -27,7 +28,10 @@ export class Context implements ContextImpl {
   msgChannel: Subject<BaseType> = new Subject();
   constructor(runOptions?: ContextRunOption) {
     this.runOptions = runOptions || {};
-    const sub = this.msgChannel.subscribe(this.workMessage, this.workError);
+    const sub = this.msgChannel.subscribe(
+      this.workMessage.bind(this),
+      this.workError.bind(this)
+    );
     this.pools.push(sub);
   }
   /**
@@ -46,17 +50,17 @@ export class Context implements ContextImpl {
     !w_map && this.runConstant.set(from.uuid, new Map());
     this.runConstant.get(from.uuid).set(name, value);
   }
-  workMessage(input: BaseType) {
-    console.log("msgChannel", input);
+  workMessage(input: ValueAble<any>) {
+    console.log("msgChannel", input.valueOf());
   }
   workError(error) {
     console.log("msgChannelError", error);
-    this.stopWorkChain()
+    this.stopWorkChain();
   }
 
-  sendLog(status: WorkType.WorkStatus) {
+  sendLog(status: WorkType.WorkStatus<any>) {
     const log = {
-      date: new Date().getDate(),
+      date: new Date().getTime(),
       work: (Array.isArray(status.work) ? status.work : [status.work]).forEach(
         ($1) => $1.name
       ),

@@ -224,10 +224,10 @@ var isNode = currentEnir === JSRUNEnvirType.NODE ||
 exports.isNode = isNode;
 var isRN = isReactNative();
 exports.isRN = isRN;
-var isElectron = window &&
-    window.process &&
-    window.process.versions &&
-    window.process.versions["electron"];
+var isElectron = (global || window) &&
+    (global || window).process &&
+    (global || window).process.versions &&
+    (global || window).process.versions["electron"];
 exports.isElectron = isElectron;
 var isPC = currentEnir === JSRUNEnvirType.NODE_LINUX ||
     currentEnir === JSRUNEnvirType.NODE_MAC ||

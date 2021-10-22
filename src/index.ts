@@ -4,6 +4,7 @@ import {
   Base64DecodeWork,
   Base64EnCodeWork,
 } from "./Base/Works/ExtendsWorks/Base64Work";
+import LoadFileWork from "./Base/Works/ExtendsWorks/LoadFileWork";
 import OpenURLWork from "./Base/Works/ExtendsWorks/OpenURLWork";
 import { QRCodeWork } from "./Base/Works/ExtendsWorks/QRCodeWork";
 // import { InOutString } from "./Base/Object/InOutputValue";
@@ -30,7 +31,7 @@ function test02() {
   //d:\元气壁纸缓存\img\116513f379bd664b7cfe5b3b40f5737d.jpg
   // context.run(new StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
 }
-test02()
+// test02()
 
 function test03() {
   const context = new Context();
@@ -38,5 +39,11 @@ function test03() {
   context.run(new StringObject("AAAA"));
   // context.run(new StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
 }
-
 // test03()
+
+function test04(){
+  const context = new Context();
+  context.addWork(new LoadFileWork());
+  context.run(new StringObject("C:\\Users\\zihao.zhu\\Desktop\\chrome\\bocbaocobfecmglnmeaeppambideimao_2.1.3_chrome.zzzmh.cn.crx"));
+}
+test04()
