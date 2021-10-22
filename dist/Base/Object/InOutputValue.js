@@ -24,7 +24,7 @@ var InOutObject = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     InOutObject.prototype.value = function () {
-        return (0, rxjs_1.of)(this);
+        return (0, rxjs_1.of)(null);
     };
     return InOutObject;
 }(BaseObject_1.ObjectTarget));

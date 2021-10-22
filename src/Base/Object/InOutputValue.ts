@@ -18,7 +18,7 @@ export class InOutObject<T extends BaseType>
   implements InOutputAble
 {
   value(): Observable<BaseType> {
-    return of(this);
+    return of(null);
   }
 }
 export class InOutNumber extends NumberObject implements InOutputAble {

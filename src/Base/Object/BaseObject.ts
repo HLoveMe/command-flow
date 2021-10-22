@@ -33,15 +33,15 @@ export class ObjectTarget<T>
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call({})) static type: string;
-  _value: any;
-  constructor(value: any) {
+  _value: T;
+  constructor(value: T) {
     super();
     this._value = value;
   }
   equal(target: ObjectTarget<T>): Boolean {
     return this._value == target._value;
   }
-  valueOf(): any {
+  valueOf(): T {
     return this._value;
   }
 }
@@ -229,7 +229,7 @@ export class DateObject
   }
 }
 
-export class DataObj extends BaseRunTime implements DataAble {
+export class DataObject extends BaseRunTime implements DataAble {
   static attributes: Set<string> = new Set();
   _value: Buffer;
   constructor(value: Buffer) {

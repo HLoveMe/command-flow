@@ -1,7 +1,6 @@
 import { Observable, of } from "rxjs";
 import {
   BooleanObject,
-  DataObj,
   ObjectTarget,
 } from "../../../Object/BaseObject";
 import { ObjectAble } from "../../../Object/ObjectTypes";

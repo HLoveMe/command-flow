@@ -27,7 +27,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DataObj = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = exports.ObjectManager = void 0;
+exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = exports.ObjectManager = void 0;
 var ObjectTypes_1 = require("./ObjectTypes");
 var Type_1 = require("../Type");
 var EquipmentTools_1 = require("../Util/EquipmentTools");
@@ -320,32 +320,32 @@ var DateObject = /** @class */ (function (_super) {
     return DateObject;
 }(EquipmentTools_1.BaseRunTime));
 exports.DateObject = DateObject;
-var DataObj = /** @class */ (function (_super) {
-    __extends(DataObj, _super);
-    function DataObj(value) {
+var DataObject = /** @class */ (function (_super) {
+    __extends(DataObject, _super);
+    function DataObject(value) {
         var _this = _super.call(this) || this;
         _this._value = value;
         return _this;
     }
-    DataObj.prototype.data = function () {
+    DataObject.prototype.data = function () {
         return this.valueOf();
     };
-    DataObj.prototype.valueOf = function () {
+    DataObject.prototype.valueOf = function () {
         return this._value;
     };
-    DataObj.prototype.equal = function (target) {
+    DataObject.prototype.equal = function (target) {
         return false;
     };
-    DataObj.attributes = new Set();
+    DataObject.attributes = new Set();
     __decorate([
         (0, ObjectTypes_1.attribute)(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Buffer)
-    ], DataObj.prototype, "valueOf", null);
-    return DataObj;
+    ], DataObject.prototype, "valueOf", null);
+    return DataObject;
 }(EquipmentTools_1.BaseRunTime));
-exports.DataObj = DataObj;
+exports.DataObject = DataObject;
 var keys = Object.keys(Type_1.ControlFlow.ControlEnum);
 Object.keys(module.exports).forEach(function ($1) {
     if ($1 != "ObjectManager") {

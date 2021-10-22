@@ -1,7 +1,6 @@
 import { from, fromEvent, Observable, of, Subscription } from "rxjs";
 import {
   BooleanObject,
-  DataObj,
   ObjectTarget,
 } from "../../../Object/BaseObject";
 import {
