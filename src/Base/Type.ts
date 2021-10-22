@@ -12,7 +12,7 @@ import {
   DataAble,
 } from "./Object/ObjectTypes";
 import { ContextRunOption } from "./Configs";
-import { PlatformConfigAble } from "./Bridge/ConfigTypes";
+import { PlatformBridgeAble } from "./Bridge/ConfigTypes";
 
 // ArrayAble<any> | MapAble<any, any> | SetAble<any>;
 // export type BaseType = null | number | string | Object ;
@@ -115,7 +115,7 @@ export namespace WorkType {
 }
 
 export declare interface ContextImpl {
-  platform: PlatformConfigAble;
+  platform: PlatformBridgeAble;
   runOptions: ContextRunOption;
   runConstant: Map<WorkType.WorkUUID, WorkType.WorkConstant>;
   works: WorkType.Work[];

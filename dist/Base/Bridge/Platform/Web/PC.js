@@ -15,20 +15,20 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PCWebConfig = void 0;
+exports.PCWebBridge = void 0;
 var rxjs_1 = require("rxjs");
 var BaseObject_1 = require("../../../Object/BaseObject");
 var BasePlatform_1 = require("../BasePlatform");
-var PCWebConfig = /** @class */ (function (_super) {
-    __extends(PCWebConfig, _super);
-    function PCWebConfig() {
+var PCWebBridge = /** @class */ (function (_super) {
+    __extends(PCWebBridge, _super);
+    function PCWebBridge() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    PCWebConfig.prototype.open = function (url) {
+    PCWebBridge.prototype.open = function (url) {
         var result = window.open(url, "__blank");
         return (0, rxjs_1.of)(new BaseObject_1.BooleanObject(result !== null));
     };
-    PCWebConfig.prototype.loadFile = function (url, option) {
+    PCWebBridge.prototype.loadFile = function (url, option) {
         return new rxjs_1.Observable(function (subscriber) {
             var input = document.createElement("input");
             input.type = "file";
@@ -61,7 +61,7 @@ var PCWebConfig = /** @class */ (function (_super) {
             };
         });
     };
-    return PCWebConfig;
-}(BasePlatform_1.PCPlatformConfig));
-exports.PCWebConfig = PCWebConfig;
+    return PCWebBridge;
+}(BasePlatform_1.PlatformBridge));
+exports.PCWebBridge = PCWebBridge;
 //# sourceMappingURL=PC.js.map

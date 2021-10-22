@@ -3,13 +3,12 @@ import { WorkType, BaseType, ContextImpl } from "./Type";
 import { forkJoin, Observable, Subject, Subscription } from "rxjs";
 import { ContextRunOption } from "./Configs";
 import { BooleanObject, StringObject } from "./Object/BaseObject";
-import { takeLast } from "rxjs/operators";
-import { PCPlatformConfig } from "./Bridge/Platform/BasePlatform";
 import Platform from "./Bridge/Index";
 import { ValueAble } from "./Object/ObjectTypes";
+import { PlatformBridge } from "./Bridge/Platform/BasePlatform";
 
 export class Context implements ContextImpl {
-  platform: PCPlatformConfig = Platform;
+  platform: PlatformBridge = Platform;
   /**
    * 运行配置文件 todo
    */

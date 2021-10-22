@@ -1,20 +1,17 @@
 import { Observable, of } from "rxjs";
-import {
-  BooleanObject,
-  ObjectTarget,
-} from "../../../Object/BaseObject";
+import { BooleanObject, ObjectTarget } from "../../../Object/BaseObject";
 import { ObjectAble } from "../../../Object/ObjectTypes";
 import {
   CommandLike,
   FileLoadEvent,
   FileOption,
-  MobileNodejsConfigAble,
+  MobileNodejsBridgeAble,
 } from "../../ConfigTypes";
-import { PCPlatformConfig } from "../BasePlatform";
+import { PlatformBridge } from "../BasePlatform";
 
-export class MobileNodejsConfig
-  extends PCPlatformConfig
-  implements MobileNodejsConfigAble
+export class MobileNodejsBridge
+  extends PlatformBridge
+  implements MobileNodejsBridgeAble
 {
   open(url: string): Observable<BooleanObject> {
     return of(new BooleanObject(false));

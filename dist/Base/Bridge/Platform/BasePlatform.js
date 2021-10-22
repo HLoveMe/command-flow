@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PCPlatformConfig = void 0;
+exports.PlatformBridge = void 0;
 var rxjs_1 = require("rxjs");
 var BaseObject_1 = require("../../Object/BaseObject");
 var QRCode = require("qrcode-generator");
-var PCPlatformConfig = /** @class */ (function () {
-    function PCPlatformConfig() {
+var PlatformBridge = /** @class */ (function () {
+    function PlatformBridge() {
     }
-    PCPlatformConfig.prototype.createQrCode = function (context, option) {
+    PlatformBridge.prototype.createQrCode = function (context, option) {
         return new rxjs_1.Observable(function (sub) {
             var _a;
             var width = (_a = option === null || option === void 0 ? void 0 : option.SideLength) !== null && _a !== void 0 ? _a : 200;
@@ -26,19 +26,19 @@ var PCPlatformConfig = /** @class */ (function () {
             };
         });
     };
-    PCPlatformConfig.prototype.loadRunInfo = function () {
+    PlatformBridge.prototype.loadRunInfo = function () {
         throw new Error("Method not implemented.");
     };
-    PCPlatformConfig.prototype.runCommand = function (command, option) {
+    PlatformBridge.prototype.runCommand = function (command, option) {
         throw new Error("Method not implemented.");
     };
-    PCPlatformConfig.prototype.open = function (url, option) {
+    PlatformBridge.prototype.open = function (url, option) {
         throw new Error("Method not implemented.");
     };
-    PCPlatformConfig.prototype.loadFile = function (url, option) {
+    PlatformBridge.prototype.loadFile = function (url, option) {
         throw new Error("Method not implemented.");
     };
-    return PCPlatformConfig;
+    return PlatformBridge;
 }());
-exports.PCPlatformConfig = PCPlatformConfig;
+exports.PlatformBridge = PlatformBridge;
 //# sourceMappingURL=BasePlatform.js.map

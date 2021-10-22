@@ -15,26 +15,26 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MobileNodejsConfig = void 0;
+exports.MobileNodejsBridge = void 0;
 var rxjs_1 = require("rxjs");
 var BaseObject_1 = require("../../../Object/BaseObject");
 var BasePlatform_1 = require("../BasePlatform");
-var MobileNodejsConfig = /** @class */ (function (_super) {
-    __extends(MobileNodejsConfig, _super);
-    function MobileNodejsConfig() {
+var MobileNodejsBridge = /** @class */ (function (_super) {
+    __extends(MobileNodejsBridge, _super);
+    function MobileNodejsBridge() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    MobileNodejsConfig.prototype.open = function (url) {
+    MobileNodejsBridge.prototype.open = function (url) {
         return (0, rxjs_1.of)(new BaseObject_1.BooleanObject(false));
     };
-    MobileNodejsConfig.prototype.loadFile = function (url, option) {
+    MobileNodejsBridge.prototype.loadFile = function (url, option) {
         return (0, rxjs_1.of)(new BaseObject_1.ObjectTarget({
             total: 0,
             loaded: 0,
             data: Buffer.of(),
         }));
     };
-    return MobileNodejsConfig;
-}(BasePlatform_1.PCPlatformConfig));
-exports.MobileNodejsConfig = MobileNodejsConfig;
+    return MobileNodejsBridge;
+}(BasePlatform_1.PlatformBridge));
+exports.MobileNodejsBridge = MobileNodejsBridge;
 //# sourceMappingURL=Mobile.js.map

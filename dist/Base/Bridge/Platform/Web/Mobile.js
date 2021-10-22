@@ -15,26 +15,26 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MobileWebConfig = void 0;
+exports.MobileWebBridge = void 0;
 var rxjs_1 = require("rxjs");
 var BaseObject_1 = require("../../../Object/BaseObject");
 var BasePlatform_1 = require("../BasePlatform");
-var MobileWebConfig = /** @class */ (function (_super) {
-    __extends(MobileWebConfig, _super);
-    function MobileWebConfig() {
+var MobileWebBridge = /** @class */ (function (_super) {
+    __extends(MobileWebBridge, _super);
+    function MobileWebBridge() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    MobileWebConfig.prototype.open = function (url) {
+    MobileWebBridge.prototype.open = function (url) {
         return (0, rxjs_1.of)(new BaseObject_1.BooleanObject(false));
     };
-    MobileWebConfig.prototype.loadFile = function (url, option) {
+    MobileWebBridge.prototype.loadFile = function (url, option) {
         return (0, rxjs_1.of)(new BaseObject_1.ObjectTarget({
             total: 0,
             loaded: 0,
             data: Buffer.of(),
         }));
     };
-    return MobileWebConfig;
-}(BasePlatform_1.PCPlatformConfig));
-exports.MobileWebConfig = MobileWebConfig;
+    return MobileWebBridge;
+}(BasePlatform_1.PlatformBridge));
+exports.MobileWebBridge = MobileWebBridge;
 //# sourceMappingURL=Mobile.js.map

@@ -8,11 +8,11 @@ import {
   CommandLike,
   FileLoadEvent,
   FileOption,
-  PCWebConfigAble,
+  PCWebBridgeAble,
 } from "../../ConfigTypes";
-import { PCPlatformConfig } from "../BasePlatform";
+import { PlatformBridge } from "../BasePlatform";
 
-export class PCWebConfig extends PCPlatformConfig implements PCWebConfigAble {
+export class PCWebBridge extends PlatformBridge implements PCWebBridgeAble {
   open(url: string): Observable<BooleanObject> {
     const result = window.open(url, "__blank");
     return of(new BooleanObject(result !== null));

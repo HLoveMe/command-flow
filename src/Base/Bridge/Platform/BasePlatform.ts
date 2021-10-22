@@ -5,16 +5,14 @@ import {
   CommandStatus,
   FileLoadEvent,
   FileOption,
-  FileType,
-  PCPlatformConfigAble,
+  PCPlatformBridgeAble,
   QRcodeOption,
   RunTimeInfo,
 } from "../ConfigTypes";
 import * as QRCode from "qrcode-generator";
-import { isPC, PlatformSelect } from "../../Util/Equipment";
-import { DataAble, ObjectAble } from "../../Object/ObjectTypes";
+import { ObjectAble } from "../../Object/ObjectTypes";
 
-export class PCPlatformConfig implements PCPlatformConfigAble {
+export class PlatformBridge implements PCPlatformBridgeAble {
   createQrCode(
     context: String,
     option?: QRcodeOption

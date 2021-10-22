@@ -9,14 +9,13 @@ import {
   FileLoadEvent,
   FileOption,
   FileType,
-  MobileWebConfigAble,
-  PCWebConfigAble,
+  MobileWebBridgeAble,
 } from "../../ConfigTypes";
-import { PCPlatformConfig } from "../BasePlatform";
+import { PlatformBridge } from "../BasePlatform";
 
-export class MobileWebConfig
-  extends PCPlatformConfig
-  implements MobileWebConfigAble
+export class MobileWebBridge
+  extends PlatformBridge
+  implements MobileWebBridgeAble
 {
   open(url: string): Observable<BooleanObject> {
     return of(new BooleanObject(false));

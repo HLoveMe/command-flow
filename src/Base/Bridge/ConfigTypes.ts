@@ -42,7 +42,7 @@ export interface FileLoadEvent {
   data: Buffer;
 }
 
-export declare interface PlatformConfigAble {
+export declare interface PlatformBridgeAble {
   //计算机运行相关硬件
   loadRunInfo(): Observable<RunTimeInfo>;
   //命令行工具
@@ -68,13 +68,13 @@ export declare interface PlatformConfigAble {
   ): Observable<StringObject>;
 }
 
-export interface PCPlatformConfigAble extends PlatformConfigAble {}
+export interface PCPlatformBridgeAble extends PlatformBridgeAble {}
 
-export interface PCWebConfigAble extends PCPlatformConfigAble {}
-export interface PCNodejsConfigAble extends PCPlatformConfigAble {}
-export interface PCRnConfigAble extends PCPlatformConfigAble {}
+export interface PCWebBridgeAble extends PCPlatformBridgeAble {}
+export interface PCNodejsBridgeAble extends PCPlatformBridgeAble {}
+export interface PCRnBridgeAble extends PCPlatformBridgeAble {}
 
-export interface MobilePlatformConfigAble extends PlatformConfigAble {}
-export interface MobileWebConfigAble extends MobilePlatformConfigAble {}
-export interface MobileNodejsConfigAble extends MobilePlatformConfigAble {}
-export interface MobileRnConfigAble extends MobilePlatformConfigAble {}
+export interface MobilePlatformBridgeAble extends PlatformBridgeAble {}
+export interface MobileWebBridgeAble extends MobilePlatformBridgeAble {}
+export interface MobileNodejsBridgeAble extends MobilePlatformBridgeAble {}
+export interface MobileRnBridgeAble extends MobilePlatformBridgeAble {}

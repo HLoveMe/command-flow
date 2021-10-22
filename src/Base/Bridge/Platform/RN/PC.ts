@@ -1,11 +1,11 @@
 import { Observable, of } from "rxjs";
 import { BooleanObject } from "../../../Object/BaseObject";
-import { PCRnConfigAble } from "../../ConfigTypes";
-import { PCPlatformConfig } from "../BasePlatform";
+import { PCRnBridgeAble } from "../../ConfigTypes";
+import {  PlatformBridge } from "../BasePlatform";
 
-export class PCRnConfig
-  extends PCPlatformConfig
-  implements PCRnConfigAble
+export class PCRnBridge
+  extends PlatformBridge
+  implements PCRnBridgeAble
 {
   open(url: string): Observable<BooleanObject> {
     return of(new BooleanObject(false));

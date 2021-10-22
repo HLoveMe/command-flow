@@ -4,17 +4,17 @@ import {
   CommandLike,
   FileLoadEvent,
   FileOption,
-  PCNodejsConfigAble,
+  PCNodejsBridgeAble,
 } from "../../ConfigTypes";
-import { PCPlatformConfig } from "../BasePlatform";
 import * as fs from "fs";
 import { ObjectAble } from "../../../Object/ObjectTypes";
+import { PlatformBridge } from "../BasePlatform";
 const nodeOpen = require("open");
 
 /*** */
-export class PCNodejsConfig
-  extends PCPlatformConfig
-  implements PCNodejsConfigAble
+export class PCNodejsBridge
+  extends PlatformBridge
+  implements PCNodejsBridgeAble
 {
   open(url: string): Observable<BooleanObject> {
     return from(nodeOpen(url, { wait: true }) as Observable<BooleanObject>);
