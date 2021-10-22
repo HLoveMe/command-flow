@@ -1,5 +1,5 @@
 import { Context } from "./Base/Context";
-import { StringObj } from "./Base/Object/BaseObject";
+import { StringObject } from "./Base/Object/BaseObject";
 import {
   Base64DecodeWork,
   Base64EnCodeWork,
@@ -17,7 +17,7 @@ function test01() {
   context.addWork(new Base64DecodeWork());
   context.addWork(new Base64DecodeWork());
   setInterval(() => {
-    context.run(new StringObj("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
+    context.run(new StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
   }, 5000);
 }
 // test01()
@@ -25,18 +25,18 @@ function test01() {
 function test02() {
   const context = new Context();
   context.addWork(new OpenURLWork());
-  // context.run(new StringObj("file:///C:/Users/Administrator/AppData/Local/Programs/Python/Python310/"));
-  context.run(new StringObj("file:///C:/Users/Administrator/Desktop/116513f379bd664b7cfe5b3b40f5737d.jpg"));
+  // context.run(new StringObject("file:///C:/Users/Administrator/AppData/Local/Programs/Python/Python310/"));
+  context.run(new StringObject("file:///C:/Users/Administrator/Desktop/116513f379bd664b7cfe5b3b40f5737d.jpg"));
   //d:\元气壁纸缓存\img\116513f379bd664b7cfe5b3b40f5737d.jpg
-  // context.run(new StringObj("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
+  // context.run(new StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
 }
 test02()
 
 function test03() {
   const context = new Context();
   context.addWork(new QRCodeWork());
-  context.run(new StringObj("AAAA"));
-  // context.run(new StringObj("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
+  context.run(new StringObject("AAAA"));
+  // context.run(new StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
 }
 
 // test03()

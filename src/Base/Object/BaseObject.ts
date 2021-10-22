@@ -26,9 +26,10 @@ export class ObjectManager {
   static types: Set<string> = new Set();
 }
 
-export class ObjectTarget
+export class ObjectTarget<T>
   extends BaseRunTime
-  implements ObjectAble, ControlFlow.Compare {
+  implements ObjectAble<T>, ControlFlow.Compare
+{
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call({})) static type: string;
@@ -37,7 +38,7 @@ export class ObjectTarget
     super();
     this._value = value;
   }
-  equal(target: ObjectTarget): Boolean {
+  equal(target: ObjectTarget<T>): Boolean {
     return this._value == target._value;
   }
   valueOf(): any {
@@ -47,7 +48,8 @@ export class ObjectTarget
 
 export class ArrayObject<T>
   extends BaseRunTime
-  implements ArrayAble<T>, ControlFlow.Compare {
+  implements ArrayAble<T>, ControlFlow.Compare
+{
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call([])) static type: string;
@@ -82,7 +84,8 @@ export class ArrayObject<T>
 
 export class MapObject<T, U>
   extends BaseRunTime
-  implements MapAble<T, U>, ControlFlow.Compare {
+  implements MapAble<T, U>, ControlFlow.Compare
+{
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Map())) static type: string;
@@ -109,7 +112,8 @@ export class MapObject<T, U>
 
 export class SetObject<T>
   extends BaseRunTime
-  implements SetAble<T>, ControlFlow.Compare {
+  implements SetAble<T>, ControlFlow.Compare
+{
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Set())) static type: string;
@@ -134,9 +138,10 @@ export class SetObject<T>
   }
 }
 
-export class NumberObj
+export class NumberObject
   extends BaseRunTime
-  implements NumberAble, ControlFlow.Compare {
+  implements NumberAble, ControlFlow.Compare
+{
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Number()))
@@ -150,14 +155,15 @@ export class NumberObj
   valueOf(): number {
     return this._value;
   }
-  equal(target: NumberObj): Boolean {
+  equal(target: NumberObject): Boolean {
     return this._value == target._value;
   }
 }
 
-export class StringObj
+export class StringObject
   extends BaseRunTime
-  implements StringAble, ControlFlow.Compare {
+  implements StringAble, ControlFlow.Compare
+{
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new String()))
@@ -171,14 +177,15 @@ export class StringObj
   valueOf(): string {
     return this._value;
   }
-  equal(target: StringObj): Boolean {
+  equal(target: StringObject): Boolean {
     return this._value == target._value;
   }
 }
 
-export class BooleanObj
+export class BooleanObject
   extends BaseRunTime
-  implements BooleanAble, ControlFlow.Compare {
+  implements BooleanAble, ControlFlow.Compare
+{
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Boolean(1)))
@@ -192,14 +199,15 @@ export class BooleanObj
   valueOf(): boolean {
     return Boolean(this._value);
   }
-  equal(target: BooleanObj): Boolean {
+  equal(target: BooleanObject): Boolean {
     return this.valueOf() == target.valueOf();
   }
 }
 
-export class DateObj
+export class DateObject
   extends BaseRunTime
-  implements DateAble, ControlFlow.Compare {
+  implements DateAble, ControlFlow.Compare
+{
   static attributes: Set<string> = new Set();
   compare?: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Date())) static type: string;
@@ -216,13 +224,12 @@ export class DateObj
   valueOf(): Date {
     return new Date(this._value);
   }
-  equal(target: DateObj): Boolean {
+  equal(target: DateObject): Boolean {
     return this.timestamp() == target.timestamp();
   }
 }
 
 export class DataObj extends BaseRunTime implements DataAble {
-
   static attributes: Set<string> = new Set();
   _value: Buffer;
   constructor(value: Buffer) {
@@ -230,7 +237,7 @@ export class DataObj extends BaseRunTime implements DataAble {
     this._value = value;
   }
   data(): Buffer {
-    return this.valueOf()
+    return this.valueOf();
   }
 
   @attribute()
@@ -238,10 +245,9 @@ export class DataObj extends BaseRunTime implements DataAble {
     return this._value;
   }
 
-  equal(target: ValueAble): Boolean {
-    return false
+  equal(target: ValueAble<Buffer>): Boolean {
+    return false;
   }
-
 }
 
 const keys = Object.keys(ControlFlow.ControlEnum);
@@ -250,14 +256,14 @@ Object.keys(module.exports).forEach(($1) => {
     const Target = module.exports[$1];
     keys.forEach((key) => {
       !Target.prototype[key] &&
-        (Target.prototype[key] = function (target: ValueAble) {
+        (Target.prototype[key] = function (target: ValueAble<any>) {
           return this._value == target._value;
         });
     });
     !Target.prototype["compare"] &&
       (Target.prototype["compare"] = function compare<
         T extends ControlFlow.ControlEnum
-      >(type: T, target: ValueAble): boolean {
+      >(type: T, target: ValueAble<any>): boolean {
         const compareFunc = (this as any)[type];
         if (typeof compareFunc == "function") {
           return (compareFunc as ControlFlow.CompareFunction).bind(this)(

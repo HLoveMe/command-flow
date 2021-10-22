@@ -4,7 +4,8 @@ import { StringAble, ValueAble } from "../../Object/ObjectTypes";
 import { Base64 } from 'js-base64';
 import { InstructionMTM } from "../Instruction";
 import { Observable, of, Subscriber } from "rxjs";
-import { StringObj } from "../../Object/BaseObject";
+import { StringObject } from "../../Object/BaseObject";
+import { isJS } from "../../Util/Equipment";
 
 //编码
 class Base64EnCodeWork extends InstructionMTM {
@@ -15,9 +16,9 @@ class Base64EnCodeWork extends InstructionMTM {
       let target: string
       if (input === null || input === undefined) target = ''
       else {
-        target = ((input as ValueAble).valueOf() as Object).toString()
+        target = ((input as ValueAble<any>).valueOf() as Object).toString()
       }
-      subscriber.next(new StringObj(Base64.encode(target)))
+      subscriber.next(new StringObject(Base64.encode(target)))
       subscriber.complete();
       return {
         unsubscribe: () => subscriber.unsubscribe(),
@@ -25,7 +26,7 @@ class Base64EnCodeWork extends InstructionMTM {
     });
   }
   static isAble() {
-    return true;
+    return isJS;
   }
 }
 //解码
@@ -37,9 +38,9 @@ class Base64DecodeWork extends InstructionMTM {
       let target: string
       if (input === null || input === undefined) target = ''
       else {
-        target = ((input as ValueAble).valueOf() as Object).toString()
+        target = ((input as ValueAble<any>).valueOf() as Object).toString()
       }
-      subscriber.next(new StringObj(Base64.decode(target)))
+      subscriber.next(new StringObject(Base64.decode(target)))
       subscriber.complete();
       return {
         unsubscribe: () => subscriber.unsubscribe(),
@@ -47,7 +48,7 @@ class Base64DecodeWork extends InstructionMTM {
     });
   }
   static isAble() {
-    return true;
+    return isJS;
   }
 }
 export {

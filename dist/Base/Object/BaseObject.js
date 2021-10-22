@@ -27,7 +27,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DataObj = exports.DateObj = exports.BooleanObj = exports.StringObj = exports.NumberObj = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = exports.ObjectManager = void 0;
+exports.DataObj = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = exports.ObjectManager = void 0;
 var ObjectTypes_1 = require("./ObjectTypes");
 var Type_1 = require("../Type");
 var EquipmentTools_1 = require("../Util/EquipmentTools");
@@ -203,123 +203,123 @@ var SetObject = /** @class */ (function (_super) {
     return SetObject;
 }(EquipmentTools_1.BaseRunTime));
 exports.SetObject = SetObject;
-var NumberObj = /** @class */ (function (_super) {
-    __extends(NumberObj, _super);
-    function NumberObj(value) {
+var NumberObject = /** @class */ (function (_super) {
+    __extends(NumberObject, _super);
+    function NumberObject(value) {
         var _this = _super.call(this) || this;
         _this._value = value;
         return _this;
     }
-    NumberObj.prototype.valueOf = function () {
+    NumberObject.prototype.valueOf = function () {
         return this._value;
     };
-    NumberObj.prototype.equal = function (target) {
+    NumberObject.prototype.equal = function (target) {
         return this._value == target._value;
     };
-    NumberObj.attributes = new Set();
+    NumberObject.attributes = new Set();
     __decorate([
         (0, ObjectTypes_1.attribute)(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Number)
-    ], NumberObj.prototype, "valueOf", null);
+    ], NumberObject.prototype, "valueOf", null);
     __decorate([
         DefaultValue(Object.prototype.toString.call(new Number())),
         __metadata("design:type", String)
-    ], NumberObj, "type", void 0);
-    return NumberObj;
+    ], NumberObject, "type", void 0);
+    return NumberObject;
 }(EquipmentTools_1.BaseRunTime));
-exports.NumberObj = NumberObj;
-var StringObj = /** @class */ (function (_super) {
-    __extends(StringObj, _super);
-    function StringObj(value) {
+exports.NumberObject = NumberObject;
+var StringObject = /** @class */ (function (_super) {
+    __extends(StringObject, _super);
+    function StringObject(value) {
         var _this = _super.call(this) || this;
         _this._value = value;
         return _this;
     }
-    StringObj.prototype.valueOf = function () {
+    StringObject.prototype.valueOf = function () {
         return this._value;
     };
-    StringObj.prototype.equal = function (target) {
+    StringObject.prototype.equal = function (target) {
         return this._value == target._value;
     };
-    StringObj.attributes = new Set();
+    StringObject.attributes = new Set();
     __decorate([
         (0, ObjectTypes_1.attribute)(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", String)
-    ], StringObj.prototype, "valueOf", null);
+    ], StringObject.prototype, "valueOf", null);
     __decorate([
         DefaultValue(Object.prototype.toString.call(new String())),
         __metadata("design:type", String)
-    ], StringObj, "type", void 0);
-    return StringObj;
+    ], StringObject, "type", void 0);
+    return StringObject;
 }(EquipmentTools_1.BaseRunTime));
-exports.StringObj = StringObj;
-var BooleanObj = /** @class */ (function (_super) {
-    __extends(BooleanObj, _super);
-    function BooleanObj(value) {
+exports.StringObject = StringObject;
+var BooleanObject = /** @class */ (function (_super) {
+    __extends(BooleanObject, _super);
+    function BooleanObject(value) {
         var _this = _super.call(this) || this;
         _this._value = value;
         return _this;
     }
-    BooleanObj.prototype.valueOf = function () {
+    BooleanObject.prototype.valueOf = function () {
         return Boolean(this._value);
     };
-    BooleanObj.prototype.equal = function (target) {
+    BooleanObject.prototype.equal = function (target) {
         return this.valueOf() == target.valueOf();
     };
-    BooleanObj.attributes = new Set();
+    BooleanObject.attributes = new Set();
     __decorate([
         (0, ObjectTypes_1.attribute)(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Boolean)
-    ], BooleanObj.prototype, "valueOf", null);
+    ], BooleanObject.prototype, "valueOf", null);
     __decorate([
         DefaultValue(Object.prototype.toString.call(new Boolean(1))),
         __metadata("design:type", String)
-    ], BooleanObj, "type", void 0);
-    return BooleanObj;
+    ], BooleanObject, "type", void 0);
+    return BooleanObject;
 }(EquipmentTools_1.BaseRunTime));
-exports.BooleanObj = BooleanObj;
-var DateObj = /** @class */ (function (_super) {
-    __extends(DateObj, _super);
-    function DateObj(value) {
+exports.BooleanObject = BooleanObject;
+var DateObject = /** @class */ (function (_super) {
+    __extends(DateObject, _super);
+    function DateObject(value) {
         var _this = _super.call(this) || this;
         _this._value = value;
         return _this;
     }
-    DateObj.prototype.timestamp = function () {
+    DateObject.prototype.timestamp = function () {
         return this.valueOf().getTime();
     };
-    DateObj.prototype.valueOf = function () {
+    DateObject.prototype.valueOf = function () {
         return new Date(this._value);
     };
-    DateObj.prototype.equal = function (target) {
+    DateObject.prototype.equal = function (target) {
         return this.timestamp() == target.timestamp();
     };
-    DateObj.attributes = new Set();
+    DateObject.attributes = new Set();
     __decorate([
         (0, ObjectTypes_1.attribute)(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Number)
-    ], DateObj.prototype, "timestamp", null);
+    ], DateObject.prototype, "timestamp", null);
     __decorate([
         (0, ObjectTypes_1.attribute)(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Date)
-    ], DateObj.prototype, "valueOf", null);
+    ], DateObject.prototype, "valueOf", null);
     __decorate([
         DefaultValue(Object.prototype.toString.call(new Date())),
         __metadata("design:type", String)
-    ], DateObj, "type", void 0);
-    return DateObj;
+    ], DateObject, "type", void 0);
+    return DateObject;
 }(EquipmentTools_1.BaseRunTime));
-exports.DateObj = DateObj;
+exports.DateObject = DateObject;
 var DataObj = /** @class */ (function (_super) {
     __extends(DataObj, _super);
     function DataObj(value) {

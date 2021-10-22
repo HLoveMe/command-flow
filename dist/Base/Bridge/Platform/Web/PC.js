@@ -26,28 +26,38 @@ var PCWebConfig = /** @class */ (function (_super) {
     }
     PCWebConfig.prototype.open = function (url) {
         var result = window.open(url, "__blank");
-        return (0, rxjs_1.of)(new BaseObject_1.BooleanObj(result !== null));
+        return (0, rxjs_1.of)(new BaseObject_1.BooleanObject(result !== null));
     };
     PCWebConfig.prototype.loadFile = function (url, option) {
         return new rxjs_1.Observable(function (subscriber) {
-            var input = document.createElement('input');
-            input.type = 'file';
-            input.id = '_temp_input_select';
-            input.accept = (option === null || option === void 0 ? void 0 : option.type) || '*';
-            input.style.display = 'none';
+            var input = document.createElement("input");
+            input.type = "file";
+            input.id = "_temp_input_select";
+            input.accept = (option === null || option === void 0 ? void 0 : option.type) || "*";
+            input.style.display = "none";
             document.body.append(input);
-            input.addEventListener('change', function (_) {
+            input.addEventListener("change", function (_) {
                 var reader = new FileReader();
-                reader.onload = function () {
+                reader.onprogress = function (info) {
+                    var total = info.total, loaded = info.loaded;
                     var data = Buffer.from(reader.result);
-                    subscriber.next(new BaseObject_1.DataObj(data));
+                    subscriber.next(new BaseObject_1.ObjectTarget({
+                        total: total,
+                        loaded: loaded,
+                        data: data,
+                    }));
+                };
+                reader.onload = function (info) {
+                    var data = Buffer.from(reader.result);
+                    var total = info.total, loaded = info.loaded;
+                    subscriber.next(new BaseObject_1.ObjectTarget({ total: total, loaded: loaded, data: data }));
                     subscriber.complete();
                 };
                 reader.readAsArrayBuffer(input.files[0]);
             });
             input.click();
             return {
-                unsubscribe: function () { return subscriber.unsubscribe(); }
+                unsubscribe: function () { return subscriber.unsubscribe(); },
             };
         });
     };

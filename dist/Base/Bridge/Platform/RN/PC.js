@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PCRnConfig = void 0;
 var rxjs_1 = require("rxjs");
+var BaseObject_1 = require("../../../Object/BaseObject");
 var BasePlatform_1 = require("../BasePlatform");
 var PCRnConfig = /** @class */ (function (_super) {
     __extends(PCRnConfig, _super);
@@ -24,7 +25,7 @@ var PCRnConfig = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     PCRnConfig.prototype.open = function (url) {
-        return (0, rxjs_1.of)(false);
+        return (0, rxjs_1.of)(new BaseObject_1.BooleanObject(false));
     };
     return PCRnConfig;
 }(BasePlatform_1.PCPlatformConfig));

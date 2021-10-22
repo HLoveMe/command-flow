@@ -1,13 +1,37 @@
 import { Observable, of } from "rxjs";
-import { BooleanObj, DataObj } from "../../../Object/BaseObject";
-import { CommandLike, FileOption, FileType, MobileWebConfigAble, PCWebConfigAble } from "../../ConfigTypes";
+import {
+  BooleanObject,
+  DataObj,
+  ObjectTarget,
+} from "../../../Object/BaseObject";
+import { ObjectAble } from "../../../Object/ObjectTypes";
+import {
+  CommandLike,
+  FileLoadEvent,
+  FileOption,
+  FileType,
+  MobileWebConfigAble,
+  PCWebConfigAble,
+} from "../../ConfigTypes";
 import { PCPlatformConfig } from "../BasePlatform";
 
-export class MobileWebConfig extends PCPlatformConfig implements MobileWebConfigAble {
-  open(url: string): Observable<BooleanObj> {
-    return of(new BooleanObj(false));
+export class MobileWebConfig
+  extends PCPlatformConfig
+  implements MobileWebConfigAble
+{
+  open(url: string): Observable<BooleanObject> {
+    return of(new BooleanObject(false));
   }
-  loadFile(url: CommandLike, option?: FileOption): Observable<DataObj> {
-    return of(new DataObj(Buffer.from([])))
+  loadFile(
+    url: CommandLike,
+    option?: FileOption
+  ): Observable<ObjectAble<FileLoadEvent>> {
+    return of(
+      new ObjectTarget<FileLoadEvent>({
+        total: 0,
+        loaded: 0,
+        data: Buffer.of(),
+      })
+    );
   }
 }

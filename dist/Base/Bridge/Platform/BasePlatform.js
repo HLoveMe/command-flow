@@ -19,10 +19,10 @@ var PCPlatformConfig = /** @class */ (function () {
             var cellSize = (width - margin * 2) / moduleCount;
             var base64 = qrcode.createDataURL(cellSize, margin);
             // const base64 = qrcode.createDataURL(cellSize, margin).replace('data:image/gif;base64', 'data:image/png;base64');
-            sub.next(new BaseObject_1.StringObj(base64));
+            sub.next(new BaseObject_1.StringObject(base64));
             sub.complete();
             return {
-                unsubscribe: function () { return sub.unsubscribe(); }
+                unsubscribe: function () { return sub.unsubscribe(); },
             };
         });
     };

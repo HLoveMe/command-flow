@@ -89,10 +89,10 @@ export namespace WorkType {
   }
   export declare interface Work
     extends WorkOperation,
-    WorkContext,
-    WorkChain,
-    WorkConfig,
-    WorkEntrance {
+      WorkContext,
+      WorkChain,
+      WorkConfig,
+      WorkEntrance {
     name: string;
     id: number;
     uuid: WorkUUID;
@@ -110,6 +110,7 @@ export namespace WorkType {
     clear(): void;
     addVariable(name: string, value: BaseType): void;
     error(err: Error): void;
+    logMsg(msg: string): void;
   }
 }
 
@@ -137,19 +138,19 @@ export namespace ControlFlow {
     "more_equal" = "more_equal",
     "less_equal" = "less_equal",
     "contain" = "contain",
-    'add' = 'add'
+    "add" = "add",
   }
   export declare type CompareExec = <T extends ControlEnum>(
     type: T,
-    target: ValueAble
+    target: ValueAble<any>
   ) => boolean;
 
-  export declare type CompareFunction = (target: ValueAble) => Boolean;
+  export declare type CompareFunction = (target: ValueAble<any>) => Boolean;
 
   declare type CompareAble = {
     [T in ControlEnum]?: CompareFunction;
   };
   export interface Compare extends CompareAble {
-    compare?<T extends ControlEnum>(type: T, target: ValueAble): boolean;
+    compare?<T extends ControlEnum>(type: T, target: ValueAble<any>): boolean;
   }
 }

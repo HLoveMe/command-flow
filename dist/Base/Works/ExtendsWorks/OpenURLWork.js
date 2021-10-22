@@ -43,7 +43,7 @@ var OpenURLWork = /** @class */ (function (_super) {
             var sub = that.context.platform
                 .open(target)
                 .subscribe({
-                next: function (_) { return subscriber.next(new BaseObject_1.BooleanObj(true)); },
+                next: function (_) { return subscriber.next(new BaseObject_1.BooleanObject(true)); },
                 complete: function () { return subscriber.complete(); },
                 error: function (err) { return subscriber.error(err); }
             });
@@ -56,7 +56,8 @@ var OpenURLWork = /** @class */ (function (_super) {
         });
     };
     OpenURLWork.isAble = function () {
-        return Equipment_1.isNode || Equipment_1.isWeb || Equipment_1.isRN;
+        return Equipment_1.isJS;
+        // return isNode || isWeb || isRN || isElectron
     };
     return OpenURLWork;
 }(Instruction_1.InstructionOTO));

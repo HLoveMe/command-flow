@@ -2,7 +2,7 @@ import {} from "./Object/InOutputValue";
 import { WorkType, BaseType, ContextImpl } from "./Type";
 import { forkJoin, Observable, Subject, Subscription } from "rxjs";
 import { ContextRunOption } from "./Configs";
-import { BooleanObj, StringObj } from "./Object/BaseObject";
+import { BooleanObject, StringObject } from "./Object/BaseObject";
 import { takeLast } from "rxjs/operators";
 import { PCPlatformConfig } from "./Bridge/Platform/BasePlatform";
 import Platform from "./Bridge/Index";
@@ -62,7 +62,7 @@ export class Context implements ContextImpl {
       ),
       info: status.desc,
     };
-    this.msgChannel.next(new StringObj(JSON.stringify(log)));
+    this.msgChannel.next(new StringObject(JSON.stringify(log)));
   }
 
   addWork(work: WorkType.Work) {
@@ -119,7 +119,7 @@ export class Context implements ContextImpl {
             content: that,
             work: errors,
             desc: "[content][Func:stopWorkChain]",
-            value: new BooleanObj(isSuccess),
+            value: new BooleanObject(isSuccess),
           });
           subscribe.next(isSuccess);
           subscribe.complete();

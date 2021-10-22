@@ -25,10 +25,14 @@ var MobileWebConfig = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     MobileWebConfig.prototype.open = function (url) {
-        return (0, rxjs_1.of)(new BaseObject_1.BooleanObj(false));
+        return (0, rxjs_1.of)(new BaseObject_1.BooleanObject(false));
     };
     MobileWebConfig.prototype.loadFile = function (url, option) {
-        return (0, rxjs_1.of)(new BaseObject_1.DataObj(Buffer.from([])));
+        return (0, rxjs_1.of)(new BaseObject_1.ObjectTarget({
+            total: 0,
+            loaded: 0,
+            data: Buffer.of(),
+        }));
     };
     return MobileWebConfig;
 }(BasePlatform_1.PCPlatformConfig));

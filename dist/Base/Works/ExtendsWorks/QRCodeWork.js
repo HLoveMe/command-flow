@@ -21,8 +21,8 @@ var rxjs_1 = require("rxjs");
 var Equipment_1 = require("../../Util/Equipment");
 /**
  * 字符串生产QRcode base64
- * input => StringObj
- * output => StringObj
+ * input => StringObject
+ * output => StringObject
  */
 var QRCodeWork = /** @class */ (function (_super) {
     __extends(QRCodeWork, _super);
@@ -41,11 +41,11 @@ var QRCodeWork = /** @class */ (function (_super) {
                 target = input.valueOf().toString();
             }
             var sub = that.context.platform
-                .createQrCode(target)
+                .createQrCode(target, option)
                 .subscribe({
                 next: function (res) { return subscriber.next(res); },
                 complete: function () { return subscriber.complete(); },
-                error: function (err) { return subscriber.error(err); }
+                error: function (err) { return subscriber.error(err); },
             });
             return {
                 unsubscribe: function () {
@@ -56,7 +56,8 @@ var QRCodeWork = /** @class */ (function (_super) {
         });
     };
     QRCodeWork.isAble = function () {
-        return Equipment_1.isNode || Equipment_1.isWeb || Equipment_1.isRN;
+        return Equipment_1.isJS;
+        // return isNode || isWeb || isRN
     };
     return QRCodeWork;
 }(Instruction_1.InstructionOTO));

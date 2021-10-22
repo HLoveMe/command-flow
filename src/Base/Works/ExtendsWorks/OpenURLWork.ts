@@ -3,8 +3,8 @@ import { BaseType, ContextImpl } from "../../Type";
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
 import { ValueAble } from "../../Object/ObjectTypes";
-import { BooleanObj } from "../../Object/BaseObject";
-import { isNode, isRN, isWeb } from "../../Util/Equipment";
+import { BooleanObject } from "../../Object/BaseObject";
+import { isElectron, isJS, isNode, isRN, isWeb } from "../../Util/Equipment";
 
 /**
  * 打开路径
@@ -13,18 +13,18 @@ import { isNode, isRN, isWeb } from "../../Util/Equipment";
  */
 export default class OpenURLWork extends InstructionOTO {
   name: string = "OpenURLWork";
-  run(input: BaseType, option?: any): Observable<BooleanObj> {
+  run(input: BaseType, option?: any): Observable<BooleanObject> {
     const that = this;
-    return new Observable((subscriber: Subscriber<BooleanObj>) => {
+    return new Observable((subscriber: Subscriber<BooleanObject>) => {
       let target: string;
       if (input === null || input === undefined) target = "";
       else {
-        target = ((input as ValueAble).valueOf() as Object).toString();
+        target = ((input as ValueAble<any>).valueOf() as Object).toString();
       }
       const sub = (that.context as ContextImpl).platform
         .open(target)
         .subscribe({
-          next: _ => subscriber.next(new BooleanObj(true)),
+          next: _ => subscriber.next(new BooleanObject(true)),
           complete: () => subscriber.complete(),
           error: (err) => subscriber.error(err)
         });
@@ -37,6 +37,7 @@ export default class OpenURLWork extends InstructionOTO {
     });
   }
   static isAble() {
-    return isNode || isWeb || isRN
+    return isJS
+    // return isNode || isWeb || isRN || isElectron
   }
 }

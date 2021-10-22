@@ -204,7 +204,6 @@ const isWeb =
   currentEnir === JSRUNEnvirType.WEB_ANDROID ||
   currentEnir === JSRUNEnvirType.WEB_OTHER;
 
-
 const isNode =
   currentEnir === JSRUNEnvirType.NODE ||
   currentEnir === JSRUNEnvirType.NODE_WIN ||
@@ -212,6 +211,12 @@ const isNode =
   currentEnir === JSRUNEnvirType.NODE_LINUX;
 
 const isRN = isReactNative();
+
+const isElectron =
+  window &&
+  window.process &&
+  window.process.versions &&
+  window.process.versions["electron"];
 
 const isPC =
   currentEnir === JSRUNEnvirType.NODE_LINUX ||
@@ -225,12 +230,16 @@ const isPC =
 
 const isMobile = !isPC;
 
-export type PlatformOSType = "reactNative" | "web" | "node";
+const isJS = true;
 
-type Select<T> = (select: { [platform in PlatformOSType]: T }) => T;
+export type PlatformOSType = "reactNative" | "web" | "node" | "electron";
+
+type Select<T> = (select: { [platform in PlatformOSType]?: T }) => T;
 
 const PlatformSelect: Select<any> = (select) => {
-  if (isWeb) {
+  if (isElectron) {
+    return select.electron;
+  } else if (isWeb) {
     return select.web;
   } else if (isNode) {
     return select.node;
@@ -243,6 +252,8 @@ export {
   isNode,
   isRN,
   isPC,
+  isElectron,
   isMobile,
+  isJS,
   PlatformSelect,
 };

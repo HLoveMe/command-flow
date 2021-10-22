@@ -42,6 +42,18 @@ var Instruction = /** @class */ (function (_super) {
         _this.uuid = (0, uuid_1.v4)();
         return _this;
     }
+    Instruction.prototype.run = function (input, option) {
+        throw new Error("Method not implemented.");
+    };
+    Instruction.prototype.rn_run = function (input, option) {
+        throw new Error("Method not implemented.");
+    };
+    Instruction.prototype.web_run = function (input, option) {
+        throw new Error("Method not implemented.");
+    };
+    Instruction.prototype.node_run = function (input, option) {
+        throw new Error("Method not implemented.");
+    };
     // run(input: InOutputAble): Observable<InOutputAble> {
     //   throw new Error("Method not implemented.");
     // }
@@ -192,16 +204,26 @@ var Instruction = /** @class */ (function (_super) {
         this.unsubscribe();
     };
     Instruction.prototype.error = function (err) {
-        this.context && this.context.sendLog({
-            work: this,
-            content: this.context,
-            desc: "[Work:preRun]-接受上一个消息错误",
-            date: new Date(),
-            value: new BaseObject_1.StringObj(err.message),
-        });
+        this.context &&
+            this.context.sendLog({
+                work: this,
+                content: this.context,
+                desc: "[Work:preRun]-接受上一个消息错误",
+                date: new Date(),
+                value: new BaseObject_1.StringObject(err.message),
+            });
     };
     Instruction.prototype.addVariable = function (name, value) {
         this.context && this.context.addVariable(this, name, value);
+    };
+    Instruction.prototype.logMsg = function (msg) {
+        var _a, _b;
+        ((_a = this.config) === null || _a === void 0 ? void 0 : _a.dev) &&
+            ((_b = this.context) === null || _b === void 0 ? void 0 : _b.sendLog({
+                work: this,
+                content: this.context,
+                desc: msg,
+            }));
     };
     Instruction.prototype.isAble = function () {
         return this.__proto__.isAble();

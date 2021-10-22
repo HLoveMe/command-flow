@@ -38,7 +38,7 @@ var InOutNumber = /** @class */ (function (_super) {
         return (0, rxjs_1.of)(this);
     };
     return InOutNumber;
-}(BaseObject_1.NumberObj));
+}(BaseObject_1.NumberObject));
 exports.InOutNumber = InOutNumber;
 var InOutString = /** @class */ (function (_super) {
     __extends(InOutString, _super);
@@ -49,7 +49,7 @@ var InOutString = /** @class */ (function (_super) {
         return (0, rxjs_1.of)(this);
     };
     return InOutString;
-}(BaseObject_1.StringObj));
+}(BaseObject_1.StringObject));
 exports.InOutString = InOutString;
 var InOutMap = /** @class */ (function (_super) {
     __extends(InOutMap, _super);
@@ -93,7 +93,7 @@ var InOutBoolean = /** @class */ (function (_super) {
         return (0, rxjs_1.of)(this);
     };
     return InOutBoolean;
-}(BaseObject_1.BooleanObj));
+}(BaseObject_1.BooleanObject));
 exports.InOutBoolean = InOutBoolean;
 var InOutDate = /** @class */ (function (_super) {
     __extends(InOutDate, _super);
@@ -104,6 +104,6 @@ var InOutDate = /** @class */ (function (_super) {
         return (0, rxjs_1.of)(this);
     };
     return InOutDate;
-}(BaseObject_1.DateObj));
+}(BaseObject_1.DateObject));
 exports.InOutDate = InOutDate;
 //# sourceMappingURL=InOutputValue.js.map

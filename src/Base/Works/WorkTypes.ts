@@ -8,30 +8,30 @@ export class SwitchStatus {
   static TOGGLE: SwitchStatusValue = new InOutNumber(2);
 }
 
-type ErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H';
+type ErrorCorrectionLevel = "L" | "M" | "Q" | "H";
 
 export declare type QRValue = InOutString;
-export interface QROption extends ObjectAble {
+export interface QROption {
   typeNumber: number; // 0-40
   errorCorrectionLevel: ErrorCorrectionLevel;
-  cellSize: number;//4
-  margin: number;//
+  cellSize: number; //4
+  margin: number; //
   value: string;
 }
 
-export declare type QR = QRValue | QROption
+export declare type QR = QRValue | QROption;
 
 declare type Request_URL = string;
 declare type Request_Method = "GET" | "POST" | "PUT" | "OPTIONS" | "DELETE";
-declare type Request_Params = { [key: string]: string }
-declare type Request_Header = { [key: string]: string }
-declare type Request_Body = BodyInit
+declare type Request_Params = { [key: string]: string };
+declare type Request_Header = { [key: string]: string };
+declare type Request_Body = BodyInit;
 
 export interface RequestOption {
   URL: Request_URL;
   Method: Request_Method;
   Params: Request_Params;
-  header:Request_Header;
+  header: Request_Header;
   Body: Request_Body;
-  Timeout:number
+  Timeout: number;
 }

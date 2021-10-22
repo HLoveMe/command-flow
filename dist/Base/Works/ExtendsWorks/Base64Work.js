@@ -20,6 +20,7 @@ var js_base64_1 = require("js-base64");
 var Instruction_1 = require("../Instruction");
 var rxjs_1 = require("rxjs");
 var BaseObject_1 = require("../../Object/BaseObject");
+var Equipment_1 = require("../../Util/Equipment");
 //编码
 var Base64EnCodeWork = /** @class */ (function (_super) {
     __extends(Base64EnCodeWork, _super);
@@ -36,7 +37,7 @@ var Base64EnCodeWork = /** @class */ (function (_super) {
             else {
                 target = input.valueOf().toString();
             }
-            subscriber.next(new BaseObject_1.StringObj(js_base64_1.Base64.encode(target)));
+            subscriber.next(new BaseObject_1.StringObject(js_base64_1.Base64.encode(target)));
             subscriber.complete();
             return {
                 unsubscribe: function () { return subscriber.unsubscribe(); },
@@ -44,7 +45,7 @@ var Base64EnCodeWork = /** @class */ (function (_super) {
         });
     };
     Base64EnCodeWork.isAble = function () {
-        return true;
+        return Equipment_1.isJS;
     };
     return Base64EnCodeWork;
 }(Instruction_1.InstructionMTM));
@@ -65,7 +66,7 @@ var Base64DecodeWork = /** @class */ (function (_super) {
             else {
                 target = input.valueOf().toString();
             }
-            subscriber.next(new BaseObject_1.StringObj(js_base64_1.Base64.decode(target)));
+            subscriber.next(new BaseObject_1.StringObject(js_base64_1.Base64.decode(target)));
             subscriber.complete();
             return {
                 unsubscribe: function () { return subscriber.unsubscribe(); },
@@ -73,7 +74,7 @@ var Base64DecodeWork = /** @class */ (function (_super) {
         });
     };
     Base64DecodeWork.isAble = function () {
-        return true;
+        return Equipment_1.isJS;
     };
     return Base64DecodeWork;
 }(Instruction_1.InstructionMTM));

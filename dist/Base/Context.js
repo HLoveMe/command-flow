@@ -51,7 +51,7 @@ var Context = /** @class */ (function () {
             work: (Array.isArray(status.work) ? status.work : [status.work]).forEach(function ($1) { return $1.name; }),
             info: status.desc,
         };
-        this.msgChannel.next(new BaseObject_1.StringObj(JSON.stringify(log)));
+        this.msgChannel.next(new BaseObject_1.StringObject(JSON.stringify(log)));
     };
     Context.prototype.addWork = function (work) {
         work.context = this;
@@ -110,7 +110,7 @@ var Context = /** @class */ (function () {
                         content: that,
                         work: errors,
                         desc: "[content][Func:stopWorkChain]",
-                        value: new BaseObject_1.BooleanObj(isSuccess),
+                        value: new BaseObject_1.BooleanObject(isSuccess),
                     });
                     subscribe.next(isSuccess);
                     subscribe.complete();
