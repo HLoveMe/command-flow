@@ -7,7 +7,6 @@ import {
   PCNodejsConfigAble,
 } from "../../ConfigTypes";
 import { PCPlatformConfig } from "../BasePlatform";
-import * as path from "path";
 import * as fs from "fs";
 import { ObjectAble } from "../../../Object/ObjectTypes";
 const nodeOpen = require("open");
