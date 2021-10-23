@@ -1,27 +1,28 @@
 import { from, fromEvent, Observable, of, Subscription } from "rxjs";
 import { BooleanObject, ObjectTarget } from "../../../Object/BaseObject";
 import {
-  CommandLike,
+  PathLike,
   FileLoadEvent,
   FileOption,
   PCNodejsBridgeAble,
+  CommandStatus,
 } from "../../ConfigTypes";
 import * as fs from "fs";
 import { ObjectAble } from "../../../Object/ObjectTypes";
 import { PlatformBridge } from "../BasePlatform";
 const nodeOpen = require("open");
+import * as process from 'child_process'
 
 /*** */
 export class PCNodejsBridge
   extends PlatformBridge
-  implements PCNodejsBridgeAble
-{
+  implements PCNodejsBridgeAble {
   open(url: string): Observable<BooleanObject> {
     return from(nodeOpen(url, { wait: true }) as Observable<BooleanObject>);
   }
 
   loadFile(
-    url: CommandLike,
+    url: PathLike,
     option?: FileOption
   ): Observable<ObjectAble<FileLoadEvent>> {
     return new Observable((subscriber) => {
@@ -61,5 +62,23 @@ export class PCNodejsBridge
         },
       };
     });
+  }
+
+  runCommand(command: string, option?: any): Observable<CommandStatus> {
+    return new Observable((subscriber) => {
+      process.exec(command, function (error, stdout, stderr) {
+        subscriber.next({
+          result: stdout,
+          command,
+          status: error != null,
+          error,
+        } as CommandStatus)
+        subscriber.complete()
+      });
+      return {
+        unsubscribe: () => subscriber.unsubscribe()
+      }
+    })
+
   }
 }

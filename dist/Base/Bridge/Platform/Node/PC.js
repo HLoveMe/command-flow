@@ -21,6 +21,7 @@ var BaseObject_1 = require("../../../Object/BaseObject");
 var fs = require("fs");
 var BasePlatform_1 = require("../BasePlatform");
 var nodeOpen = require("open");
+var process = require("child_process");
 /*** */
 var PCNodejsBridge = /** @class */ (function (_super) {
     __extends(PCNodejsBridge, _super);
@@ -66,6 +67,22 @@ var PCNodejsBridge = /** @class */ (function (_super) {
                     subscriber.unsubscribe();
                     subs.forEach(function ($1) { return $1.unsubscribe(); });
                 },
+            };
+        });
+    };
+    PCNodejsBridge.prototype.runCommand = function (command, option) {
+        return new rxjs_1.Observable(function (subscriber) {
+            process.exec(command, function (error, stdout, stderr) {
+                subscriber.next({
+                    result: stdout,
+                    command: command,
+                    status: error != null,
+                    error: error,
+                });
+                subscriber.complete();
+            });
+            return {
+                unsubscribe: function () { return subscriber.unsubscribe(); }
             };
         });
     };

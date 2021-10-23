@@ -1,10 +1,10 @@
 import { Observable, Subscriber } from "rxjs";
 import { BooleanObject, StringObject } from "../../Object/BaseObject";
 import {
-  CommandLike,
   CommandStatus,
   FileLoadEvent,
   FileOption,
+  PathLike,
   PCPlatformBridgeAble,
   QRcodeOption,
   RunTimeInfo,
@@ -37,14 +37,36 @@ export class PlatformBridge implements PCPlatformBridgeAble {
   loadRunInfo(): Observable<RunTimeInfo> {
     throw new Error("Method not implemented.");
   }
-  runCommand(command: CommandLike, option?: any): Observable<CommandStatus> {
-    throw new Error("Method not implemented.");
+  runCommand(command: string, option?: any): Observable<CommandStatus> {
+    return new Observable((subscriber) => {
+      let result = null;
+      let error = null;
+      let status = false;
+      try {
+        result = eval(command?.toString())
+        status = true;
+      } catch (_error) {
+        error = _error;
+        status = false;
+      } finally {
+        subscriber.next({
+          result,
+          status,
+          error,
+          command
+        })
+        subscriber.complete()
+      }
+      return {
+        unsubscribe: () => subscriber.unsubscribe()
+      }
+    })
   }
   open(url: String, option?: any): Observable<BooleanObject> {
     throw new Error("Method not implemented.");
   }
   loadFile(
-    url: CommandLike,
+    url: PathLike,
     option?: FileOption
   ): Observable<ObjectAble<FileLoadEvent>> {
     throw new Error("Method not implemented.");

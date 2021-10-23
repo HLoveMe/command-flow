@@ -7,10 +7,9 @@ export interface RunTimeInfo {
   platform: any;
 }
 
-export type CommandLike = string | Buffer | URL;
-export type PathLike = CommandLike;
+export type PathLike = string | Buffer | URL;
 export interface CommandStatus {
-  command: CommandLike;
+  command: string;
   status: boolean;
   error?: Error;
   result?: string;
@@ -50,7 +49,7 @@ export declare interface PlatformBridgeAble {
    * 运行一个脚本 path
    * 运行 javascript
    */
-  runCommand(command: CommandLike, option?: any): Observable<CommandStatus>;
+  runCommand(command: string, option?: any): Observable<CommandStatus>;
 
   //计算机操作
   open(url: String, option?: any): Observable<BooleanObject>;
@@ -68,13 +67,13 @@ export declare interface PlatformBridgeAble {
   ): Observable<StringObject>;
 }
 
-export interface PCPlatformBridgeAble extends PlatformBridgeAble {}
+export interface PCPlatformBridgeAble extends PlatformBridgeAble { }
 
-export interface PCWebBridgeAble extends PCPlatformBridgeAble {}
-export interface PCNodejsBridgeAble extends PCPlatformBridgeAble {}
-export interface PCRnBridgeAble extends PCPlatformBridgeAble {}
+export interface PCWebBridgeAble extends PCPlatformBridgeAble { }
+export interface PCNodejsBridgeAble extends PCPlatformBridgeAble { }
+export interface PCRnBridgeAble extends PCPlatformBridgeAble { }
 
-export interface MobilePlatformBridgeAble extends PlatformBridgeAble {}
-export interface MobileWebBridgeAble extends MobilePlatformBridgeAble {}
-export interface MobileNodejsBridgeAble extends MobilePlatformBridgeAble {}
-export interface MobileRnBridgeAble extends MobilePlatformBridgeAble {}
+export interface MobilePlatformBridgeAble extends PlatformBridgeAble { }
+export interface MobileWebBridgeAble extends MobilePlatformBridgeAble { }
+export interface MobileNodejsBridgeAble extends MobilePlatformBridgeAble { }
+export interface MobileRnBridgeAble extends MobilePlatformBridgeAble { }

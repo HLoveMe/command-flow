@@ -30,7 +30,31 @@ var PlatformBridge = /** @class */ (function () {
         throw new Error("Method not implemented.");
     };
     PlatformBridge.prototype.runCommand = function (command, option) {
-        throw new Error("Method not implemented.");
+        return new rxjs_1.Observable(function (subscriber) {
+            var result = null;
+            var error = null;
+            var status = false;
+            try {
+                result = eval(command === null || command === void 0 ? void 0 : command.toString());
+                status = true;
+            }
+            catch (_error) {
+                error = _error;
+                status = false;
+            }
+            finally {
+                subscriber.next({
+                    result: result,
+                    status: status,
+                    error: error,
+                    command: command
+                });
+                subscriber.complete();
+            }
+            return {
+                unsubscribe: function () { return subscriber.unsubscribe(); }
+            };
+        });
     };
     PlatformBridge.prototype.open = function (url, option) {
         throw new Error("Method not implemented.");

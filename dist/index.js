@@ -6,6 +6,7 @@ var Base64Work_1 = require("./Base/Works/ExtendsWorks/Base64Work");
 var LoadFileWork_1 = require("./Base/Works/ExtendsWorks/LoadFileWork");
 var OpenURLWork_1 = require("./Base/Works/ExtendsWorks/OpenURLWork");
 var QRCodeWork_1 = require("./Base/Works/ExtendsWorks/QRCodeWork");
+var RunCommandWork_1 = require("./Base/Works/ExtendsWorks/RunCommandWork");
 // import { InOutString } from "./Base/Object/InOutputValue";
 // import { BehaviorSubject } from "rxjs";
 // import { takeLast } from "rxjs/operators";
@@ -41,5 +42,11 @@ function test04() {
     context.addWork(new LoadFileWork_1.default());
     context.run(new BaseObject_1.StringObject("C:\\Users\\zihao.zhu\\Desktop\\chrome\\bocbaocobfecmglnmeaeppambideimao_2.1.3_chrome.zzzmh.cn.crx"));
 }
-test04();
+// test04()
+function test05() {
+    var context = new Context_1.Context();
+    context.addWork(new RunCommandWork_1.default());
+    context.run(new BaseObject_1.StringObject("node --version"));
+}
+test05();
 //# sourceMappingURL=index.js.map

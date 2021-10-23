@@ -5,9 +5,9 @@ import {
 } from "../../../Object/BaseObject";
 import { ObjectAble } from "../../../Object/ObjectTypes";
 import {
-  CommandLike,
   FileLoadEvent,
   FileOption,
+  PathLike,
   PCWebBridgeAble,
 } from "../../ConfigTypes";
 import { PlatformBridge } from "../BasePlatform";
@@ -18,7 +18,7 @@ export class PCWebBridge extends PlatformBridge implements PCWebBridgeAble {
     return of(new BooleanObject(result !== null));
   }
   loadFile(
-    url: CommandLike,
+    url: PathLike,
     option?: FileOption
   ): Observable<ObjectAble<FileLoadEvent>> {
     return new Observable((subscriber) => {

@@ -5,23 +5,21 @@ import {
 } from "../../../Object/BaseObject";
 import { ObjectAble } from "../../../Object/ObjectTypes";
 import {
-  CommandLike,
+  PathLike,
   FileLoadEvent,
   FileOption,
-  FileType,
   MobileWebBridgeAble,
 } from "../../ConfigTypes";
 import { PlatformBridge } from "../BasePlatform";
 
 export class MobileWebBridge
   extends PlatformBridge
-  implements MobileWebBridgeAble
-{
+  implements MobileWebBridgeAble {
   open(url: string): Observable<BooleanObject> {
     return of(new BooleanObject(false));
   }
   loadFile(
-    url: CommandLike,
+    url: PathLike,
     option?: FileOption
   ): Observable<ObjectAble<FileLoadEvent>> {
     return of(
