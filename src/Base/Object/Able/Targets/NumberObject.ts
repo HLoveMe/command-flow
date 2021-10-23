@@ -1,12 +1,12 @@
 import { ControlFlow } from "../../Control";
 import { attribute, DefaultValue } from "../../util";
-import { NumberAble } from "../Ables";
+import { Value } from "../../../Types";
 
 export class NumberObject
-  implements NumberAble, ControlFlow.Compare<NumberAble>
+  implements Value.NumberAble, ControlFlow.Compare<Value.NumberAble>
 {
   static attributes: Set<string> = new Set();
-  // compare?: ControlFlow.CompareExec;
+  compare: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Number()))
   static type: string;
   _value: number;

@@ -1,12 +1,12 @@
 import { ControlFlow } from "../../Control";
 import { attribute, DefaultValue, Params } from "../../util";
-import { ArrayAble } from "../Ables";
+import { Value } from "../../../Types";
 
 export class ArrayObject<T>
-  implements ArrayAble<T>, ControlFlow.Compare<ArrayAble<T>>
+  implements Value.ArrayAble<T>, ControlFlow.Compare<Value.ArrayAble<T>>
 {
   static attributes: Set<string> = new Set();
-  // compare?: ControlFlow.CompareExec;
+  compare: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call([])) static type: string;
   _value: Array<T>;
   constructor(value: Array<T>) {

@@ -1,3 +1,6 @@
+import { ValueAble } from "./Able/Ables";
+import { ControlFlow } from "./Control";
+
 export function attribute() {
   return function ($1: any, $2: string, descriptor: PropertyDescriptor) {
     ($1.constructor.attributes as Set<string>).add($2);
@@ -20,4 +23,25 @@ export function DefaultValue(value: string) {
     target[propertyName] = value;
     ObjectManager.types.add(value);
   };
+}
+
+export function CompareUnit(host: any) {
+  Object.keys(ControlFlow.CompareEnum).forEach((key) => {
+    const comFunction = host.prototype[key];
+    if (!comFunction) {
+      host.prototype[key] = () => false;
+    }
+  });
+  !host.prototype.compare &&
+    (host.prototype.compare = function (
+      type: ControlFlow.CompareEnum,
+      target: ValueAble<any>
+    ) {
+      const execFunc = host.prototype[type]?.bind(
+        this
+      ) as ControlFlow.CompareFunction;
+      if (execFunc && typeof execFunc === "function")
+        return execFunc.call(this, target);
+      return false;
+    });
 }

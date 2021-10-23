@@ -1,12 +1,12 @@
 import { ControlFlow } from "../../Control";
 import { attribute, DefaultValue, Params } from "../../util";
-import { MapAble } from "../Ables";
+import { Value } from "../../../Types";
 
 export class MapObject<T, U>
-implements MapAble<T, U>, ControlFlow.Compare<MapAble<T, U>>
+implements Value.MapAble<T, U>, ControlFlow.Compare<Value.MapAble<T, U>>
 {
 static attributes: Set<string> = new Set();
-// compare?: ControlFlow.CompareExec;
+compare: ControlFlow.CompareExec;
 @DefaultValue(Object.prototype.toString.call(new Map())) static type: string;
 _value: Map<T, U>;
 constructor(value: Map<T, U>) {

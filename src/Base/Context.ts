@@ -1,5 +1,5 @@
 
-import { WorkType, BaseType, ContextImpl } from "./Type";
+import { WorkType, BaseType, ContextImpl } from "./Types";
 import { forkJoin, Observable, Subject, Subscription } from "rxjs";
 import { ContextRunOption } from "./Configs";
 import { BooleanObject, StringObject } from "./Object/Able/ObjectAble";

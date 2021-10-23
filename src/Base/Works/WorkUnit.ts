@@ -1,5 +1,5 @@
 import { Subscription } from "rxjs";
-import { ContextImpl, WorkType } from "../Type";
+import { ContextImpl, WorkType } from "../Types";
 import { v4 as UUID } from "uuid";
 
 export class WorkUnit implements WorkType.WorkUnitImpl {

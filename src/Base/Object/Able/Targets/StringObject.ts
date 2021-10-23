@@ -1,12 +1,11 @@
+import { Value } from "../../../Types";
 import { ControlFlow } from "../../Control";
 import { attribute, DefaultValue } from "../../util";
-import { StringAble } from "../Ables";
-
 export class StringObject
-  implements StringAble, ControlFlow.Compare<StringAble>
+  implements Value.StringAble, ControlFlow.Compare<Value.StringAble>
 {
   static attributes: Set<string> = new Set();
-  // compare?: ControlFlow.CompareExec;
+  compare: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new String()))
   static type: string;
   _value: string;

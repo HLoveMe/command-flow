@@ -1,10 +1,10 @@
 import { ControlFlow } from "../../Control";
 import { attribute, DefaultValue } from "../../util";
-import { DateAble } from "../Ables";
+import { Value } from "../../../Types";
 
-export class DateObject implements DateAble, ControlFlow.Compare<DateAble> {
+export class DateObject implements Value.DateAble, ControlFlow.Compare<Value.DateAble> {
   static attributes: Set<string> = new Set();
-  // compare?: ControlFlow.CompareExec;
+  compare: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Date())) static type: string;
   _value: any;
   constructor(value: any) {

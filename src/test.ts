@@ -1,5 +1,7 @@
 import { Context } from "./Base/Context";
-import { StringObject } from "./Base/Object/Able/ObjectAble";
+import { Value } from "./Base/Types";
+import { DataObject, StringObject } from "./Base/Object/Able/ObjectAble";
+import { ControlFlow } from "./Base/Object/Control";
 import {
   Base64DecodeWork,
   Base64EnCodeWork,
@@ -27,7 +29,11 @@ function test02() {
   const context = new Context();
   context.addWork(new OpenURLWork());
   // context.run(new StringObject("file:///C:/Users/Administrator/AppData/Local/Programs/Python/Python310/"));
-  context.run(new StringObject("file:///C:/Users/Administrator/Desktop/116513f379bd664b7cfe5b3b40f5737d.jpg"));
+  context.run(
+    new StringObject(
+      "file:///C:/Users/Administrator/Desktop/116513f379bd664b7cfe5b3b40f5737d.jpg"
+    )
+  );
   //d:\元气壁纸缓存\img\116513f379bd664b7cfe5b3b40f5737d.jpg
   // context.run(new StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
 }
@@ -41,9 +47,22 @@ function test03() {
 }
 // test03()
 
-function test04(){
+function test04() {
   const context = new Context();
   context.addWork(new LoadFileWork());
-  context.run(new StringObject("C:\\Users\\zihao.zhu\\Desktop\\chrome\\bocbaocobfecmglnmeaeppambideimao_2.1.3_chrome.zzzmh.cn.crx"));
+  context.run(
+    new StringObject(
+      "C:\\Users\\zihao.zhu\\Desktop\\chrome\\bocbaocobfecmglnmeaeppambideimao_2.1.3_chrome.zzzmh.cn.crx"
+    )
+  );
 }
-test04()
+// test04()
+
+function test05() {
+  const data1: DataObject = new DataObject(Buffer.from([]));
+  const data2 = new DataObject(Buffer.from([]));
+  debugger;
+  (data1 as ControlFlow.Compare<Value.DataAble>).less(data2);
+  const result = data1.compare(ControlFlow.CompareEnum.Equal, data2);
+}
+test04();

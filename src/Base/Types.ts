@@ -1,41 +1,65 @@
-import { Readable } from "stream";
-import { AsyncSubject, Observable, Subject, Subscription } from "rxjs";
-import {
-  ArrayAble,
-  MapAble,
-  SetAble,
-  StringAble,
-  NumberAble,
-  ValueAble,
-  BooleanAble,
-  DateAble,
-  DataAble,
-} from "./Object/Able/Ables";
+import { Observable, Subject, Subscription } from "rxjs";
+
 import { ContextRunOption } from "./Configs";
 import { PlatformBridgeAble } from "./Bridge/ConfigTypes";
 
-// ArrayAble<any> | MapAble<any, any> | SetAble<any>;
-// export type BaseType = null | number | string | Object ;
+export namespace Value {
+  export declare interface ValueAble<V> {
+    _value: V;
+    valueOf(): V;
+  }
+  export declare interface ObjectAble<V> extends ValueAble<V> {}
+  export declare interface ArrayAble<T> extends ValueAble<Array<T>> {
+    len(): number;
+    first(): T;
+    last(): T;
+    valueOfIndex(index: number): T;
+    valueOf(): Array<T>;
+  }
+
+  export declare interface MapAble<T, U> extends ValueAble<Map<T, U>> {
+    len(): number;
+    get(key: T): U;
+    valueOf(): Map<T, U>;
+  }
+
+  export declare interface SetAble<T> extends ValueAble<Set<T>> {
+    len(): number;
+    valueOf(): Set<T>;
+  }
+
+  export declare interface NumberAble extends ValueAble<Number> {
+    valueOf(): Number;
+  }
+
+  export declare interface StringAble extends ValueAble<String> {
+    valueOf(): String;
+  }
+
+  export declare interface BooleanAble extends ValueAble<Boolean> {
+    valueOf(): Boolean;
+  }
+
+  export declare interface DateAble extends ValueAble<Date> {
+    timestamp(): number;
+  }
+
+  export declare interface DataAble extends ValueAble<Buffer> {
+    data(): Buffer;
+  }
+}
+
 export type BaseType =
-  | ArrayAble<any>
-  | MapAble<any, any>
-  | SetAble<any>
-  | StringAble
-  | NumberAble
-  | BooleanAble
-  | DateAble
-  | DataAble
+  | Value.ArrayAble<any>
+  | Value.MapAble<any, any>
+  | Value.SetAble<any>
+  | Value.StringAble
+  | Value.NumberAble
+  | Value.BooleanAble
+  | Value.DateAble
+  | Value.DataAble
   | undefined
   | null;
-
-// export type AbleType = BaseType | Readable
-
-export type InOutData = Observable<BaseType>;
-
-export declare interface InOutputAble {
-  value(): InOutData;
-}
-export type InOutputAbleOrNil = InOutputAble | null | undefined;
 
 export namespace WorkType {
   export declare type ConfigInfo = { [key: string]: any };

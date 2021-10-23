@@ -1,9 +1,4 @@
-import { InOutputAbleOrNil } from "../../Type";
-import { ValueAble, ObjectAble } from "../../Object/Able/Ables";
-import { takeLast, map, flatMap } from "rxjs/operators";
-import { ValueSwitchTapCatch } from "../../Util/rxjs_operators";
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { RequestOption } from "../WorkTypes";
+
 import { InstructionOTO } from "../Instruction";
 
 class RequestWork extends InstructionOTO {

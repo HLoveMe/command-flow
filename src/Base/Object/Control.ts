@@ -26,10 +26,10 @@ export namespace ControlFlow {
   }
 
   // 比较 接口
-  // export declare type CompareExec = <T extends CompareEnum>(
-  //   type: T,
-  //   target: ValueAble<any>
-  // ) => BooleanAble;
+  export declare type CompareExec = (
+    type: CompareEnum,
+    target: ValueAble<any>
+  ) => BooleanAble;
 
   export declare type CompareFunction = (target: ValueAble<any>) => Boolean;
 

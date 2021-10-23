@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Context_1 = require("./Base/Context");
 var ObjectAble_1 = require("./Base/Object/Able/ObjectAble");
+var Control_1 = require("./Base/Object/Control");
 var Base64Work_1 = require("./Base/Works/ExtendsWorks/Base64Work");
 var LoadFileWork_1 = require("./Base/Works/ExtendsWorks/LoadFileWork");
 var OpenURLWork_1 = require("./Base/Works/ExtendsWorks/OpenURLWork");
@@ -41,5 +42,13 @@ function test04() {
     context.addWork(new LoadFileWork_1.default());
     context.run(new ObjectAble_1.StringObject("C:\\Users\\zihao.zhu\\Desktop\\chrome\\bocbaocobfecmglnmeaeppambideimao_2.1.3_chrome.zzzmh.cn.crx"));
 }
-test04();
+// test04()
+function test05() {
+    var data1 = new ObjectAble_1.DataObject(Buffer.from([]));
+    var data2 = new ObjectAble_1.DataObject(Buffer.from([]));
+    debugger;
+    data1.less(data2);
+    var result = (data1).compare(Control_1.ControlFlow.CompareEnum.Equal, data2);
+}
+test05();
 //# sourceMappingURL=index.js.map

@@ -1,4 +1,4 @@
-import { BaseType, ContextImpl, WorkType } from "../Type";
+import { BaseType, ContextImpl, WorkType,Value } from "../Types";
 import {
   Subject,
   Subscription,
@@ -20,7 +20,6 @@ import { v4 as UUID } from "uuid";
 import { WorkUnit } from "./WorkUnit";
 import { EnvironmentAble } from "../Util/EquipmentTools";
 import { StringObject } from "../Object/Able/ObjectAble";
-import { ValueAble } from "../Object/Able/Ables";
 
 /**
  * 一次输入--->一次输出 InstructionOTO
@@ -128,7 +127,7 @@ class Instruction
       const uuid = UUID();
       const runSub: Subscription = execFunc(value)
         .pipe(
-          tap((_value: ValueAble<any>) => {
+          tap((_value: Value.ValueAble<any>) => {
             that.config?.dev &&
               that.context?.sendLog({
                 work: that,
