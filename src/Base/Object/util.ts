@@ -46,3 +46,26 @@ export function CompareUnit(host: any) {
       return false;
     });
 }
+
+
+export function CalcUnit(host:any){
+  Object.keys(ControlFlow.CalcEnum).forEach((item) => {
+    const key = ControlFlow.CalcEnum[item];
+    const comFunction = host.prototype[key];
+    if (!comFunction) {
+      host.prototype[key] = () => false;
+    }
+  });
+  !host.prototype.compare &&
+    (host.prototype.compare = function (
+      type: ControlFlow.CalcEnum,
+      target: Value.ValueAble<any>
+    ) {
+      const execFunc = host.prototype[type]?.bind(
+        this
+      ) as ControlFlow.CalcFunction;
+      if (execFunc && typeof execFunc === "function")
+        return execFunc.call(this, target);
+      return false;
+    });
+}

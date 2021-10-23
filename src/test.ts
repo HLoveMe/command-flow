@@ -59,7 +59,7 @@ function test05() {
   const data1: DataObject = new DataObject(Buffer.from([]));
   const data2 = new DataObject(Buffer.from([]));
   debugger;
-  (data1 as ControlFlow.Compare<Value.DataAble>).less(data2);
+  data1.less(data2);
   const result = data1.compare(ControlFlow.CompareEnum.Equal, data2);
 }
 test05();

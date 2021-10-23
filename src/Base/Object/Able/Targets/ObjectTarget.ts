@@ -1,7 +1,8 @@
 import { ControlFlow } from "../../Control";
-import { DefaultValue } from "../../util";
+import { CompareUnit, DefaultValue } from "../../util";
 import { Value } from "../../../Types";
 
+@CompareUnit
 export class ObjectTarget<T>
   implements Value.ObjectAble<T>, ControlFlow.Compare<Value.ObjectAble<T>>
 {
@@ -15,9 +16,19 @@ export class ObjectTarget<T>
   valueOf(): T {
     return this._value;
   }
-  more: ControlFlow.CompareFunction;
-  equal: ControlFlow.CompareFunction;
-  less: ControlFlow.CompareFunction;
-  moreEqual: ControlFlow.CompareFunction;
-  lessEqual: ControlFlow.CompareFunction;
+  more(target: Value.ValueAble<any>): Boolean {
+    return false;
+  }
+  equal(target: Value.ValueAble<any>): Boolean {
+    return false;
+  }
+  less(target: Value.ValueAble<any>): Boolean {
+    return false;
+  }
+  moreEqual(target: Value.ValueAble<any>): Boolean {
+    return false;
+  }
+  lessEqual(target: Value.ValueAble<any>): Boolean {
+    return false;
+  }
 }

@@ -16,7 +16,6 @@ export namespace ControlFlow {
     Reduce = "reduce", // -
     Multi = "multi", // *
     Divide = "divide", // /
-    Power = "power",
   }
   //集合属性
   export enum CollectionEnum {
@@ -44,14 +43,14 @@ export namespace ControlFlow {
   }
 
   // 计算接口
-  export declare type CalcFunction = <T extends Value.NumberAble>(
-    target: T
-  ) => T;
+  export declare type CalcFunction = (
+    target: Value.NumberAble
+  ) => Value.NumberAble;
 
   declare type CalcAble = {
     [T in CalcEnum]: CalcFunction;
   };
   export interface Calc<U extends Value.NumberAble> extends CalcAble {
-    calc<T extends Value.NumberAble>(target: U): U;
+    calc(target: U): U;
   }
 }

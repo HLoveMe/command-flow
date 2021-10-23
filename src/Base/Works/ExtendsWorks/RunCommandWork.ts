@@ -1,11 +1,12 @@
 
-import { BaseType, ContextImpl } from "../../Type";
+
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
-import { ValueAble } from "../../Object/ObjectTypes";
-import { BooleanObject } from "../../Object/BaseObject";
 import { isJS } from "../../Util/Equipment";
 import { CommandStatus } from "../../Bridge/ConfigTypes";
+import { BaseType, ContextImpl } from "../../Types";
+import { Value } from '../../Types';
+import { BooleanObject } from '../../Object/Able/ObjectAble';
 
 /**
  * mobil   run javascript 
@@ -19,7 +20,7 @@ export default class RunCommandWork extends InstructionOTO {
       let target: string;
       if (command === null || command === undefined) target = "";
       else {
-        target = ((command as ValueAble<any>).valueOf() as Object).toString();
+        target = ((command as Value.ValueAble<any>).valueOf() as Object).toString();
       }
       const sub = (that.context as ContextImpl).platform
         .runCommand(target)
