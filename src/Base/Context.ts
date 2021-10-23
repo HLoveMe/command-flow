@@ -4,7 +4,7 @@ import { forkJoin, Observable, Subject, Subscription } from "rxjs";
 import { ContextRunOption } from "./Configs";
 import { BooleanObject, StringObject } from "./Object/Able/ObjectAble";
 import Platform from "./Bridge/Index";
-import { ValueAble } from "./Object/Able/Ables";
+import { Value } from "./Types";
 import { PlatformBridge } from "./Bridge/Platform/BasePlatform";
 
 export class Context implements ContextImpl {
@@ -49,7 +49,7 @@ export class Context implements ContextImpl {
     !w_map && this.runConstant.set(from.uuid, new Map());
     this.runConstant.get(from.uuid).set(name, value);
   }
-  workMessage(input: ValueAble<any>) {
+  workMessage(input: Value.ValueAble<any>) {
     console.log("msgChannel", input.valueOf());
   }
   workError(error) {

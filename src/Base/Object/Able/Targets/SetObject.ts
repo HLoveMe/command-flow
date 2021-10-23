@@ -1,8 +1,9 @@
 import { ControlFlow } from "../../Control";
 import { attribute, DefaultValue, Params } from "../../util";
 import { Value } from "../../../Types";
+import { ObjectTarget } from "./ObjectTarget";
 
-export class SetObject<T>
+export class SetObject<T> extends ObjectTarget<Set<T>>
   implements Value.SetAble<T>, ControlFlow.Compare<Value.SetAble<T>>
 {
   static attributes: Set<string> = new Set();
@@ -10,6 +11,7 @@ export class SetObject<T>
   @DefaultValue(Object.prototype.toString.call(new Set())) static type: string;
   _value: Set<T>;
   constructor(value: Set<T>) {
+    super(value)
     this._value = value;
   }
   @attribute()
@@ -22,8 +24,5 @@ export class SetObject<T>
   }
   valueOf(): Set<T> {
     throw this._value;
-  }
-  equal(target: SetObject<T>): Boolean {
-    return this._value == target._value;
   }
 }

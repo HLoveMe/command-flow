@@ -12,10 +12,12 @@ export class ObjectTarget<T>
   constructor(value: T) {
     this._value = value;
   }
-  equal(target: ObjectTarget<T>): Boolean {
-    return this._value == target._value;
-  }
   valueOf(): T {
     return this._value;
   }
+  more: ControlFlow.CompareFunction;
+  equal: ControlFlow.CompareFunction;
+  less: ControlFlow.CompareFunction;
+  moreEqual: ControlFlow.CompareFunction;
+  lessEqual: ControlFlow.CompareFunction;
 }

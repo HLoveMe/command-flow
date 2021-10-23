@@ -2,12 +2,14 @@ import { ControlFlow } from "../../Control";
 import { attribute, CompareUnit } from "../../util";
 
 import { Value } from "../../../Types";
+import { ObjectTarget } from "./ObjectTarget";
 @CompareUnit
-export class DataObject implements ControlFlow.Compare<Value.DataAble>, Value.DataAble {
+export class DataObject extends ObjectTarget<Buffer> implements ControlFlow.Compare<Value.DataAble>, Value.DataAble {
   static attributes: Set<string> = new Set();
   _value: Buffer;
   compare: ControlFlow.CompareExec;
   constructor(value: Buffer) {
+    super(value)
     this._value = value;
   }
 
@@ -18,9 +20,5 @@ export class DataObject implements ControlFlow.Compare<Value.DataAble>, Value.Da
   @attribute()
   valueOf(): Buffer {
     return this._value;
-  }
-
-  equal(target: Value.DataAble): Boolean {
-    return false;
   }
 }

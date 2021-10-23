@@ -1,15 +1,19 @@
 import { ControlFlow } from "../../Control";
 import { attribute, DefaultValue, Params } from "../../util";
-import { Value } from "../../../Types";
+import { Value } from "../../../index";
+import { ObjectTarget } from "./ObjectTarget";
 
 export class ArrayObject<T>
+  extends ObjectTarget<Array<T>>
   implements Value.ArrayAble<T>, ControlFlow.Compare<Value.ArrayAble<T>>
 {
   static attributes: Set<string> = new Set();
   compare: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call([])) static type: string;
   _value: Array<T>;
+
   constructor(value: Array<T>) {
+    super(value);
     this._value = value;
   }
   @attribute()
@@ -30,8 +34,5 @@ export class ArrayObject<T>
   }
   valueOf(): Array<T> {
     return this._value;
-  }
-  equal(target: ArrayObject<T>): Boolean {
-    return this._value == target._value;
   }
 }

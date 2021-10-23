@@ -1,5 +1,6 @@
-import { BooleanAble, NumberAble, ValueAble } from "./Able/Ables";
+// import { BooleanAble, NumberAble, ValueAble } from "./Able/Ables";
 
+import { Value } from "../Types";
 export namespace ControlFlow {
   // 比较属性 compare
   export enum CompareEnum {
@@ -28,25 +29,29 @@ export namespace ControlFlow {
   // 比较 接口
   export declare type CompareExec = (
     type: CompareEnum,
-    target: ValueAble<any>
-  ) => BooleanAble;
+    target: Value.ValueAble<any>
+  ) => Value.BooleanAble;
 
-  export declare type CompareFunction = (target: ValueAble<any>) => Boolean;
+  export declare type CompareFunction = (
+    target: Value.ValueAble<any>
+  ) => Boolean;
 
   declare type CompareAble = {
-    [T in CompareEnum]?: CompareFunction;
+    [T in CompareEnum]: CompareFunction;
   };
-  export interface Compare<U extends ValueAble<any>> extends CompareAble {
-    compare?<T extends CompareEnum>(type: T, target: U): BooleanAble;
+  export interface Compare<U extends Value.ValueAble<any>> extends CompareAble {
+    compare<T extends CompareEnum>(type: T, target: U): Value.BooleanAble;
   }
 
   // 计算接口
-  export declare type CalcFunction = (target: NumberAble) => NumberAble;
+  export declare type CalcFunction = <T extends Value.NumberAble>(
+    target: T
+  ) => T;
 
   declare type CalcAble = {
     [T in CalcEnum]: CalcFunction;
   };
-  export interface Calc<U extends NumberAble> extends CalcAble {
-    calc?<T extends NumberAble>(target: U): U;
+  export interface Calc<U extends Value.NumberAble> extends CalcAble {
+    calc<T extends Value.NumberAble>(target: U): U;
   }
 }

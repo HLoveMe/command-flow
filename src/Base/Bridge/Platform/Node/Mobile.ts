@@ -1,6 +1,6 @@
 import { Observable, of } from "rxjs";
 import { BooleanObject, ObjectTarget } from "../../../Object/Able/ObjectAble";
-import { ObjectAble } from "../../../Object/Able/Ables";
+import { Value } from "../../../Types";
 import {
   CommandLike,
   FileLoadEvent,
@@ -19,7 +19,7 @@ export class MobileNodejsBridge
   loadFile(
     url: CommandLike,
     option?: FileOption
-  ): Observable<ObjectAble<FileLoadEvent>> {
+  ): Observable<Value.ObjectAble<FileLoadEvent>> {
     return of(
       new ObjectTarget<FileLoadEvent>({
         total: 0,

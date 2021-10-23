@@ -1,7 +1,4 @@
-import { Context } from "./Base/Context";
-import { Value } from "./Base/Types";
-import { DataObject, StringObject } from "./Base/Object/Able/ObjectAble";
-import { ControlFlow } from "./Base/Object/Control";
+import { Context, Value, StringObject, DataObject, ControlFlow } from "./Base";
 import {
   Base64DecodeWork,
   Base64EnCodeWork,

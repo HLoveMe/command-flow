@@ -7,7 +7,7 @@ import {
   PCNodejsBridgeAble,
 } from "../../ConfigTypes";
 import * as fs from "fs";
-import { ObjectAble } from "../../../Object/Able/Ables";
+import { Value } from "../../../Types";
 import { PlatformBridge } from "../BasePlatform";
 const nodeOpen = require("open");
 
@@ -23,7 +23,7 @@ export class PCNodejsBridge
   loadFile(
     url: CommandLike,
     option?: FileOption
-  ): Observable<ObjectAble<FileLoadEvent>> {
+  ): Observable<Value.ObjectAble<FileLoadEvent>> {
     return new Observable((subscriber) => {
       const stat = fs.lstatSync(url as unknown as fs.PathLike);
       const subs: Subscription[] = [];

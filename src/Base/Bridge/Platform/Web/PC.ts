@@ -3,7 +3,7 @@ import {
   BooleanObject,
   ObjectTarget,
 } from "../../../Object/Able/ObjectAble";
-import { ObjectAble } from "../../../Object/Able/Ables";
+import { Value } from "../../../Types";
 import {
   CommandLike,
   FileLoadEvent,
@@ -20,7 +20,7 @@ export class PCWebBridge extends PlatformBridge implements PCWebBridgeAble {
   loadFile(
     url: CommandLike,
     option?: FileOption
-  ): Observable<ObjectAble<FileLoadEvent>> {
+  ): Observable<Value.ObjectAble<FileLoadEvent>> {
     return new Observable((subscriber) => {
       const input = document.createElement("input");
       input.type = "file";
