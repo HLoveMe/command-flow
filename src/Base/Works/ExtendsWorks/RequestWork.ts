@@ -1,5 +1,5 @@
 import { InOutputAbleOrNil } from "../../Type";
-import { ValueAble, ObjectAble } from "../../Object/ObjectTypes";
+import { ValueAble, ObjectAble } from "../../Object/Able/Ables";
 import { takeLast, map, flatMap } from "rxjs/operators";
 import { ValueSwitchTapCatch } from "../../Util/rxjs_operators";
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'

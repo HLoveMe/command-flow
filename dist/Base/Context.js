@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Context = void 0;
 var rxjs_1 = require("rxjs");
-var BaseObject_1 = require("./Object/BaseObject");
+var ObjectAble_1 = require("./Object/Able/ObjectAble");
 var Index_1 = require("./Bridge/Index");
 var Context = /** @class */ (function () {
     function Context(runOptions) {
@@ -51,7 +51,7 @@ var Context = /** @class */ (function () {
             work: (Array.isArray(status.work) ? status.work : [status.work]).forEach(function ($1) { return $1.name; }),
             info: status.desc,
         };
-        this.msgChannel.next(new BaseObject_1.StringObject(JSON.stringify(log)));
+        this.msgChannel.next(new ObjectAble_1.StringObject(JSON.stringify(log)));
     };
     Context.prototype.addWork = function (work) {
         work.context = this;
@@ -110,7 +110,7 @@ var Context = /** @class */ (function () {
                         content: that,
                         work: errors,
                         desc: "[content][Func:stopWorkChain]",
-                        value: new BaseObject_1.BooleanObject(isSuccess),
+                        value: new ObjectAble_1.BooleanObject(isSuccess),
                     });
                     subscribe.next(isSuccess);
                     subscribe.complete();

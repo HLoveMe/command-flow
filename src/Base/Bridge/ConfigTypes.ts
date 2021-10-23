@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
-import { BooleanObject, StringObject } from "../Object/BaseObject";
-import { DataAble, ObjectAble } from "../Object/ObjectTypes";
+import { BooleanObject, StringObject } from "../Object/Able/ObjectAble";
+import { DataAble, ObjectAble } from "../Object/Able/Ables";
 
 export interface RunTimeInfo {
   name: string;

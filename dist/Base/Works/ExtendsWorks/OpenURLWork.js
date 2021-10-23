@@ -17,7 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Instruction_1 = require("../Instruction");
 var rxjs_1 = require("rxjs");
-var BaseObject_1 = require("../../Object/BaseObject");
+var ObjectAble_1 = require("../../Object/Able/ObjectAble");
 var Equipment_1 = require("../../Util/Equipment");
 /**
  * 打开路径
@@ -43,7 +43,7 @@ var OpenURLWork = /** @class */ (function (_super) {
             var sub = that.context.platform
                 .open(target)
                 .subscribe({
-                next: function (_) { return subscriber.next(new BaseObject_1.BooleanObject(true)); },
+                next: function (_) { return subscriber.next(new ObjectAble_1.BooleanObject(true)); },
                 complete: function () { return subscriber.complete(); },
                 error: function (err) { return subscriber.error(err); }
             });

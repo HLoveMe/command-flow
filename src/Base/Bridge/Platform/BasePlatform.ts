@@ -1,5 +1,5 @@
 import { Observable, Subscriber } from "rxjs";
-import { BooleanObject, StringObject } from "../../Object/BaseObject";
+import { BooleanObject, StringObject } from "../../Object/Able/ObjectAble";
 import {
   CommandLike,
   CommandStatus,
@@ -10,7 +10,7 @@ import {
   RunTimeInfo,
 } from "../ConfigTypes";
 import * as QRCode from "qrcode-generator";
-import { ObjectAble } from "../../Object/ObjectTypes";
+import { ObjectAble } from "../../Object/Able/Ables";
 
 export class PlatformBridge implements PCPlatformBridgeAble {
   createQrCode(

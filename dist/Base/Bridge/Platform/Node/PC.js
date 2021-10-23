@@ -17,7 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PCNodejsBridge = void 0;
 var rxjs_1 = require("rxjs");
-var BaseObject_1 = require("../../../Object/BaseObject");
+var ObjectAble_1 = require("../../../Object/Able/ObjectAble");
 var fs = require("fs");
 var BasePlatform_1 = require("../BasePlatform");
 var nodeOpen = require("open");
@@ -46,7 +46,7 @@ var PCNodejsBridge = /** @class */ (function (_super) {
                 var sub1 = (0, rxjs_1.fromEvent)(rs, "data").subscribe({
                     next: function (chunk) {
                         data_1 = Buffer.concat([data_1, chunk]);
-                        subscriber.next(new BaseObject_1.ObjectTarget({
+                        subscriber.next(new ObjectAble_1.ObjectTarget({
                             loaded: data_1.length,
                             total: stat.size,
                             data: data_1,

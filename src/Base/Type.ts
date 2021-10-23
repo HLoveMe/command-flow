@@ -10,7 +10,7 @@ import {
   BooleanAble,
   DateAble,
   DataAble,
-} from "./Object/ObjectTypes";
+} from "./Object/Able/Ables";
 import { ContextRunOption } from "./Configs";
 import { PlatformBridgeAble } from "./Bridge/ConfigTypes";
 
@@ -128,29 +128,4 @@ export declare interface ContextImpl {
   sendLog(status: WorkType.WorkStatus<BaseType>): void;
   clear(): void;
   stopWorkChain(): Observable<boolean>;
-}
-
-export namespace ControlFlow {
-  export enum ControlEnum {
-    "more" = "more",
-    "equal" = "equal",
-    "less" = "less",
-    "more_equal" = "more_equal",
-    "less_equal" = "less_equal",
-    "contain" = "contain",
-    "add" = "add",
-  }
-  export declare type CompareExec = <T extends ControlEnum>(
-    type: T,
-    target: ValueAble<any>
-  ) => boolean;
-
-  export declare type CompareFunction = (target: ValueAble<any>) => Boolean;
-
-  declare type CompareAble = {
-    [T in ControlEnum]?: CompareFunction;
-  };
-  export interface Compare extends CompareAble {
-    compare?<T extends ControlEnum>(type: T, target: ValueAble<any>): boolean;
-  }
 }

@@ -19,8 +19,8 @@ import { tap } from "rxjs/operators";
 import { v4 as UUID } from "uuid";
 import { WorkUnit } from "./WorkUnit";
 import { EnvironmentAble } from "../Util/EquipmentTools";
-import { StringObject } from "../Object/BaseObject";
-import { ValueAble } from "../Object/ObjectTypes";
+import { StringObject } from "../Object/Able/ObjectAble";
+import { ValueAble } from "../Object/Able/Ables";
 
 /**
  * 一次输入--->一次输出 InstructionOTO

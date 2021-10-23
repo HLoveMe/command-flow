@@ -2,8 +2,8 @@ import { Observable, of } from "rxjs";
 import {
   BooleanObject,
   ObjectTarget,
-} from "../../../Object/BaseObject";
-import { ObjectAble } from "../../../Object/ObjectTypes";
+} from "../../../Object/Able/ObjectAble";
+import { ObjectAble } from "../../../Object/Able/Ables";
 import {
   CommandLike,
   FileLoadEvent,

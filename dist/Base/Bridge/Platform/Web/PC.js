@@ -17,7 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PCWebBridge = void 0;
 var rxjs_1 = require("rxjs");
-var BaseObject_1 = require("../../../Object/BaseObject");
+var ObjectAble_1 = require("../../../Object/Able/ObjectAble");
 var BasePlatform_1 = require("../BasePlatform");
 var PCWebBridge = /** @class */ (function (_super) {
     __extends(PCWebBridge, _super);
@@ -26,7 +26,7 @@ var PCWebBridge = /** @class */ (function (_super) {
     }
     PCWebBridge.prototype.open = function (url) {
         var result = window.open(url, "__blank");
-        return (0, rxjs_1.of)(new BaseObject_1.BooleanObject(result !== null));
+        return (0, rxjs_1.of)(new ObjectAble_1.BooleanObject(result !== null));
     };
     PCWebBridge.prototype.loadFile = function (url, option) {
         return new rxjs_1.Observable(function (subscriber) {
@@ -41,7 +41,7 @@ var PCWebBridge = /** @class */ (function (_super) {
                 reader.onprogress = function (info) {
                     var total = info.total, loaded = info.loaded;
                     var data = Buffer.from(reader.result);
-                    subscriber.next(new BaseObject_1.ObjectTarget({
+                    subscriber.next(new ObjectAble_1.ObjectTarget({
                         total: total,
                         loaded: loaded,
                         data: data,
@@ -50,7 +50,7 @@ var PCWebBridge = /** @class */ (function (_super) {
                 reader.onload = function (info) {
                     var data = Buffer.from(reader.result);
                     var total = info.total, loaded = info.loaded;
-                    subscriber.next(new BaseObject_1.ObjectTarget({ total: total, loaded: loaded, data: data }));
+                    subscriber.next(new ObjectAble_1.ObjectTarget({ total: total, loaded: loaded, data: data }));
                     subscriber.complete();
                 };
                 reader.readAsArrayBuffer(input.files[0]);

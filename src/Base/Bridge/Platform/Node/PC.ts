@@ -1,5 +1,5 @@
 import { from, fromEvent, Observable, of, Subscription } from "rxjs";
-import { BooleanObject, ObjectTarget } from "../../../Object/BaseObject";
+import { BooleanObject, ObjectTarget } from "../../../Object/Able/ObjectAble";
 import {
   CommandLike,
   FileLoadEvent,
@@ -7,7 +7,7 @@ import {
   PCNodejsBridgeAble,
 } from "../../ConfigTypes";
 import * as fs from "fs";
-import { ObjectAble } from "../../../Object/ObjectTypes";
+import { ObjectAble } from "../../../Object/Able/Ables";
 import { PlatformBridge } from "../BasePlatform";
 const nodeOpen = require("open");
 

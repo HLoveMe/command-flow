@@ -22,7 +22,7 @@ var Equipment_1 = require("../Util/Equipment");
 var operators_1 = require("rxjs/operators");
 var uuid_1 = require("uuid");
 var WorkUnit_1 = require("./WorkUnit");
-var BaseObject_1 = require("../Object/BaseObject");
+var ObjectAble_1 = require("../Object/Able/ObjectAble");
 /**
  * 一次输入--->一次输出 InstructionOTO
  * 一次输入--->多次输出 InstructionOTM
@@ -198,7 +198,7 @@ var Instruction = /** @class */ (function (_super) {
                 content: this.context,
                 desc: "[Work:preRun]-接受上一个消息错误",
                 date: new Date(),
-                value: new BaseObject_1.StringObject(err.message),
+                value: new ObjectAble_1.StringObject(err.message),
             });
     };
     Instruction.prototype.addVariable = function (name, value) {

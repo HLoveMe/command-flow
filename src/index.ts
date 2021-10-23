@@ -1,5 +1,5 @@
 import { Context } from "./Base/Context";
-import { StringObject } from "./Base/Object/BaseObject";
+import { StringObject } from "./Base/Object/Able/ObjectAble";
 import {
   Base64DecodeWork,
   Base64EnCodeWork,

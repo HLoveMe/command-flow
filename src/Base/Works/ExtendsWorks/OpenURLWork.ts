@@ -2,8 +2,8 @@
 import { BaseType, ContextImpl } from "../../Type";
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
-import { ValueAble } from "../../Object/ObjectTypes";
-import { BooleanObject } from "../../Object/BaseObject";
+import { ValueAble } from "../../Object/Able/Ables";
+import { BooleanObject } from "../../Object/Able/ObjectAble";
 import { isElectron, isJS, isNode, isRN, isWeb } from "../../Util/Equipment";
 
 /**
