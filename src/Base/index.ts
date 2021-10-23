@@ -12,6 +12,18 @@ import {
 import { Value, ContextImpl, BaseType, WorkType } from "./Types";
 import { ControlFlow } from "./Object/Control";
 import { Context } from "./Context";
+import {
+  InstructionMTM,
+  InstructionOTM,
+  InstructionOTO,
+} from "./Works/Instruction";
+import {
+  Base64DecodeWork,
+  Base64EnCodeWork,
+} from "./Works/ExtendsWorks/Base64Work";
+import LoadFileWork from "./Works/ExtendsWorks/LoadFileWork";
+import OpenURLWork from "./Works/ExtendsWorks/OpenURLWork";
+import { QRCodeWork } from "./Works/ExtendsWorks/QRCodeWork";
 
 export {
   ObjectTarget,
@@ -29,4 +41,12 @@ export {
   BaseType,
   WorkType,
   ControlFlow,
+  InstructionMTM,
+  InstructionOTM,
+  InstructionOTO,
+  Base64DecodeWork,
+  Base64EnCodeWork,
+  LoadFileWork,
+  OpenURLWork,
+  QRCodeWork
 };

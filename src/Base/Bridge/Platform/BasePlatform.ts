@@ -10,7 +10,7 @@ import {
   RunTimeInfo,
 } from "../ConfigTypes";
 import * as QRCode from "qrcode-generator";
-import { ObjectAble } from "../../Object/Able/Ables";
+import { Value } from "../../Types";
 
 export class PlatformBridge implements PCPlatformBridgeAble {
   createQrCode(
@@ -46,7 +46,7 @@ export class PlatformBridge implements PCPlatformBridgeAble {
   loadFile(
     url: CommandLike,
     option?: FileOption
-  ): Observable<ObjectAble<FileLoadEvent>> {
+  ): Observable<Value.ObjectAble<FileLoadEvent>> {
     throw new Error("Method not implemented.");
   }
 }

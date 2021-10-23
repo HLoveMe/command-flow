@@ -1,8 +1,8 @@
 import { ControlFlow } from "../../Control";
 import { attribute, CompareUnit } from "../../util";
-
 import { Value } from "../../../Types";
 import { ObjectTarget } from "./ObjectTarget";
+
 @CompareUnit
 export class DataObject extends ObjectTarget<Buffer> implements ControlFlow.Compare<Value.DataAble>, Value.DataAble {
   static attributes: Set<string> = new Set();

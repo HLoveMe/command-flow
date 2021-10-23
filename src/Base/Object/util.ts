@@ -1,4 +1,4 @@
-import { ValueAble } from "./Able/Ables";
+import { Value } from "../Types";
 import { ControlFlow } from "./Control";
 
 export function attribute() {
@@ -26,7 +26,8 @@ export function DefaultValue(value: string) {
 }
 
 export function CompareUnit(host: any) {
-  Object.keys(ControlFlow.CompareEnum).forEach((key) => {
+  Object.keys(ControlFlow.CompareEnum).forEach((item) => {
+    const key = ControlFlow.CompareEnum[item];
     const comFunction = host.prototype[key];
     if (!comFunction) {
       host.prototype[key] = () => false;
@@ -35,7 +36,7 @@ export function CompareUnit(host: any) {
   !host.prototype.compare &&
     (host.prototype.compare = function (
       type: ControlFlow.CompareEnum,
-      target: ValueAble<any>
+      target: Value.ValueAble<any>
     ) {
       const execFunc = host.prototype[type]?.bind(
         this

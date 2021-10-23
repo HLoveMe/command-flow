@@ -1,15 +1,15 @@
-import { Context, Value, StringObject, DataObject, ControlFlow } from "./Base";
 import {
+  Context,
+  Value,
+  StringObject,
+  DataObject,
+  ControlFlow,
   Base64DecodeWork,
   Base64EnCodeWork,
-} from "./Base/Works/ExtendsWorks/Base64Work";
-import LoadFileWork from "./Base/Works/ExtendsWorks/LoadFileWork";
-import OpenURLWork from "./Base/Works/ExtendsWorks/OpenURLWork";
-import { QRCodeWork } from "./Base/Works/ExtendsWorks/QRCodeWork";
-// import { InOutString } from "./Base/Object/InOutputValue";
-// import { BehaviorSubject } from "rxjs";
-// import { takeLast } from "rxjs/operators";
-// import { QRCodeWork } from "./Base/Works/QRCodeWork";
+  LoadFileWork,
+  OpenURLWork,
+  QRCodeWork,
+} from "./Base";
 
 function test01() {
   const context = new Context();
@@ -62,4 +62,4 @@ function test05() {
   (data1 as ControlFlow.Compare<Value.DataAble>).less(data2);
   const result = data1.compare(ControlFlow.CompareEnum.Equal, data2);
 }
-test04();
+test05();
