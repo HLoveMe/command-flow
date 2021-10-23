@@ -2,8 +2,8 @@ import { Observable, of } from "rxjs";
 import {
   BooleanObject,
   ObjectTarget,
-} from "../../../Object/BaseObject";
-import { ObjectAble } from "../../../Object/ObjectTypes";
+} from "../../../Object/Able/ObjectAble";
+import { Value } from "../../../Types";
 import {
   PathLike,
   FileLoadEvent,
@@ -21,7 +21,7 @@ export class MobileWebBridge
   loadFile(
     url: PathLike,
     option?: FileOption
-  ): Observable<ObjectAble<FileLoadEvent>> {
+  ): Observable<Value.ObjectAble<FileLoadEvent>> {
     return of(
       new ObjectTarget<FileLoadEvent>({
         total: 0,

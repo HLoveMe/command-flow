@@ -1,9 +1,8 @@
 
-import { BaseType, ContextImpl } from "../../Type";
+import { BaseType, ContextImpl,Value } from "../../Types";
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
-import { ValueAble } from "../../Object/ObjectTypes";
-import { BooleanObject } from "../../Object/BaseObject";
+import { BooleanObject } from "../../Object/Able/ObjectAble";
 import { isElectron, isJS, isNode, isRN, isWeb } from "../../Util/Equipment";
 
 /**
@@ -19,7 +18,7 @@ export default class OpenURLWork extends InstructionOTO {
       let target: string;
       if (input === null || input === undefined) target = "";
       else {
-        target = ((input as ValueAble<any>).valueOf() as Object).toString();
+        target = ((input as Value.ValueAble<any>).valueOf() as Object).toString();
       }
       const sub = (that.context as ContextImpl).platform
         .open(target)

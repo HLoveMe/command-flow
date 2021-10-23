@@ -2,8 +2,8 @@ import { Observable, of } from "rxjs";
 import {
   BooleanObject,
   ObjectTarget,
-} from "../../../Object/BaseObject";
-import { ObjectAble } from "../../../Object/ObjectTypes";
+} from "../../../Object/Able/ObjectAble";
+import { Value } from "../../../Types";
 import {
   FileLoadEvent,
   FileOption,
@@ -20,7 +20,7 @@ export class PCWebBridge extends PlatformBridge implements PCWebBridgeAble {
   loadFile(
     url: PathLike,
     option?: FileOption
-  ): Observable<ObjectAble<FileLoadEvent>> {
+  ): Observable<Value.ObjectAble<FileLoadEvent>> {
     return new Observable((subscriber) => {
       const input = document.createElement("input");
       input.type = "file";

@@ -1,10 +1,7 @@
-import { BaseType, ContextImpl } from "../../Type";
-import { StringAble, ValueAble } from "../../Object/ObjectTypes";
-import { QROption } from "../WorkTypes";
+import { BaseType, ContextImpl,Value } from "../../Types";
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
-import { BooleanObject, StringObject } from "../../Object/BaseObject";
-import { isJS, isNode, isRN, isWeb } from "../../Util/Equipment";
+import { isJS } from "../../Util/Equipment";
 import { QRcodeOption } from "../../Bridge/ConfigTypes";
 
 /**
@@ -14,13 +11,13 @@ import { QRcodeOption } from "../../Bridge/ConfigTypes";
  */
 class QRCodeWork extends InstructionOTO {
   name: string = "OpenURLWork";
-  run(input: BaseType, option?: QRcodeOption): Observable<StringAble> {
+  run(input: BaseType, option?: QRcodeOption): Observable<Value.StringAble> {
     const that = this;
-    return new Observable((subscriber: Subscriber<StringAble>) => {
+    return new Observable((subscriber: Subscriber<Value.StringAble>) => {
       let target: string;
       if (input === null || input === undefined) target = "";
       else {
-        target = ((input as ValueAble<any>).valueOf() as Object).toString();
+        target = ((input as Value.ValueAble<any>).valueOf() as Object).toString();
       }
       const sub = (that.context as ContextImpl).platform
         .createQrCode(target, option)

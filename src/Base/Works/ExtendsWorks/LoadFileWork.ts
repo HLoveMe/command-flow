@@ -1,12 +1,11 @@
-import { BaseType, ContextImpl } from "../../Type";
+import { BaseType, ContextImpl,Value } from "../../Types";
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
-import { ValueAble } from "../../Object/ObjectTypes";
 import {
   BooleanObject,
   DataObject,
   ObjectTarget,
-} from "../../Object/BaseObject";
+} from "../../Object/Able/ObjectAble";
 import { isElectron, isNode, isPC, isRN, isWeb } from "../../Util/Equipment";
 import { FileLoadEvent, FileOption } from "../../Bridge/ConfigTypes";
 import { takeLast, tap } from "rxjs/operators";
@@ -20,7 +19,7 @@ export default class LoadFileWork extends InstructionOTO {
       let target: string;
       if (input === null || input === undefined) target = "";
       else {
-        target = ((input as ValueAble<any>).valueOf() as Object).toString();
+        target = ((input as Value.ValueAble<any>).valueOf() as Object).toString();
       }
       const sub = (that.context as ContextImpl).platform
         .loadFile(target, option)

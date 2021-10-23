@@ -1,4 +1,4 @@
-import { WorkType } from "../Type";
+import { WorkType } from "../Types";
 
 
 export class ExecError extends Error {

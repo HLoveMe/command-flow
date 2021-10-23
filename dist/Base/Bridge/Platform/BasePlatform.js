@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlatformBridge = void 0;
 var rxjs_1 = require("rxjs");
-var BaseObject_1 = require("../../Object/BaseObject");
+var ObjectAble_1 = require("../../Object/Able/ObjectAble");
 var QRCode = require("qrcode-generator");
 var PlatformBridge = /** @class */ (function () {
     function PlatformBridge() {
@@ -19,7 +19,7 @@ var PlatformBridge = /** @class */ (function () {
             var cellSize = (width - margin * 2) / moduleCount;
             var base64 = qrcode.createDataURL(cellSize, margin);
             // const base64 = qrcode.createDataURL(cellSize, margin).replace('data:image/gif;base64', 'data:image/png;base64');
-            sub.next(new BaseObject_1.StringObject(base64));
+            sub.next(new ObjectAble_1.StringObject(base64));
             sub.complete();
             return {
                 unsubscribe: function () { return sub.unsubscribe(); },

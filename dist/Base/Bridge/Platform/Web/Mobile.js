@@ -17,7 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MobileWebBridge = void 0;
 var rxjs_1 = require("rxjs");
-var BaseObject_1 = require("../../../Object/BaseObject");
+var ObjectAble_1 = require("../../../Object/Able/ObjectAble");
 var BasePlatform_1 = require("../BasePlatform");
 var MobileWebBridge = /** @class */ (function (_super) {
     __extends(MobileWebBridge, _super);
@@ -25,10 +25,10 @@ var MobileWebBridge = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     MobileWebBridge.prototype.open = function (url) {
-        return (0, rxjs_1.of)(new BaseObject_1.BooleanObject(false));
+        return (0, rxjs_1.of)(new ObjectAble_1.BooleanObject(false));
     };
     MobileWebBridge.prototype.loadFile = function (url, option) {
-        return (0, rxjs_1.of)(new BaseObject_1.ObjectTarget({
+        return (0, rxjs_1.of)(new ObjectAble_1.ObjectTarget({
             total: 0,
             loaded: 0,
             data: Buffer.of(),

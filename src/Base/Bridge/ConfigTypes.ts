@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
-import { BooleanObject, StringObject } from "../Object/BaseObject";
-import { DataAble, ObjectAble } from "../Object/ObjectTypes";
+import { BooleanObject, StringObject } from "../Object/Able/ObjectAble";
+import { Value } from "../Types";
 
 export interface RunTimeInfo {
   name: string;
@@ -58,7 +58,7 @@ export declare interface PlatformBridgeAble {
   loadFile(
     url: PathLike,
     option?: FileOption
-  ): Observable<ObjectAble<FileLoadEvent>>;
+  ): Observable<Value.ObjectAble<FileLoadEvent>>;
 
   // 工具
   createQrCode(

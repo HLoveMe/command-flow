@@ -1,5 +1,5 @@
 import { Observable, of } from "rxjs";
-import { BooleanObject } from "../../../Object/BaseObject";
+import { BooleanObject } from "../../../Object/Able/ObjectAble";
 import { PCRnBridgeAble } from "../../ConfigTypes";
 import {  PlatformBridge } from "../BasePlatform";
 

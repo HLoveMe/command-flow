@@ -1,5 +1,5 @@
 import { from, fromEvent, Observable, of, Subscription } from "rxjs";
-import { BooleanObject, ObjectTarget } from "../../../Object/BaseObject";
+import { BooleanObject, ObjectTarget } from "../../../Object/Able/ObjectAble";
 import {
   PathLike,
   FileLoadEvent,
@@ -8,7 +8,7 @@ import {
   CommandStatus,
 } from "../../ConfigTypes";
 import * as fs from "fs";
-import { ObjectAble } from "../../../Object/ObjectTypes";
+import { Value } from "../../../Types";
 import { PlatformBridge } from "../BasePlatform";
 const nodeOpen = require("open");
 import * as process from 'child_process'
@@ -24,7 +24,7 @@ export class PCNodejsBridge
   loadFile(
     url: PathLike,
     option?: FileOption
-  ): Observable<ObjectAble<FileLoadEvent>> {
+  ): Observable<Value.ObjectAble<FileLoadEvent>> {
     return new Observable((subscriber) => {
       const stat = fs.lstatSync(url as unknown as fs.PathLike);
       const subs: Subscription[] = [];
