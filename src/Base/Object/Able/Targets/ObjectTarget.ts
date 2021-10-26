@@ -13,16 +13,18 @@ export class ObjectTarget<T>
   constructor(value: T) {
     this._value = value;
   }
+  valueOf(): T {
+    return this._value;
+  }
+  
   merge(target: Value.ObjectAble<T>): Value.ObjectAble<T> {
     const result = Object.assign(this._value, target._value);
     return new ObjectTarget(result);
   }
-  valueOf(): T {
-    return this._value;
-  }
   json(): string {
     return JSON.stringify(this._value);
   }
+
   more(target: Value.ValueAble<any>): Boolean {
     return false;
   }

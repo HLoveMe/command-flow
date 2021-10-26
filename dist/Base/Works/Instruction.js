@@ -128,11 +128,11 @@ var Instruction = /** @class */ (function (_super) {
                         desc: "[Work][Func:run]->结果",
                         value: _value === null || _value === void 0 ? void 0 : _value.valueOf(),
                     }));
-            }))
+            }), (0, operators_1.observeOn)(rxjs_1.asyncScheduler))
                 .subscribe({
                 complete: function () {
                     var unit = that.runSubscriptions.get(uuid_2);
-                    unit.sub.unsubscribe();
+                    unit === null || unit === void 0 ? void 0 : unit.sub.unsubscribe();
                     that.runSubscriptions.delete(uuid_2);
                 },
                 error: function (err) {
@@ -163,7 +163,7 @@ var Instruction = /** @class */ (function (_super) {
         return new rxjs_1.Observable(function (subscribe) {
             _this.stop();
             _this.runSubscriptions.forEach(function (value) {
-                value.sub.unsubscribe();
+                value === null || value === void 0 ? void 0 : value.sub.unsubscribe();
             });
             subscribe.next(true);
             subscribe.complete();

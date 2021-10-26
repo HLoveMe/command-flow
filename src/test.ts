@@ -42,7 +42,7 @@ function test03() {
   context.run(new StringObject("AAAA"));
   // context.run(new StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
 }
-// test03()
+test03()
 
 function test04() {
   const context = new Context();
@@ -62,4 +62,4 @@ function test05() {
   data1.less(data2);
   const result = data1.compare(ControlFlow.CompareEnum.Equal, data2);
 }
-test05();
+// test05();

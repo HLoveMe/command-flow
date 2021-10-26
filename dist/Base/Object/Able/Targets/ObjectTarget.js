@@ -16,12 +16,12 @@ var ObjectTarget = /** @class */ (function () {
         this._value = value;
     }
     ObjectTarget_1 = ObjectTarget;
+    ObjectTarget.prototype.valueOf = function () {
+        return this._value;
+    };
     ObjectTarget.prototype.merge = function (target) {
         var result = Object.assign(this._value, target._value);
         return new ObjectTarget_1(result);
-    };
-    ObjectTarget.prototype.valueOf = function () {
-        return this._value;
     };
     ObjectTarget.prototype.json = function () {
         return JSON.stringify(this._value);

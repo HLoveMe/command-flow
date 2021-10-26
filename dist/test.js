@@ -26,7 +26,7 @@ function test03() {
     context.run(new Base_1.StringObject("AAAA"));
     // context.run(new StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
 }
-// test03()
+test03();
 function test04() {
     var context = new Base_1.Context();
     context.addWork(new Base_1.LoadFileWork());
@@ -40,5 +40,5 @@ function test05() {
     data1.less(data2);
     var result = data1.compare(Base_1.ControlFlow.CompareEnum.Equal, data2);
 }
-test05();
+// test05();
 //# sourceMappingURL=test.js.map

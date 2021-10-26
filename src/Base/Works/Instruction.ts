@@ -5,6 +5,7 @@ import {
   Observable,
   PartialObserver,
   Subscriber,
+  asyncScheduler,
 } from "rxjs";
 import { ExecError } from "../Error";
 import {
@@ -15,7 +16,7 @@ import {
   PlatformSelect,
 } from "../Util/Equipment";
 import { WorkRunOption } from "../Configs";
-import { tap } from "rxjs/operators";
+import { observeOn, tap } from "rxjs/operators";
 import { v4 as UUID } from "uuid";
 import { WorkUnit } from "./WorkUnit";
 import { EnvironmentAble } from "../Util/EquipmentTools";
@@ -135,12 +136,13 @@ class Instruction
                 desc: "[Work][Func:run]->结果",
                 value: _value?.valueOf(),
               });
-          })
+          }),
+          observeOn(asyncScheduler)
         )
         .subscribe({
           complete: () => {
             const unit = that.runSubscriptions.get(uuid);
-            unit.sub.unsubscribe();
+            unit?.sub.unsubscribe();
             that.runSubscriptions.delete(uuid);
           },
           error: (err) => {
@@ -171,7 +173,7 @@ class Instruction
     return new Observable<Boolean>((subscribe: Subscriber<Boolean>) => {
       this.stop();
       this.runSubscriptions.forEach((value) => {
-        value.sub.unsubscribe();
+        value?.sub.unsubscribe();
       });
       subscribe.next(true);
       subscribe.complete();
