@@ -1,4 +1,4 @@
-import { BaseType, ContextImpl, WorkType,Value } from "../Types";
+import { BaseType, ContextImpl, WorkType, Value } from "../Types";
 import {
   Subject,
   Subscription,
@@ -154,7 +154,7 @@ class Instruction
                 desc: "[Work][Func:run]->下一个Work",
                 value: res?.valueOf(),
               });
-            that.nextWork?.next(res);
+            that.nextWork?.next(res as BaseType);
           },
         });
       const unit = new WorkUnit(that.context, that, runSub, uuid);

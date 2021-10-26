@@ -8,8 +8,13 @@ export namespace Value {
     _value: V;
     valueOf(): V;
   }
-  export declare interface ObjectAble<V> extends ValueAble<V> {}
-  export declare interface ArrayAble<T> extends ValueAble<Array<T>> {
+  export declare interface ObjectAble<V> extends ValueAble<V> {
+    json(): string;
+    merge(target: ObjectAble<V>): ObjectAble<V>;
+  }
+  export declare interface ArrayAble<T>
+    extends ValueAble<Array<T>>,
+      ObjectAble<Array<T>> {
     len(): number;
     first(): T;
     last(): T;
@@ -17,34 +22,46 @@ export namespace Value {
     valueOf(): Array<T>;
   }
 
-  export declare interface MapAble<T, U> extends ValueAble<Map<T, U>> {
+  export declare interface MapAble<T, U>
+    extends ValueAble<Map<T, U>>,
+      ObjectAble<Map<T, U>> {
     len(): number;
     get(key: T): U;
     valueOf(): Map<T, U>;
   }
 
-  export declare interface SetAble<T> extends ValueAble<Set<T>> {
+  export declare interface SetAble<T>
+    extends ValueAble<Set<T>>,
+      ObjectAble<Set<T>> {
     len(): number;
     valueOf(): Set<T>;
   }
 
-  export declare interface NumberAble extends ValueAble<Number> {
+  export declare interface NumberAble
+    extends ValueAble<Number>,
+      ObjectAble<Number> {
     valueOf(): Number;
   }
 
-  export declare interface StringAble extends ValueAble<String> {
+  export declare interface StringAble
+    extends ValueAble<String>,
+      ObjectAble<String> {
     valueOf(): String;
   }
 
-  export declare interface BooleanAble extends ValueAble<Boolean> {
+  export declare interface BooleanAble
+    extends ValueAble<Boolean>,
+      ObjectAble<Boolean> {
     valueOf(): Boolean;
   }
 
-  export declare interface DateAble extends ValueAble<Date> {
+  export declare interface DateAble extends ValueAble<Date>, ObjectAble<Date> {
     timestamp(): number;
   }
 
-  export declare interface DataAble extends ValueAble<Buffer> {
+  export declare interface DataAble
+    extends ValueAble<Buffer>,
+      ObjectAble<Buffer> {
     data(): Buffer;
   }
 }
