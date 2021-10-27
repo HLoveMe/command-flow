@@ -1,6 +1,7 @@
 import { BooleanObject, NumberObject } from "./Able/ObjectAble";
 import { Value } from "../Types";
 import { ControlFlow } from "./Control";
+import { decide } from "./valueUtil";
 
 export function attribute() {
   return function ($1: any, $2: string, descriptor: PropertyDescriptor) {
@@ -64,6 +65,37 @@ export function CalcUnit(host: any) {
       const execFunc = host.prototype[type]?.bind(
         this
       ) as ControlFlow.CalcFunction;
+      if (execFunc && typeof execFunc === "function")
+        return execFunc.call(this, target);
+      return false;
+    });
+}
+
+export function ArrayUint(host: any) {
+  Object.keys(ControlFlow.ArrayEnum).forEach((item) => {
+    const key = ControlFlow.ArrayEnum[item];
+    const comFunction = host.prototype[key];
+    if (!comFunction) {
+      host.prototype[key] = function (...args: any[]) {
+        const value = (this as Value.ArrayAble<any>).valueOf();
+        const execFunc = value[key];
+        let result;
+        if (typeof execFunc === "function") {
+          result = execFunc.bind(value)(...args);
+        }else
+        result = value;
+        return decide(result);
+      };
+    }
+  });
+  !host.prototype.collection &&
+    (host.prototype.collection = function (
+      type: ControlFlow.ArrayEnum,
+      target: Value.ValueAble<any>
+    ) {
+      const execFunc = host.prototype[type]?.bind(
+        this
+      ) as ControlFlow.ArrayFunction;
       if (execFunc && typeof execFunc === "function")
         return execFunc.call(this, target);
       return false;

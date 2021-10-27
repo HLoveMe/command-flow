@@ -32,10 +32,12 @@ function test04() {
     context.addWork(new Base_1.LoadFileWork());
     context.run(new Base_1.StringObject("d:\\元气壁纸缓存\\img\\116513f379bd664b7cfe5b3b40f5737d.jpg"));
 }
-test04();
+// test04()
 function test05() {
-    var num1 = new Base_1.NumberObject(1);
-    var num2 = new Base_1.NumberObject(2);
+    var arr1 = new Base_1.ArrayObject([1, 2, 3, 4]);
+    var a = arr1.find(function ($1) { return $1 >= 3; });
+    var b = arr1.find(function ($1) { return $1 >= 3; });
+    debugger;
 }
-// test05();
+test05();
 //# sourceMappingURL=test.js.map

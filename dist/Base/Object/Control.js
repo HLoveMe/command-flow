@@ -32,40 +32,37 @@ var ControlFlow;
     })(CollectionEnum = ControlFlow.CollectionEnum || (ControlFlow.CollectionEnum = {}));
     var ArrayEnum;
     (function (ArrayEnum) {
-        ArrayEnum["Length"] = "length";
-        ArrayEnum["Constructor"] = "constructor";
-        ArrayEnum["Concat"] = "concat";
-        ArrayEnum["CopyWithin"] = "copyWithin";
-        ArrayEnum["Fill"] = "fill";
+        // Length = "length", ?????
+        // Concat = "concat",
+        // CopyWithin = "copyWithin",
+        // Fill = "fill",
         ArrayEnum["Find"] = "find";
-        ArrayEnum["FindIndex"] = "findIndex";
-        ArrayEnum["LastIndexOf"] = "lastIndexOf";
-        ArrayEnum["Pop"] = "pop";
-        ArrayEnum["Push"] = "push";
-        ArrayEnum["Reverse"] = "reverse";
-        ArrayEnum["Shift"] = "shift";
-        ArrayEnum["Unshift"] = "unshift";
-        ArrayEnum["Slice"] = "slice";
-        ArrayEnum["Sort"] = "sort";
-        ArrayEnum["Splice"] = "splice";
-        ArrayEnum["Includes"] = "includes";
-        ArrayEnum["IndexOf"] = "indexOf";
-        ArrayEnum["Join"] = "join";
-        ArrayEnum["Keys"] = "keys";
-        ArrayEnum["Entries"] = "entries";
-        ArrayEnum["Values"] = "values";
-        ArrayEnum["ForEach"] = "forEach";
-        ArrayEnum["Filter"] = "filter";
-        ArrayEnum["Flat"] = "flat";
-        ArrayEnum["FlatMap"] = "flatMap";
-        ArrayEnum["Map"] = "map";
-        ArrayEnum["Every"] = "every";
-        ArrayEnum["Some"] = "some";
-        ArrayEnum["Reduce"] = "reduce";
-        ArrayEnum["ReduceRight"] = "reduceRight";
-        ArrayEnum["ToLocaleString"] = "toLocaleString";
-        ArrayEnum["ToString"] = "toString";
-        ArrayEnum["At"] = "at";
+        // FindIndex = "findIndex",
+        // LastIndexOf = "lastIndexOf",
+        // Pop = "pop",
+        // Push = "push",
+        // Reverse = "reverse",
+        // Shift = "shift",
+        // Unshift = "unshift",
+        // Slice = "slice",
+        // Sort = "sort",
+        // Splice = "splice",
+        // Includes = "includes",
+        // IndexOf = "indexOf",
+        // Join = "join",
+        // Keys = "keys",
+        // Entries = "entries",
+        // Values = "values",
+        // ForEach = "forEach",
+        // Filter = "filter",
+        // Flat = "flat",
+        // FlatMap = "flatMap",
+        // Map = "map",
+        // Every = "every",
+        // Some = "some",
+        // Reduce = "reduce",
+        // ReduceRight = "reduceRight",
+        // At = "at",
     })(ArrayEnum = ControlFlow.ArrayEnum || (ControlFlow.ArrayEnum = {}));
     var SetEnum;
     (function (SetEnum) {
@@ -92,5 +89,9 @@ var ControlFlow;
         MapEnum["Size"] = "size";
         MapEnum["Values"] = "values";
     })(MapEnum = ControlFlow.MapEnum || (ControlFlow.MapEnum = {}));
+    var A;
+    (function (A) {
+        A["ah"] = "aa";
+    })(A || (A = {}));
 })(ControlFlow = exports.ControlFlow || (exports.ControlFlow = {}));
 //# sourceMappingURL=Control.js.map

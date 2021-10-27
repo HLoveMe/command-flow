@@ -37,6 +37,7 @@ var ArrayObject = /** @class */ (function (_super) {
         _this._value = value;
         return _this;
     }
+    ArrayObject_1 = ArrayObject;
     ArrayObject.prototype.len = function () {
         return this._value.length;
     };
@@ -52,8 +53,17 @@ var ArrayObject = /** @class */ (function (_super) {
     ArrayObject.prototype.valueOf = function () {
         return this._value;
     };
+    //collection
+    ArrayObject.prototype.collection = function () {
+        return null;
+    };
+    ArrayObject.prototype.find = function () {
+        return null;
+    };
+    ArrayObject.prototype.aa = function () { return null; };
+    var ArrayObject_1;
     ArrayObject.attributes = new Set();
-    ArrayObject.empty = new ArrayObject([]);
+    ArrayObject.empty = new ArrayObject_1([]);
     __decorate([
         (0, util_1.attribute)(),
         __metadata("design:type", Function),
@@ -83,6 +93,10 @@ var ArrayObject = /** @class */ (function (_super) {
         (0, util_1.DefaultValue)(Object.prototype.toString.call([])),
         __metadata("design:type", String)
     ], ArrayObject, "type", void 0);
+    ArrayObject = ArrayObject_1 = __decorate([
+        util_1.ArrayUint,
+        __metadata("design:paramtypes", [Array])
+    ], ArrayObject);
     return ArrayObject;
 }(ObjectTarget_1.ObjectTarget));
 exports.ArrayObject = ArrayObject;

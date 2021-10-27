@@ -10,6 +10,7 @@ import {
   OpenURLWork,
   QRCodeWork,
   NumberObject,
+  ArrayObject,
 } from "./Base";
 
 function test01() {
@@ -54,10 +55,12 @@ function test04() {
     )
   );
 }
-test04()
+// test04()
 
 function test05() {
-  const num1 = new NumberObject(1);
-  const num2 =  new NumberObject(2);
+  const arr1 = new ArrayObject([1, 2, 3, 4]);
+  const a = (arr1 as ControlFlow.Collection).find(($1) => $1 >= 3);
+  const b = arr1.find(($1) => $1 >= 3);
+  debugger;
 }
-// test05();
+test05();

@@ -1,11 +1,14 @@
 import { ControlFlow } from "../../Control";
-import { attribute, DefaultValue, Params } from "../../util";
+import { ArrayUint, attribute, DefaultValue, Params } from "../../util";
 import { Value } from "../../../index";
 import { ObjectTarget } from "./ObjectTarget";
+import { BaseType } from "../../../Types";
 
+
+@ArrayUint
 export class ArrayObject<T>
   extends ObjectTarget<Array<T>>
-  implements Value.ArrayAble<T>
+  implements Value.ArrayAble<T> , ControlFlow.Collection
 {
   static attributes: Set<string> = new Set();
   static empty: ArrayObject<Object> = new ArrayObject([]);
@@ -17,6 +20,7 @@ export class ArrayObject<T>
     super(value);
     this._value = value;
   }
+  
   @attribute()
   len(): number {
     return this._value.length;
@@ -36,4 +40,15 @@ export class ArrayObject<T>
   valueOf(): Array<T> {
     return this._value;
   }
+
+  //collection
+  collection(): BaseType {
+    return null
+  }
+
+  find():BaseType{
+    return null
+  }
+
+  aa():BaseType{return null}
 }
