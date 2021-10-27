@@ -34,20 +34,4 @@ export class ObjectTarget<T>
       return new StringObject("{}");
     }
   }
-
-  more(target: Value.ValueAble<any>): Boolean {
-    return false;
-  }
-  equal(target: Value.ValueAble<any>): Boolean {
-    return false;
-  }
-  less(target: Value.ValueAble<any>): Boolean {
-    return false;
-  }
-  moreEqual(target: Value.ValueAble<any>): Boolean {
-    return false;
-  }
-  lessEqual(target: Value.ValueAble<any>): Boolean {
-    return false;
-  }
 }

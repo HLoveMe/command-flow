@@ -2,6 +2,7 @@ import { ControlFlow } from "../../Control";
 import { attribute, CalcUnit, CompareUnit, DefaultValue } from "../../util";
 import { Value } from "../../../Types";
 import { ObjectTarget } from "./ObjectTarget";
+import { BooleanObject } from "./BooleanObject";
 
 @CalcUnit
 @CompareUnit
@@ -27,8 +28,23 @@ export class NumberObject
   valueOf(): number {
     return this._value;
   }
-  // 
-
+  // Compare
+  more(target: Value.ValueAble<any>): Value.BooleanAble {
+    return new BooleanObject(this._value > target._value);
+  }
+  equal(target: Value.ValueAble<any>): Value.BooleanAble {
+    return new BooleanObject(this._value === target._value);
+  }
+  less(target: Value.ValueAble<any>): Value.BooleanAble {
+    return new BooleanObject(this._value < target._value);
+  }
+  moreEqual(target: Value.ValueAble<any>): Value.BooleanAble {
+    return new BooleanObject(this._value >= target._value);
+  }
+  lessEqual(target: Value.ValueAble<any>): Value.BooleanAble {
+    return new BooleanObject(this._value <= target._value);
+  }
+  // Calc
   plus(target: NumberObject): NumberObject {
     return new NumberObject(this._value + target._value);
   }

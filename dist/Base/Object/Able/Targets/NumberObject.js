@@ -27,6 +27,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NumberObject = void 0;
 var util_1 = require("../../util");
 var ObjectTarget_1 = require("./ObjectTarget");
+var BooleanObject_1 = require("./BooleanObject");
 var NumberObject = /** @class */ (function (_super) {
     __extends(NumberObject, _super);
     function NumberObject(value) {
@@ -38,7 +39,23 @@ var NumberObject = /** @class */ (function (_super) {
     NumberObject.prototype.valueOf = function () {
         return this._value;
     };
-    // 
+    // Compare
+    NumberObject.prototype.more = function (target) {
+        return new BooleanObject_1.BooleanObject(this._value > target._value);
+    };
+    NumberObject.prototype.equal = function (target) {
+        return new BooleanObject_1.BooleanObject(this._value === target._value);
+    };
+    NumberObject.prototype.less = function (target) {
+        return new BooleanObject_1.BooleanObject(this._value < target._value);
+    };
+    NumberObject.prototype.moreEqual = function (target) {
+        return new BooleanObject_1.BooleanObject(this._value >= target._value);
+    };
+    NumberObject.prototype.lessEqual = function (target) {
+        return new BooleanObject_1.BooleanObject(this._value <= target._value);
+    };
+    // Calc
     NumberObject.prototype.plus = function (target) {
         return new NumberObject_1(this._value + target._value);
     };

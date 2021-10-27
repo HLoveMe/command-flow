@@ -1,3 +1,4 @@
+import { BooleanObject, NumberObject } from "..";
 import { Value } from "../Types";
 import { ControlFlow } from "./Control";
 
@@ -30,7 +31,7 @@ export function CompareUnit(host: any) {
     const key = ControlFlow.CompareEnum[item];
     const comFunction = host.prototype[key];
     if (!comFunction) {
-      host.prototype[key] = () => false;
+      host.prototype[key] = () => new BooleanObject(false);
     }
   });
   !host.prototype.compare &&
@@ -47,17 +48,16 @@ export function CompareUnit(host: any) {
     });
 }
 
-
-export function CalcUnit(host:any){
+export function CalcUnit(host: any) {
   Object.keys(ControlFlow.CalcEnum).forEach((item) => {
     const key = ControlFlow.CalcEnum[item];
     const comFunction = host.prototype[key];
     if (!comFunction) {
-      host.prototype[key] = () => false;
+      host.prototype[key] = () => new NumberObject(0);
     }
   });
-  !host.prototype.compare &&
-    (host.prototype.compare = function (
+  !host.prototype.calc &&
+    (host.prototype.calc = function (
       type: ControlFlow.CalcEnum,
       target: Value.ValueAble<any>
     ) {

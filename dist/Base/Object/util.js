@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CalcUnit = exports.CompareUnit = exports.DefaultValue = exports.ObjectManager = exports.Params = exports.attribute = void 0;
+var __1 = require("..");
 var Control_1 = require("./Control");
 function attribute() {
     return function ($1, $2, descriptor) {
@@ -35,7 +36,7 @@ function CompareUnit(host) {
         var key = Control_1.ControlFlow.CompareEnum[item];
         var comFunction = host.prototype[key];
         if (!comFunction) {
-            host.prototype[key] = function () { return false; };
+            host.prototype[key] = function () { return new __1.BooleanObject(false); };
         }
     });
     !host.prototype.compare &&
@@ -53,11 +54,11 @@ function CalcUnit(host) {
         var key = Control_1.ControlFlow.CalcEnum[item];
         var comFunction = host.prototype[key];
         if (!comFunction) {
-            host.prototype[key] = function () { return false; };
+            host.prototype[key] = function () { return new __1.NumberObject(0); };
         }
     });
-    !host.prototype.compare &&
-        (host.prototype.compare = function (type, target) {
+    !host.prototype.calc &&
+        (host.prototype.calc = function (type, target) {
             var _a;
             var execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
             if (execFunc && typeof execFunc === "function")

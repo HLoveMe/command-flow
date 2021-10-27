@@ -33,7 +33,7 @@ export namespace ControlFlow {
 
   export declare type CompareFunction = (
     target: Value.ValueAble<any>
-  ) => Boolean;
+  ) => Value.BooleanAble;
 
   declare type CompareAble = {
     [T in CompareEnum]: CompareFunction;

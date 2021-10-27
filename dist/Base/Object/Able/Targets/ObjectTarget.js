@@ -36,21 +36,6 @@ var ObjectTarget = /** @class */ (function () {
             return new StringObject("{}");
         }
     };
-    ObjectTarget.prototype.more = function (target) {
-        return false;
-    };
-    ObjectTarget.prototype.equal = function (target) {
-        return false;
-    };
-    ObjectTarget.prototype.less = function (target) {
-        return false;
-    };
-    ObjectTarget.prototype.moreEqual = function (target) {
-        return false;
-    };
-    ObjectTarget.prototype.lessEqual = function (target) {
-        return false;
-    };
     ObjectTarget.attributes = new Set();
     ObjectTarget.empty = new ObjectTarget({});
     __decorate([

@@ -57,9 +57,6 @@ function test04() {
 // test04()
 
 function test05() {
-  // const data1: DataObject = new DataObject(Buffer.from([]));
-  // const data2 = new DataObject(Buffer.from([]));
-  // const result = data1.compare(ControlFlow.CompareEnum.Equal, data2);
   const num1 = new NumberObject(1);
   const num2 =  new NumberObject(2);
   num1.less(num2)
