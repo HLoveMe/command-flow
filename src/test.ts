@@ -9,6 +9,7 @@ import {
   LoadFileWork,
   OpenURLWork,
   QRCodeWork,
+  NumberObject,
 } from "./Base";
 
 function test01() {
@@ -42,7 +43,7 @@ function test03() {
   context.run(new StringObject("AAAA"));
   // context.run(new StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
 }
-test03()
+// test03();
 
 function test04() {
   const context = new Context();
@@ -56,10 +57,11 @@ function test04() {
 // test04()
 
 function test05() {
-  const data1: DataObject = new DataObject(Buffer.from([]));
-  const data2 = new DataObject(Buffer.from([]));
-  debugger;
-  data1.less(data2);
-  const result = data1.compare(ControlFlow.CompareEnum.Equal, data2);
+  // const data1: DataObject = new DataObject(Buffer.from([]));
+  // const data2 = new DataObject(Buffer.from([]));
+  // const result = data1.compare(ControlFlow.CompareEnum.Equal, data2);
+  const num1 = new NumberObject(1);
+  const num2 =  new NumberObject(2);
+  num1.less(num2)
 }
-// test05();
+test05();

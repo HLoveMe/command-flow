@@ -20,11 +20,22 @@ var ObjectTarget = /** @class */ (function () {
         return this._value;
     };
     ObjectTarget.prototype.merge = function (target) {
-        var result = Object.assign(this._value, target._value);
-        return new ObjectTarget_1(result);
+        try {
+            var result = Object.assign(this._value, target._value);
+            return new ObjectTarget_1(result);
+        }
+        catch (error) {
+            return new ObjectTarget_1(null);
+        }
     };
     ObjectTarget.prototype.json = function () {
-        return JSON.stringify(this._value);
+        var StringObject = require("./StringObject").StringObject;
+        try {
+            return new StringObject(JSON.stringify(this._value));
+        }
+        catch (error) {
+            return new StringObject("{}");
+        }
     };
     ObjectTarget.prototype.more = function (target) {
         return false;
@@ -43,6 +54,7 @@ var ObjectTarget = /** @class */ (function () {
     };
     var ObjectTarget_1;
     ObjectTarget.attributes = new Set();
+    ObjectTarget.empty = new ObjectTarget_1({});
     __decorate([
         (0, util_1.DefaultValue)(Object.prototype.toString.call({})),
         __metadata("design:type", String)

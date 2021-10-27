@@ -7,6 +7,7 @@ export class ObjectTarget<T>
   implements Value.ObjectAble<T>, ControlFlow.Compare<Value.ObjectAble<T>>
 {
   static attributes: Set<string> = new Set();
+  static empty: ObjectTarget<Object> = new ObjectTarget({});
   compare: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call({})) static type: string;
   _value: T;
@@ -16,13 +17,22 @@ export class ObjectTarget<T>
   valueOf(): T {
     return this._value;
   }
-  
+
   merge(target: Value.ObjectAble<T>): Value.ObjectAble<T> {
-    const result = Object.assign(this._value, target._value);
-    return new ObjectTarget(result);
+    try {
+      const result = Object.assign(this._value, target._value);
+      return new ObjectTarget(result);
+    } catch (error) {
+      return new ObjectTarget(null);
+    }
   }
-  json(): string {
-    return JSON.stringify(this._value);
+  json(): Value.StringAble {
+    const { StringObject } = require("./StringObject");
+    try {
+      return new StringObject(JSON.stringify(this._value));
+    } catch (error) {
+      return new StringObject("{}");
+    }
   }
 
   more(target: Value.ValueAble<any>): Boolean {

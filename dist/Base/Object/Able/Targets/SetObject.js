@@ -47,6 +47,7 @@ var SetObject = /** @class */ (function (_super) {
         throw this._value;
     };
     SetObject.attributes = new Set();
+    SetObject.empty = new SetObject(new Set());
     __decorate([
         (0, util_1.attribute)(),
         __metadata("design:type", Function),

@@ -8,6 +8,7 @@ export class ArrayObject<T>
   implements Value.ArrayAble<T>, ControlFlow.Compare<Value.ArrayAble<T>>
 {
   static attributes: Set<string> = new Set();
+  static empty: ArrayObject<Object> = new ArrayObject([]);
   compare: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call([])) static type: string;
   _value: Array<T>;

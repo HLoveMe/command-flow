@@ -3,13 +3,16 @@ import { attribute } from "../../util";
 import { Value } from "../../../Types";
 import { ObjectTarget } from "./ObjectTarget";
 
-
-export class DataObject extends ObjectTarget<Buffer> implements ControlFlow.Compare<Value.DataAble>, Value.DataAble {
+export class DataObject
+  extends ObjectTarget<Buffer>
+  implements ControlFlow.Compare<Value.DataAble>, Value.DataAble
+{
   static attributes: Set<string> = new Set();
+  static empty: DataObject = new DataObject(Buffer.of());
   _value: Buffer;
   compare: ControlFlow.CompareExec;
   constructor(value: Buffer) {
-    super(value)
+    super(value);
     this._value = value;
   }
 

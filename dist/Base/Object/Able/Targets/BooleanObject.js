@@ -38,6 +38,7 @@ var BooleanObject = /** @class */ (function (_super) {
         return Boolean(this._value);
     };
     BooleanObject.attributes = new Set();
+    BooleanObject.empty = new BooleanObject(false);
     __decorate([
         (0, util_1.attribute)(),
         __metadata("design:type", Function),

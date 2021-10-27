@@ -41,6 +41,7 @@ var DataObject = /** @class */ (function (_super) {
         return this._value;
     };
     DataObject.attributes = new Set();
+    DataObject.empty = new DataObject(Buffer.of());
     __decorate([
         (0, util_1.attribute)(),
         __metadata("design:type", Function),

@@ -26,7 +26,7 @@ function test03() {
     context.run(new Base_1.StringObject("AAAA"));
     // context.run(new StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
 }
-test03();
+// test03();
 function test04() {
     var context = new Base_1.Context();
     context.addWork(new Base_1.LoadFileWork());
@@ -34,11 +34,12 @@ function test04() {
 }
 // test04()
 function test05() {
-    var data1 = new Base_1.DataObject(Buffer.from([]));
-    var data2 = new Base_1.DataObject(Buffer.from([]));
-    debugger;
-    data1.less(data2);
-    var result = data1.compare(Base_1.ControlFlow.CompareEnum.Equal, data2);
+    // const data1: DataObject = new DataObject(Buffer.from([]));
+    // const data2 = new DataObject(Buffer.from([]));
+    // const result = data1.compare(ControlFlow.CompareEnum.Equal, data2);
+    var num1 = new Base_1.NumberObject(1);
+    var num2 = new Base_1.NumberObject(2);
+    num1.less(num2);
 }
-// test05();
+test05();
 //# sourceMappingURL=test.js.map

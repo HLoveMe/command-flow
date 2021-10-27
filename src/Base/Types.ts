@@ -9,7 +9,7 @@ export namespace Value {
     valueOf(): V;
   }
   export declare interface ObjectAble<V> extends ValueAble<V> {
-    json(): string;
+    json(): Value.StringAble;
     merge(target: ObjectAble<V>): ObjectAble<V>;
   }
   export declare interface ArrayAble<T>

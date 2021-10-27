@@ -8,6 +8,7 @@ export class MapObject<T, U>
   implements Value.MapAble<T, U>, ControlFlow.Compare<Value.MapAble<T, U>>
 {
   static attributes: Set<string> = new Set();
+  static empty: MapObject<any, any> = new MapObject(new Map());
   compare: ControlFlow.CompareExec;
   @DefaultValue(Object.prototype.toString.call(new Map())) static type: string;
   _value: Map<T, U>;

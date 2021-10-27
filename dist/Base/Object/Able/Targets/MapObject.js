@@ -47,6 +47,7 @@ var MapObject = /** @class */ (function (_super) {
         throw this._value;
     };
     MapObject.attributes = new Set();
+    MapObject.empty = new MapObject(new Map());
     __decorate([
         (0, util_1.attribute)(),
         __metadata("design:type", Function),

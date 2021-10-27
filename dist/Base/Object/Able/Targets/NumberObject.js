@@ -38,6 +38,7 @@ var NumberObject = /** @class */ (function (_super) {
     NumberObject.prototype.valueOf = function () {
         return this._value;
     };
+    // 
     NumberObject.prototype.plus = function (target) {
         return new NumberObject_1(this._value + target._value);
     };
@@ -52,6 +53,7 @@ var NumberObject = /** @class */ (function (_super) {
     };
     var NumberObject_1;
     NumberObject.attributes = new Set();
+    NumberObject.empty = new NumberObject_1(0);
     __decorate([
         (0, util_1.attribute)(),
         __metadata("design:type", Function),

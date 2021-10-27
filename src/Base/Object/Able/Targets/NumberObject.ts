@@ -12,6 +12,7 @@ export class NumberObject
     ControlFlow.Calc<Value.NumberAble>
 {
   static attributes: Set<string> = new Set();
+  static empty: NumberObject = new NumberObject(0);
   compare: ControlFlow.CompareExec;
   calc: ControlFlow.CalcFunction;
   @DefaultValue(Object.prototype.toString.call(new Number()))
@@ -25,6 +26,7 @@ export class NumberObject
   valueOf(): number {
     return this._value;
   }
+  // 
 
   plus(target: NumberObject): NumberObject {
     return new NumberObject(this._value + target._value);

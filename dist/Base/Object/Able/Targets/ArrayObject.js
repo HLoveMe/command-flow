@@ -53,6 +53,7 @@ var ArrayObject = /** @class */ (function (_super) {
         return this._value;
     };
     ArrayObject.attributes = new Set();
+    ArrayObject.empty = new ArrayObject([]);
     __decorate([
         (0, util_1.attribute)(),
         __metadata("design:type", Function),

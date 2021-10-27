@@ -41,6 +41,7 @@ var DateObject = /** @class */ (function (_super) {
         return new Date(this._value);
     };
     DateObject.attributes = new Set();
+    DateObject.empty = new DateObject(new Date());
     __decorate([
         (0, util_1.attribute)(),
         __metadata("design:type", Function),

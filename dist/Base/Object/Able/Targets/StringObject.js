@@ -38,6 +38,7 @@ var StringObject = /** @class */ (function (_super) {
         return this._value;
     };
     StringObject.attributes = new Set();
+    StringObject.empty = new StringObject("");
     __decorate([
         (0, util_1.attribute)(),
         __metadata("design:type", Function),
