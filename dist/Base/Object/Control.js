@@ -24,8 +24,8 @@ var ControlFlow;
     //集合属性
     var CollectionEnum;
     (function (CollectionEnum) {
-        CollectionEnum["Has"] = "has";
-        CollectionEnum["Push"] = "push";
+        CollectionEnum["Contain"] = "contain";
+        CollectionEnum["Add"] = "add";
         CollectionEnum["Pop"] = "pop";
         CollectionEnum["Index"] = "index";
     })(CollectionEnum = ControlFlow.CollectionEnum || (ControlFlow.CollectionEnum = {}));

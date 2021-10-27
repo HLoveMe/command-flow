@@ -19,8 +19,8 @@ export namespace ControlFlow {
   }
   //集合属性
   export enum CollectionEnum {
-    Has = "has", //
-    Push = "push", //
+    Contain = "contain", //
+    Add = "add", //
     Pop = "pop", //
     Index = "index", //
   }
