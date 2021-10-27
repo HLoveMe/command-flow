@@ -5,11 +5,11 @@ import { ObjectTarget } from "./ObjectTarget";
 
 export class DateObject
   extends ObjectTarget<Date>
-  implements Value.DateAble, ControlFlow.Compare<Value.DateAble>
+  implements Value.DateAble
 {
   static attributes: Set<string> = new Set();
   static empty: DateObject = new DateObject(new Date());
-  compare: ControlFlow.CompareExec;
+  
   @DefaultValue(Object.prototype.toString.call(new Date())) static type: string;
   _value: Date;
   constructor(value: Date) {

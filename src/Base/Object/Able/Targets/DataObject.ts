@@ -5,12 +5,12 @@ import { ObjectTarget } from "./ObjectTarget";
 
 export class DataObject
   extends ObjectTarget<Buffer>
-  implements ControlFlow.Compare<Value.DataAble>, Value.DataAble
+  implements  Value.DataAble
 {
   static attributes: Set<string> = new Set();
   static empty: DataObject = new DataObject(Buffer.of());
   _value: Buffer;
-  compare: ControlFlow.CompareExec;
+  
   constructor(value: Buffer) {
     super(value);
     this._value = value;

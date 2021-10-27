@@ -1,9 +1,10 @@
 import { ControlFlow } from "../../Control";
-import { attribute, CalcUnit, DefaultValue } from "../../util";
+import { attribute, CalcUnit, CompareUnit, DefaultValue } from "../../util";
 import { Value } from "../../../Types";
 import { ObjectTarget } from "./ObjectTarget";
 
 @CalcUnit
+@CompareUnit
 export class NumberObject
   extends ObjectTarget<number>
   implements

@@ -4,11 +4,11 @@ import { attribute, DefaultValue } from "../../util";
 import { ObjectTarget } from "./ObjectTarget";
 export class StringObject
   extends ObjectTarget<string>
-  implements Value.StringAble, ControlFlow.Compare<Value.StringAble>
+  implements Value.StringAble
 {
   static attributes: Set<string> = new Set();
   static empty: StringObject = new StringObject("");
-  compare: ControlFlow.CompareExec;
+  
   @DefaultValue(Object.prototype.toString.call(new String()))
   static type: string;
   _value: string;

@@ -5,11 +5,11 @@ import { ObjectTarget } from "./ObjectTarget";
 
 export class BooleanObject
   extends ObjectTarget<Boolean>
-  implements Value.BooleanAble, ControlFlow.Compare<Value.BooleanAble>
+  implements Value.BooleanAble
 {
   static attributes: Set<string> = new Set();
   static empty: BooleanObject = new BooleanObject(false);
-  compare: ControlFlow.CompareExec;
+  
   @DefaultValue(Object.prototype.toString.call(new Boolean(1)))
   static type: string;
   _value: Boolean;

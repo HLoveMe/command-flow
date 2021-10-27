@@ -2,13 +2,13 @@ import { ControlFlow } from "../../Control";
 import { CompareUnit, DefaultValue } from "../../util";
 import { Value } from "../../../Types";
 
-@CompareUnit
+
 export class ObjectTarget<T>
-  implements Value.ObjectAble<T>, ControlFlow.Compare<Value.ObjectAble<T>>
+  implements Value.ObjectAble<T>
 {
   static attributes: Set<string> = new Set();
   static empty: ObjectTarget<Object> = new ObjectTarget({});
-  compare: ControlFlow.CompareExec;
+  
   @DefaultValue(Object.prototype.toString.call({})) static type: string;
   _value: T;
   constructor(value: T) {

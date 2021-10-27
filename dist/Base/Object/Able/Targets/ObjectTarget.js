@@ -15,17 +15,16 @@ var ObjectTarget = /** @class */ (function () {
     function ObjectTarget(value) {
         this._value = value;
     }
-    ObjectTarget_1 = ObjectTarget;
     ObjectTarget.prototype.valueOf = function () {
         return this._value;
     };
     ObjectTarget.prototype.merge = function (target) {
         try {
             var result = Object.assign(this._value, target._value);
-            return new ObjectTarget_1(result);
+            return new ObjectTarget(result);
         }
         catch (error) {
-            return new ObjectTarget_1(null);
+            return new ObjectTarget(null);
         }
     };
     ObjectTarget.prototype.json = function () {
@@ -52,17 +51,12 @@ var ObjectTarget = /** @class */ (function () {
     ObjectTarget.prototype.lessEqual = function (target) {
         return false;
     };
-    var ObjectTarget_1;
     ObjectTarget.attributes = new Set();
-    ObjectTarget.empty = new ObjectTarget_1({});
+    ObjectTarget.empty = new ObjectTarget({});
     __decorate([
         (0, util_1.DefaultValue)(Object.prototype.toString.call({})),
         __metadata("design:type", String)
     ], ObjectTarget, "type", void 0);
-    ObjectTarget = ObjectTarget_1 = __decorate([
-        util_1.CompareUnit,
-        __metadata("design:paramtypes", [Object])
-    ], ObjectTarget);
     return ObjectTarget;
 }());
 exports.ObjectTarget = ObjectTarget;

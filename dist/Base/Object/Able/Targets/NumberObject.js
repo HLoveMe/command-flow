@@ -66,6 +66,7 @@ var NumberObject = /** @class */ (function (_super) {
     ], NumberObject, "type", void 0);
     NumberObject = NumberObject_1 = __decorate([
         util_1.CalcUnit,
+        util_1.CompareUnit,
         __metadata("design:paramtypes", [Number])
     ], NumberObject);
     return NumberObject;
