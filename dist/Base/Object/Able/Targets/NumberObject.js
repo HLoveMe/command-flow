@@ -40,6 +40,7 @@ var NumberObject = /** @class */ (function (_super) {
         return this._value;
     };
     // Compare
+    // compare: ControlFlow.CompareExec;
     NumberObject.prototype.more = function (target) {
         return new BooleanObject_1.BooleanObject(this._value > target._value);
     };
@@ -56,6 +57,7 @@ var NumberObject = /** @class */ (function (_super) {
         return new BooleanObject_1.BooleanObject(this._value <= target._value);
     };
     // Calc
+    // calc: ControlFlow.CalcFunction;
     NumberObject.prototype.plus = function (target) {
         return new NumberObject_1(this._value + target._value);
     };

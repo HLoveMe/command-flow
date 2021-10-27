@@ -36,6 +36,7 @@ function test04() {
 function test05() {
     var num1 = new Base_1.NumberObject(1);
     var num2 = new Base_1.NumberObject(2);
+    var a = num2 > num1;
     num1.less(num2);
 }
 test05();

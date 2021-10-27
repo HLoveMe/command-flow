@@ -59,6 +59,7 @@ function test04() {
 function test05() {
   const num1 = new NumberObject(1);
   const num2 =  new NumberObject(2);
+  const a = (num2 as unknown as number) >(num1 as unknown as number)
   num1.less(num2)
 }
 test05();

@@ -29,6 +29,7 @@ export class NumberObject
     return this._value;
   }
   // Compare
+  // compare: ControlFlow.CompareExec;
   more(target: Value.ValueAble<any>): Value.BooleanAble {
     return new BooleanObject(this._value > target._value);
   }
@@ -45,6 +46,7 @@ export class NumberObject
     return new BooleanObject(this._value <= target._value);
   }
   // Calc
+  // calc: ControlFlow.CalcFunction;
   plus(target: NumberObject): NumberObject {
     return new NumberObject(this._value + target._value);
   }
