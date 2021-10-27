@@ -60,9 +60,9 @@ export namespace Value {
   }
 
   export declare interface DataAble
-    extends ValueAble<Buffer>,
-      ObjectAble<Buffer> {
-    data(): Buffer;
+    extends ValueAble<ArrayBuffer>,
+      ObjectAble<ArrayBuffer> {
+    data(): ArrayBuffer;
   }
 }
 

@@ -7,7 +7,7 @@ export interface RunTimeInfo {
   platform: any;
 }
 
-export type PathLike = string | Buffer | URL;
+export type PathLike = string | URL;
 export interface CommandStatus {
   command: string;
   status: boolean;
@@ -38,7 +38,7 @@ export interface FileOption {
 export interface FileLoadEvent {
   total: number;
   loaded: number;
-  data: Buffer;
+  data: ArrayBuffer;
 }
 
 export declare interface PlatformBridgeAble {
@@ -67,13 +67,13 @@ export declare interface PlatformBridgeAble {
   ): Observable<StringObject>;
 }
 
-export interface PCPlatformBridgeAble extends PlatformBridgeAble { }
+export interface PCPlatformBridgeAble extends PlatformBridgeAble {}
 
-export interface PCWebBridgeAble extends PCPlatformBridgeAble { }
-export interface PCNodejsBridgeAble extends PCPlatformBridgeAble { }
-export interface PCRnBridgeAble extends PCPlatformBridgeAble { }
+export interface PCWebBridgeAble extends PCPlatformBridgeAble {}
+export interface PCNodejsBridgeAble extends PCPlatformBridgeAble {}
+export interface PCRnBridgeAble extends PCPlatformBridgeAble {}
 
-export interface MobilePlatformBridgeAble extends PlatformBridgeAble { }
-export interface MobileWebBridgeAble extends MobilePlatformBridgeAble { }
-export interface MobileNodejsBridgeAble extends MobilePlatformBridgeAble { }
-export interface MobileRnBridgeAble extends MobilePlatformBridgeAble { }
+export interface MobilePlatformBridgeAble extends PlatformBridgeAble {}
+export interface MobileWebBridgeAble extends MobilePlatformBridgeAble {}
+export interface MobileNodejsBridgeAble extends MobilePlatformBridgeAble {}
+export interface MobileRnBridgeAble extends MobilePlatformBridgeAble {}

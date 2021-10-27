@@ -1,8 +1,5 @@
 import { Observable, of } from "rxjs";
-import {
-  BooleanObject,
-  ObjectTarget,
-} from "../../../Object/Able/ObjectAble";
+import { BooleanObject, ObjectTarget } from "../../../Object/Able/ObjectAble";
 import { Value } from "../../../Types";
 import {
   FileLoadEvent,
@@ -32,17 +29,17 @@ export class PCWebBridge extends PlatformBridge implements PCWebBridgeAble {
         const reader = new FileReader();
         reader.onprogress = (info: ProgressEvent) => {
           const { total, loaded } = info;
-          const data = Buffer.from(reader.result as ArrayBuffer);
+          const data = reader.result as ArrayBuffer;
           subscriber.next(
             new ObjectTarget<FileLoadEvent>({
               total,
               loaded,
               data: data,
-            } as FileLoadEvent)
+            })
           );
         };
         reader.onload = (info: ProgressEvent) => {
-          const data = Buffer.from(reader.result as ArrayBuffer);
+          const data = reader.result as ArrayBuffer;
           const { total, loaded } = info;
           subscriber.next(
             new ObjectTarget<FileLoadEvent>({ total, loaded, data })

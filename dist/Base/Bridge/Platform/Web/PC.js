@@ -40,7 +40,7 @@ var PCWebBridge = /** @class */ (function (_super) {
                 var reader = new FileReader();
                 reader.onprogress = function (info) {
                     var total = info.total, loaded = info.loaded;
-                    var data = Buffer.from(reader.result);
+                    var data = reader.result;
                     subscriber.next(new ObjectAble_1.ObjectTarget({
                         total: total,
                         loaded: loaded,
@@ -48,7 +48,7 @@ var PCWebBridge = /** @class */ (function (_super) {
                     }));
                 };
                 reader.onload = function (info) {
-                    var data = Buffer.from(reader.result);
+                    var data = reader.result;
                     var total = info.total, loaded = info.loaded;
                     subscriber.next(new ObjectAble_1.ObjectTarget({ total: total, loaded: loaded, data: data }));
                     subscriber.complete();

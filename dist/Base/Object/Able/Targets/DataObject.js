@@ -38,15 +38,16 @@ var DataObject = /** @class */ (function (_super) {
         return this.valueOf();
     };
     DataObject.prototype.valueOf = function () {
+        Buffer;
         return this._value;
     };
     DataObject.attributes = new Set();
-    DataObject.empty = new DataObject(Buffer.of());
+    DataObject.empty = new DataObject(new ArrayBuffer(0));
     __decorate([
         (0, util_1.attribute)(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
-        __metadata("design:returntype", Buffer)
+        __metadata("design:returntype", ArrayBuffer)
     ], DataObject.prototype, "valueOf", null);
     return DataObject;
 }(ObjectTarget_1.ObjectTarget));

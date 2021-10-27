@@ -43,12 +43,13 @@ var PCNodejsBridge = /** @class */ (function (_super) {
             }
             else {
                 var rs = fs.createReadStream(url);
+                rs.addListener;
                 var data_1 = Buffer.of();
                 var sub1 = (0, rxjs_1.fromEvent)(rs, "data").subscribe({
                     next: function (chunk) {
                         data_1 = Buffer.concat([data_1, chunk]);
                         subscriber.next(new ObjectAble_1.ObjectTarget({
-                            loaded: data_1.length,
+                            loaded: data_1.byteLength,
                             total: stat.size,
                             data: data_1,
                         }));
@@ -82,7 +83,7 @@ var PCNodejsBridge = /** @class */ (function (_super) {
                 subscriber.complete();
             });
             return {
-                unsubscribe: function () { return subscriber.unsubscribe(); }
+                unsubscribe: function () { return subscriber.unsubscribe(); },
             };
         });
     };

@@ -30,14 +30,12 @@ function test03() {
 function test04() {
     var context = new Base_1.Context();
     context.addWork(new Base_1.LoadFileWork());
-    context.run(new Base_1.StringObject("C:\\Users\\zihao.zhu\\Desktop\\chrome\\bocbaocobfecmglnmeaeppambideimao_2.1.3_chrome.zzzmh.cn.crx"));
+    context.run(new Base_1.StringObject("d:\\元气壁纸缓存\\img\\116513f379bd664b7cfe5b3b40f5737d.jpg"));
 }
-// test04()
+test04();
 function test05() {
     var num1 = new Base_1.NumberObject(1);
     var num2 = new Base_1.NumberObject(2);
-    var a = num2 > num1;
-    num1.less(num2);
 }
-test05();
+// test05();
 //# sourceMappingURL=test.js.map

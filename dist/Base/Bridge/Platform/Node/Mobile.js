@@ -31,7 +31,7 @@ var MobileNodejsBridge = /** @class */ (function (_super) {
         return (0, rxjs_1.of)(new ObjectAble_1.ObjectTarget({
             total: 0,
             loaded: 0,
-            data: Buffer.of(),
+            data: new ArrayBuffer(0),
         }));
     };
     return MobileNodejsBridge;

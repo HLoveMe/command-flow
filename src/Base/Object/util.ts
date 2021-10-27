@@ -1,4 +1,4 @@
-import { BooleanObject, NumberObject } from "..";
+import { BooleanObject, NumberObject } from "./Able/ObjectAble";
 import { Value } from "../Types";
 import { ControlFlow } from "./Control";
 

@@ -1,5 +1,6 @@
 // import { BooleanAble, NumberAble, ValueAble } from "./Able/Ables";
 
+import { BaseType } from "..";
 import { Value } from "../Types";
 export namespace ControlFlow {
   // 比较属性 compare
@@ -19,10 +20,73 @@ export namespace ControlFlow {
   }
   //集合属性
   export enum CollectionEnum {
-    Contain = "contain", //
-    Add = "add", //
-    Pop = "pop", //
-    Index = "index", //
+    Contain = "contain", //是否包含
+    Add = "add", //增加
+    ValueFor = "valueFor", // 取值
+    Keys = "keys", // 所有keys
+    Values = "values", // 所有values
+  }
+
+  export enum ArrayEnum {
+    Length = "length",
+    Constructor = "constructor",
+    Concat = "concat",
+    CopyWithin = "copyWithin",
+    Fill = "fill",
+    Find = "find",
+    FindIndex = "findIndex",
+    LastIndexOf = "lastIndexOf",
+    Pop = "pop",
+    Push = "push",
+    Reverse = "reverse",
+    Shift = "shift",
+    Unshift = "unshift",
+    Slice = "slice",
+    Sort = "sort",
+    Splice = "splice",
+    Includes = "includes",
+    IndexOf = "indexOf",
+    Join = "join",
+    Keys = "keys",
+    Entries = "entries",
+    Values = "values",
+    ForEach = "forEach",
+    Filter = "filter",
+    Flat = "flat",
+    FlatMap = "flatMap",
+    Map = "map",
+    Every = "every",
+    Some = "some",
+    Reduce = "reduce",
+    ReduceRight = "reduceRight",
+    ToLocaleString = "toLocaleString",
+    ToString = "toString",
+    At = "at",
+  }
+
+  export enum SetEnum {
+    Has = "has",
+    Add = "add",
+    Delete = "delete",
+    Clear = "clear",
+    Entries = "entries",
+    ForEach = "forEach",
+    Size = "size",
+    Values = "values",
+    Keys = "keys",
+  }
+
+  export enum MapEnum {
+    Get = "get",
+    Set = "set",
+    Has = "has",
+    Delete = "delete",
+    Clear = "clear",
+    Entries = "entries",
+    ForEach = "forEach",
+    Keys = "keys",
+    Size = "size",
+    Values = "values",
   }
 
   // 比较 接口
@@ -52,5 +116,14 @@ export namespace ControlFlow {
   };
   export interface Calc<U extends Value.NumberAble> extends CalcAble {
     calc(target: U): U;
+  }
+
+  // Array
+  export declare type ArrayFunction = () => any;
+  declare type ArrayAble = {
+    [T in ArrayEnum]: ArrayFunction;
+  };
+  export interface Collection<U extends BaseType> extends ArrayAble {
+    collection(...args): any;
   }
 }

@@ -26,7 +26,7 @@ export class MobileWebBridge
       new ObjectTarget<FileLoadEvent>({
         total: 0,
         loaded: 0,
-        data: Buffer.of(),
+        data: new ArrayBuffer(0),
       })
     );
   }

@@ -11,12 +11,13 @@ import * as fs from "fs";
 import { Value } from "../../../Types";
 import { PlatformBridge } from "../BasePlatform";
 const nodeOpen = require("open");
-import * as process from 'child_process'
+import * as process from "child_process";
 
 /*** */
 export class PCNodejsBridge
   extends PlatformBridge
-  implements PCNodejsBridgeAble {
+  implements PCNodejsBridgeAble
+{
   open(url: string): Observable<BooleanObject> {
     return from(nodeOpen(url, { wait: true }) as Observable<BooleanObject>);
   }
@@ -34,13 +35,14 @@ export class PCNodejsBridge
         subscriber.error(new Error(`${url.toString()} is not file`));
       } else {
         const rs = fs.createReadStream(url as unknown as fs.PathLike);
+        rs.addListener;
         let data = Buffer.of();
         const sub1 = fromEvent(rs, "data").subscribe({
           next: (chunk: Buffer) => {
             data = Buffer.concat([data, chunk]);
             subscriber.next(
               new ObjectTarget<FileLoadEvent>({
-                loaded: data.length,
+                loaded: data.byteLength,
                 total: stat.size,
                 data,
               })
@@ -72,13 +74,12 @@ export class PCNodejsBridge
           command,
           status: error != null,
           error,
-        } as CommandStatus)
-        subscriber.complete()
+        } as CommandStatus);
+        subscriber.complete();
       });
       return {
-        unsubscribe: () => subscriber.unsubscribe()
-      }
-    })
-
+        unsubscribe: () => subscriber.unsubscribe(),
+      };
+    });
   }
 }

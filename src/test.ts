@@ -50,16 +50,14 @@ function test04() {
   context.addWork(new LoadFileWork());
   context.run(
     new StringObject(
-      "C:\\Users\\zihao.zhu\\Desktop\\chrome\\bocbaocobfecmglnmeaeppambideimao_2.1.3_chrome.zzzmh.cn.crx"
+      "d:\\元气壁纸缓存\\img\\116513f379bd664b7cfe5b3b40f5737d.jpg"
     )
   );
 }
-// test04()
+test04()
 
 function test05() {
   const num1 = new NumberObject(1);
   const num2 =  new NumberObject(2);
-  const a = (num2 as unknown as number) >(num1 as unknown as number)
-  num1.less(num2)
 }
-test05();
+// test05();
