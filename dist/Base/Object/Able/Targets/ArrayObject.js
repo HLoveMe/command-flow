@@ -54,13 +54,9 @@ var ArrayObject = /** @class */ (function (_super) {
         return this._value;
     };
     //collection
-    ArrayObject.prototype.collection = function () {
+    ArrayObject.prototype.collectionArray = function () {
         return null;
     };
-    ArrayObject.prototype.find = function () {
-        return null;
-    };
-    ArrayObject.prototype.aa = function () { return null; };
     var ArrayObject_1;
     ArrayObject.attributes = new Set();
     ArrayObject.empty = new ArrayObject_1([]);

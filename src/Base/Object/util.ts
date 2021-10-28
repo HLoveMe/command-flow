@@ -82,22 +82,21 @@ export function ArrayUint(host: any) {
         let result;
         if (typeof execFunc === "function") {
           result = execFunc.bind(value)(...args);
-        }else
-        result = value;
+        } else result = value;
         return decide(result);
       };
     }
   });
-  !host.prototype.collection &&
-    (host.prototype.collection = function (
+  !host.prototype.collectionArray &&
+    (host.prototype.collectionArray = function (
       type: ControlFlow.ArrayEnum,
-      target: Value.ValueAble<any>
+      ...args: any[]
     ) {
       const execFunc = host.prototype[type]?.bind(
         this
       ) as ControlFlow.ArrayFunction;
       if (execFunc && typeof execFunc === "function")
-        return execFunc.call(this, target);
+        return execFunc.call(this, ...args);
       return false;
     });
 }

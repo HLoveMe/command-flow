@@ -26,39 +26,38 @@ export namespace ControlFlow {
     Keys = "keys", // 所有keys
     Values = "values", // 所有values
   }
-
+  //Object.keys(Object.getOwnPropertyDescriptors(Array.prototype)).map($1=>`${$1}: ControlFlow.ArrayFunction`).join('\n')
   export enum ArrayEnum {
-    // Length = "length", ?????
-    // Concat = "concat",
-    // CopyWithin = "copyWithin",
-    // Fill = "fill",
+    Concat = "concat",
+    CopyWithin = "copyWithin",
+    Fill = "fill",
     Find = "find",
-    // FindIndex = "findIndex",
-    // LastIndexOf = "lastIndexOf",
-    // Pop = "pop",
-    // Push = "push",
-    // Reverse = "reverse",
-    // Shift = "shift",
-    // Unshift = "unshift",
-    // Slice = "slice",
-    // Sort = "sort",
-    // Splice = "splice",
-    // Includes = "includes",
-    // IndexOf = "indexOf",
-    // Join = "join",
-    // Keys = "keys",
-    // Entries = "entries",
-    // Values = "values",
-    // ForEach = "forEach",
-    // Filter = "filter",
-    // Flat = "flat",
-    // FlatMap = "flatMap",
-    // Map = "map",
-    // Every = "every",
-    // Some = "some",
-    // Reduce = "reduce",
-    // ReduceRight = "reduceRight",
-    // At = "at",
+    FindIndex = "findIndex",
+    LastIndexOf = "lastIndexOf",
+    Pop = "pop",
+    Push = "push",
+    Reverse = "reverse",
+    Shift = "shift",
+    Unshift = "unshift",
+    Slice = "slice",
+    Sort = "sort",
+    Splice = "splice",
+    Includes = "includes",
+    IndexOf = "indexOf",
+    Join = "join",
+    Keys = "keys",
+    Entries = "entries",
+    Values = "values",
+    ForEach = "forEach",
+    Filter = "filter",
+    Flat = "flat",
+    FlatMap = "flatMap",
+    Map = "map",
+    Every = "every",
+    Some = "some",
+    Reduce = "reduce",
+    ReduceRight = "reduceRight",
+    At = "at",
   }
 
   export enum SetEnum {
@@ -114,15 +113,13 @@ export namespace ControlFlow {
   export interface Calc<U extends Value.NumberAble> extends CalcAble {
     calc(target: U): U;
   }
-  enum A {
-    ah = "aa",
-  }
+
   // Array
   export declare type ArrayFunction = (...args) => BaseType;
   declare type ArrayAbsoluteAble = {
     [T in ArrayEnum]: ArrayFunction;
   };
   export interface Collection extends ArrayAbsoluteAble {
-    // collection(): BaseType;
+    collectionArray(): BaseType;
   }
 }
