@@ -59,8 +59,14 @@ function test04() {
 
 function test05() {
   const arr1 = new ArrayObject([1, 2, 3, 4]);
-  const a = (arr1 as ControlFlow.Collection).find(($1) => $1 >= 3);
-  const b = arr1.find(($1) => $1 >= 3);
+  // const a = (arr1 as ControlFlow.Collection).find(($1) => $1 >= 3);
+  // const b = arr1.find(($1) => $1 >= 3);
+  const isAll = arr1.collectionArray(
+    ControlFlow.ArrayEnum.Every,
+    ($1: number, index: number) => {
+      return $1 >= 1;
+    }
+  );
   debugger;
 }
 test05();

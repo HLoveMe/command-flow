@@ -1,13 +1,4 @@
 "use strict";
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.DefaultValue = exports.ObjectManager = exports.Params = exports.attribute = void 0;
 var ObjectAble_1 = require("./Able/ObjectAble");
@@ -108,7 +99,7 @@ function ArrayUint(host) {
             }
             var execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
             if (execFunc && typeof execFunc === "function")
-                return execFunc.call.apply(execFunc, __spreadArray([this], args, false));
+                return execFunc.apply(void 0, args);
             return false;
         });
 }

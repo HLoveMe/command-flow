@@ -115,11 +115,15 @@ export namespace ControlFlow {
   }
 
   // Array
+  export declare type CollectionArrayExec = (
+    key: ArrayEnum,
+    ...args: any[]
+  ) => BaseType;
   export declare type ArrayFunction = (...args) => BaseType;
   declare type ArrayAbsoluteAble = {
     [T in ArrayEnum]: ArrayFunction;
   };
   export interface Collection extends ArrayAbsoluteAble {
-    collectionArray(): BaseType;
+    collectionArray(key: ArrayEnum, ...args: any[]): BaseType;
   }
 }

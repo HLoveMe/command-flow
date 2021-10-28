@@ -95,8 +95,7 @@ export function ArrayUint(host: any) {
       const execFunc = host.prototype[type]?.bind(
         this
       ) as ControlFlow.ArrayFunction;
-      if (execFunc && typeof execFunc === "function")
-        return execFunc.call(this, ...args);
+      if (execFunc && typeof execFunc === "function") return execFunc(...args);
       return false;
     });
 }

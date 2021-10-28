@@ -35,8 +35,11 @@ function test04() {
 // test04()
 function test05() {
     var arr1 = new Base_1.ArrayObject([1, 2, 3, 4]);
-    var a = arr1.find(function ($1) { return $1 >= 3; });
-    var b = arr1.find(function ($1) { return $1 >= 3; });
+    // const a = (arr1 as ControlFlow.Collection).find(($1) => $1 >= 3);
+    // const b = arr1.find(($1) => $1 >= 3);
+    var isAll = arr1.collectionArray(Base_1.ControlFlow.ArrayEnum.Every, function ($1, index) {
+        return $1 >= 1;
+    });
     debugger;
 }
 test05();

@@ -41,9 +41,7 @@ export class ArrayObject<T>
   }
 
   //collection
-  collectionArray(): BaseType {
-    return null;
-  }
+  collectionArray: ControlFlow.CollectionArrayExec;
   // array function
   length: ControlFlow.ArrayFunction;
   concat: ControlFlow.ArrayFunction;
