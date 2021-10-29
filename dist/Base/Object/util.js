@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.DefaultValue = exports.ObjectManager = exports.Params = exports.attribute = void 0;
+exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.DefaultValue = exports.ObjectManager = exports.Params = exports.attribute = void 0;
 var ObjectAble_1 = require("./Able/ObjectAble");
 var Control_1 = require("./Control");
 var valueUtil_1 = require("./valueUtil");
@@ -140,4 +140,40 @@ function SetUint(host) {
         });
 }
 exports.SetUint = SetUint;
+function MapUint(host) {
+    Object.keys(Control_1.ControlFlow.MapEnum).forEach(function (item) {
+        var key = Control_1.ControlFlow.MapEnum[item];
+        var comFunction = host.prototype[key];
+        if (!comFunction) {
+            host.prototype[key] = function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                var value = this.valueOf();
+                var execFunc = value[key];
+                var result;
+                if (typeof execFunc === "function") {
+                    result = execFunc.bind(value).apply(void 0, args);
+                }
+                else
+                    result = value;
+                return (0, valueUtil_1.decide)(result);
+            };
+        }
+    });
+    !host.prototype.collectionArray &&
+        (host.prototype.collectionArray = function (type) {
+            var _a;
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
+            var execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
+            if (execFunc && typeof execFunc === "function")
+                return execFunc.apply(void 0, args);
+            return false;
+        });
+}
+exports.MapUint = MapUint;
 //# sourceMappingURL=util.js.map

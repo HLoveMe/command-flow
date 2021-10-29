@@ -23,9 +23,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MapObject = void 0;
 var util_1 = require("../../util");
@@ -37,17 +34,21 @@ var MapObject = /** @class */ (function (_super) {
         _this._value = value;
         return _this;
     }
+    MapObject_1 = MapObject;
     MapObject.prototype.len = function () {
         return this._value.size;
-    };
-    MapObject.prototype.get = function (key) {
-        return this.get(key);
     };
     MapObject.prototype.valueOf = function () {
         throw this._value;
     };
+    MapObject.prototype.merge = function (target) {
+        var newMap = new Map(this._value);
+        target._value.forEach(function ($1, key) { return newMap.set(key, $1); });
+        return new MapObject_1(newMap);
+    };
+    var MapObject_1;
     MapObject.attributes = new Set();
-    MapObject.empty = new MapObject(new Map());
+    MapObject.empty = new MapObject_1(new Map());
     __decorate([
         (0, util_1.attribute)(),
         __metadata("design:type", Function),
@@ -55,16 +56,13 @@ var MapObject = /** @class */ (function (_super) {
         __metadata("design:returntype", Number)
     ], MapObject.prototype, "len", null);
     __decorate([
-        (0, util_1.attribute)(),
-        __param(0, (0, util_1.Params)("key")),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Object]),
-        __metadata("design:returntype", Object)
-    ], MapObject.prototype, "get", null);
-    __decorate([
         (0, util_1.DefaultValue)(Object.prototype.toString.call(new Map())),
         __metadata("design:type", String)
     ], MapObject, "type", void 0);
+    MapObject = MapObject_1 = __decorate([
+        util_1.MapUint,
+        __metadata("design:paramtypes", [Map])
+    ], MapObject);
     return MapObject;
 }(ObjectTarget_1.ObjectTarget));
 exports.MapObject = MapObject;

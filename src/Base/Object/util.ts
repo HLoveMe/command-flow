@@ -100,7 +100,6 @@ export function ArrayUint(host: any) {
     });
 }
 
-
 export function SetUint(host: any) {
   Object.keys(ControlFlow.SetEnum).forEach((item) => {
     const key = ControlFlow.SetEnum[item];
@@ -125,6 +124,35 @@ export function SetUint(host: any) {
       const execFunc = host.prototype[type]?.bind(
         this
       ) as ControlFlow.SetFunction;
+      if (execFunc && typeof execFunc === "function") return execFunc(...args);
+      return false;
+    });
+}
+
+export function MapUint(host: any) {
+  Object.keys(ControlFlow.MapEnum).forEach((item) => {
+    const key = ControlFlow.MapEnum[item];
+    const comFunction = host.prototype[key];
+    if (!comFunction) {
+      host.prototype[key] = function (...args: any[]) {
+        const value = (this as Value.MapAble<any, any>).valueOf();
+        const execFunc = value[key];
+        let result;
+        if (typeof execFunc === "function") {
+          result = execFunc.bind(value)(...args);
+        } else result = value;
+        return decide(result);
+      };
+    }
+  });
+  !host.prototype.collectionArray &&
+    (host.prototype.collectionArray = function (
+      type: ControlFlow.MapEnum,
+      ...args: any[]
+    ) {
+      const execFunc = host.prototype[type]?.bind(
+        this
+      ) as ControlFlow.MapFunction;
       if (execFunc && typeof execFunc === "function") return execFunc(...args);
       return false;
     });

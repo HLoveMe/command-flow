@@ -26,7 +26,6 @@ export namespace Value {
     extends ValueAble<Map<T, U>>,
       ObjectAble<Map<T, U>> {
     len(): number;
-    get(key: T): U;
     valueOf(): Map<T, U>;
   }
 
