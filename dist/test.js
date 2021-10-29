@@ -34,12 +34,20 @@ function test04() {
 }
 // test04()
 function test05() {
-    var arr1 = new Base_1.ArrayObject([1, 2, 3, 4]);
+    // const arr1 = new ArrayObject([1, 2, 3, 4]);
     // const a = (arr1 as ControlFlow.Collection).find(($1) => $1 >= 3);
     // const b = arr1.find(($1) => $1 >= 3);
-    var isAll = arr1.collectionArray(Base_1.ControlFlow.ArrayEnum.Every, function ($1, index) {
-        return $1 >= 1;
-    });
+    // const isAll = arr1.collectionArray(
+    //   ControlFlow.ArrayEnum.Every,
+    //   ($1: number, index: number) => {
+    //     return $1 >= 1;
+    //   }
+    // );
+    var set1 = new Base_1.SetObject(new Set());
+    set1.add('aa');
+    set1.add('bb');
+    var a = set1.has('aa');
+    var b = set1.has('aa11');
     debugger;
 }
 test05();

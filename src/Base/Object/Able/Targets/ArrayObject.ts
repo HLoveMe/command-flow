@@ -7,7 +7,7 @@ import { BaseType } from "../../../Types";
 @ArrayUint
 export class ArrayObject<T>
   extends ObjectTarget<Array<T>>
-  implements Value.ArrayAble<T>, ControlFlow.Collection
+  implements Value.ArrayAble<T>, ControlFlow.CollectionArray
 {
   static attributes: Set<string> = new Set();
   static empty: ArrayObject<Object> = new ArrayObject([]);
@@ -38,6 +38,10 @@ export class ArrayObject<T>
   }
   valueOf(): Array<T> {
     return this._value;
+  }
+
+  merge(target: ArrayObject<T>): ArrayObject<T> {
+    return new ArrayObject([...this._value, ...target._value]);
   }
 
   //collection

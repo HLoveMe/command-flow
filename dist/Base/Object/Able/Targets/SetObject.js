@@ -23,9 +23,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SetObject = void 0;
 var util_1 = require("../../util");
@@ -37,17 +34,22 @@ var SetObject = /** @class */ (function (_super) {
         _this._value = value;
         return _this;
     }
+    SetObject_1 = SetObject;
     SetObject.prototype.len = function () {
         return this._value.size;
     };
-    SetObject.prototype.has = function (value) {
-        return this._value.has(value);
-    };
     SetObject.prototype.valueOf = function () {
-        throw this._value;
+        return this._value;
     };
+    SetObject.prototype.merge = function (target) {
+        var newSet = new Set();
+        this._value.forEach(function ($1) { return newSet.add($1); });
+        target.forEach(function ($1) { return newSet.add($1); });
+        return new SetObject_1(newSet);
+    };
+    var SetObject_1;
     SetObject.attributes = new Set();
-    SetObject.empty = new SetObject(new Set());
+    SetObject.empty = new SetObject_1(new Set());
     __decorate([
         (0, util_1.attribute)(),
         __metadata("design:type", Function),
@@ -55,16 +57,13 @@ var SetObject = /** @class */ (function (_super) {
         __metadata("design:returntype", Number)
     ], SetObject.prototype, "len", null);
     __decorate([
-        (0, util_1.attribute)(),
-        __param(0, (0, util_1.Params)("value")),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Object]),
-        __metadata("design:returntype", Boolean)
-    ], SetObject.prototype, "has", null);
-    __decorate([
         (0, util_1.DefaultValue)(Object.prototype.toString.call(new Set())),
         __metadata("design:type", String)
     ], SetObject, "type", void 0);
+    SetObject = SetObject_1 = __decorate([
+        util_1.SetUint,
+        __metadata("design:paramtypes", [Set])
+    ], SetObject);
     return SetObject;
 }(ObjectTarget_1.ObjectTarget));
 exports.SetObject = SetObject;

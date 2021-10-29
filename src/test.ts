@@ -11,6 +11,7 @@ import {
   QRCodeWork,
   NumberObject,
   ArrayObject,
+  SetObject,
 } from "./Base";
 
 function test01() {
@@ -58,15 +59,21 @@ function test04() {
 // test04()
 
 function test05() {
-  const arr1 = new ArrayObject([1, 2, 3, 4]);
+  // const arr1 = new ArrayObject([1, 2, 3, 4]);
   // const a = (arr1 as ControlFlow.Collection).find(($1) => $1 >= 3);
   // const b = arr1.find(($1) => $1 >= 3);
-  const isAll = arr1.collectionArray(
-    ControlFlow.ArrayEnum.Every,
-    ($1: number, index: number) => {
-      return $1 >= 1;
-    }
-  );
+  // const isAll = arr1.collectionArray(
+  //   ControlFlow.ArrayEnum.Every,
+  //   ($1: number, index: number) => {
+  //     return $1 >= 1;
+  //   }
+  // );
+
+  const  set1 = new SetObject(new Set())
+  set1.add('aa')
+  set1.add('bb')
+  const a = set1.has('aa')
+  const b = set1.has('aa11')
   debugger;
 }
 test05();

@@ -26,6 +26,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArrayObject = void 0;
 var util_1 = require("../../util");
@@ -52,6 +61,9 @@ var ArrayObject = /** @class */ (function (_super) {
     };
     ArrayObject.prototype.valueOf = function () {
         return this._value;
+    };
+    ArrayObject.prototype.merge = function (target) {
+        return new ArrayObject_1(__spreadArray(__spreadArray([], this._value, true), target._value, true));
     };
     var ArrayObject_1;
     ArrayObject.attributes = new Set();

@@ -28,6 +28,11 @@ export class NumberObject
   valueOf(): number {
     return this._value;
   }
+
+  merge(target: NumberObject): NumberObject {
+    return new NumberObject(this._value + target._value);
+  }
+
   // Compare
   // compare: ControlFlow.CompareExec;
   more(target: Value.ValueAble<any>): Value.BooleanAble {

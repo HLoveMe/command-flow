@@ -99,3 +99,33 @@ export function ArrayUint(host: any) {
       return false;
     });
 }
+
+
+export function SetUint(host: any) {
+  Object.keys(ControlFlow.SetEnum).forEach((item) => {
+    const key = ControlFlow.SetEnum[item];
+    const comFunction = host.prototype[key];
+    if (!comFunction) {
+      host.prototype[key] = function (...args: any[]) {
+        const value = (this as Value.SetAble<any>).valueOf();
+        const execFunc = value[key];
+        let result;
+        if (typeof execFunc === "function") {
+          result = execFunc.bind(value)(...args);
+        } else result = value;
+        return decide(result);
+      };
+    }
+  });
+  !host.prototype.collectionArray &&
+    (host.prototype.collectionArray = function (
+      type: ControlFlow.SetEnum,
+      ...args: any[]
+    ) {
+      const execFunc = host.prototype[type]?.bind(
+        this
+      ) as ControlFlow.SetFunction;
+      if (execFunc && typeof execFunc === "function") return execFunc(...args);
+      return false;
+    });
+}

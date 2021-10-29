@@ -1,5 +1,4 @@
 import { Value } from "../../../Types";
-import { ControlFlow } from "../../Control";
 import { attribute, DefaultValue } from "../../util";
 import { ObjectTarget } from "./ObjectTarget";
 export class StringObject
@@ -8,7 +7,7 @@ export class StringObject
 {
   static attributes: Set<string> = new Set();
   static empty: StringObject = new StringObject("");
-  
+
   @DefaultValue(Object.prototype.toString.call(new String()))
   static type: string;
   _value: string;

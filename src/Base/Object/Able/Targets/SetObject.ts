@@ -1,15 +1,16 @@
 import { ControlFlow } from "../../Control";
-import { attribute, DefaultValue, Params } from "../../util";
+import { attribute, DefaultValue, SetUint } from "../../util";
 import { Value } from "../../../Types";
 import { ObjectTarget } from "./ObjectTarget";
 
+@SetUint
 export class SetObject<T>
   extends ObjectTarget<Set<T>>
-  implements Value.SetAble<T>
+  implements Value.SetAble<T>, ControlFlow.CollectionSet
 {
   static attributes: Set<string> = new Set();
   static empty: SetObject<any> = new SetObject(new Set());
-  
+
   @DefaultValue(Object.prototype.toString.call(new Set())) static type: string;
   _value: Set<T>;
   constructor(value: Set<T>) {
@@ -20,11 +21,26 @@ export class SetObject<T>
   len(): number {
     return this._value.size;
   }
-  @attribute()
-  has(@Params("value") value: T): boolean {
-    return this._value.has(value);
-  }
+
   valueOf(): Set<T> {
-    throw this._value;
+    return this._value;
   }
+
+  merge(target: SetObject<T>): SetObject<T> {
+    const newSet = new Set<T>();
+    this._value.forEach(($1) => newSet.add($1));
+    target.forEach(($1) => newSet.add($1));
+    return new SetObject(newSet);
+  }
+
+  collectionSet: ControlFlow.CollectionSetExec;
+  has: ControlFlow.SetFunction;
+  add: ControlFlow.SetFunction;
+  delete: ControlFlow.SetFunction;
+  clear: ControlFlow.SetFunction;
+  entries: ControlFlow.SetFunction;
+  forEach: ControlFlow.SetFunction;
+  size: ControlFlow.SetFunction;
+  values: ControlFlow.SetFunction;
+  keys: ControlFlow.SetFunction;
 }

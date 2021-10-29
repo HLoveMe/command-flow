@@ -39,6 +39,9 @@ var NumberObject = /** @class */ (function (_super) {
     NumberObject.prototype.valueOf = function () {
         return this._value;
     };
+    NumberObject.prototype.merge = function (target) {
+        return new NumberObject_1(this._value + target._value);
+    };
     // Compare
     // compare: ControlFlow.CompareExec;
     NumberObject.prototype.more = function (target) {
