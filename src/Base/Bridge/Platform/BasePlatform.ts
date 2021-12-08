@@ -1,18 +1,18 @@
-import { Observable, Subscriber } from "rxjs";
+import { Observable, of, Subscriber } from "rxjs";
 import { BooleanObject, StringObject } from "../../Object/Able/ObjectAble";
 import {
   CommandStatus,
   FileLoadEvent,
   FileOption,
   PathLike,
-  PCPlatformBridgeAble,
+  BasePlatformBridgeAble,
   QRcodeOption,
   RunTimeInfo,
 } from "../ConfigTypes";
 import * as QRCode from "qrcode-generator";
 import { Value } from "../../Types";
 
-export class PlatformBridge implements PCPlatformBridgeAble {
+export class PlatformBridge implements BasePlatformBridgeAble {
   createQrCode(
     context: String,
     option?: QRcodeOption
@@ -70,5 +70,9 @@ export class PlatformBridge implements PCPlatformBridgeAble {
     option?: FileOption
   ): Observable<Value.ObjectAble<FileLoadEvent>> {
     throw new Error("Method not implemented.");
+  }
+  fetch(option?: any): Observable<any> {
+    fetch(option?.url ?? "")
+    return of(null);
   }
 }
