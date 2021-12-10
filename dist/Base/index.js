@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.QRCodeWork = exports.OpenURLWork = exports.LoadFileWork = exports.Base64EnCodeWork = exports.Base64DecodeWork = exports.InstructionOTO = exports.InstructionOTM = exports.InstructionMTM = exports.ControlFlow = exports.Context = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
+exports.QRCodeWork = exports.OpenURLWork = exports.LoadFileWork = exports.Base64EnCodeWork = exports.Base64DecodeWork = exports.InstructionOTO = exports.InstructionOTM = exports.InstructionMTM = exports.ControlFlow = exports.WorkType = exports.Context = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
 var ObjectAble_1 = require("./Object/Able/ObjectAble");
 Object.defineProperty(exports, "ObjectTarget", { enumerable: true, get: function () { return ObjectAble_1.ObjectTarget; } });
 Object.defineProperty(exports, "ArrayObject", { enumerable: true, get: function () { return ObjectAble_1.ArrayObject; } });
@@ -11,6 +11,8 @@ Object.defineProperty(exports, "StringObject", { enumerable: true, get: function
 Object.defineProperty(exports, "BooleanObject", { enumerable: true, get: function () { return ObjectAble_1.BooleanObject; } });
 Object.defineProperty(exports, "DateObject", { enumerable: true, get: function () { return ObjectAble_1.DateObject; } });
 Object.defineProperty(exports, "DataObject", { enumerable: true, get: function () { return ObjectAble_1.DataObject; } });
+var Types_1 = require("./Types");
+Object.defineProperty(exports, "WorkType", { enumerable: true, get: function () { return Types_1.WorkType; } });
 var Control_1 = require("./Object/Control");
 Object.defineProperty(exports, "ControlFlow", { enumerable: true, get: function () { return Control_1.ControlFlow; } });
 var Context_1 = require("./Context");

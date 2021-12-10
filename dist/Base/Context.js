@@ -1,11 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Context = void 0;
+var Types_1 = require("./Types");
 var rxjs_1 = require("rxjs");
 var ObjectAble_1 = require("./Object/Able/ObjectAble");
 var Index_1 = require("./Bridge/Index");
+var BeginWork_1 = require("./Works/ExtendsWorks/BeginWork");
 var Context = /** @class */ (function () {
     function Context(runOptions) {
+        this.status = Types_1.WorkType.WorkRunStatus.INIT;
         this.platform = Index_1.default;
         /**
          * 上下文变量
@@ -14,7 +17,7 @@ var Context = /** @class */ (function () {
         /**
          * 所有work
          */
-        this.works = [];
+        this.works = [new BeginWork_1.BeginWork()];
         /**
          * 消息传输通道
          */
@@ -64,21 +67,32 @@ var Context = /** @class */ (function () {
         }
         works.forEach(this.addWork);
     };
-    // 执行works
     Context.prototype.prepareWorks = function () {
+        if (this.status !== Types_1.WorkType.WorkRunStatus.INIT)
+            return;
         this.works.forEach(function ($1, index, source) {
             var before = source[index - 1];
             var after = source[index + 1];
             $1.prepare(before, after);
         });
+        this.status = Types_1.WorkType.WorkRunStatus.READY;
     };
     Context.prototype.run = function (input, initOption) {
-        this.prepareWorks();
+        if (this.status !== Types_1.WorkType.WorkRunStatus.READY)
+            return;
         var inputWork = this.works[0];
         if (inputWork) {
             inputWork.startRun(input);
-            // inputWork.complete()
         }
+        this.status = Types_1.WorkType.WorkRunStatus.RUNNING;
+    };
+    //
+    Context.prototype.tryInsertInput = function (input) {
+        // if (this.status !== WorkType.WorkRunStatus.RUNNING) return;
+        // const inputWork = this.works[0];
+        // if (inputWork) {
+        //   inputWork.inputSubject.next(input);
+        // }
     };
     /**
      * 停止执行

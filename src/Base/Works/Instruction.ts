@@ -27,10 +27,9 @@ import { StringObject } from "../Object/Able/ObjectAble";
  * 一次输入--->多次输出 InstructionOTM
  * n次输入---->m次输出 InstructionMTM
  */
-class Instruction
+export class Instruction
   extends Subject<BaseType>
-  implements WorkType.Work, EnvironmentAble
-{
+  implements WorkType.Work, EnvironmentAble {
   static OPTION: WorkRunOption;
   name: string = "Instruction";
   static _id: number = 0;
@@ -39,8 +38,6 @@ class Instruction
   beforeWork?: WorkType.Work;
   nextWork?: WorkType.Work;
   context?: ContextImpl;
-  inputSubject: Subject<BaseType> = new Subject<BaseType>();
-  inputSubscription: Subscription;
   runSubscriptions: Map<string, WorkUnit> = new Map();
   pools: Subscription[] = [];
   // 运行配置 config:OPTION todo
@@ -62,6 +59,7 @@ class Instruction
   //   throw new Error("Method not implemented.");
   // }
 
+  // 连接上下通道
   prepare(before?: WorkType.Work, next?: WorkType.Work): void {
     this.beforeWork = before;
     this.nextWork = next;
@@ -71,17 +69,8 @@ class Instruction
   // 处理上一个的传入
   _connectChannel() {
     const that = this;
-    // 处理启动指令 仅仅头部work会触发
-    const observer: PartialObserver<any> = {
-      next: (value) => that.next(value),
-      error: null,
-      complete: null,
-    };
-    var sub1: Subscription = this.inputSubject.subscribe(observer);
-    this.inputSubscription = sub1;
-    this.pools.push(sub1);
     // // 处理数据
-    const sub2: Subscription = that
+    const sub2: Subscription = this
       .pipe(
         tap((value) => {
           this.config?.dev &&
@@ -94,7 +83,7 @@ class Instruction
         })
       )
       .subscribe({
-        complete: () => {},
+        complete: () => { },
         error: (error) => that.error(error),
         next: (value: BaseType) => that._run(value),
       });
@@ -102,6 +91,7 @@ class Instruction
   }
 
   _run(value: BaseType) {
+    this.nextValue(value);
     const that = this;
     const execFunc: WorkType.WorkFunction = PlatformSelect({
       reactNative: () =>
@@ -114,6 +104,10 @@ class Instruction
         )(value),
       node: () =>
         ((that as WorkType.Work).node_run ?? (that as WorkType.Work).run).bind(
+          that
+        )(value),
+      electron: () =>
+        ((that as WorkType.Work).electron_run ?? (that as WorkType.Work).run).bind(
           that
         )(value),
     });
@@ -147,6 +141,7 @@ class Instruction
           },
           error: (err) => {
             that.context.msgChannel.error(new ExecError(that, err));
+            that.completeOneLoop(value, null, false);
           },
           next: (res) => {
             that.config?.dev &&
@@ -156,6 +151,7 @@ class Instruction
                 desc: "[Work][Func:run]->下一个Work",
                 value: res?.valueOf(),
               });
+            that.completeOneLoop(value, res as BaseType, true);
             that.nextWork?.next(res as BaseType);
           },
         });
@@ -184,27 +180,23 @@ class Instruction
   }
 
   stop(): void {
-    this.inputSubscription.unsubscribe();
+    // this.inputSubscription.unsubscribe();
   }
 
-  /**
-   * 运行
-   * @param value
-   */
-  startRun(value: BaseType) {
-    this.inputSubject.next(value);
-  }
-
-  complete() {
-    super.complete();
-    this.inputSubject.complete();
-  }
+  // /**
+  //  * 运行 头部
+  //  * @param value
+  //  */
+  // startRun(value: BaseType) {
+  //   this.inputSubject.next(value);
+  // }
 
   clear(): void {
     this.pools && this.pools.forEach(($1) => $1.unsubscribe());
     this.pools.length = 0;
     this.unsubscribe();
   }
+
   error(err: Error): void {
     this.context &&
       this.context.sendLog({
@@ -227,6 +219,9 @@ class Instruction
       });
   }
 
+  nextValue(input: BaseType) { }
+  completeOneLoop(input: BaseType, next: BaseType, success: Boolean) { }
+
   toString() {
     return `[${this.name}:${this.id}]`;
   }
@@ -241,11 +236,17 @@ class Instruction
 }
 
 export class InstructionOTO extends Instruction {
-  handleMessageNext(value: BaseType) {
-    this.next(value);
-    this.stop();
+  // handleMessageNext(value: BaseType) {
+  //   this.next(value);
+  //   this.stop();
+  // }
+  nextValue(input: BaseType) {
+    this.complete();
   }
-
+  completeOneLoop(input: BaseType, next: BaseType, success: Boolean) {
+    this.unsubscribe()
+    this.clear();
+  }
   run(input: BaseType): Observable<BaseType> {
     return new Observable((subscriber) => {
       subscriber.next(input);
@@ -261,9 +262,13 @@ export class InstructionOTM extends Instruction {
   // 声明可以进行配置的属性 todo
   static OPTION: WorkRunOption;
   name: string = "MultipleInstruction";
-  handleMessageNext(value: BaseType) {
-    this.next(value);
-    this.stop();
+  // handleMessageNext(value: BaseType) {
+  //   this.next(value);
+  //   this.stop();
+  // }
+  completeOneLoop(input: BaseType, next: BaseType, success: Boolean) {
+    // this.inputSubject.complete();
+    // this.inputSubject.unsubscribe();
   }
   run(input: BaseType): Observable<BaseType> {
     return new Observable((subscriber) => {
@@ -283,9 +288,9 @@ export class InstructionMTM extends Instruction {
   static OPTION: WorkRunOption;
   name: string = "MultipleInstruction";
 
-  handleMessageNext(value: BaseType) {
-    this.next(value);
-  }
+  // handleMessageNext(value: BaseType) {
+  //   this.next(value);
+  // }
   run(input: BaseType): Observable<BaseType> {
     return new Observable((subscriber) => {
       subscriber.next(input);

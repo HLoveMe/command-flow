@@ -6,8 +6,10 @@ import { BooleanObject, StringObject } from "./Object/Able/ObjectAble";
 import Platform from "./Bridge/Index";
 import { Value } from "./Types";
 import { PlatformBridge } from "./Bridge/Platform/BasePlatform";
+import { BeginWork } from "./Works/ExtendsWorks/BeginWork";
 
 export class Context implements ContextImpl {
+  status: WorkType.WorkRunStatus = WorkType.WorkRunStatus.INIT;
   platform: PlatformBridge = Platform;
   /**
    * 运行配置文件 todo
@@ -20,7 +22,7 @@ export class Context implements ContextImpl {
   /**
    * 所有work
    */
-  works: WorkType.Work[] = [];
+  works: WorkType.Work[] = [new BeginWork()];
   /**
    * 消息传输通道
    */
@@ -75,8 +77,9 @@ export class Context implements ContextImpl {
   addWorks(...works: WorkType.Work[]): void {
     works.forEach(this.addWork);
   }
-  // 执行works
+
   prepareWorks() {
+    if (this.status !== WorkType.WorkRunStatus.INIT) return;
     this.works.forEach(
       ($1: WorkType.Work, index: number, source: WorkType.Work[]) => {
         const before: WorkType.Work = source[index - 1];
@@ -84,15 +87,25 @@ export class Context implements ContextImpl {
         $1.prepare(before, after);
       }
     );
+    this.status = WorkType.WorkRunStatus.READY;
   }
 
-  run(input: BaseType, initOption?: any) {
-    this.prepareWorks();
+  run(input?: BaseType, initOption?: any) {
+    if (this.status !== WorkType.WorkRunStatus.READY) return;
     const inputWork = this.works[0];
     if (inputWork) {
-      inputWork.startRun(input);
-      // inputWork.complete()
+      (inputWork as unknown as WorkType.WorkEntrance).startRun(input);
     }
+    this.status = WorkType.WorkRunStatus.RUNNING;
+  }
+
+  //
+  tryInsertInput(input: BaseType) {
+    // if (this.status !== WorkType.WorkRunStatus.RUNNING) return;
+    // const inputWork = this.works[0];
+    // if (inputWork) {
+    //   inputWork.inputSubject.next(input);
+    // }
   }
 
   /**
@@ -109,11 +122,11 @@ export class Context implements ContextImpl {
       let errors: WorkType.Work[] = [];
       const sub = forkJoin(taskUns).subscribe({
         next: (values) =>
-          (isSuccess = values.every(($1, index) => {
-            if ($1 === true) return true;
-            errors.push(this.works[index]);
-            return false;
-          })),
+        (isSuccess = values.every(($1, index) => {
+          if ($1 === true) return true;
+          errors.push(this.works[index]);
+          return false;
+        })),
         error: () => {
           // 关闭报错
         },

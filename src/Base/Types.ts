@@ -89,6 +89,15 @@ export namespace WorkType {
 
   export type WorkFunction = (input: BaseType) => Observable<BaseType>;
 
+  export enum WorkRunStatus {
+    INIT,//初始状态
+    // FROZEN,//冻结状态 
+    READY,//准备状态 已经初始化
+    // PRE_RUN,//预运行状态 已经初始化
+    RUNNING,//运行中
+    COMPLETE,//完成
+  }
+
   export interface WorkStatus<T extends BaseType> {
     content?: ContextImpl;
     work?: Work | Work[];
@@ -109,14 +118,14 @@ export namespace WorkType {
   }
   export interface WorkChain extends Subject<BaseType> {
     runSubscriptions: Map<string, WorkUnitImpl>;
-    inputSubject: Subject<BaseType>;
-    inputSubscription: Subscription;
     pools: Subscription[];
   }
   // 入口
   export interface WorkEntrance {
     // 仅仅头部work 有效
     startRun(value: BaseType): void;
+    inputSubject: Subject<BaseType>;
+    inputSubscription: Subscription;
   }
   export interface WorkConfig {
     //根据该属性 控制Work 工作流程
@@ -132,8 +141,7 @@ export namespace WorkType {
     extends WorkOperation,
     WorkContext,
     WorkChain,
-    WorkConfig,
-    WorkEntrance {
+    WorkConfig {
     name: string;
     id: number;
     uuid: WorkUUID;
@@ -143,6 +151,7 @@ export namespace WorkType {
     rn_run?(input: BaseType, option?: any): Observable<BaseType>;
     web_run?(input: BaseType, option?: any): Observable<BaseType>;
     node_run?(input: BaseType, option?: any): Observable<BaseType>;
+    electron_run?(input: BaseType, option?: any): Observable<BaseType>;
     prepare(before?: Work, next?: Work): void;
     // 停止接受上一任务的消息
     stop(): void;
@@ -152,10 +161,16 @@ export namespace WorkType {
     addVariable(name: string, value: BaseType): void;
     error(err: Error): void;
     logMsg(msg: string): void;
+    // 节点
+    // 收到一个消息
+    nextValue(input: BaseType): void;
+    //完成一次 [输入->输出]
+    completeOneLoop(input: BaseType, next: BaseType, success: Boolean): void;
   }
 }
 
 export declare interface ContextImpl {
+  status: WorkType.WorkRunStatus,
   platform: PlatformBridgeAble;
   runOptions: ContextRunOption;
   runConstant: Map<WorkType.WorkUUID, WorkType.WorkConstant>;
@@ -164,7 +179,11 @@ export declare interface ContextImpl {
   pools: Subscription[];
   addWork(work: WorkType.Work): void;
   addWorks(...works: WorkType.Work[]): void;
-  run(input: BaseType, initOption?: any): void;
+  // 准备
+  prepareWorks(): void;
+  // 开始运行
+  run(input?: BaseType, initOption?: any): void;
+  // 
   addVariable(from: WorkType.Work, name: string, value: BaseType): void;
   sendLog(status: WorkType.WorkStatus<BaseType>): void;
   clear(): void;

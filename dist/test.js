@@ -7,6 +7,7 @@ function test01() {
     context.addWork(new Base_1.Base64EnCodeWork());
     context.addWork(new Base_1.Base64DecodeWork());
     context.addWork(new Base_1.Base64DecodeWork());
+    context.prepareWorks();
     setInterval(function () {
         context.run(new Base_1.StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
     }, 5000);
@@ -15,6 +16,7 @@ function test01() {
 function test02() {
     var context = new Base_1.Context();
     context.addWork(new Base_1.OpenURLWork());
+    context.prepareWorks();
     // context.run(new StringObject("file:///C:/Users/Administrator/AppData/Local/Programs/Python/Python310/"));
     context.run(new Base_1.StringObject("file:///C:/Users/Administrator/Desktop/116513f379bd664b7cfe5b3b40f5737d.jpg"));
     //d:\元气壁纸缓存\img\116513f379bd664b7cfe5b3b40f5737d.jpg
@@ -24,6 +26,7 @@ function test02() {
 function test03() {
     var context = new Base_1.Context();
     context.addWork(new Base_1.QRCodeWork());
+    context.prepareWorks();
     context.run(new Base_1.StringObject("AAAA"));
     // context.run(new StringObject("https://www.baidu.com/s?ie=UTF-8&wd=jimp"));
 }
@@ -31,6 +34,7 @@ function test03() {
 function test04() {
     var context = new Base_1.Context();
     context.addWork(new Base_1.LoadFileWork());
+    context.prepareWorks();
     context.run(new Base_1.StringObject("d:\\元气壁纸缓存\\img\\116513f379bd664b7cfe5b3b40f5737d.jpg"));
 }
 // test04()
@@ -55,11 +59,21 @@ function test05() {
 function test06() {
     var context = new Base_1.Context();
     context.addWork(new FetchWork_1.default());
+    context.prepareWorks();
     context.run(new Base_1.ObjectTarget({
         url: "https://www.baidu.com/s?ie=UTF-8&wd=jimp",
         method: "GET",
         contextType: "text/plain",
     }));
+    setTimeout(function () {
+        context.run(new Base_1.ObjectTarget({
+            url: "https://www.baidu.com/s?ie=UTF-8&wd=jimp",
+            method: "GET",
+            contextType: "text/plain",
+        }));
+    }, 5000);
+    // setTimeout(() => {
+    // }, 1000000)
 }
 test06();
 //# sourceMappingURL=test.js.map
