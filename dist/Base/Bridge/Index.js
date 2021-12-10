@@ -7,6 +7,7 @@ var Mobile_2 = require("./Platform/RN/Mobile");
 var PC_2 = require("./Platform/RN/PC");
 var Mobile_3 = require("./Platform/Web/Mobile");
 var PC_3 = require("./Platform/Web/PC");
+require("./Difference/index");
 var runConfig = (0, Equipment_1.PlatformSelect)({
     web: { pc: PC_3.PCWebBridge, mobile: Mobile_3.MobileWebBridge },
     node: { pc: PC_1.PCNodejsBridge, mobile: Mobile_1.MobileNodejsBridge },

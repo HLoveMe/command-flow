@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Base_1 = require("./Base");
+var FetchWork_1 = require("./Base/Works/ExtendsWorks/FetchWork");
 function test01() {
     var context = new Base_1.Context();
     context.addWork(new Base_1.Base64EnCodeWork());
@@ -50,5 +51,15 @@ function test05() {
     var b = set1.has('aa11');
     debugger;
 }
-test05();
+// test05();
+function test06() {
+    var context = new Base_1.Context();
+    context.addWork(new FetchWork_1.default());
+    context.run(new Base_1.ObjectTarget({
+        url: "https://www.baidu.com/s?ie=UTF-8&wd=jimp",
+        method: "GET",
+        contextType: "text/plain",
+    }));
+}
+test06();
 //# sourceMappingURL=test.js.map

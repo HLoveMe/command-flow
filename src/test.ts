@@ -12,7 +12,9 @@ import {
   NumberObject,
   ArrayObject,
   SetObject,
+  ObjectTarget,
 } from "./Base";
+import FetchWork from "./Base/Works/ExtendsWorks/FetchWork";
 
 function test01() {
   const context = new Context();
@@ -76,4 +78,16 @@ function test05() {
   const b = set1.has('aa11')
   debugger;
 }
-test05();
+// test05();
+function test06() {
+  const context = new Context();
+  context.addWork(new FetchWork());
+  context.run(
+    new ObjectTarget({
+      url: "https://www.baidu.com/s?ie=UTF-8&wd=jimp",
+      method: "GET",
+      contextType:"text/plain",
+    })
+  );
+}
+test06()

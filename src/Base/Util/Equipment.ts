@@ -151,8 +151,8 @@ if (process && process.env && process.title) {
     type == "Windows_NT"
       ? JSRUNEnvirType.NODE_WIN
       : type == "Darwin"
-      ? JSRUNEnvirType.NODE_MAC
-      : JSRUNEnvirType.NODE_LINUX;
+        ? JSRUNEnvirType.NODE_MAC
+        : JSRUNEnvirType.NODE_LINUX;
 } else {
   const typeName = getJSEnvironment().name;
   if (isReactNative() || typeName == EnvirType.REACTNATIVE) {
@@ -237,13 +237,15 @@ export type PlatformOSType = "reactNative" | "web" | "node" | "electron";
 type Select<T> = (select: { [platform in PlatformOSType]?: T }) => T;
 
 const PlatformSelect: Select<any> = (select) => {
+  let target;
   if (isElectron) {
-    return select.electron;
+    target = select.electron;
   } else if (isWeb) {
-    return select.web;
+    target = select.web;
   } else if (isNode) {
-    return select.node;
-  } else return select.reactNative;
+    target = select.node;
+  } else target = select.reactNative;
+  return target;
 };
 export {
   JSRUNEnvirType,

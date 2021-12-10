@@ -1,5 +1,5 @@
-import { Observable, of, Subscriber } from "rxjs";
-import { BooleanObject, StringObject } from "../../Object/Able/ObjectAble";
+import { async, Observable, of, Subscriber } from "rxjs";
+import { BooleanObject, StringObject, ObjectTarget } from "../../Object/Able/ObjectAble";
 import {
   CommandStatus,
   FileLoadEvent,
@@ -8,9 +8,13 @@ import {
   BasePlatformBridgeAble,
   QRcodeOption,
   RunTimeInfo,
+  RequestParams,
+  ResponseContent,
+  SupportContentType,
 } from "../ConfigTypes";
 import * as QRCode from "qrcode-generator";
 import { Value } from "../../Types";
+import Axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 export class PlatformBridge implements BasePlatformBridgeAble {
   createQrCode(
@@ -71,8 +75,32 @@ export class PlatformBridge implements BasePlatformBridgeAble {
   ): Observable<Value.ObjectAble<FileLoadEvent>> {
     throw new Error("Method not implemented.");
   }
-  fetch(option?: any): Observable<any> {
-    fetch(option?.url ?? "")
-    return of(null);
+  fetch(req: AxiosRequestConfig): Observable<Value.ObjectAble<ResponseContent>> {
+    return new Observable((subscriber) => {
+      Axios.request(req)
+        .then((response: AxiosResponse) => {
+          let error = null;
+          let data = null;
+          const content = {} as ResponseContent
+          if (response.status !== 200) {
+            error = new Error(`${response.status} ${response.statusText}`);
+          } else {
+            data = response.data
+          }
+          content.data = data;
+          content.error = error;
+          content.response = response;
+          subscriber.next(new ObjectTarget(content));
+          subscriber.complete()
+        })
+        .catch((error) => {
+          subscriber.error(error)
+        })
+      return {
+        unsubscribe: () => {
+          subscriber.unsubscribe();
+        }
+      }
+    })
   }
 }

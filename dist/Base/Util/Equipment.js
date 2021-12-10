@@ -243,17 +243,19 @@ exports.isMobile = isMobile;
 var isJS = true;
 exports.isJS = isJS;
 var PlatformSelect = function (select) {
+    var target;
     if (isElectron) {
-        return select.electron;
+        target = select.electron;
     }
     else if (isWeb) {
-        return select.web;
+        target = select.web;
     }
     else if (isNode) {
-        return select.node;
+        target = select.node;
     }
     else
-        return select.reactNative;
+        target = select.reactNative;
+    return target;
 };
 exports.PlatformSelect = PlatformSelect;
 //# sourceMappingURL=Equipment.js.map

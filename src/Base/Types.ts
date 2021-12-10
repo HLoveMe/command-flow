@@ -14,7 +14,7 @@ export namespace Value {
   }
   export declare interface ArrayAble<T>
     extends ValueAble<Array<T>>,
-      ObjectAble<Array<T>> {
+    ObjectAble<Array<T>> {
     len(): number;
     first(): T;
     last(): T;
@@ -24,33 +24,33 @@ export namespace Value {
 
   export declare interface MapAble<T, U>
     extends ValueAble<Map<T, U>>,
-      ObjectAble<Map<T, U>> {
+    ObjectAble<Map<T, U>> {
     len(): number;
     valueOf(): Map<T, U>;
   }
 
   export declare interface SetAble<T>
     extends ValueAble<Set<T>>,
-      ObjectAble<Set<T>> {
+    ObjectAble<Set<T>> {
     len(): number;
     valueOf(): Set<T>;
   }
 
   export declare interface NumberAble
     extends ValueAble<Number>,
-      ObjectAble<Number> {
+    ObjectAble<Number> {
     valueOf(): Number;
   }
 
   export declare interface StringAble
     extends ValueAble<String>,
-      ObjectAble<String> {
+    ObjectAble<String> {
     valueOf(): String;
   }
 
   export declare interface BooleanAble
     extends ValueAble<Boolean>,
-      ObjectAble<Boolean> {
+    ObjectAble<Boolean> {
     valueOf(): Boolean;
   }
 
@@ -60,20 +60,21 @@ export namespace Value {
 
   export declare interface DataAble
     extends ValueAble<ArrayBuffer>,
-      ObjectAble<ArrayBuffer> {
+    ObjectAble<ArrayBuffer> {
     data(): ArrayBuffer;
   }
 }
 
 export type BaseType =
-  | Value.ArrayAble<any>
-  | Value.MapAble<any, any>
-  | Value.SetAble<any>
-  | Value.StringAble
-  | Value.NumberAble
-  | Value.BooleanAble
-  | Value.DateAble
-  | Value.DataAble
+  Value.ObjectAble<any> // ObjectTarget
+  | Value.ArrayAble<any> // ArrayTarget
+  | Value.MapAble<any, any>// MapTarget
+  | Value.SetAble<any>// SetTarget
+  | Value.StringAble// StringTarget
+  | Value.NumberAble// NumberTarget
+  | Value.BooleanAble// BooleanTarget
+  | Value.DateAble//  DateTarget
+  | Value.DataAble// DataTarget
   | undefined
   | null;
 
@@ -129,10 +130,10 @@ export namespace WorkType {
   }
   export declare interface Work
     extends WorkOperation,
-      WorkContext,
-      WorkChain,
-      WorkConfig,
-      WorkEntrance {
+    WorkContext,
+    WorkChain,
+    WorkConfig,
+    WorkEntrance {
     name: string;
     id: number;
     uuid: WorkUUID;

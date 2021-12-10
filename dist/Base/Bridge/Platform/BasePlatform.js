@@ -4,6 +4,7 @@ exports.PlatformBridge = void 0;
 var rxjs_1 = require("rxjs");
 var ObjectAble_1 = require("../../Object/Able/ObjectAble");
 var QRCode = require("qrcode-generator");
+var axios_1 = require("axios");
 var PlatformBridge = /** @class */ (function () {
     function PlatformBridge() {
     }
@@ -61,6 +62,35 @@ var PlatformBridge = /** @class */ (function () {
     };
     PlatformBridge.prototype.loadFile = function (url, option) {
         throw new Error("Method not implemented.");
+    };
+    PlatformBridge.prototype.fetch = function (req) {
+        return new rxjs_1.Observable(function (subscriber) {
+            axios_1.default.request(req)
+                .then(function (response) {
+                var error = null;
+                var data = null;
+                var content = {};
+                if (response.status !== 200) {
+                    error = new Error(response.status + " " + response.statusText);
+                }
+                else {
+                    data = response.data;
+                }
+                content.data = data;
+                content.error = error;
+                content.response = response;
+                subscriber.next(new ObjectAble_1.ObjectTarget(content));
+                subscriber.complete();
+            })
+                .catch(function (error) {
+                subscriber.error(error);
+            });
+            return {
+                unsubscribe: function () {
+                    subscriber.unsubscribe();
+                }
+            };
+        });
     };
     return PlatformBridge;
 }());

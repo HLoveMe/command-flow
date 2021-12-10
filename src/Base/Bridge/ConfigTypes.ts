@@ -1,3 +1,4 @@
+import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { Observable } from "rxjs";
 import { BooleanObject, StringObject } from "../Object/Able/ObjectAble";
 import { Value } from "../Types";
@@ -41,6 +42,28 @@ export interface FileLoadEvent {
   data: ArrayBuffer;
 }
 
+export interface RequestTimeOut {
+  timeout: number;
+}
+export declare type RequestMethod = "GET" | "POST" | "PUT" | "OPTIONS" | "DELETE";
+export interface RequestParamsInit {
+  method?:RequestMethod;
+  timeout?:number;
+  data?:any;
+  contextType?:SupportContentType;
+  url:string;
+}
+export type RequestParams = AxiosRequestConfig
+export enum SupportContentType {
+  JSON = "application/json",
+  TEXT = "text/plain",
+}
+export interface ResponseContent {
+  error?: Error;
+  data?: any;
+  response: AxiosResponse;
+}
+
 export declare interface PlatformBridgeAble {
   //计算机运行相关硬件
   loadRunInfo(): Observable<RunTimeInfo>;
@@ -67,7 +90,8 @@ export declare interface PlatformBridgeAble {
   ): Observable<StringObject>;
 
   // 网络
-  fetch(option: any): Observable<any>;
+  // 仅仅支持json/txt
+  fetch(req: AxiosRequestConfig): Observable<Value.ObjectAble<ResponseContent>>;
 }
 
 export interface BasePlatformBridgeAble extends PlatformBridgeAble { }

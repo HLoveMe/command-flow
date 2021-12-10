@@ -6,6 +6,7 @@ import { MobileRnBridge } from "./Platform/RN/Mobile";
 import { PCRnBridge } from "./Platform/RN/PC";
 import { MobileWebBridge } from "./Platform/Web/Mobile";
 import { PCWebBridge } from "./Platform/Web/PC";
+import './Difference/index';
 
 const runConfig = PlatformSelect({
   web: { pc: PCWebBridge, mobile: MobileWebBridge },
