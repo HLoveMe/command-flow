@@ -19,6 +19,7 @@ exports.BeginWork = void 0;
 var rxjs_1 = require("rxjs");
 var uuid_1 = require("uuid");
 var Instruction_1 = require("../Instruction");
+var Equipment_1 = require("../../Util/Equipment");
 var BeginWork = /** @class */ (function (_super) {
     __extends(BeginWork, _super);
     function BeginWork() {
@@ -62,6 +63,9 @@ var BeginWork = /** @class */ (function (_super) {
         this.inputSubject.next(value);
     };
     BeginWork.prototype.completeOneLoop = function () { };
+    BeginWork.isAble = function () {
+        return Equipment_1.isJS;
+    };
     BeginWork._id = 0;
     return BeginWork;
 }(Instruction_1.InstructionMTM));

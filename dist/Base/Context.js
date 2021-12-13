@@ -68,8 +68,15 @@ var Context = /** @class */ (function () {
         works.forEach(this.addWork);
     };
     Context.prototype.prepareWorks = function () {
-        if (this.status !== Types_1.WorkType.WorkRunStatus.INIT)
-            return;
+        if (this.status !== Types_1.WorkType.WorkRunStatus.INIT) {
+            return this.sendLog({
+                content: this,
+                work: null,
+                desc: "[content][Func:prepareWorks][context status is not init]",
+                value: new ObjectAble_1.BooleanObject(false),
+            });
+        }
+        ;
         this.works.forEach(function ($1, index, source) {
             var before = source[index - 1];
             var after = source[index + 1];
@@ -78,21 +85,41 @@ var Context = /** @class */ (function () {
         this.status = Types_1.WorkType.WorkRunStatus.READY;
     };
     Context.prototype.run = function (input, initOption) {
-        if (this.status !== Types_1.WorkType.WorkRunStatus.READY)
-            return;
+        if (this.status !== Types_1.WorkType.WorkRunStatus.READY) {
+            return this.sendLog({
+                content: this,
+                work: null,
+                desc: "[content][Func:prepareWorks][run status is not ready]",
+                value: new ObjectAble_1.BooleanObject(false),
+            });
+        }
+        ;
         var inputWork = this.works[0];
         if (inputWork) {
             inputWork.startRun(input);
         }
         this.status = Types_1.WorkType.WorkRunStatus.RUNNING;
     };
-    //
+    /**
+     * 尝试再次输入某个值
+     * 成功与否和Work是否支持有关
+     * @param input
+     * @returns
+     */
     Context.prototype.tryInsertInput = function (input) {
-        // if (this.status !== WorkType.WorkRunStatus.RUNNING) return;
-        // const inputWork = this.works[0];
-        // if (inputWork) {
-        //   inputWork.inputSubject.next(input);
-        // }
+        if (this.status !== Types_1.WorkType.WorkRunStatus.RUNNING) {
+            return this.sendLog({
+                content: this,
+                work: null,
+                desc: "[content][Func:tryInsertInput][run status is not running]",
+                value: new ObjectAble_1.BooleanObject(false),
+            });
+        }
+        ;
+        var inputWork = this.works[0];
+        if (inputWork) {
+            inputWork.inputSubject.next(input);
+        }
     };
     /**
      * 停止执行

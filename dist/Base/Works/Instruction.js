@@ -157,10 +157,10 @@ var Instruction = /** @class */ (function (_super) {
         this.next(value);
     };
     Instruction.prototype.stopWork = function () {
-        var _this = this;
+        var that = this;
         return new rxjs_1.Observable(function (subscribe) {
-            _this.stop();
-            _this.runSubscriptions.forEach(function (value) {
+            that.stop();
+            that.runSubscriptions.forEach(function (value) {
                 value === null || value === void 0 ? void 0 : value.sub.unsubscribe();
             });
             subscribe.next(true);

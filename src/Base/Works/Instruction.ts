@@ -166,9 +166,10 @@ export class Instruction
   }
 
   stopWork(): Observable<Boolean> {
+    const that = this
     return new Observable<Boolean>((subscribe: Subscriber<Boolean>) => {
-      this.stop();
-      this.runSubscriptions.forEach((value) => {
+      that.stop();
+      that.runSubscriptions.forEach((value) => {
         value?.sub.unsubscribe();
       });
       subscribe.next(true);

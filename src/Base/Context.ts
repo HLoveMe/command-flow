@@ -79,7 +79,14 @@ export class Context implements ContextImpl {
   }
 
   prepareWorks() {
-    if (this.status !== WorkType.WorkRunStatus.INIT) return;
+    if (this.status !== WorkType.WorkRunStatus.INIT) {
+      return this.sendLog({
+        content: this,
+        work: null,
+        desc: "[content][Func:prepareWorks][context status is not init]",
+        value: new BooleanObject(false),
+      });
+    };
     this.works.forEach(
       ($1: WorkType.Work, index: number, source: WorkType.Work[]) => {
         const before: WorkType.Work = source[index - 1];
@@ -91,7 +98,14 @@ export class Context implements ContextImpl {
   }
 
   run(input?: BaseType, initOption?: any) {
-    if (this.status !== WorkType.WorkRunStatus.READY) return;
+    if (this.status !== WorkType.WorkRunStatus.READY) {
+      return this.sendLog({
+        content: this,
+        work: null,
+        desc: "[content][Func:prepareWorks][run status is not ready]",
+        value: new BooleanObject(false),
+      });
+    };
     const inputWork = this.works[0];
     if (inputWork) {
       (inputWork as unknown as WorkType.WorkEntrance).startRun(input);
@@ -99,13 +113,25 @@ export class Context implements ContextImpl {
     this.status = WorkType.WorkRunStatus.RUNNING;
   }
 
-  //
+  /**
+   * 尝试再次输入某个值
+   * 成功与否和Work是否支持有关
+   * @param input 
+   * @returns 
+   */
   tryInsertInput(input: BaseType) {
-    // if (this.status !== WorkType.WorkRunStatus.RUNNING) return;
-    // const inputWork = this.works[0];
-    // if (inputWork) {
-    //   inputWork.inputSubject.next(input);
-    // }
+    if (this.status !== WorkType.WorkRunStatus.RUNNING) {
+      return this.sendLog({
+        content: this,
+        work: null,
+        desc: "[content][Func:tryInsertInput][run status is not running]",
+        value: new BooleanObject(false),
+      });
+    };
+    const inputWork = this.works[0];
+    if (inputWork) {
+      (inputWork as unknown as WorkType.WorkEntrance).inputSubject.next(input);
+    }
   }
 
   /**

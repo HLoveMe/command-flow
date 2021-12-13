@@ -8,20 +8,11 @@ import {
   asyncScheduler,
 } from "rxjs";
 import { ExecError } from "../../Error";
-import {
-  currentEnir,
-  isMobile,
-  isPC,
-  JSRUNEnvirType,
-  PlatformSelect,
-} from "../../Util/Equipment";
 import { WorkRunOption } from "../../Configs";
-import { observeOn, tap } from "rxjs/operators";
 import { v4 as UUID } from "uuid";
-import { WorkUnit } from "./../WorkUnit";
 import { EnvironmentAble } from "../../Util/EquipmentTools";
-import { StringObject } from "../../Object/Able/ObjectAble";
-import { Instruction, InstructionMTM } from "../Instruction";
+import {  InstructionMTM } from "../Instruction";
+import { isJS } from "../../Util/Equipment";
 
 export class BeginWork
   extends InstructionMTM
@@ -70,4 +61,9 @@ export class BeginWork
   }
 
   completeOneLoop() { }
+
+  static isAble() {
+    return isJS;
+  }
+
 }
