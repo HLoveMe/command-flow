@@ -95,7 +95,7 @@ function test06() {
     })
   );
   setTimeout(() => {
-    context.run(
+    context.tryInsertInput(
       new ObjectTarget({
         url: "https://www.baidu.com/s?ie=UTF-8&wd=jimp",
         method: "GET",

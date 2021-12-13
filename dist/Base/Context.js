@@ -51,7 +51,7 @@ var Context = /** @class */ (function () {
     Context.prototype.sendLog = function (status) {
         var log = {
             date: new Date().getTime(),
-            work: (Array.isArray(status.work) ? status.work : [status.work]).forEach(function ($1) { return $1.name; }),
+            work: (Array.isArray(status.work) ? status.work : [status.work]).forEach(function ($1) { return $1 === null || $1 === void 0 ? void 0 : $1.name; }),
             info: status.desc,
         };
         this.msgChannel.next(new ObjectAble_1.StringObject(JSON.stringify(log)));
@@ -89,7 +89,7 @@ var Context = /** @class */ (function () {
             return this.sendLog({
                 content: this,
                 work: null,
-                desc: "[content][Func:prepareWorks][run status is not ready]",
+                desc: "[content][Func:run][run status is not ready]",
                 value: new ObjectAble_1.BooleanObject(false),
             });
         }

@@ -3,6 +3,10 @@
 // import { map } from "rxjs/operators";
 // import { InOutputAbleOrNil, WorkType } from "..";
 
+import { Observable, Subscription } from "rxjs"
+import { filter, map } from "rxjs/operators";
+import { BaseType } from "..";
+
 // const ObjectMap = {
 //   "[object Object]": InOutValue.InOutObject,
 //   "[object Map]": InOutValue.InOutMap,
@@ -49,3 +53,33 @@
 //   //   )
 //   // }
 // };
+
+/**
+ * 缓存一个值
+ * @param  
+ * @returns 
+ */
+export function BufferValue() {
+  let buffer: [number, BaseType] = null;
+  return (source: Observable<[number, BaseType]>) => {
+    return new Observable((observer) => {
+      const sub = source.pipe(
+        filter(nextValue => {
+          if (buffer === null || nextValue[1].valueOf() != buffer[1].valueOf()) {
+            buffer = nextValue;
+            return true;
+          }
+          return false;
+        })
+      ).subscribe({
+        next: (nextValue) => observer.next(nextValue),
+      })
+      return {
+        unsubscribe: () => {
+          sub.unsubscribe();
+          observer.unsubscribe();
+        }
+      }
+    })
+  }
+}

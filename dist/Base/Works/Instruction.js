@@ -173,13 +173,6 @@ var Instruction = /** @class */ (function (_super) {
     Instruction.prototype.stop = function () {
         // this.inputSubscription.unsubscribe();
     };
-    // /**
-    //  * 运行 头部
-    //  * @param value
-    //  */
-    // startRun(value: BaseType) {
-    //   this.inputSubject.next(value);
-    // }
     Instruction.prototype.clear = function () {
         this.pools && this.pools.forEach(function ($1) { return $1.unsubscribe(); });
         this.pools.length = 0;
@@ -207,8 +200,23 @@ var Instruction = /** @class */ (function (_super) {
                 desc: msg,
             }));
     };
+    //重写
+    Instruction.prototype.next = function (value) {
+        if (this.closed === false) {
+            _super.prototype.next.call(this, value);
+        }
+        else {
+            this.context.sendLog({
+                work: this,
+                content: this.context,
+                desc: this.toString() + " 已经关闭",
+            });
+        }
+    };
+    // 声明周期
     Instruction.prototype.nextValue = function (input) { };
     Instruction.prototype.completeOneLoop = function (input, next, success) { };
+    // 基础
     Instruction.prototype.toString = function () {
         return "[" + this.name + ":" + this.id + "]";
     };

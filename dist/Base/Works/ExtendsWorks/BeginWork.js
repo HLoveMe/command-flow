@@ -20,6 +20,7 @@ var rxjs_1 = require("rxjs");
 var uuid_1 = require("uuid");
 var Instruction_1 = require("../Instruction");
 var Equipment_1 = require("../../Util/Equipment");
+var rxjs_operators_1 = require("../../Util/rxjs_operators");
 var BeginWork = /** @class */ (function (_super) {
     __extends(BeginWork, _super);
     function BeginWork() {
@@ -28,6 +29,7 @@ var BeginWork = /** @class */ (function (_super) {
         // 输入 头部work
         _this.inputSubject = new rxjs_1.Subject();
         _this.uuid = (0, uuid_1.v4)();
+        _this.heartSubject = (0, rxjs_1.interval)(1000);
         return _this;
     }
     // 处理上一个的传入
@@ -35,11 +37,12 @@ var BeginWork = /** @class */ (function (_super) {
         var that = this;
         // 处理启动指令 仅仅头部work会触发
         var observer = {
-            next: function (value) { return that.next(value); },
+            next: function (value) { return that.next(value[1]); },
             error: null,
             complete: null,
         };
-        var sub1 = this.inputSubject.subscribe(observer);
+        // var sub1: Subscription = this.inputSubject.subscribe(observer);
+        var sub1 = (0, rxjs_1.combineLatest)([this.heartSubject, this.inputSubject]).pipe((0, rxjs_operators_1.BufferValue)()).subscribe(observer);
         this.inputSubscription = sub1;
         this.pools.push(sub1);
         // // 处理数据

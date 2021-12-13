@@ -63,7 +63,7 @@ export class Context implements ContextImpl {
     const log = {
       date: new Date().getTime(),
       work: (Array.isArray(status.work) ? status.work : [status.work]).forEach(
-        ($1) => $1.name
+        ($1) => $1?.name
       ),
       info: status.desc,
     };
@@ -102,7 +102,7 @@ export class Context implements ContextImpl {
       return this.sendLog({
         content: this,
         work: null,
-        desc: "[content][Func:prepareWorks][run status is not ready]",
+        desc: "[content][Func:run][run status is not ready]",
         value: new BooleanObject(false),
       });
     };

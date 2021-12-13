@@ -1,7 +1,12 @@
+"use strict";
 // import { Observable } from "rxjs";
 // import * as InOutValue from "../Object/InOutputValue";
 // import { map } from "rxjs/operators";
 // import { InOutputAbleOrNil, WorkType } from "..";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BufferValue = void 0;
+var rxjs_1 = require("rxjs");
+var operators_1 = require("rxjs/operators");
 // const ObjectMap = {
 //   "[object Object]": InOutValue.InOutObject,
 //   "[object Map]": InOutValue.InOutMap,
@@ -47,4 +52,32 @@
 //   //   )
 //   // }
 // };
+/**
+ * 缓存一个值
+ * @param
+ * @returns
+ */
+function BufferValue() {
+    var buffer = null;
+    return function (source) {
+        return new rxjs_1.Observable(function (observer) {
+            var sub = source.pipe((0, operators_1.filter)(function (nextValue) {
+                if (buffer === null || nextValue[1].valueOf() != buffer[1].valueOf()) {
+                    buffer = nextValue;
+                    return true;
+                }
+                return false;
+            })).subscribe({
+                next: function (nextValue) { return observer.next(nextValue); },
+            });
+            return {
+                unsubscribe: function () {
+                    sub.unsubscribe();
+                    observer.unsubscribe();
+                }
+            };
+        });
+    };
+}
+exports.BufferValue = BufferValue;
 //# sourceMappingURL=rxjs_operators.js.map

@@ -66,7 +66,7 @@ function test06() {
         contextType: "text/plain",
     }));
     setTimeout(function () {
-        context.run(new Base_1.ObjectTarget({
+        context.tryInsertInput(new Base_1.ObjectTarget({
             url: "https://www.baidu.com/s?ie=UTF-8&wd=jimp",
             method: "GET",
             contextType: "text/plain",

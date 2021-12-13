@@ -1,18 +1,17 @@
-import { BaseType, ContextImpl, WorkType, Value } from "../../Types";
+import { BaseType, WorkType } from "../../Types";
 import {
   Subject,
   Subscription,
   Observable,
   PartialObserver,
-  Subscriber,
-  asyncScheduler,
+  interval, combineLatest, OperatorFunction
 } from "rxjs";
-import { ExecError } from "../../Error";
 import { WorkRunOption } from "../../Configs";
 import { v4 as UUID } from "uuid";
 import { EnvironmentAble } from "../../Util/EquipmentTools";
-import {  InstructionMTM } from "../Instruction";
+import { InstructionMTM } from "../Instruction";
 import { isJS } from "../../Util/Equipment";
+import { BufferValue } from "../../Util/rxjs_operators";
 
 export class BeginWork
   extends InstructionMTM
@@ -22,10 +21,12 @@ export class BeginWork
   static _id: number = 0;
   // 输入 头部work
   inputSubject: Subject<BaseType> = new Subject<BaseType>();
+  heartSubject: Observable<number>;
   inputSubscription: Subscription;
   constructor() {
     super();
     this.uuid = UUID();
+    this.heartSubject = interval(1000)
   }
 
   // 处理上一个的传入
@@ -33,11 +34,16 @@ export class BeginWork
     const that = this;
     // 处理启动指令 仅仅头部work会触发
     const observer: PartialObserver<any> = {
-      next: (value) => that.next(value),
+      next: (value) => that.next(value[1]),
       error: null,
       complete: null,
     };
-    var sub1: Subscription = this.inputSubject.subscribe(observer);
+
+
+    // var sub1: Subscription = this.inputSubject.subscribe(observer);
+    var sub1: Subscription = combineLatest([this.heartSubject, this.inputSubject]).pipe(
+      BufferValue(),
+    ).subscribe(observer)
     this.inputSubscription = sub1;
     this.pools.push(sub1);
     // // 处理数据

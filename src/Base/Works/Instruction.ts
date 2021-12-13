@@ -184,14 +184,6 @@ export class Instruction
     // this.inputSubscription.unsubscribe();
   }
 
-  // /**
-  //  * 运行 头部
-  //  * @param value
-  //  */
-  // startRun(value: BaseType) {
-  //   this.inputSubject.next(value);
-  // }
-
   clear(): void {
     this.pools && this.pools.forEach(($1) => $1.unsubscribe());
     this.pools.length = 0;
@@ -220,13 +212,26 @@ export class Instruction
       });
   }
 
+  //重写
+  next(value: BaseType) {
+    if (this.closed === false) {
+      super.next(value);
+    } else {
+      this.context.sendLog({
+        work: this,
+        content: this.context,
+        desc: this.toString() + " 已经关闭",
+      })
+    }
+  }
+  // 声明周期
   nextValue(input: BaseType) { }
   completeOneLoop(input: BaseType, next: BaseType, success: Boolean) { }
 
+  // 基础
   toString() {
     return `[${this.name}:${this.id}]`;
   }
-
   isAble(): Boolean {
     return (this as any).__proto__.isAble();
   }
