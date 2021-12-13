@@ -41,8 +41,8 @@ var BeginWork = /** @class */ (function (_super) {
             error: null,
             complete: null,
         };
-        // var sub1: Subscription = this.inputSubject.subscribe(observer);
-        var sub1 = (0, rxjs_1.combineLatest)([this.heartSubject, this.inputSubject]).pipe((0, rxjs_operators_1.BufferValue)()).subscribe(observer);
+        var sub1 = (0, rxjs_1.combineLatest)([this.heartSubject, this.inputSubject])
+            .pipe((0, rxjs_operators_1.BufferValue)()).subscribe(observer);
         this.inputSubscription = sub1;
         this.pools.push(sub1);
         // // 处理数据

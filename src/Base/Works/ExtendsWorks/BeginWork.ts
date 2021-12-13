@@ -38,12 +38,11 @@ export class BeginWork
       error: null,
       complete: null,
     };
-
-
-    // var sub1: Subscription = this.inputSubject.subscribe(observer);
-    var sub1: Subscription = combineLatest([this.heartSubject, this.inputSubject]).pipe(
-      BufferValue(),
-    ).subscribe(observer)
+    var sub1: Subscription =
+      combineLatest([this.heartSubject, this.inputSubject])
+        .pipe(
+          BufferValue(),
+        ).subscribe(observer)
     this.inputSubscription = sub1;
     this.pools.push(sub1);
     // // 处理数据

@@ -85,7 +85,7 @@ var Instruction = /** @class */ (function (_super) {
     Instruction.prototype._run = function (value) {
         var _this = this;
         var _a, _b;
-        this.nextValue(value);
+        value = this.nextValue(value) || value;
         var that = this;
         var execFunc = (0, Equipment_1.PlatformSelect)({
             reactNative: function () {
@@ -214,8 +214,9 @@ var Instruction = /** @class */ (function (_super) {
         }
     };
     // 声明周期
-    Instruction.prototype.nextValue = function (input) { };
-    Instruction.prototype.completeOneLoop = function (input, next, success) { };
+    // 接受到一个输入
+    Instruction.prototype.nextValue = function (input) { return input; };
+    Instruction.prototype.completeOneLoop = function (input, toValue, success) { };
     // 基础
     Instruction.prototype.toString = function () {
         return "[" + this.name + ":" + this.id + "]";
@@ -241,8 +242,9 @@ var InstructionOTO = /** @class */ (function (_super) {
     // }
     InstructionOTO.prototype.nextValue = function (input) {
         this.complete();
+        return input;
     };
-    InstructionOTO.prototype.completeOneLoop = function (input, next, success) {
+    InstructionOTO.prototype.completeOneLoop = function (input, toValue, success) {
         this.unsubscribe();
         this.clear();
     };
@@ -265,14 +267,8 @@ var InstructionOTM = /** @class */ (function (_super) {
         _this.name = "MultipleInstruction";
         return _this;
     }
-    // handleMessageNext(value: BaseType) {
-    //   this.next(value);
-    //   this.stop();
-    // }
-    InstructionOTM.prototype.completeOneLoop = function (input, next, success) {
-        // this.inputSubject.complete();
-        // this.inputSubject.unsubscribe();
-    };
+    InstructionOTM.prototype.nextValue = function (input) { return input; };
+    InstructionOTM.prototype.completeOneLoop = function (input, next, success) { };
     InstructionOTM.prototype.run = function (input) {
         return new rxjs_1.Observable(function (subscriber) {
             subscriber.next(input);
@@ -294,9 +290,8 @@ var InstructionMTM = /** @class */ (function (_super) {
         _this.name = "MultipleInstruction";
         return _this;
     }
-    // handleMessageNext(value: BaseType) {
-    //   this.next(value);
-    // }
+    InstructionMTM.prototype.nextValue = function (input) { return input; };
+    InstructionMTM.prototype.completeOneLoop = function (input, next, success) { };
     InstructionMTM.prototype.run = function (input) {
         return new rxjs_1.Observable(function (subscriber) {
             subscriber.next(input);

@@ -65,13 +65,15 @@ function test06() {
         method: "GET",
         contextType: "text/plain",
     }));
-    setTimeout(function () {
-        context.tryInsertInput(new Base_1.ObjectTarget({
-            url: "https://www.baidu.com/s?ie=UTF-8&wd=jimp",
-            method: "GET",
-            contextType: "text/plain",
-        }));
-    }, 5000);
+    // setTimeout(() => {
+    //   context.tryInsertInput(
+    //     new ObjectTarget({
+    //       url: "https://www.baidu.com/s?ie=UTF-8&wd=jimp",
+    //       method: "GET",
+    //       contextType: "text/plain",
+    //     })
+    //   );
+    // }, 5000)
     // setTimeout(() => {
     // }, 1000000)
 }

@@ -91,7 +91,7 @@ export class Instruction
   }
 
   _run(value: BaseType) {
-    this.nextValue(value);
+    value = this.nextValue(value) || value;
     const that = this;
     const execFunc: WorkType.WorkFunction = PlatformSelect({
       reactNative: () =>
@@ -225,8 +225,9 @@ export class Instruction
     }
   }
   // 声明周期
-  nextValue(input: BaseType) { }
-  completeOneLoop(input: BaseType, next: BaseType, success: Boolean) { }
+  // 接受到一个输入
+  nextValue(input: BaseType): BaseType { return input }
+  completeOneLoop(input: BaseType, toValue: BaseType, success: Boolean) { }
 
   // 基础
   toString() {
@@ -246,10 +247,11 @@ export class InstructionOTO extends Instruction {
   //   this.next(value);
   //   this.stop();
   // }
-  nextValue(input: BaseType) {
+  nextValue(input: BaseType): BaseType {
     this.complete();
+    return input;
   }
-  completeOneLoop(input: BaseType, next: BaseType, success: Boolean) {
+  completeOneLoop(input: BaseType, toValue: BaseType, success: Boolean) {
     this.unsubscribe()
     this.clear();
   }
@@ -268,14 +270,8 @@ export class InstructionOTM extends Instruction {
   // 声明可以进行配置的属性 todo
   static OPTION: WorkRunOption;
   name: string = "MultipleInstruction";
-  // handleMessageNext(value: BaseType) {
-  //   this.next(value);
-  //   this.stop();
-  // }
-  completeOneLoop(input: BaseType, next: BaseType, success: Boolean) {
-    // this.inputSubject.complete();
-    // this.inputSubject.unsubscribe();
-  }
+  nextValue(input: BaseType): BaseType { return input }
+  completeOneLoop(input: BaseType, next: BaseType, success: Boolean) { }
   run(input: BaseType): Observable<BaseType> {
     return new Observable((subscriber) => {
       subscriber.next(input);
@@ -294,9 +290,9 @@ export class InstructionMTM extends Instruction {
   static OPTION: WorkRunOption;
   name: string = "MultipleInstruction";
 
-  // handleMessageNext(value: BaseType) {
-  //   this.next(value);
-  // }
+  nextValue(input: BaseType): BaseType { return input }
+  completeOneLoop(input: BaseType, next: BaseType, success: Boolean) { }
+  
   run(input: BaseType): Observable<BaseType> {
     return new Observable((subscriber) => {
       subscriber.next(input);

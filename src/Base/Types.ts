@@ -124,8 +124,11 @@ export namespace WorkType {
   export interface WorkEntrance {
     // 仅仅头部work 有效
     startRun(value: BaseType): void;
+    // 输入
     inputSubject: Subject<BaseType>;
     inputSubscription: Subscription;
+    // 心跳
+    heartSubject: Observable<number>;
   }
   export interface WorkConfig {
     //根据该属性 控制Work 工作流程
@@ -163,9 +166,9 @@ export namespace WorkType {
     logMsg(msg: string): void;
     // 节点
     // 收到一个消息
-    nextValue(input: BaseType): void;
+    nextValue(input: BaseType): BaseType
     //完成一次 [输入->输出]
-    completeOneLoop(input: BaseType, next: BaseType, success: Boolean): void;
+    completeOneLoop(input: BaseType, toValue: BaseType, success: Boolean): void;
   }
 }
 
