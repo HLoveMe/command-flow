@@ -47,11 +47,11 @@ export interface RequestTimeOut {
 }
 export declare type RequestMethod = "GET" | "POST" | "PUT" | "OPTIONS" | "DELETE";
 export interface RequestParamsInit {
-  method?:RequestMethod;
-  timeout?:number;
-  data?:any;
-  contextType?:SupportContentType;
-  url:string;
+  method?: RequestMethod;
+  timeout?: number;
+  data?: any;
+  contextType?: SupportContentType;
+  url: string;
 }
 export type RequestParams = AxiosRequestConfig
 export enum SupportContentType {
@@ -64,7 +64,110 @@ export interface ResponseContent {
   response: AxiosResponse;
 }
 
+/**
+ * 硬件驱动部分
+ */
+export namespace Hardware {
+  // 拍照
+  // 视频
+  // 相片
+  // 地理位置
+  // 录音
+  // 文件
+  // 震动 =>手机
+  // 传感器
+  // 调节/获取音量 =>手机 
+  // 调节/获取亮度 =>手机 
+  // 系统信息
+  // 蓝牙状态/开关/发送数据/监听/关闭
+  // 语音播放文字
+  export type DataString = string;
+  export interface ImageResponse {
+    image: DataString;
+    error?: Error;
+  }
+  export interface TakePhotoOption { }
+
+  export interface VideoOption { }
+  export interface VideoResponse {
+    videoUrl?: string;
+    error?: Error;
+  }
+  export interface PositionResponse {
+    longitude?: number;
+    latitude?: number;
+    accuracy?: number;
+  }
+  export interface PositionOption { }
+  export interface AudioResponse { }
+
+  export interface VibratorOption { }
+  export interface BluetoothDevice { }
+  export interface SpeechOption { }
+  export interface SpeechResponse { }
+
+  export interface Permission {
+    // 权限处理
+  }
+  export interface PlatformDrive extends Permission {
+    // 拍照
+    takePhoto(option: TakePhotoOption): Promise<ImageResponse>;
+    // 视频
+    recordVideo(option: VideoOption): Promise<VideoResponse>;
+
+    // 相片
+    getPhotos(): Promise<Array<ImageResponse>>;
+
+    // 地理位置
+    getCurrentPosition(): Promise<PositionResponse>;
+    watchPosition(option: PositionOption): Observable<PositionResponse>;
+    closePosition(): Promise<boolean>;
+
+    // 录音
+    recordAudio(): Promise<AudioResponse>;
+    stopAudio(): Promise<Boolean>;
+
+    // 文件
+    getFile(option: any): Promise<any>;
+
+    // start 震动
+    startVibrator(option: VibratorOption): Promise<Boolean>;
+    stopVibrator(): Promise<Boolean>;
+
+    //传感器 距离传感器 加速度传感器 陀螺仪 磁力计
+
+    // 系统信息
+    getSystemInfo(): Promise<RunTimeInfo>;
+
+    //音量
+    getVolume(): Promise<number>;
+    setVolume(volume: number): Promise<Boolean>;
+
+    //亮度
+    getBrightness(): Promise<number>;
+    setBrightness(brightness: number): Promise<Boolean>;
+
+    //蓝牙
+    scanBluetooth(): Promise<Array<BluetoothDevice>>;
+    connectBluetooth(device: BluetoothDevice): Promise<Boolean>;
+    bluetoothSendData(data: String): Promise<Boolean>;
+    bluetoothReceiveData(device: BluetoothDevice): Observable<String>;
+    bluetoothClose(device: BluetoothDevice): Promise<Boolean>;
+
+    //语音
+    speechInit(option: SpeechOption): Promise<Boolean>;
+    speak(text: string): Promise<SpeechResponse>;
+    stopSpeak(): Promise<SpeechResponse>;
+    clearSpeech(): Promise<Boolean>;
+  }
+
+}
+
+
 export declare interface PlatformBridgeAble {
+  // 硬件相关
+  hardwareSource?: Hardware.PlatformDrive;
+
   //计算机运行相关硬件
   loadRunInfo(): Observable<RunTimeInfo>;
   //命令行工具

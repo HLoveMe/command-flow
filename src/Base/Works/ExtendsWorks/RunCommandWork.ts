@@ -9,8 +9,12 @@ import { Value } from '../../Types';
 import { BooleanObject } from '../../Object/Able/ObjectAble';
 
 /**
- * mobil   run javascript 
- * pc shell
+ * 默认：
+ * run javascript 
+ * 
+ * node:指定
+ *  = "#javascript#console.log('hello world')"
+ *  = "#shell#echo hello world"
  */
 export default class RunCommandWork extends InstructionOTO {
   name: string = "RunCommandWork";

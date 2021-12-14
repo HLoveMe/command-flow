@@ -8,15 +8,16 @@ import {
   BasePlatformBridgeAble,
   QRcodeOption,
   RunTimeInfo,
-  RequestParams,
   ResponseContent,
-  SupportContentType,
+  Hardware,
 } from "../ConfigTypes";
 import * as QRCode from "qrcode-generator";
 import { Value } from "../../Types";
 import Axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { HardwareBase } from "./Hardware";
 
 export class PlatformBridge implements BasePlatformBridgeAble {
+  hardwareSource: Hardware.PlatformDrive = new HardwareBase();
   createQrCode(
     context: String,
     option?: QRcodeOption

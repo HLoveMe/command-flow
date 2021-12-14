@@ -71,6 +71,14 @@ export class Context implements ContextImpl {
   }
 
   addWork(work: WorkType.Work) {
+    if (this.status !== WorkType.WorkRunStatus.INIT) {
+      return this.sendLog({
+        content: this,
+        work: null,
+        desc: "[content][Func:addWork][context status is not init]",
+        value: new BooleanObject(false),
+      });
+    }
     work.context = this;
     this.works.push(work);
   }

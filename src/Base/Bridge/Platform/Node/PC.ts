@@ -16,8 +16,7 @@ import * as process from "child_process";
 /*** */
 export class PCNodejsBridge
   extends PlatformBridge
-  implements PCNodejsBridgeAble
-{
+  implements PCNodejsBridgeAble {
   open(url: string): Observable<BooleanObject> {
     return from(nodeOpen(url, { wait: true }) as Observable<BooleanObject>);
   }
@@ -35,7 +34,6 @@ export class PCNodejsBridge
         subscriber.error(new Error(`${url.toString()} is not file`));
       } else {
         const rs = fs.createReadStream(url as unknown as fs.PathLike);
-        rs.addListener;
         let data = Buffer.of();
         const sub1 = fromEvent(rs, "data").subscribe({
           next: (chunk: Buffer) => {
@@ -65,18 +63,48 @@ export class PCNodejsBridge
       };
     });
   }
-
+  /**
+ * = "#javascript#console.log('hello world')" :default
+ *  = "#shell#echo hello world"
+ * @param command 
+ * @param option 
+ * @returns 
+ */
   runCommand(command: string, option?: any): Observable<CommandStatus> {
     return new Observable((subscriber) => {
-      process.exec(command, function (error, stdout, stderr) {
-        subscriber.next({
-          result: stdout,
-          command,
-          status: error != null,
-          error,
-        } as CommandStatus);
+      const runJs = () => {
+        let result = null;
+        let status = false;
+        let error = null;
+        try {
+          result = eval(command?.toString())
+          status = true;
+        } catch (err) {
+          result = null;
+          status = false;
+          error = err;
+        }
+        return {
+          status, result, command, error
+        } as CommandStatus;
+      }
+      if (command.startsWith("#shell#")) {
+        process.exec(command, function (error, stdout, stderr) {
+          subscriber.next({
+            result: stdout,
+            command,
+            status: error != null,
+            error,
+          } as CommandStatus);
+          subscriber.complete();
+        });
+      } else if (command.startsWith("#javascript#")) {
+        subscriber.next(runJs());
         subscriber.complete();
-      });
+      } else {
+        subscriber.next(runJs());
+        subscriber.complete();
+      }
       return {
         unsubscribe: () => subscriber.unsubscribe(),
       };

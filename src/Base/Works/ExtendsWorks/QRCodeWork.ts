@@ -10,7 +10,7 @@ import { QRcodeOption } from "../../Bridge/ConfigTypes";
  * output => StringObject
  */
 class QRCodeWork extends InstructionOTO {
-  name: string = "OpenURLWork";
+  name: string = "QRCodeWork";
   run(input: BaseType, option?: QRcodeOption): Observable<Value.StringAble> {
     const that = this;
     return new Observable((subscriber: Subscriber<Value.StringAble>) => {

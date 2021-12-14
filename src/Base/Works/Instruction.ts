@@ -10,6 +10,7 @@ import {
 import { ExecError } from "../Error";
 import {
   currentEnir,
+  isJS,
   isMobile,
   isPC,
   JSRUNEnvirType,
@@ -238,7 +239,7 @@ export class Instruction
   }
 
   static isAble() {
-    return isPC || isMobile;
+    return isJS;
   }
 }
 
