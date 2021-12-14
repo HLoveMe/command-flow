@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.QRCodeWork = exports.OpenURLWork = exports.LoadFileWork = exports.Base64EnCodeWork = exports.Base64DecodeWork = exports.InstructionOTO = exports.InstructionOTM = exports.InstructionMTM = exports.ControlFlow = exports.WorkType = exports.Context = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
+exports.DelayIntervalWork = exports.TimeoutWork = exports.IntervalWork = exports.QRCodeWork = exports.OpenURLWork = exports.LoadFileWork = exports.Base64EnCodeWork = exports.Base64DecodeWork = exports.InstructionOTO = exports.InstructionOTM = exports.InstructionMTM = exports.ControlFlow = exports.WorkType = exports.Context = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
 var ObjectAble_1 = require("./Object/Able/ObjectAble");
 Object.defineProperty(exports, "ObjectTarget", { enumerable: true, get: function () { return ObjectAble_1.ObjectTarget; } });
 Object.defineProperty(exports, "ArrayObject", { enumerable: true, get: function () { return ObjectAble_1.ArrayObject; } });
@@ -30,4 +30,8 @@ var OpenURLWork_1 = require("./Works/ExtendsWorks/OpenURLWork");
 exports.OpenURLWork = OpenURLWork_1.default;
 var QRCodeWork_1 = require("./Works/ExtendsWorks/QRCodeWork");
 Object.defineProperty(exports, "QRCodeWork", { enumerable: true, get: function () { return QRCodeWork_1.QRCodeWork; } });
+var UtilWork_1 = require("./Works/ExtendsWorks/UtilWork");
+Object.defineProperty(exports, "IntervalWork", { enumerable: true, get: function () { return UtilWork_1.IntervalWork; } });
+Object.defineProperty(exports, "TimeoutWork", { enumerable: true, get: function () { return UtilWork_1.TimeoutWork; } });
+Object.defineProperty(exports, "DelayIntervalWork", { enumerable: true, get: function () { return UtilWork_1.DelayIntervalWork; } });
 //# sourceMappingURL=index.js.map

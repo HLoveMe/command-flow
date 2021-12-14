@@ -70,17 +70,54 @@ var PCNodejsBridge = /** @class */ (function (_super) {
             };
         });
     };
+    /**
+   * = "#javascript#console.log('hello world')" :default
+   *  = "#shell#echo hello world"
+   * @param command
+   * @param option
+   * @returns
+   */
     PCNodejsBridge.prototype.runCommand = function (command, option) {
         return new rxjs_1.Observable(function (subscriber) {
-            process.exec(command, function (error, stdout, stderr) {
-                subscriber.next({
-                    result: stdout,
+            var runJs = function () {
+                var result = null;
+                var status = false;
+                var error = null;
+                try {
+                    result = eval(command === null || command === void 0 ? void 0 : command.toString());
+                    status = true;
+                }
+                catch (err) {
+                    result = null;
+                    status = false;
+                    error = err;
+                }
+                return {
+                    status: status,
+                    result: result,
                     command: command,
-                    status: error != null,
-                    error: error,
+                    error: error
+                };
+            };
+            if (command.startsWith("#shell#")) {
+                process.exec(command, function (error, stdout, stderr) {
+                    subscriber.next({
+                        result: stdout,
+                        command: command,
+                        status: error != null,
+                        error: error,
+                    });
+                    subscriber.complete();
                 });
+            }
+            else if (command.startsWith("#javascript#")) {
+                subscriber.next(runJs());
                 subscriber.complete();
-            });
+            }
+            else {
+                subscriber.next(runJs());
+                subscriber.complete();
+            }
             return {
                 unsubscribe: function () { return subscriber.unsubscribe(); },
             };

@@ -225,7 +225,7 @@ var Instruction = /** @class */ (function (_super) {
         return this.__proto__.isAble();
     };
     Instruction.isAble = function () {
-        return Equipment_1.isPC || Equipment_1.isMobile;
+        return Equipment_1.isJS;
     };
     Instruction._id = 0;
     return Instruction;

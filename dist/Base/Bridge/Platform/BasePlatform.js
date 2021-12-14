@@ -5,8 +5,10 @@ var rxjs_1 = require("rxjs");
 var ObjectAble_1 = require("../../Object/Able/ObjectAble");
 var QRCode = require("qrcode-generator");
 var axios_1 = require("axios");
+var Hardware_1 = require("./Hardware");
 var PlatformBridge = /** @class */ (function () {
     function PlatformBridge() {
+        this.hardwareSource = new Hardware_1.HardwareBase();
     }
     PlatformBridge.prototype.createQrCode = function (context, option) {
         return new rxjs_1.Observable(function (sub) {

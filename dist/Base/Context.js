@@ -57,6 +57,14 @@ var Context = /** @class */ (function () {
         this.msgChannel.next(new ObjectAble_1.StringObject(JSON.stringify(log)));
     };
     Context.prototype.addWork = function (work) {
+        if (this.status !== Types_1.WorkType.WorkRunStatus.INIT) {
+            return this.sendLog({
+                content: this,
+                work: null,
+                desc: "[content][Func:addWork][context status is not init]",
+                value: new ObjectAble_1.BooleanObject(false),
+            });
+        }
         work.context = this;
         this.works.push(work);
     };

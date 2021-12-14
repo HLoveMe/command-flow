@@ -28,7 +28,7 @@ var QRCodeWork = /** @class */ (function (_super) {
     __extends(QRCodeWork, _super);
     function QRCodeWork() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.name = "OpenURLWork";
+        _this.name = "QRCodeWork";
         return _this;
     }
     QRCodeWork.prototype.run = function (input, option) {

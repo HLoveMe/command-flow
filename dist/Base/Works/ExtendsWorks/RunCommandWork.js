@@ -20,8 +20,12 @@ var rxjs_1 = require("rxjs");
 var Equipment_1 = require("../../Util/Equipment");
 var ObjectAble_1 = require("../../Object/Able/ObjectAble");
 /**
- * mobil   run javascript
- * pc shell
+ * 默认：
+ * run javascript
+ *
+ * node:指定
+ *  = "#javascript#console.log('hello world')"
+ *  = "#shell#echo hello world"
  */
 var RunCommandWork = /** @class */ (function (_super) {
     __extends(RunCommandWork, _super);

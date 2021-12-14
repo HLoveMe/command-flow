@@ -2,7 +2,7 @@ import { ContextImpl, Value, } from "../../Types";
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
 import { isJS } from "../../Util/Equipment";
-import { RequestParams, RequestParamsInit, ResponseContent } from "../../Bridge/ConfigTypes";
+import { RequestParamsInit, ResponseContent } from "../../Bridge/ConfigTypes";
 import { ObjectTarget } from "../..";
 import { AxiosRequestConfig } from "axios";
 import { tap } from "rxjs/operators";

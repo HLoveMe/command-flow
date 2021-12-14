@@ -24,6 +24,7 @@ import {
 import LoadFileWork from "./Works/ExtendsWorks/LoadFileWork";
 import OpenURLWork from "./Works/ExtendsWorks/OpenURLWork";
 import { QRCodeWork } from "./Works/ExtendsWorks/QRCodeWork";
+import { IntervalWork, TimeoutWork, DelayIntervalWork } from "./Works/ExtendsWorks/UtilWork";
 
 export {
   ObjectTarget,
@@ -48,5 +49,8 @@ export {
   Base64EnCodeWork,
   LoadFileWork,
   OpenURLWork,
-  QRCodeWork
+  QRCodeWork,
+  IntervalWork,
+  TimeoutWork,
+  DelayIntervalWork,
 };
