@@ -42,7 +42,7 @@ export class PCNodejsBridge
               new ObjectTarget<FileLoadEvent>({
                 loaded: data.byteLength,
                 total: stat.size,
-                data,
+                data:data.buffer,
               })
             );
           },
