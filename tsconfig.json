@@ -4,7 +4,7 @@
     "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata":true,
-    "outDir": "./dist",
+    "outDir": "./public",
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "commonjs",
@@ -13,6 +13,6 @@
     "skipLibCheck": true,
     "moduleResolution": "node"
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "**/*.d.ts", "src/**/*"],
+  "include": ["core/**/*.ts", "core/**/*.d.ts", "**/*.d.ts", "core/**/*", "test.ts"],
   "exclude": ["node_modules"]
 }
