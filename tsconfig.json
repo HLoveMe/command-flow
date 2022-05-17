@@ -4,7 +4,7 @@
     "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata":true,
-    "outDir": "./public",
+    "outDir": "./coreDist",
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "commonjs",
