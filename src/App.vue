@@ -6,6 +6,7 @@
     <QR></QR>
     <LoadFile></LoadFile>
     <RunCommand></RunCommand>
+    <GroupCommand></GroupCommand>
   </div>
 </template>
 <script setup lang="ts">
@@ -15,6 +16,7 @@ import OpenSourceUrl from "./components/OpenSourceUrl.vue";
 import QR from "./components/QRRun.vue";
 import LoadFile from "./components/LoadFile.vue";
 import RunCommand from './components/RunCommand.vue'
+import GroupCommand from './components/GroupCommand.vue'
 </script>
 <style>
 * {

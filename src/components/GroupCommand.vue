@@ -13,9 +13,8 @@
       :disabled="disabled"
       value="showCode"
     />
-
     <input type="button" @click="clearLog" :disabled="disabled" value="clear" />
-    <a class="name">Base64 decode encode test</a>
+    <a class="name">组合：输入文字 解码，拼接 打开网址</a>
     <div class="run-container">
       <div class="code" ref="codeRef"></div>
       <RunGroup
@@ -26,8 +25,8 @@
       ></RunGroup>
       <RunResult
         v-if="logInfo.size >= 1"
-        :desc="'www.baidu.com 编码 再解码'"
-        :expect="'www.baidu.com'"
+        :desc="'--'"
+        :expect="'=='"
         :success="result"
       ></RunResult>
     </div>
@@ -40,19 +39,17 @@ import {
   DataObject,
   ControlFlow,
   Base64DecodeWork,
-  Base64EnCodeWork,
-  InstructionOTO,
+  LoadFileWork,
   OpenURLWork,
   QRCodeWork,
   NumberObject,
   ArrayObject,
   SetObject,
-  ObjectTarget,unpackValue
+  ObjectTarget,
 } from "../../coreDist/index";
-import { computed, onMounted, ref } from "vue";
+import { ref } from "vue";
 import RunGroup from "./RunGroup.vue";
 import RunResult from "./RunResult.vue";
-import { Observable } from "rxjs";
 interface WorkStatus {
   content?: any;
   work?: any | any[];
@@ -91,30 +88,15 @@ const getContext = () => {
   });
   return context;
 };
-class RunResultShow extends InstructionOTO {
-  name = "RunResultShow";
-
-  run(input: any): Observable<any> {
-    return new Observable((subscriber) => {
-      const value = unpackValue(input);
-      result.value = value == "http://www.baidu.com";
-      subscriber.complete();
-      return {
-        unsubscribe: () => subscriber.unsubscribe(),
-      };
-    });
-  }
-}
 const clearLog = () => {
   logInfo.value.clear();
 };
 async function codeDome() {
   const context = new Context();
-  context.addWork(new Base64EnCodeWork());
   context.addWork(new Base64DecodeWork());
-  context.addWork(new RunResultShow());
+  context.addWork(new OpenURLWork());
   await context.prepareWorks();
-  context.dispatch("http://www.baidu.com");
+  context.dispatch("aHR0cDovL3d3dy5iYWlkdS5jb20=");
 }
 const reRun = () => {
   logInfo.value.clear();
@@ -122,10 +104,10 @@ const reRun = () => {
 };
 const startBegin = async () => {
   const context = getContext();
-  context.addWork(new Base64EnCodeWork());
   context.addWork(new Base64DecodeWork());
+  context.addWork(new OpenURLWork());
   await context.prepareWorks();
-  context.dispatch("http://www.baidu.com");
+  context.dispatch("aHR0cDovL3d3dy5iYWlkdS5jb20=");
 };
 const showCode = () => {
   console.log(codeDome.toString());
