@@ -9,6 +9,7 @@ import {
 import { isElectron, isMobile, isNode, isPC, isWeb } from "../../Util/Equipment";
 import { FileLoadEvent, FileOption } from "../../Bridge/ConfigTypes";
 import { takeLast, tap } from "rxjs/operators";
+import { unpackValue } from "../../Util/channel-value-util";
 
 export default class LoadFileWork extends InstructionOTO {
   name: string = "LoadFileWork";
@@ -19,14 +20,14 @@ export default class LoadFileWork extends InstructionOTO {
       let target: string;
       if (input === null || input === undefined) target = "";
       else {
-        target = (input._value as ChannelValue).value.toString()
+        target = unpackValue(input);
       }
       const sub = (that.context as ContextImpl).platform
         .loadFile(target, option)
         .pipe(
           tap((obj: ObjectTarget<FileLoadEvent>) => {
-            const { loaded, total } = obj.valueOf();
-            this.logMsg(`[LoadFileWork][load:progress]${loaded}/${total}`);
+            const { loaded, total, finish } = obj.valueOf();
+            this.logMsg(`加载进度[load:progress]---：${loaded}/${total} 是否完成：${finish}`, input);
           }),
           takeLast(1)
         )

@@ -158,7 +158,7 @@ export namespace WorkType {
     clear(): void;
     addVariable(name: string, value: BaseType): void;
     error(err: Error): void;
-    logMsg(msg: string): void;
+    logMsg(msg: string, inputValue: ChannelObject): void;
     // 节点
     // 收到一个消息
     nextValue(input: BaseType): BaseType

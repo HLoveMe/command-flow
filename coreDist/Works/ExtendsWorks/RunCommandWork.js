@@ -48,7 +48,7 @@ var RunCommandWork = /** @class */ (function (_super) {
                 .runCommand(target)
                 .subscribe({
                 next: function (info) {
-                    _this.logMsg(JSON.stringify(info));
+                    _this.logMsg(JSON.stringify(info), command);
                     subscriber.next(wrapperValue(command, new BooleanObject(info.error !== null && info.status === true)));
                 },
                 complete: function () { return subscriber.complete(); },

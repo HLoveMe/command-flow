@@ -20,6 +20,7 @@ import { observeOn, tap } from "rxjs/operators";
 import { v4 as UUID } from "uuid";
 import { WorkUnit } from "./WorkUnit";
 import { StringObject } from "../Object/Able/ObjectAble";
+import { wrapperValue } from "../Util/channel-value-util";
 /**
  * 一次输入--->一次输出 InstructionOTO
  * 一次输入--->多次输出 InstructionOTM
@@ -172,13 +173,14 @@ var Instruction = /** @class */ (function (_super) {
     Instruction.prototype.addVariable = function (name, value) {
         this.context && this.context.addVariable(this, name, value);
     };
-    Instruction.prototype.logMsg = function (msg) {
+    Instruction.prototype.logMsg = function (msg, input) {
         var _a, _b;
         ((_a = this.config) === null || _a === void 0 ? void 0 : _a.dev) &&
             ((_b = this.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                 work: [this],
                 content: this.context,
                 desc: msg,
+                value: wrapperValue(input, null),
             }));
     };
     //重写
@@ -191,6 +193,7 @@ var Instruction = /** @class */ (function (_super) {
                 work: [this],
                 content: this.context,
                 desc: this.toString() + " 已经关闭",
+                value: wrapperValue(value, null),
             });
         }
     };

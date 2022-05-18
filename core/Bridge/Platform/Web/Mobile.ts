@@ -27,6 +27,7 @@ export class MobileWebBridge
         total: 0,
         loaded: 0,
         data: new ArrayBuffer(0),
+        finish: true,
       })
     );
   }

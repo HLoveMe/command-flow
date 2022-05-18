@@ -35,6 +35,7 @@ export class PCWebBridge extends PlatformBridge implements PCWebBridgeAble {
               total,
               loaded,
               data: data,
+              finish: false,
             })
           );
         };
@@ -42,10 +43,13 @@ export class PCWebBridge extends PlatformBridge implements PCWebBridgeAble {
           const data = reader.result as ArrayBuffer;
           const { total, loaded } = info;
           subscriber.next(
-            new ObjectTarget<FileLoadEvent>({ total, loaded, data })
+            new ObjectTarget<FileLoadEvent>({ total, loaded, data, finish: true })
           );
           subscriber.complete();
         };
+        reader.onerror = (ev: ProgressEvent<FileReader>) => {
+          subscriber.error(ev);
+        }
         reader.readAsArrayBuffer(input.files[0]);
       });
       input.click();

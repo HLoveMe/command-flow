@@ -8,7 +8,8 @@ import { v4 as UUID } from "uuid";
 import { EnvironmentAble } from "../../Util/EvalEquipment";
 import { InstructionOTO } from "../Instruction";
 import { isJS } from "../../Util/Equipment";
-import { ObjectTarget } from "../..";
+import { ObjectTarget } from "../../Object/Able/ObjectAble";
+import { decide } from '../../Object/valueUtil'
 
 export class BeginWork
   extends InstructionOTO
@@ -53,7 +54,7 @@ export class BeginWork
     (this.nextWork as Subject<ChannelObject>).next(
       new ObjectTarget<ChannelValue>({
         id,
-        value,
+        value: decide(value),
         option: {},
       })
     );

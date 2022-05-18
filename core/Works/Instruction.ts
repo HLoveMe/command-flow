@@ -22,6 +22,8 @@ import { v4 as UUID } from "uuid";
 import { WorkUnit } from "./WorkUnit";
 import { EnvironmentAble } from "../Util/EvalEquipment";
 import { StringObject } from "../Object/Able/ObjectAble";
+import { decide } from "../Object/valueUtil";
+import { wrapperValue } from "../Util/channel-value-util";
 
 /**
  * 一次输入--->一次输出 InstructionOTO
@@ -188,12 +190,13 @@ export class Instruction
   addVariable(name: string, value: BaseType): void {
     this.context && this.context.addVariable(this, name, value);
   }
-  logMsg(msg: string): void {
+  logMsg(msg: string, input: ChannelObject): void {
     this.config?.dev &&
       this.context?.sendLog({
         work: [this],
         content: this.context,
         desc: msg,
+        value: wrapperValue(input, null),
       });
   }
 
@@ -206,6 +209,7 @@ export class Instruction
         work: [this],
         content: this.context,
         desc: this.toString() + " 已经关闭",
+        value: wrapperValue(value, null),
       })
     }
   }

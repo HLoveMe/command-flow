@@ -60,7 +60,7 @@ var FetchWork = /** @class */ (function (_super) {
             var fetchSub = that.context.platform.fetch(options)
                 .pipe(tap(function (result) {
                 var data = result.valueOf().data;
-                _this.logMsg("[FetchWork][load:data]" + data);
+                _this.logMsg("[FetchWork][load:data]" + data, input);
             })).subscribe({
                 next: function (data) {
                     var result = data.valueOf();

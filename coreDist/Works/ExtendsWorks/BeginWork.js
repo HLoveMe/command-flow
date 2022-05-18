@@ -16,7 +16,8 @@ var __extends = (this && this.__extends) || (function () {
 import { v4 as UUID } from "uuid";
 import { InstructionOTO } from "../Instruction";
 import { isJS } from "../../Util/Equipment";
-import { ObjectTarget } from "../..";
+import { ObjectTarget } from "../../Object/Able/ObjectAble";
+import { decide } from '../../Object/valueUtil';
 var BeginWork = /** @class */ (function (_super) {
     __extends(BeginWork, _super);
     function BeginWork() {
@@ -53,7 +54,7 @@ var BeginWork = /** @class */ (function (_super) {
         var id = runId !== null && runId !== void 0 ? runId : UUID();
         this.nextWork.next(new ObjectTarget({
             id: id,
-            value: value,
+            value: decide(value),
             option: {},
         }));
     };

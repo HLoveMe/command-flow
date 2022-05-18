@@ -42,13 +42,17 @@ var PCWebBridge = /** @class */ (function (_super) {
                         total: total,
                         loaded: loaded,
                         data: data,
+                        finish: false,
                     }));
                 };
                 reader.onload = function (info) {
                     var data = reader.result;
                     var total = info.total, loaded = info.loaded;
-                    subscriber.next(new ObjectTarget({ total: total, loaded: loaded, data: data }));
+                    subscriber.next(new ObjectTarget({ total: total, loaded: loaded, data: data, finish: true }));
                     subscriber.complete();
+                };
+                reader.onerror = function (ev) {
+                    subscriber.error(ev);
                 };
                 reader.readAsArrayBuffer(input.files[0]);
             });

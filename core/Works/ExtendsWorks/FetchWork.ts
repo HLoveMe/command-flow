@@ -34,7 +34,7 @@ export default class FetchWork extends InstructionOTO {
         .pipe(
           tap((result: Value.ObjectAble<ResponseContent>) => {
             const { data } = result.valueOf();
-            this.logMsg(`[FetchWork][load:data]${data}`);
+            this.logMsg(`[FetchWork][load:data]${data}`,input);
           })
         ).subscribe({
           next: (data: Value.ObjectAble<ResponseContent>) => {

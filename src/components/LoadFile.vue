@@ -14,7 +14,7 @@
       value="showCode"
     />
     <input type="button" @click="clearLog" :disabled="disabled" value="clear" />
-    <a class="name">打开网页</a>
+    <a class="name">LoadFileWork</a>
     <div class="run-container">
       <div class="code" ref="codeRef"></div>
       <RunGroup
@@ -23,25 +23,18 @@
         :id="item"
         :items="logInfo.get(item)"
       ></RunGroup>
-      <RunResult v-if="logInfo.size>=1" :desc="'打开网页'" :expect="'打开网址'"></RunResult>
+      <RunResult
+        v-if="logInfo.size >= 1"
+        :desc="'--'"
+        :expect="'=='"
+      ></RunResult>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import {
   Context,
-  StringObject,
-  DataObject,
-  ControlFlow,
-  Base64DecodeWork,
-  Base64EnCodeWork,
-  LoadFileWork,
-  OpenURLWork,
-  QRCodeWork,
-  NumberObject,
-  ArrayObject,
-  SetObject,
-  ObjectTarget,
+  LoadFileWork
 } from "../../coreDist/index";
 import { computed, onMounted, ref } from "vue";
 import RunGroup from "./RunGroup.vue";
@@ -88,9 +81,9 @@ const clearLog = () => {
 };
 async function codeDome() {
   const context = new Context();
-  context.addWork(new OpenURLWork());
+  context.addWork(new LoadFileWork());
   await context.prepareWorks();
-  context.dispatch("http://www.baidu.com");
+  context.dispatch();
 }
 const reRun = () => {
   logInfo.value.clear();
@@ -98,9 +91,9 @@ const reRun = () => {
 };
 const startBegin = async () => {
   const context = getContext();
-  context.addWork(new OpenURLWork());
+  context.addWork(new LoadFileWork());
   await context.prepareWorks();
-  context.dispatch("http://www.baidu.com");
+  context.dispatch();
 };
 const showCode = () => {
   console.log(codeDome.toString());

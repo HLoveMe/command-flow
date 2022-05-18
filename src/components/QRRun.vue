@@ -108,6 +108,7 @@ class ShowQR extends InstructionOTO {
 }
 const clearLog = () => {
   logInfo.value.clear();
+  qrCodeRef.value.src = "";
 };
 async function codeDome() {
   const context = new Context();

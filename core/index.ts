@@ -25,7 +25,8 @@ import LoadFileWork from "./Works/ExtendsWorks/LoadFileWork";
 import OpenURLWork from "./Works/ExtendsWorks/OpenURLWork";
 import { QRCodeWork } from "./Works/ExtendsWorks/QRCodeWork";
 import { IntervalWork, TimeoutWork, DelayIntervalWork } from "./Works/ExtendsWorks/UtilWork";
-import { unpackValue,wrapperValue } from './Util/channel-value-util'
+import { unpackValue, wrapperValue } from './Util/channel-value-util'
+import { isAbleType, decide } from './Object/valueUtil'
 
 export {
   ObjectTarget,
@@ -55,5 +56,6 @@ export {
   TimeoutWork,
   DelayIntervalWork,
   unpackValue,
-  wrapperValue
+  wrapperValue,
+  isAbleType, decide
 };

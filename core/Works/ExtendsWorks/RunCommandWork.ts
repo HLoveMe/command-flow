@@ -32,7 +32,7 @@ export default class RunCommandWork extends InstructionOTO {
         .runCommand(target)
         .subscribe({
           next: (info: CommandStatus) => {
-            this.logMsg(JSON.stringify(info));
+            this.logMsg(JSON.stringify(info), command);
             subscriber.next(wrapperValue(command, new BooleanObject(info.error !== null && info.status === true)))
           },
           complete: () => subscriber.complete(),

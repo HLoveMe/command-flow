@@ -40,6 +40,7 @@ export interface FileLoadEvent {
   total: number;
   loaded: number;
   data: ArrayBuffer;
+  finish:boolean;
 }
 
 export interface RequestTimeOut {
