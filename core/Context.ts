@@ -101,17 +101,17 @@ export class Context implements ContextImpl {
         value: new BooleanObject(false),
       });
     };
-    this.works.forEach(
+    await Promise.all(this.works.map(
       ($1: WorkType.Work, index: number, source: WorkType.Work[]) => {
         const before: WorkType.Work = source[index - 1];
         const after: WorkType.Work = source[index + 1];
-        $1.prepare(before, after);
+        return $1.prepare(before, after);
       }
-    );
+    ))
     this.status = WorkType.WorkRunStatus.READY;
   }
 
-  run(input?: BaseType, initOption?: ContextRunOption) {
+  dispatch(input?: BaseType, initOption?: ContextRunOption) {
     if (this.status === WorkType.WorkRunStatus.INIT) {
       return this.sendLog({
         content: this,

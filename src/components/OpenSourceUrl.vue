@@ -13,6 +13,7 @@
       :disabled="disabled"
       value="showCode"
     />
+    <input type="button" @click="clearLog" :disabled="disabled" value="clear" />
     <a class="name">打开网页</a>
     <div class="run-container">
       <div class="code" ref="codeRef"></div>
@@ -82,11 +83,14 @@ const getContext = () => {
   });
   return context;
 };
+const clearLog = () => {
+  logInfo.value.clear();
+};
 async function codeDome() {
   const context = new Context();
   context.addWork(new OpenURLWork());
   await context.prepareWorks();
-  context.run("www.baidu.com");
+  context.dispatch("www.baidu.com");
 }
 const reRun = () => {
   logInfo.value.clear();
@@ -96,7 +100,7 @@ const startBegin = async () => {
   const context = getContext();
   context.addWork(new OpenURLWork());
   await context.prepareWorks();
-  context.run("http://www.baidu.com");
+  context.dispatch("http://www.baidu.com");
 };
 const showCode = () => {
   console.log(codeDome.toString());

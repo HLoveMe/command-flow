@@ -22,7 +22,6 @@ import { v4 as UUID } from "uuid";
 import { WorkUnit } from "./WorkUnit";
 import { EnvironmentAble } from "../Util/EvalEquipment";
 import { StringObject } from "../Object/Able/ObjectAble";
-import { wrapperValue } from "../Util/channel-value-util";
 
 /**
  * 一次输入--->一次输出 InstructionOTO
@@ -50,10 +49,11 @@ export class Instruction
     this.uuid = UUID();
   }
   // 连接上下通道
-  prepare(before?: WorkType.Work, next?: WorkType.Work): void {
+  prepare(before?: WorkType.Work, next?: WorkType.Work): Promise<void> {
     this.beforeWork = before;
     this.nextWork = next;
     this._connectChannel();
+    return null;
   }
 
   // 处理上一个的传入
@@ -112,7 +112,7 @@ export class Instruction
       const uuid = UUID();
       const runSub: Subscription = execFunc(value)
         .pipe(
-          tap((_value:ChannelObject) => {
+          tap((_value: ChannelObject) => {
             that.config?.dev &&
               that.context?.sendLog({
                 work: [that],

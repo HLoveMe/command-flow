@@ -120,26 +120,31 @@ var Context = /** @class */ (function () {
     Context.prototype.prepareWorks = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                if (this.status !== WorkType.WorkRunStatus.INIT) {
-                    return [2 /*return*/, this.sendLog({
-                            content: this,
-                            work: [],
-                            desc: "[content][Func:prepareWorks][context status is not init]",
-                            value: new BooleanObject(false),
-                        })];
+                switch (_a.label) {
+                    case 0:
+                        if (this.status !== WorkType.WorkRunStatus.INIT) {
+                            return [2 /*return*/, this.sendLog({
+                                    content: this,
+                                    work: [],
+                                    desc: "[content][Func:prepareWorks][context status is not init]",
+                                    value: new BooleanObject(false),
+                                })];
+                        }
+                        ;
+                        return [4 /*yield*/, Promise.all(this.works.map(function ($1, index, source) {
+                                var before = source[index - 1];
+                                var after = source[index + 1];
+                                return $1.prepare(before, after);
+                            }))];
+                    case 1:
+                        _a.sent();
+                        this.status = WorkType.WorkRunStatus.READY;
+                        return [2 /*return*/];
                 }
-                ;
-                this.works.forEach(function ($1, index, source) {
-                    var before = source[index - 1];
-                    var after = source[index + 1];
-                    $1.prepare(before, after);
-                });
-                this.status = WorkType.WorkRunStatus.READY;
-                return [2 /*return*/];
             });
         });
     };
-    Context.prototype.run = function (input, initOption) {
+    Context.prototype.dispatch = function (input, initOption) {
         if (this.status === WorkType.WorkRunStatus.INIT) {
             return this.sendLog({
                 content: this,

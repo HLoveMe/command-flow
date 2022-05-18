@@ -150,7 +150,7 @@ export namespace WorkType {
     web_run?(input: BaseType, option?: any): Observable<BaseType>;
     node_run?(input: BaseType, option?: any): Observable<BaseType>;
     electron_run?(input: BaseType, option?: any): Observable<BaseType>;
-    prepare(before?: Work, next?: Work): void;
+    prepare(before?: Work, next?: Work): Promise<void>;
     // 停止接受上一任务的消息
     stop(): void;
     // 关闭Work
@@ -179,9 +179,9 @@ export declare interface ContextImpl {
   addWorks(...works: WorkType.Work[]): void;
   addWorkLog(tap: PartialObserver<WorkType.WorkStatus<ChannelObject>>): Subscription
   // 准备
-  prepareWorks(): void;
+  prepareWorks(): Promise<void>;
   // 开始运行
-  run(input?: BaseType, initOption?: any): void;
+  dispatch(input?: BaseType, initOption?: any): void;
   // 
   addVariable(from: WorkType.Work, name: string, value: BaseType): void;
   sendLog(status: WorkType.WorkStatus<BaseType>): void;

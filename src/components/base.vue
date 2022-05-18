@@ -13,6 +13,7 @@
       :disabled="disabled"
       value="showCode"
     />
+    <input type="button" @click="clearLog" :disabled="disabled" value="clear" />
     <a class="name">Base64 decode encode test</a>
     <div class="run-container">
       <div class="code" ref="codeRef"></div>
@@ -22,7 +23,11 @@
         :id="item"
         :items="logInfo.get(item)"
       ></RunGroup>
-      <RunResult v-if="logInfo.size>=1" :desc="'--'" :expect="'=='"></RunResult>
+      <RunResult
+        v-if="logInfo.size >= 1"
+        :desc="'--'"
+        :expect="'=='"
+      ></RunResult>
     </div>
   </div>
 </template>
@@ -82,12 +87,15 @@ const getContext = () => {
   });
   return context;
 };
+const clearLog = () => {
+  logInfo.value.clear();
+};
 async function codeDome() {
   const context = new Context();
   context.addWork(new Base64EnCodeWork());
   context.addWork(new Base64DecodeWork());
   await context.prepareWorks();
-  context.run("www.baidu.com");
+  context.dispatch("www.baidu.com");
 }
 const reRun = () => {
   logInfo.value.clear();
@@ -98,7 +106,7 @@ const startBegin = async () => {
   context.addWork(new Base64EnCodeWork());
   context.addWork(new Base64DecodeWork());
   await context.prepareWorks();
-  context.run("www.baidu.com");
+  context.dispatch("www.baidu.com");
 };
 const showCode = () => {
   console.log(codeDome.toString());

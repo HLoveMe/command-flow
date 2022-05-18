@@ -43,6 +43,7 @@ var Instruction = /** @class */ (function (_super) {
         this.beforeWork = before;
         this.nextWork = next;
         this._connectChannel();
+        return null;
     };
     // 处理上一个的传入
     Instruction.prototype._connectChannel = function () {

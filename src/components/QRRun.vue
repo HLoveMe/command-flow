@@ -13,9 +13,8 @@
       :disabled="disabled"
       value="showCode"
     />
-    
     <input type="button" @click="clearLog" :disabled="disabled" value="clear" />
-    <a class="name">Base64 decode encode test</a>
+    <a class="name">QR-create</a>
     <div class="run-container">
       <div class="code" ref="codeRef"></div>
       <RunGroup
@@ -24,7 +23,12 @@
         :id="item"
         :items="logInfo.get(item)"
       ></RunGroup>
-      <RunResult v-if="logInfo.size>=1" :desc="'--'" :expect="'=='"></RunResult>
+      <RunResult
+        v-if="logInfo.size >= 1"
+        :desc="'--'"
+        :expect="'=='"
+      ></RunResult>
+      <img ref="qrCodeRef" />
     </div>
   </div>
 </template>
@@ -43,10 +47,13 @@ import {
   ArrayObject,
   SetObject,
   ObjectTarget,
+  InstructionOTO,
+  unpackValue,
 } from "../../coreDist/index";
 import { computed, onMounted, ref } from "vue";
 import RunGroup from "./RunGroup.vue";
 import RunResult from "./RunResult.vue";
+import { Observable } from "rxjs";
 interface WorkStatus {
   content?: any;
   work?: any | any[];
@@ -55,6 +62,7 @@ interface WorkStatus {
   date?: Date;
 }
 const codeRef = ref<HTMLDivElement>();
+const qrCodeRef = ref<HTMLImageElement>();
 const logInfo = ref<Map<string, Array<any>>>(new Map());
 const disabled = ref<boolean>(false);
 const getContext = () => {
@@ -84,13 +92,27 @@ const getContext = () => {
   });
   return context;
 };
+class ShowQR extends InstructionOTO {
+  name = "ShowQRHandler";
+
+  run(input): Observable<any> {
+    return new Observable((subscriber) => {
+      const value = unpackValue(input);
+      qrCodeRef.value.src = `${value}`;
+      subscriber.complete();
+      return {
+        unsubscribe: () => subscriber.unsubscribe(),
+      };
+    });
+  }
+}
 const clearLog = () => {
   logInfo.value.clear();
 };
 async function codeDome() {
   const context = new Context();
-  context.addWork(new Base64EnCodeWork());
-  context.addWork(new Base64DecodeWork());
+  context.addWork(new QRCodeWork());
+  context.addWork(new ShowQR());
   await context.prepareWorks();
   context.dispatch("www.baidu.com");
 }
@@ -100,8 +122,8 @@ const reRun = () => {
 };
 const startBegin = async () => {
   const context = getContext();
-  context.addWork(new Base64EnCodeWork());
-  context.addWork(new Base64DecodeWork());
+  context.addWork(new QRCodeWork());
+  context.addWork(new ShowQR());
   await context.prepareWorks();
   context.dispatch("www.baidu.com");
 };
