@@ -4,7 +4,6 @@ import { Observable, Subscriber } from "rxjs";
 import { isJS } from "../../Util/Equipment";
 import { QRcodeOption } from "../../Bridge/ConfigTypes";
 import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
-import { StringObject } from "../..";
 
 /**
  * 字符串生产QRcode base64

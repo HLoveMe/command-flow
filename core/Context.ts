@@ -1,7 +1,7 @@
 
 import { WorkType, BaseType, ContextImpl, ChannelObject, ChannelValue } from "./Types";
 import { CompletionObserver, forkJoin, Observable, PartialObserver, Subject, Subscription } from "rxjs";
-import { ContextRunOption } from "./Configs";
+import { ContextRunOption, DefaultRunConfig } from "./Configs";
 import { BooleanObject, StringObject } from "./Object/Able/ObjectAble";
 import Platform from "./Bridge/Index";
 import { Value } from "./Types";
@@ -23,18 +23,19 @@ export class Context implements ContextImpl {
   /**
    * 所有work
    */
-  works: WorkType.Work[] = [new BeginWork()];
+  works: WorkType.Work[] = [];
   /**
    * 消息传输通道
    */
   msgChannel: Subject<WorkType.WorkStatus> = new Subject();
   constructor(runOptions?: ContextRunOption) {
-    this.runOptions = runOptions || {} as ContextRunOption;
+    this.runOptions = (runOptions || DefaultRunConfig) as ContextRunOption;
     const sub = this.msgChannel.subscribe({
       next: (value) => this.workMessage(value),
       error: (error) => this.workError(error),
     });
     this.pools.push(sub);
+    this.addWork(new BeginWork());
   }
   /**
    * 需要销毁的Subscription
@@ -111,7 +112,7 @@ export class Context implements ContextImpl {
     this.status = WorkType.WorkRunStatus.READY;
   }
 
-  dispatch(input?: BaseType, initOption?: ContextRunOption) {
+  dispatch(input?: BaseType) {
     if (this.status === WorkType.WorkRunStatus.INIT) {
       return this.sendLog({
         content: this,

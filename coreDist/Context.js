@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { WorkType } from "./Types";
 import { forkJoin, Observable, Subject } from "rxjs";
+import { DefaultRunConfig } from "./Configs";
 import { BooleanObject } from "./Object/Able/ObjectAble";
 import Platform from "./Bridge/Index";
 import { BeginWork } from "./Works/ExtendsWorks/BeginWork";
@@ -52,7 +53,7 @@ var Context = /** @class */ (function () {
         /**
          * 所有work
          */
-        this.works = [new BeginWork()];
+        this.works = [];
         /**
          * 消息传输通道
          */
@@ -61,12 +62,13 @@ var Context = /** @class */ (function () {
          * 需要销毁的Subscription
          */
         this.pools = [];
-        this.runOptions = runOptions || {};
+        this.runOptions = (runOptions || DefaultRunConfig);
         var sub = this.msgChannel.subscribe({
             next: function (value) { return _this.workMessage(value); },
             error: function (error) { return _this.workError(error); },
         });
         this.pools.push(sub);
+        this.addWork(new BeginWork());
     }
     /**
      * 增加上下文变量
@@ -144,7 +146,7 @@ var Context = /** @class */ (function () {
             });
         });
     };
-    Context.prototype.dispatch = function (input, initOption) {
+    Context.prototype.dispatch = function (input) {
         if (this.status === WorkType.WorkRunStatus.INIT) {
             return this.sendLog({
                 content: this,

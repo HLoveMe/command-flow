@@ -35,7 +35,7 @@ var Instruction = /** @class */ (function (_super) {
         _this.runSubscriptions = new Map();
         _this.pools = [];
         // 运行配置 config:OPTION todo
-        _this.config = { dev: true };
+        _this.config = { development: true };
         _this.uuid = UUID();
         return _this;
     }
@@ -43,6 +43,7 @@ var Instruction = /** @class */ (function (_super) {
     Instruction.prototype.prepare = function (before, next) {
         this.beforeWork = before;
         this.nextWork = next;
+        this.config = this.context.runOptions;
         this._connectChannel();
         return null;
     };
@@ -54,7 +55,7 @@ var Instruction = /** @class */ (function (_super) {
         var sub2 = this
             .pipe(tap(function (value) {
             var _a, _b;
-            ((_a = _this.config) === null || _a === void 0 ? void 0 : _a.dev) &&
+            ((_a = _this.config) === null || _a === void 0 ? void 0 : _a.development) &&
                 ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                     work: [that],
                     content: _this.context,
@@ -71,28 +72,29 @@ var Instruction = /** @class */ (function (_super) {
     };
     Instruction.prototype._run = function (value) {
         var _this = this;
-        var _a, _b;
+        var _a, _b, _c;
         value = this.nextValue(value) || value;
         var that = this;
+        var nextOption = (((_a = this.config) === null || _a === void 0 ? void 0 : _a.workConfig) || {})[this.name] || {};
         var execFunc = PlatformSelect({
             web: function () {
                 var _a;
-                return ((_a = that.web_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value);
+                return ((_a = that.web_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value, nextOption);
             },
             node: function () {
                 var _a;
-                return ((_a = that.node_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value);
+                return ((_a = that.node_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value, nextOption);
             },
             electron: function () {
                 var _a;
-                return ((_a = that.electron_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value);
+                return ((_a = that.electron_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value, nextOption);
             },
             other: function () {
-                return (that.run).bind(that)(value);
+                return (that.run).bind(that)(value, nextOption);
             }
         });
-        ((_a = this.config) === null || _a === void 0 ? void 0 : _a.dev) &&
-            ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
+        ((_b = this.config) === null || _b === void 0 ? void 0 : _b.development) &&
+            ((_c = that.context) === null || _c === void 0 ? void 0 : _c.sendLog({
                 work: [that],
                 content: this.context,
                 desc: "[Work][Func:run]->入口",
@@ -103,7 +105,7 @@ var Instruction = /** @class */ (function (_super) {
             var runSub = execFunc(value)
                 .pipe(tap(function (_value) {
                 var _a, _b;
-                ((_a = that.config) === null || _a === void 0 ? void 0 : _a.dev) &&
+                ((_a = that.config) === null || _a === void 0 ? void 0 : _a.development) &&
                     ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                         work: [that],
                         content: _this.context,
@@ -123,7 +125,7 @@ var Instruction = /** @class */ (function (_super) {
                 },
                 next: function (res) {
                     var _a, _b, _c;
-                    ((_a = that.config) === null || _a === void 0 ? void 0 : _a.dev) &&
+                    ((_a = that.config) === null || _a === void 0 ? void 0 : _a.development) &&
                         ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                             work: [that],
                             content: that.context,
@@ -175,7 +177,7 @@ var Instruction = /** @class */ (function (_super) {
     };
     Instruction.prototype.logMsg = function (msg, input) {
         var _a, _b;
-        ((_a = this.config) === null || _a === void 0 ? void 0 : _a.dev) &&
+        ((_a = this.config) === null || _a === void 0 ? void 0 : _a.development) &&
             ((_b = this.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                 work: [this],
                 content: this.context,

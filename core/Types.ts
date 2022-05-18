@@ -181,7 +181,7 @@ export declare interface ContextImpl {
   // 准备
   prepareWorks(): Promise<void>;
   // 开始运行
-  dispatch(input?: BaseType, initOption?: any): void;
+  dispatch(input?: BaseType): void;
   // 
   addVariable(from: WorkType.Work, name: string, value: BaseType): void;
   sendLog(status: WorkType.WorkStatus<BaseType>): void;

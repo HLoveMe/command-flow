@@ -16,7 +16,7 @@ import {
   JSRUNEnvirType,
   PlatformSelect,
 } from "../Util/Equipment";
-import { WorkRunOption } from "../Configs";
+import { ContextRunOption, WorkRunOption } from "../Configs";
 import { observeOn, tap } from "rxjs/operators";
 import { v4 as UUID } from "uuid";
 import { WorkUnit } from "./WorkUnit";
@@ -34,7 +34,6 @@ export class Instruction
   extends Subject<ChannelObject>
   implements WorkType.Work, EnvironmentAble {
 
-  static OPTION: WorkRunOption;
   name: string = "Instruction";
   static _id: number = 0;
   id: number = Instruction._id++;
@@ -45,7 +44,7 @@ export class Instruction
   runSubscriptions: Map<string, WorkUnit> = new Map();
   pools: Subscription[] = [];
   // 运行配置 config:OPTION todo
-  config: { [key: string]: any } = { dev: true };
+  config: ContextRunOption = { development: true };
   constructor() {
     super();
     this.uuid = UUID();
@@ -54,6 +53,7 @@ export class Instruction
   prepare(before?: WorkType.Work, next?: WorkType.Work): Promise<void> {
     this.beforeWork = before;
     this.nextWork = next;
+    this.config = this.context.runOptions;
     this._connectChannel();
     return null;
   }
@@ -65,7 +65,7 @@ export class Instruction
     const sub2: Subscription = this
       .pipe(
         tap((value) => {
-          this.config?.dev &&
+          this.config?.development &&
             that.context?.sendLog({
               work: [that],
               content: this.context,
@@ -85,25 +85,26 @@ export class Instruction
   _run(value: ChannelObject) {
     value = this.nextValue(value) || value;
     const that = this;
+    const nextOption = (this.config?.workConfig || {})[this.name] || {};
     const execFunc: WorkType.WorkFunction = PlatformSelect({
       web: () =>
         ((that as WorkType.Work).web_run ?? (that as WorkType.Work).run).bind(
           that
-        )(value),
+        )(value, nextOption),
       node: () =>
         ((that as WorkType.Work).node_run ?? (that as WorkType.Work).run).bind(
           that
-        )(value),
+        )(value, nextOption),
       electron: () =>
         ((that as WorkType.Work).electron_run ?? (that as WorkType.Work).run).bind(
           that
-        )(value),
+        )(value, nextOption),
       other: () =>
         ((that as WorkType.Work).run).bind(
           that
-        )(value)
+        )(value, nextOption)
     });
-    this.config?.dev &&
+    this.config?.development &&
       that.context?.sendLog({
         work: [that],
         content: this.context,
@@ -115,7 +116,7 @@ export class Instruction
       const runSub: Subscription = execFunc(value)
         .pipe(
           tap((_value: ChannelObject) => {
-            that.config?.dev &&
+            that.config?.development &&
               that.context?.sendLog({
                 work: [that],
                 content: this.context,
@@ -136,7 +137,7 @@ export class Instruction
             that.completeOneLoop(value, null, false);
           },
           next: (res) => {
-            that.config?.dev &&
+            that.config?.development &&
               that.context?.sendLog({
                 work: [that],
                 content: that.context,
@@ -191,7 +192,7 @@ export class Instruction
     this.context && this.context.addVariable(this, name, value);
   }
   logMsg(msg: string, input: ChannelObject): void {
-    this.config?.dev &&
+    this.config?.development &&
       this.context?.sendLog({
         work: [this],
         content: this.context,
