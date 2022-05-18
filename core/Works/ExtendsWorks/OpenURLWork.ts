@@ -5,6 +5,7 @@ import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
 import { BooleanObject, ObjectTarget } from "../../Object/Able/ObjectAble";
 import { isElectron, isJS, isNode, isWeb } from "../../Util/Equipment";
+import { unpackValue } from "../../Util/channel-value-util";
 
 /**
  * 打开路径
@@ -19,7 +20,7 @@ export default class OpenURLWork extends InstructionOTO {
       let target: string;
       if (input === null || input === undefined) target = "";
       else {
-        target = ((input as Value.ValueAble<any>).valueOf() as Object).toString();
+        target = unpackValue(input);
       }
       const sub = (that.context as ContextImpl).platform
         .open(target)

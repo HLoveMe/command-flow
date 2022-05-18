@@ -13,7 +13,7 @@
       :disabled="disabled"
       value="showCode"
     />
-    <a class="name">Base64 decode encode test</a>
+    <a class="name">打开网页</a>
     <div class="run-container">
       <div class="code" ref="codeRef"></div>
       <RunGroup
@@ -22,7 +22,7 @@
         :id="item"
         :items="logInfo.get(item)"
       ></RunGroup>
-      <RunResult v-if="logInfo.size>=1" :desc="'--'" :expect="'=='"></RunResult>
+      <RunResult v-if="logInfo.size>=1" :desc="'打开网页'" :expect="'打开网址'"></RunResult>
     </div>
   </div>
 </template>
@@ -84,8 +84,7 @@ const getContext = () => {
 };
 async function codeDome() {
   const context = new Context();
-  context.addWork(new Base64EnCodeWork());
-  context.addWork(new Base64DecodeWork());
+  context.addWork(new OpenURLWork());
   await context.prepareWorks();
   context.run("www.baidu.com");
 }
@@ -95,10 +94,9 @@ const reRun = () => {
 };
 const startBegin = async () => {
   const context = getContext();
-  context.addWork(new Base64EnCodeWork());
-  context.addWork(new Base64DecodeWork());
+  context.addWork(new OpenURLWork());
   await context.prepareWorks();
-  context.run("www.baidu.com");
+  context.run("http://www.baidu.com");
 };
 const showCode = () => {
   console.log(codeDome.toString());

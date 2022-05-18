@@ -22,7 +22,7 @@
         :id="item"
         :items="logInfo.get(item)"
       ></RunGroup>
-      <RunResult></RunResult>
+      <RunResult v-if="logInfo.size>=1" :desc="'--'" :expect="'=='"></RunResult>
     </div>
   </div>
 </template>

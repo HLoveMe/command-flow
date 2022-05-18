@@ -28,6 +28,7 @@ import { InstructionOTO } from "../Instruction";
 import { Observable } from "rxjs";
 import { BooleanObject, ObjectTarget } from "../../Object/Able/ObjectAble";
 import { isJS } from "../../Util/Equipment";
+import { unpackValue } from "../../Util/channel-value-util";
 /**
  * 打开路径
  * http://www.baidu.com
@@ -47,7 +48,7 @@ var OpenURLWork = /** @class */ (function (_super) {
             if (input === null || input === undefined)
                 target = "";
             else {
-                target = input.valueOf().toString();
+                target = unpackValue(input);
             }
             var sub = that.context.platform
                 .open(target)
