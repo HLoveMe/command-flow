@@ -32,15 +32,31 @@ import {
 } from "../../coreDist/index";
 import { ref } from "vue";
 import { async } from "rxjs";
-const logCount = ref<number>(0);
+interface WorkStatus {
+  content?: any;
+  work?: any | any[];
+  desc?: any;
+  value?: any;
+  date?: Date;
+}
+const logInfo = ref<Map<string, Array<string>>>(new Map());
 const codeRef = ref<HTMLDivElement>();
 const resultRef = ref<HTMLDivElement>();
 const logRef = ref<HTMLDivElement>();
 const disabled = ref<boolean>(false);
 const context = new Context();
 context.addWorkLog({
-  next: (log: any) => {
-    console.log("loglogloglog",log)
+  next: (log: WorkStatus) => {
+    const {
+      desc,
+      value: { _value },
+      date,
+      work,
+    } = log;
+    const id = _value.id;
+    const channeLValue = _value.value._value;
+    const workName = work.map(($1) => $1.name).join("-");
+    console.log("loglogloglog", workName, desc, id, channeLValue);
     // const div = document.createElement("div");
     // div.innerText = `${logCount.value}:${log}`;
     // logRef.value.appendChild(div);
@@ -53,8 +69,8 @@ const startBegin = async () => {
   // const context = new Context();
   context.addWork(new Base64EnCodeWork());
   context.addWork(new Base64DecodeWork());
-  await context.prepareWorks()
-  context.run('www.baidu.com')
+  await context.prepareWorks();
+  context.run("www.baidu.com");
 };
 </script>
 <style scoped lang="less">

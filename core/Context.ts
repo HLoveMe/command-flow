@@ -67,7 +67,7 @@ export class Context implements ContextImpl {
   sendLog(status: WorkType.WorkStatus) {
     const log = {
       date: new Date(),
-      work: (Array.isArray(status.work) ? status.work : [status.work]).filter(
+      work: status.work.filter(
         ($1) => $1?.name
       ),
       desc: status.desc,
@@ -80,7 +80,7 @@ export class Context implements ContextImpl {
     if (this.status !== WorkType.WorkRunStatus.INIT) {
       return this.sendLog({
         content: this,
-        work: null,
+        work: [],
         desc: "[content][Func:addWork][context status is not init]",
         value: new BooleanObject(false),
       });
@@ -96,7 +96,7 @@ export class Context implements ContextImpl {
     if (this.status !== WorkType.WorkRunStatus.INIT) {
       return this.sendLog({
         content: this,
-        work: null,
+        work: [],
         desc: "[content][Func:prepareWorks][context status is not init]",
         value: new BooleanObject(false),
       });
@@ -111,11 +111,11 @@ export class Context implements ContextImpl {
     this.status = WorkType.WorkRunStatus.READY;
   }
 
-  run(input?: BaseType, initOption?: any) {
+  run(input?: BaseType, initOption?: ContextRunOption) {
     if (this.status === WorkType.WorkRunStatus.INIT) {
       return this.sendLog({
         content: this,
-        work: null,
+        work: [],
         desc: "[context][Func:run][run status is not ready  or 已经初始化]",
         value: new BooleanObject(false),
       });
@@ -137,7 +137,7 @@ export class Context implements ContextImpl {
   //   if (this.status !== WorkType.WorkRunStatus.RUNNING) {
   //     return this.sendLog({
   //       content: this,
-  //       work: null,
+  //       work: [],
   //       desc: "[content][Func:tryInsertInput][run status is not running]",
   //       value: new BooleanObject(false),
   //     });

@@ -54,7 +54,7 @@ var Instruction = /** @class */ (function (_super) {
             var _a, _b;
             ((_a = _this.config) === null || _a === void 0 ? void 0 : _a.dev) &&
                 ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
-                    work: that,
+                    work: [that],
                     content: _this.context,
                     desc: "[Work:preRun]->接受到数据",
                     value: value,
@@ -91,7 +91,7 @@ var Instruction = /** @class */ (function (_super) {
         });
         ((_a = this.config) === null || _a === void 0 ? void 0 : _a.dev) &&
             ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
-                work: that,
+                work: [that],
                 content: this.context,
                 desc: "[Work][Func:run]->入口",
                 value: value,
@@ -103,10 +103,10 @@ var Instruction = /** @class */ (function (_super) {
                 var _a, _b;
                 ((_a = that.config) === null || _a === void 0 ? void 0 : _a.dev) &&
                     ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
-                        work: that,
+                        work: [that],
                         content: _this.context,
                         desc: "[Work][Func:run]->结果",
-                        value: _value === null || _value === void 0 ? void 0 : _value.valueOf(),
+                        value: _value,
                     }));
             }), observeOn(asyncScheduler))
                 .subscribe({
@@ -123,10 +123,10 @@ var Instruction = /** @class */ (function (_super) {
                     var _a, _b, _c;
                     ((_a = that.config) === null || _a === void 0 ? void 0 : _a.dev) &&
                         ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
-                            work: that,
+                            work: [that],
                             content: that.context,
                             desc: "[Work][Func:run]->下一个Work",
-                            value: res === null || res === void 0 ? void 0 : res.valueOf(),
+                            value: res,
                         }));
                     that.completeOneLoop(value, res, true);
                     (_c = that.nextWork) === null || _c === void 0 ? void 0 : _c.next(res);
@@ -161,7 +161,7 @@ var Instruction = /** @class */ (function (_super) {
     Instruction.prototype.error = function (err) {
         this.context &&
             this.context.sendLog({
-                work: this,
+                work: [this],
                 content: this.context,
                 desc: "[Work:preRun]-接受上一个消息错误",
                 date: new Date(),
@@ -175,7 +175,7 @@ var Instruction = /** @class */ (function (_super) {
         var _a, _b;
         ((_a = this.config) === null || _a === void 0 ? void 0 : _a.dev) &&
             ((_b = this.context) === null || _b === void 0 ? void 0 : _b.sendLog({
-                work: this,
+                work: [this],
                 content: this.context,
                 desc: msg,
             }));
@@ -187,7 +187,7 @@ var Instruction = /** @class */ (function (_super) {
         }
         else {
             this.context.sendLog({
-                work: this,
+                work: [this],
                 content: this.context,
                 desc: this.toString() + " 已经关闭",
             });

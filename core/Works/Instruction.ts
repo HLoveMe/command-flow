@@ -22,6 +22,7 @@ import { v4 as UUID } from "uuid";
 import { WorkUnit } from "./WorkUnit";
 import { EnvironmentAble } from "../Util/EvalEquipment";
 import { StringObject } from "../Object/Able/ObjectAble";
+import { wrapperValue } from "../Util/channel-value-util";
 
 /**
  * 一次输入--->一次输出 InstructionOTO
@@ -64,7 +65,7 @@ export class Instruction
         tap((value) => {
           this.config?.dev &&
             that.context?.sendLog({
-              work: that,
+              work: [that],
               content: this.context,
               desc: "[Work:preRun]->接受到数据",
               value: value,
@@ -102,7 +103,7 @@ export class Instruction
     });
     this.config?.dev &&
       that.context?.sendLog({
-        work: that,
+        work: [that],
         content: this.context,
         desc: "[Work][Func:run]->入口",
         value: value,
@@ -111,13 +112,13 @@ export class Instruction
       const uuid = UUID();
       const runSub: Subscription = execFunc(value)
         .pipe(
-          tap((_value: Value.ValueAble<any>) => {
+          tap((_value:ChannelObject) => {
             that.config?.dev &&
               that.context?.sendLog({
-                work: that,
+                work: [that],
                 content: this.context,
                 desc: "[Work][Func:run]->结果",
-                value: _value?.valueOf(),
+                value: _value,
               });
           }),
           observeOn(asyncScheduler)
@@ -135,10 +136,10 @@ export class Instruction
           next: (res) => {
             that.config?.dev &&
               that.context?.sendLog({
-                work: that,
+                work: [that],
                 content: that.context,
                 desc: "[Work][Func:run]->下一个Work",
-                value: res?.valueOf(),
+                value: res,
               });
             that.completeOneLoop(value, res as BaseType, true);
             that.nextWork?.next(res as BaseType);
@@ -177,7 +178,7 @@ export class Instruction
   error(err: Error): void {
     this.context &&
       this.context.sendLog({
-        work: this,
+        work: [this],
         content: this.context,
         desc: "[Work:preRun]-接受上一个消息错误",
         date: new Date(),
@@ -190,7 +191,7 @@ export class Instruction
   logMsg(msg: string): void {
     this.config?.dev &&
       this.context?.sendLog({
-        work: this,
+        work: [this],
         content: this.context,
         desc: msg,
       });
@@ -202,7 +203,7 @@ export class Instruction
       super.next(value);
     } else {
       this.context.sendLog({
-        work: this,
+        work: [this],
         content: this.context,
         desc: this.toString() + " 已经关闭",
       })

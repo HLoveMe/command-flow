@@ -92,7 +92,7 @@ var Context = /** @class */ (function () {
     Context.prototype.sendLog = function (status) {
         var log = {
             date: new Date(),
-            work: (Array.isArray(status.work) ? status.work : [status.work]).filter(function ($1) { return $1 === null || $1 === void 0 ? void 0 : $1.name; }),
+            work: status.work.filter(function ($1) { return $1 === null || $1 === void 0 ? void 0 : $1.name; }),
             desc: status.desc,
             value: status.value,
         };
@@ -102,7 +102,7 @@ var Context = /** @class */ (function () {
         if (this.status !== WorkType.WorkRunStatus.INIT) {
             return this.sendLog({
                 content: this,
-                work: null,
+                work: [],
                 desc: "[content][Func:addWork][context status is not init]",
                 value: new BooleanObject(false),
             });
@@ -123,7 +123,7 @@ var Context = /** @class */ (function () {
                 if (this.status !== WorkType.WorkRunStatus.INIT) {
                     return [2 /*return*/, this.sendLog({
                             content: this,
-                            work: null,
+                            work: [],
                             desc: "[content][Func:prepareWorks][context status is not init]",
                             value: new BooleanObject(false),
                         })];
@@ -143,7 +143,7 @@ var Context = /** @class */ (function () {
         if (this.status === WorkType.WorkRunStatus.INIT) {
             return this.sendLog({
                 content: this,
-                work: null,
+                work: [],
                 desc: "[context][Func:run][run status is not ready  or 已经初始化]",
                 value: new BooleanObject(false),
             });
@@ -165,7 +165,7 @@ var Context = /** @class */ (function () {
     //   if (this.status !== WorkType.WorkRunStatus.RUNNING) {
     //     return this.sendLog({
     //       content: this,
-    //       work: null,
+    //       work: [],
     //       desc: "[content][Func:tryInsertInput][run status is not running]",
     //       value: new BooleanObject(false),
     //     });
