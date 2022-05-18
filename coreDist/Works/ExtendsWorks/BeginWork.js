@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -14,17 +13,16 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.BeginWork = void 0;
-var uuid_1 = require("uuid");
-var Instruction_1 = require("../Instruction");
-var Equipment_1 = require("../../Util/Equipment");
+import { v4 as UUID } from "uuid";
+import { InstructionOTO } from "../Instruction";
+import { isJS } from "../../Util/Equipment";
+import { ObjectTarget } from "../..";
 var BeginWork = /** @class */ (function (_super) {
     __extends(BeginWork, _super);
     function BeginWork() {
         var _this = _super.call(this) || this;
         _this.name = "BeginWork";
-        _this.uuid = (0, uuid_1.v4)();
+        _this.uuid = UUID();
         return _this;
     }
     // // 处理上一个的传入
@@ -51,15 +49,20 @@ var BeginWork = /** @class */ (function (_super) {
      * 运行 头部
      * @param value
      */
-    BeginWork.prototype.startRun = function (value) {
-        this.nextWork.next(value);
+    BeginWork.prototype.startRun = function (value, runId) {
+        var id = runId !== null && runId !== void 0 ? runId : UUID();
+        this.nextWork.next(new ObjectTarget({
+            id: id,
+            value: value,
+            option: {},
+        }));
     };
     BeginWork.prototype.completeOneLoop = function () { };
     BeginWork.isAble = function () {
-        return Equipment_1.isJS;
+        return isJS;
     };
     BeginWork._id = 0;
     return BeginWork;
-}(Instruction_1.InstructionOTO));
-exports.BeginWork = BeginWork;
+}(InstructionOTO));
+export { BeginWork };
 //# sourceMappingURL=BeginWork.js.map

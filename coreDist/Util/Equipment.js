@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlatformSelect = exports.isJS = exports.isMobile = exports.isElectron = exports.isPC = exports.isNode = exports.isWeb = exports.currentEnir = exports.JSRUNEnvirType = exports.getJSEnvironment = exports.isReactNative = void 0;
 var JSRUNEnvirType;
 (function (JSRUNEnvirType) {
     JSRUNEnvirType[JSRUNEnvirType["NODE_PC"] = 10] = "NODE_PC";
@@ -9,7 +6,6 @@ var JSRUNEnvirType;
     JSRUNEnvirType[JSRUNEnvirType["ELECTRON_PC"] = 40] = "ELECTRON_PC";
     JSRUNEnvirType[JSRUNEnvirType["OTHER"] = 100] = "OTHER";
 })(JSRUNEnvirType || (JSRUNEnvirType = {}));
-exports.JSRUNEnvirType = JSRUNEnvirType;
 var EnvirType = {
     /**
      * WIndow 浏览器 运行环境
@@ -44,7 +40,7 @@ var EnvirType = {
 /**
  * 是否为 rn 代码
  */
-function isReactNative() {
+export function isReactNative() {
     var GLOBAL;
     try {
         GLOBAL = window;
@@ -56,8 +52,7 @@ function isReactNative() {
         GLOBAL.ReactNative &&
         GLOBAL.ReactNative.NativeModules);
 }
-exports.isReactNative = isReactNative;
-function getJSEnvironment() {
+export function getJSEnvironment() {
     if (navigator.userAgent) {
         var userAgent = navigator.userAgent;
         var platform, result;
@@ -140,56 +135,48 @@ function getJSEnvironment() {
         return { name: EnvirType.Other, versionStr: "" };
     }
 }
-exports.getJSEnvironment = getJSEnvironment;
 var currentEnir;
-exports.currentEnir = currentEnir;
-if (process) {
-    if ((global || window) &&
-        (global || window).process &&
-        (global || window).process.versions &&
-        (global || window).process.versions["electron"]) {
-        exports.currentEnir = currentEnir = JSRUNEnvirType.ELECTRON_PC;
+if ((globalThis || window).process) {
+    if ((globalThis || window) &&
+        (globalThis || window).process &&
+        (globalThis || window).process.versions &&
+        (globalThis || window).process.versions["electron"]) {
+        currentEnir = JSRUNEnvirType.ELECTRON_PC;
     }
     else
-        exports.currentEnir = currentEnir = JSRUNEnvirType.NODE_PC;
+        currentEnir = JSRUNEnvirType.NODE_PC;
 }
 else {
     var typeName = getJSEnvironment().name;
     switch (typeName) {
         case EnvirType.WINDOWS:
-            exports.currentEnir = currentEnir = JSRUNEnvirType.WEB_PC;
+            currentEnir = JSRUNEnvirType.WEB_PC;
             break;
         case EnvirType.MACINTOSH:
-            exports.currentEnir = currentEnir = JSRUNEnvirType.WEB_PC;
+            currentEnir = JSRUNEnvirType.WEB_PC;
             break;
         case EnvirType.IOS:
-            exports.currentEnir = currentEnir = JSRUNEnvirType.WEB_MOBILE;
+            currentEnir = JSRUNEnvirType.WEB_MOBILE;
             break;
         case EnvirType.ANDROID:
-            exports.currentEnir = currentEnir = JSRUNEnvirType.WEB_MOBILE;
+            currentEnir = JSRUNEnvirType.WEB_MOBILE;
             break;
         case EnvirType.LINUX:
-            exports.currentEnir = currentEnir = JSRUNEnvirType.WEB_PC;
+            currentEnir = JSRUNEnvirType.WEB_PC;
             break;
         default:
-            exports.currentEnir = currentEnir = JSRUNEnvirType.OTHER;
+            currentEnir = JSRUNEnvirType.OTHER;
             break;
     }
 }
 var isWeb = currentEnir === JSRUNEnvirType.WEB_MOBILE || currentEnir === JSRUNEnvirType.WEB_PC;
-exports.isWeb = isWeb;
 var isNode = currentEnir === JSRUNEnvirType.NODE_PC;
-exports.isNode = isNode;
 var isElectron = currentEnir === JSRUNEnvirType.ELECTRON_PC;
-exports.isElectron = isElectron;
 var isPC = currentEnir === JSRUNEnvirType.NODE_PC ||
     currentEnir === JSRUNEnvirType.WEB_PC ||
     currentEnir === JSRUNEnvirType.ELECTRON_PC;
-exports.isPC = isPC;
 var isMobile = currentEnir === JSRUNEnvirType.WEB_MOBILE;
-exports.isMobile = isMobile;
 var isJS = true;
-exports.isJS = isJS;
 var PlatformSelect = function (select) {
     var target;
     if (isElectron) {
@@ -203,5 +190,5 @@ var PlatformSelect = function (select) {
     }
     return target;
 };
-exports.PlatformSelect = PlatformSelect;
+export { JSRUNEnvirType, currentEnir, isWeb, isNode, isPC, isElectron, isMobile, isJS, PlatformSelect, };
 //# sourceMappingURL=Equipment.js.map

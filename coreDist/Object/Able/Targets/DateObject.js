@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -23,10 +22,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.DateObject = void 0;
-var util_1 = require("../../util");
-var ObjectTarget_1 = require("./ObjectTarget");
+import { attribute, DefaultValue } from "../../util";
+import { ObjectTarget } from "./ObjectTarget";
 var DateObject = /** @class */ (function (_super) {
     __extends(DateObject, _super);
     function DateObject(value) {
@@ -43,22 +40,22 @@ var DateObject = /** @class */ (function (_super) {
     DateObject.attributes = new Set();
     DateObject.empty = new DateObject(new Date());
     __decorate([
-        (0, util_1.attribute)(),
+        attribute(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Number)
     ], DateObject.prototype, "timestamp", null);
     __decorate([
-        (0, util_1.attribute)(),
+        attribute(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Date)
     ], DateObject.prototype, "valueOf", null);
     __decorate([
-        (0, util_1.DefaultValue)(Object.prototype.toString.call(new Date())),
+        DefaultValue(Object.prototype.toString.call(new Date())),
         __metadata("design:type", String)
     ], DateObject, "type", void 0);
     return DateObject;
-}(ObjectTarget_1.ObjectTarget));
-exports.DateObject = DateObject;
+}(ObjectTarget));
+export { DateObject };
 //# sourceMappingURL=DateObject.js.map

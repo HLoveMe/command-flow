@@ -1,8 +1,10 @@
-import { BaseType, ContextImpl,Value } from "../../Types";
+import { BaseType, ChannelObject, ChannelValue, ContextImpl, Value } from "../../Types";
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
 import { isJS } from "../../Util/Equipment";
 import { QRcodeOption } from "../../Bridge/ConfigTypes";
+import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
+import { StringObject } from "../..";
 
 /**
  * 字符串生产QRcode base64
@@ -11,18 +13,18 @@ import { QRcodeOption } from "../../Bridge/ConfigTypes";
  */
 class QRCodeWork extends InstructionOTO {
   name: string = "QRCodeWork";
-  run(input: BaseType, option?: QRcodeOption): Observable<Value.StringAble> {
+  run(input: ChannelObject, option?: QRcodeOption): Observable<ChannelObject<Value.StringAble>> {
     const that = this;
-    return new Observable((subscriber: Subscriber<Value.StringAble>) => {
+    return new Observable((subscriber: Subscriber<ChannelObject<Value.StringAble>>) => {
       let target: string;
       if (input === null || input === undefined) target = "";
       else {
-        target = ((input as Value.ValueAble<any>).valueOf() as Object).toString();
+        target = unpackValue(input)
       }
       const sub = (that.context as ContextImpl).platform
         .createQrCode(target, option)
         .subscribe({
-          next: (res) => subscriber.next(res),
+          next: (res) => subscriber.next(wrapperValue(input, res)),
           complete: () => subscriber.complete(),
           error: (err) => subscriber.error(err),
         });

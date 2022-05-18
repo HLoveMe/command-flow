@@ -1,1 +1,1 @@
-{"version":3,"file":"PlayWork.js","sourceRoot":"","sources":["../../../core/Works/ExtendsWorks/PlayWork.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;AACA,8CAAgD;AAEhD;IAAkC,uCAAc;IAAhD;;IAEA,CAAC;IAAD,0BAAC;AAAD,CAAC,AAFD,CAAkC,4BAAc,GAE/C;AAIC,kDAAmB"}
+{"version":3,"file":"PlayWork.js","sourceRoot":"","sources":["../../../core/Works/ExtendsWorks/PlayWork.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;AACA,OAAO,EAAE,cAAc,EAAE,MAAM,gBAAgB,CAAC;AAEhD;IAAkC,uCAAc;IAAhD;;IAEA,CAAC;IAAD,0BAAC;AAAD,CAAC,AAFD,CAAkC,cAAc,GAE/C;AAGD,OAAO,EACL,mBAAmB,EACpB,CAAA"}

@@ -131,11 +131,11 @@ export function getJSEnvironment() {
 }
 
 var currentEnir: JSRUNEnvirType;
-if (process) {
-  if ((global || window) &&
-    (global || window).process &&
-    (global || window).process.versions &&
-    (global || window).process.versions["electron"]) {
+if ((globalThis || window).process) {
+  if ((globalThis || window) &&
+    (globalThis || window).process &&
+    (globalThis || window).process.versions &&
+    (globalThis || window).process.versions["electron"]) {
     currentEnir = JSRUNEnvirType.ELECTRON_PC
   } else
     currentEnir = JSRUNEnvirType.NODE_PC;

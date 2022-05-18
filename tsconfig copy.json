@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata":true,
+    "outDir": "./coreDist",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "watch": true,
+    "types": ["node"],
+    "skipLibCheck": true,
+    "moduleResolution": "node"
+  },
+  "include": ["core/**/*.ts", "core/**/*.d.ts", "**/*.d.ts", "core/**/*", "test.ts"],
+  "exclude": ["node_modules"]
+}

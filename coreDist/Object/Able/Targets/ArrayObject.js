@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -35,10 +34,8 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ArrayObject = void 0;
-var util_1 = require("../../util");
-var ObjectTarget_1 = require("./ObjectTarget");
+import { ArrayUint, attribute, DefaultValue, Params } from "../../util";
+import { ObjectTarget } from "./ObjectTarget";
 var ArrayObject = /** @class */ (function (_super) {
     __extends(ArrayObject, _super);
     function ArrayObject(value) {
@@ -69,39 +66,39 @@ var ArrayObject = /** @class */ (function (_super) {
     ArrayObject.attributes = new Set();
     ArrayObject.empty = new ArrayObject_1([]);
     __decorate([
-        (0, util_1.attribute)(),
+        attribute(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Number)
     ], ArrayObject.prototype, "len", null);
     __decorate([
-        (0, util_1.attribute)(),
+        attribute(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Object)
     ], ArrayObject.prototype, "first", null);
     __decorate([
-        (0, util_1.attribute)(),
+        attribute(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Object)
     ], ArrayObject.prototype, "last", null);
     __decorate([
-        (0, util_1.attribute)(),
-        __param(0, (0, util_1.Params)("index")),
+        attribute(),
+        __param(0, Params("index")),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Number]),
         __metadata("design:returntype", Object)
     ], ArrayObject.prototype, "valueOfIndex", null);
     __decorate([
-        (0, util_1.DefaultValue)(Object.prototype.toString.call([])),
+        DefaultValue(Object.prototype.toString.call([])),
         __metadata("design:type", String)
     ], ArrayObject, "type", void 0);
     ArrayObject = ArrayObject_1 = __decorate([
-        util_1.ArrayUint,
+        ArrayUint,
         __metadata("design:paramtypes", [Array])
     ], ArrayObject);
     return ArrayObject;
-}(ObjectTarget_1.ObjectTarget));
-exports.ArrayObject = ArrayObject;
+}(ObjectTarget));
+export { ArrayObject };
 //# sourceMappingURL=ArrayObject.js.map

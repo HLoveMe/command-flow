@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -14,11 +13,11 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Instruction_1 = require("../Instruction");
-var rxjs_1 = require("rxjs");
-var Equipment_1 = require("../../Util/Equipment");
-var ObjectAble_1 = require("../../Object/Able/ObjectAble");
+import { InstructionOTO } from "../Instruction";
+import { Observable } from "rxjs";
+import { isJS } from "../../Util/Equipment";
+import { BooleanObject } from '../../Object/Able/ObjectAble';
+import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 /**
  * 默认：
  * run javascript
@@ -37,19 +36,20 @@ var RunCommandWork = /** @class */ (function (_super) {
     RunCommandWork.prototype.run = function (command, option) {
         var _this = this;
         var that = this;
-        return new rxjs_1.Observable(function (subscriber) {
+        return new Observable(function (subscriber) {
             var target;
             if (command === null || command === undefined)
                 target = "";
             else {
-                target = command.valueOf().toString();
+                // target = ((command as Value.ValueAble<any>).valueOf() as Object).toString();
+                target = unpackValue(command);
             }
             var sub = that.context.platform
                 .runCommand(target)
                 .subscribe({
                 next: function (info) {
                     _this.logMsg(JSON.stringify(info));
-                    subscriber.next(new ObjectAble_1.BooleanObject(info.error !== null && info.status === true));
+                    subscriber.next(wrapperValue(command, new BooleanObject(info.error !== null && info.status === true)));
                 },
                 complete: function () { return subscriber.complete(); },
                 error: function (err) { return subscriber.error(err); }
@@ -63,10 +63,10 @@ var RunCommandWork = /** @class */ (function (_super) {
         });
     };
     RunCommandWork.isAble = function () {
-        return Equipment_1.isJS;
+        return isJS;
         // return isNode || isWeb || isRN || isElectron
     };
     return RunCommandWork;
-}(Instruction_1.InstructionOTO));
-exports.default = RunCommandWork;
+}(InstructionOTO));
+export default RunCommandWork;
 //# sourceMappingURL=RunCommandWork.js.map

@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -14,12 +13,22 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Instruction_1 = require("../Instruction");
-var rxjs_1 = require("rxjs");
-var Equipment_1 = require("../../Util/Equipment");
-var __1 = require("../..");
-var operators_1 = require("rxjs/operators");
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+import { InstructionOTO } from "../Instruction";
+import { Observable } from "rxjs";
+import { isJS } from "../../Util/Equipment";
+import { ObjectTarget } from "../..";
+import { tap } from "rxjs/operators";
 var FetchWork = /** @class */ (function (_super) {
     __extends(FetchWork, _super);
     function FetchWork() {
@@ -46,10 +55,10 @@ var FetchWork = /** @class */ (function (_super) {
     FetchWork.prototype.run = function (input) {
         var _this = this;
         var that = this;
-        var options = this._getInitOption(input);
-        return new rxjs_1.Observable(function (subscriber) {
+        var options = this._getInitOption(input._value.value);
+        return new Observable(function (subscriber) {
             var fetchSub = that.context.platform.fetch(options)
-                .pipe((0, operators_1.tap)(function (result) {
+                .pipe(tap(function (result) {
                 var data = result.valueOf().data;
                 _this.logMsg("[FetchWork][load:data]" + data);
             })).subscribe({
@@ -59,7 +68,7 @@ var FetchWork = /** @class */ (function (_super) {
                         subscriber.error(result.error);
                     }
                     else {
-                        subscriber.next(new __1.ObjectTarget(result.data));
+                        subscriber.next(new ObjectTarget(__assign(__assign({}, input._value), { value: result.data })));
                         subscriber.complete();
                     }
                 },
@@ -75,9 +84,9 @@ var FetchWork = /** @class */ (function (_super) {
         });
     };
     FetchWork.isAble = function () {
-        return Equipment_1.isJS;
+        return isJS;
     };
     return FetchWork;
-}(Instruction_1.InstructionOTO));
-exports.default = FetchWork;
+}(InstructionOTO));
+export default FetchWork;
 //# sourceMappingURL=FetchWork.js.map

@@ -1,8 +1,8 @@
-import { BaseType, ContextImpl, Value } from "../../Types";
+import { ContextImpl } from "../../Types";
+import { ChannelObject, ChannelValue } from "../../Types";
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
 import {
-  BooleanObject,
   DataObject,
   ObjectTarget,
 } from "../../Object/Able/ObjectAble";
@@ -13,13 +13,13 @@ import { takeLast, tap } from "rxjs/operators";
 export default class LoadFileWork extends InstructionOTO {
   name: string = "LoadFileWork";
 
-  run(input: BaseType, option?: FileOption): Observable<DataObject> {
+  run(input: ChannelObject, option?: FileOption): Observable<ChannelObject<DataObject>> {
     const that = this;
-    return new Observable((subscriber: Subscriber<DataObject>) => {
+    return new Observable((subscriber: Subscriber<ChannelObject<DataObject>>) => {
       let target: string;
       if (input === null || input === undefined) target = "";
       else {
-        target = ((input as Value.ValueAble<any>).valueOf() as Object).toString();
+        target = (input._value as ChannelValue).value.toString()
       }
       const sub = (that.context as ContextImpl).platform
         .loadFile(target, option)
@@ -33,7 +33,10 @@ export default class LoadFileWork extends InstructionOTO {
         .subscribe({
           next: (obj: ObjectTarget<FileLoadEvent>) => {
             const { data } = obj.valueOf();
-            subscriber.next(new DataObject(data));
+            subscriber.next(new ObjectTarget({
+              ...input._value,
+              value: new DataObject(data)
+            }));
             subscriber.complete();
           },
           complete: () => subscriber.complete(),

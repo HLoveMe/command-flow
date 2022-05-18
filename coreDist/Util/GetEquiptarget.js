@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,9 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.libraryQuote = void 0;
-var Equipment_1 = require("./Equipment");
+import { PlatformSelect } from "./Equipment";
 /**
  * 获取引用
  * @param quote_name
@@ -47,11 +44,11 @@ var Equipment_1 = require("./Equipment");
  * @returns
  * libraryQuote('fetch','node-fetch')
  */
-var libraryQuote = function (quote_name, node, rn, electron) { return function () { return __awaiter(void 0, void 0, void 0, function () {
+export var libraryQuote = function (quote_name, node, rn, electron) { return function () { return __awaiter(void 0, void 0, void 0, function () {
     var result;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, (0, Equipment_1.PlatformSelect)({
+            case 0: return [4 /*yield*/, PlatformSelect({
                     web: function () { return (global || window)[quote_name] || require(quote_name); },
                     node: function () {
                         var a = fetch;
@@ -65,5 +62,4 @@ var libraryQuote = function (quote_name, node, rn, electron) { return function (
         }
     });
 }); }; };
-exports.libraryQuote = libraryQuote;
 //# sourceMappingURL=GetEquiptarget.js.map

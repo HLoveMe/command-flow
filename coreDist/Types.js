@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.WorkType = void 0;
-var WorkType;
+export var WorkType;
 (function (WorkType) {
     var WorkRunStatus;
     (function (WorkRunStatus) {
@@ -12,5 +9,5 @@ var WorkType;
         WorkRunStatus[WorkRunStatus["RUNNING"] = 2] = "RUNNING";
         WorkRunStatus[WorkRunStatus["COMPLETE"] = 3] = "COMPLETE";
     })(WorkRunStatus = WorkType.WorkRunStatus || (WorkType.WorkRunStatus = {}));
-})(WorkType = exports.WorkType || (exports.WorkType = {}));
+})(WorkType || (WorkType = {}));
 //# sourceMappingURL=Types.js.map

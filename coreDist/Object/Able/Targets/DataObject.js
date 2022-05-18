@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -23,10 +22,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.DataObject = void 0;
-var util_1 = require("../../util");
-var ObjectTarget_1 = require("./ObjectTarget");
+import { attribute } from "../../util";
+import { ObjectTarget } from "./ObjectTarget";
 var DataObject = /** @class */ (function (_super) {
     __extends(DataObject, _super);
     function DataObject(value) {
@@ -44,12 +41,12 @@ var DataObject = /** @class */ (function (_super) {
     DataObject.attributes = new Set();
     DataObject.empty = new DataObject(new ArrayBuffer(0));
     __decorate([
-        (0, util_1.attribute)(),
+        attribute(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", ArrayBuffer)
     ], DataObject.prototype, "valueOf", null);
     return DataObject;
-}(ObjectTarget_1.ObjectTarget));
-exports.DataObject = DataObject;
+}(ObjectTarget));
+export { DataObject };
 //# sourceMappingURL=DataObject.js.map

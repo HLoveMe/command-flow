@@ -1,4 +1,5 @@
 import { ContextImpl, Value, } from "../../Types";
+import { ChannelObject, ChannelValue } from "../../Types";
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
 import { isJS } from "../../Util/Equipment";
@@ -25,11 +26,10 @@ export default class FetchWork extends InstructionOTO {
     request.timeoutErrorMessage = '请求超时';
     return request;
   }
-
-  run(input: Value.ObjectAble<RequestParamsInit>): Observable<Value.ObjectAble<any>> {
+  run(input: ChannelObject<Value.ObjectAble<RequestParamsInit>>): Observable<ChannelObject<Value.ObjectAble<any>>> {
     const that = this;
-    const options = this._getInitOption(input);
-    return new Observable((subscriber: Subscriber<Value.ObjectAble<any>>) => {
+    const options = this._getInitOption(input._value.value);
+    return new Observable((subscriber: Subscriber<ChannelObject<Value.ObjectAble<any>>>) => {
       const fetchSub = (that.context as ContextImpl).platform.fetch(options as AxiosRequestConfig)
         .pipe(
           tap((result: Value.ObjectAble<ResponseContent>) => {
@@ -42,7 +42,10 @@ export default class FetchWork extends InstructionOTO {
             if (result.error) {
               subscriber.error(result.error);
             } else {
-              subscriber.next(new ObjectTarget(result.data));
+              subscriber.next(new ObjectTarget({
+                ...input._value,
+                value: result.data,
+              }));
               subscriber.complete();
             }
           },

@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -23,10 +22,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.BooleanObject = void 0;
-var util_1 = require("../../util");
-var ObjectTarget_1 = require("./ObjectTarget");
+import { attribute, DefaultValue } from "../../util";
+import { ObjectTarget } from "./ObjectTarget";
 var BooleanObject = /** @class */ (function (_super) {
     __extends(BooleanObject, _super);
     function BooleanObject(value) {
@@ -40,16 +37,16 @@ var BooleanObject = /** @class */ (function (_super) {
     BooleanObject.attributes = new Set();
     BooleanObject.empty = new BooleanObject(false);
     __decorate([
-        (0, util_1.attribute)(),
+        attribute(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Boolean)
     ], BooleanObject.prototype, "valueOf", null);
     __decorate([
-        (0, util_1.DefaultValue)(Object.prototype.toString.call(new Boolean(1))),
+        DefaultValue(Object.prototype.toString.call(new Boolean(1))),
         __metadata("design:type", String)
     ], BooleanObject, "type", void 0);
     return BooleanObject;
-}(ObjectTarget_1.ObjectTarget));
-exports.BooleanObject = BooleanObject;
+}(ObjectTarget));
+export { BooleanObject };
 //# sourceMappingURL=BooleanObject.js.map

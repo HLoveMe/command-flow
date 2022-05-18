@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.SupportContentType = exports.FileType = void 0;
-var FileType;
+export var FileType;
 (function (FileType) {
     FileType["Audio"] = "audio/*";
     FileType["Video"] = "video/*";
@@ -12,10 +9,10 @@ var FileType;
     FileType["Pdf"] = "application/pdf";
     FileType["Word"] = "application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/msword\uFF0Capplication/vnd.openxmlformats-officedocument.wordprocessingml.document";
     FileType["All"] = "*";
-})(FileType = exports.FileType || (exports.FileType = {}));
-var SupportContentType;
+})(FileType || (FileType = {}));
+export var SupportContentType;
 (function (SupportContentType) {
     SupportContentType["JSON"] = "application/json";
     SupportContentType["TEXT"] = "text/plain";
-})(SupportContentType = exports.SupportContentType || (exports.SupportContentType = {}));
+})(SupportContentType || (SupportContentType = {}));
 //# sourceMappingURL=ConfigTypes.js.map

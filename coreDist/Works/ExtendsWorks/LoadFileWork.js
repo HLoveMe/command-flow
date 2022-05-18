@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -14,12 +13,22 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Instruction_1 = require("../Instruction");
-var rxjs_1 = require("rxjs");
-var ObjectAble_1 = require("../../Object/Able/ObjectAble");
-var Equipment_1 = require("../../Util/Equipment");
-var operators_1 = require("rxjs/operators");
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+import { InstructionOTO } from "../Instruction";
+import { Observable } from "rxjs";
+import { DataObject, ObjectTarget, } from "../../Object/Able/ObjectAble";
+import { isMobile } from "../../Util/Equipment";
+import { takeLast, tap } from "rxjs/operators";
 var LoadFileWork = /** @class */ (function (_super) {
     __extends(LoadFileWork, _super);
     function LoadFileWork() {
@@ -30,23 +39,23 @@ var LoadFileWork = /** @class */ (function (_super) {
     LoadFileWork.prototype.run = function (input, option) {
         var _this = this;
         var that = this;
-        return new rxjs_1.Observable(function (subscriber) {
+        return new Observable(function (subscriber) {
             var target;
             if (input === null || input === undefined)
                 target = "";
             else {
-                target = input.valueOf().toString();
+                target = input._value.value.toString();
             }
             var sub = that.context.platform
                 .loadFile(target, option)
-                .pipe((0, operators_1.tap)(function (obj) {
+                .pipe(tap(function (obj) {
                 var _a = obj.valueOf(), loaded = _a.loaded, total = _a.total;
                 _this.logMsg("[LoadFileWork][load:progress]" + loaded + "/" + total);
-            }), (0, operators_1.takeLast)(1))
+            }), takeLast(1))
                 .subscribe({
                 next: function (obj) {
                     var data = obj.valueOf().data;
-                    subscriber.next(new ObjectAble_1.DataObject(data));
+                    subscriber.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new DataObject(data) })));
                     subscriber.complete();
                 },
                 complete: function () { return subscriber.complete(); },
@@ -61,9 +70,9 @@ var LoadFileWork = /** @class */ (function (_super) {
         });
     };
     LoadFileWork.isAble = function () {
-        return !Equipment_1.isMobile;
+        return !isMobile;
     };
     return LoadFileWork;
-}(Instruction_1.InstructionOTO));
-exports.default = LoadFileWork;
+}(InstructionOTO));
+export default LoadFileWork;
 //# sourceMappingURL=LoadFileWork.js.map

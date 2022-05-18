@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -14,11 +13,21 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Instruction_1 = require("../Instruction");
-var rxjs_1 = require("rxjs");
-var ObjectAble_1 = require("../../Object/Able/ObjectAble");
-var Equipment_1 = require("../../Util/Equipment");
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+import { InstructionOTO } from "../Instruction";
+import { Observable } from "rxjs";
+import { BooleanObject, ObjectTarget } from "../../Object/Able/ObjectAble";
+import { isJS } from "../../Util/Equipment";
 /**
  * 打开路径
  * http://www.baidu.com
@@ -33,7 +42,7 @@ var OpenURLWork = /** @class */ (function (_super) {
     }
     OpenURLWork.prototype.run = function (input, option) {
         var that = this;
-        return new rxjs_1.Observable(function (subscriber) {
+        return new Observable(function (subscriber) {
             var target;
             if (input === null || input === undefined)
                 target = "";
@@ -43,7 +52,7 @@ var OpenURLWork = /** @class */ (function (_super) {
             var sub = that.context.platform
                 .open(target)
                 .subscribe({
-                next: function (_) { return subscriber.next(new ObjectAble_1.BooleanObject(true)); },
+                next: function (_) { return subscriber.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new BooleanObject(true) }))); },
                 complete: function () { return subscriber.complete(); },
                 error: function (err) { return subscriber.error(err); }
             });
@@ -56,10 +65,10 @@ var OpenURLWork = /** @class */ (function (_super) {
         });
     };
     OpenURLWork.isAble = function () {
-        return Equipment_1.isJS;
+        return isJS;
         // return isNode || isWeb || isRN || isElectron
     };
     return OpenURLWork;
-}(Instruction_1.InstructionOTO));
-exports.default = OpenURLWork;
+}(InstructionOTO));
+export default OpenURLWork;
 //# sourceMappingURL=OpenURLWork.js.map

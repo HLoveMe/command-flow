@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.HardwareBase = void 0;
 var HardwareBase = /** @class */ (function () {
     function HardwareBase() {
     }
@@ -81,5 +78,5 @@ var HardwareBase = /** @class */ (function () {
     };
     return HardwareBase;
 }());
-exports.HardwareBase = HardwareBase;
+export { HardwareBase };
 //# sourceMappingURL=Hardware.js.map

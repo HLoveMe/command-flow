@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,17 +34,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Context = void 0;
-var Types_1 = require("./Types");
-var rxjs_1 = require("rxjs");
-var ObjectAble_1 = require("./Object/Able/ObjectAble");
-var Index_1 = require("./Bridge/Index");
-var BeginWork_1 = require("./Works/ExtendsWorks/BeginWork");
+import { WorkType } from "./Types";
+import { forkJoin, Observable, Subject } from "rxjs";
+import { BooleanObject } from "./Object/Able/ObjectAble";
+import Platform from "./Bridge/Index";
+import { BeginWork } from "./Works/ExtendsWorks/BeginWork";
+import { decide } from "./Object/valueUtil";
 var Context = /** @class */ (function () {
     function Context(runOptions) {
-        this.status = Types_1.WorkType.WorkRunStatus.INIT;
-        this.platform = Index_1.default;
+        var _this = this;
+        this.status = WorkType.WorkRunStatus.INIT;
+        this.platform = Platform;
         /**
          * 上下文变量
          */
@@ -53,17 +52,20 @@ var Context = /** @class */ (function () {
         /**
          * 所有work
          */
-        this.works = [new BeginWork_1.BeginWork()];
+        this.works = [new BeginWork()];
         /**
          * 消息传输通道
          */
-        this.msgChannel = new rxjs_1.Subject();
+        this.msgChannel = new Subject();
         /**
          * 需要销毁的Subscription
          */
         this.pools = [];
         this.runOptions = runOptions || {};
-        var sub = this.msgChannel.subscribe(this.workMessage.bind(this), this.workError.bind(this));
+        var sub = this.msgChannel.subscribe({
+            next: function (value) { return _this.workMessage(value); },
+            error: function (error) { return _this.workError(error); },
+        });
         this.pools.push(sub);
     }
     /**
@@ -78,28 +80,31 @@ var Context = /** @class */ (function () {
         this.runConstant.get(from.uuid).set(name, value);
     };
     Context.prototype.workMessage = function (input) {
-        console.log("msgChannel", input.valueOf());
+        // console.log("msgChannel", input);
     };
     Context.prototype.workError = function (error) {
-        console.log("msgChannelError", error);
+        // console.log("msgChannelError", error);
         this.stopWorkChain();
+    };
+    Context.prototype.addWorkLog = function (tap) {
+        return this.msgChannel.subscribe(tap);
     };
     Context.prototype.sendLog = function (status) {
         var log = {
-            date: new Date().getTime(),
-            work: (Array.isArray(status.work) ? status.work : [status.work]).forEach(function ($1) { return $1 === null || $1 === void 0 ? void 0 : $1.name; }),
-            info: status.desc,
+            date: new Date(),
+            work: (Array.isArray(status.work) ? status.work : [status.work]).filter(function ($1) { return $1 === null || $1 === void 0 ? void 0 : $1.name; }),
+            desc: status.desc,
             value: status.value,
         };
-        this.msgChannel.next(new ObjectAble_1.StringObject(JSON.stringify(log)));
+        this.msgChannel.next(log);
     };
     Context.prototype.addWork = function (work) {
-        if (this.status !== Types_1.WorkType.WorkRunStatus.INIT) {
+        if (this.status !== WorkType.WorkRunStatus.INIT) {
             return this.sendLog({
                 content: this,
                 work: null,
                 desc: "[content][Func:addWork][context status is not init]",
-                value: new ObjectAble_1.BooleanObject(false),
+                value: new BooleanObject(false),
             });
         }
         work.context = this;
@@ -115,12 +120,12 @@ var Context = /** @class */ (function () {
     Context.prototype.prepareWorks = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                if (this.status !== Types_1.WorkType.WorkRunStatus.INIT) {
+                if (this.status !== WorkType.WorkRunStatus.INIT) {
                     return [2 /*return*/, this.sendLog({
                             content: this,
                             work: null,
                             desc: "[content][Func:prepareWorks][context status is not init]",
-                            value: new ObjectAble_1.BooleanObject(false),
+                            value: new BooleanObject(false),
                         })];
                 }
                 ;
@@ -129,26 +134,26 @@ var Context = /** @class */ (function () {
                     var after = source[index + 1];
                     $1.prepare(before, after);
                 });
-                this.status = Types_1.WorkType.WorkRunStatus.READY;
+                this.status = WorkType.WorkRunStatus.READY;
                 return [2 /*return*/];
             });
         });
     };
     Context.prototype.run = function (input, initOption) {
-        if (this.status === Types_1.WorkType.WorkRunStatus.INIT) {
+        if (this.status === WorkType.WorkRunStatus.INIT) {
             return this.sendLog({
                 content: this,
                 work: null,
                 desc: "[context][Func:run][run status is not ready  or 已经初始化]",
-                value: new ObjectAble_1.BooleanObject(false),
+                value: new BooleanObject(false),
             });
         }
         ;
         var inputWork = this.works[0];
         if (inputWork) {
-            inputWork.startRun(input);
+            inputWork.startRun(decide(input));
         }
-        this.status = Types_1.WorkType.WorkRunStatus.RUNNING;
+        this.status = WorkType.WorkRunStatus.RUNNING;
     };
     // /**
     //  * 尝试再次输入某个值
@@ -177,13 +182,13 @@ var Context = /** @class */ (function () {
     Context.prototype.stopWorkChain = function () {
         var _this = this;
         var that = this;
-        return new rxjs_1.Observable(function (subscribe) {
+        return new Observable(function (subscribe) {
             var taskUns = _this.works.map(function ($1) {
                 return $1.stopWork();
             });
             var isSuccess = false;
             var errors = [];
-            var sub = (0, rxjs_1.forkJoin)(taskUns).subscribe({
+            var sub = forkJoin(taskUns).subscribe({
                 next: function (values) {
                     return (isSuccess = values.every(function ($1, index) {
                         if ($1 === true)
@@ -200,7 +205,7 @@ var Context = /** @class */ (function () {
                         content: that,
                         work: errors,
                         desc: "[content][Func:stopWorkChain]",
-                        value: new ObjectAble_1.BooleanObject(isSuccess),
+                        value: new BooleanObject(isSuccess),
                     });
                     subscribe.next(isSuccess);
                     subscribe.complete();
@@ -219,5 +224,5 @@ var Context = /** @class */ (function () {
     };
     return Context;
 }());
-exports.Context = Context;
+export { Context };
 //# sourceMappingURL=Context.js.map

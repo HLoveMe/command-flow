@@ -1,8 +1,5 @@
-"use strict";
 // import { BooleanAble, NumberAble, ValueAble } from "./Able/Ables";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ControlFlow = void 0;
-var ControlFlow;
+export var ControlFlow;
 (function (ControlFlow) {
     // 比较属性 compare
     var CompareEnum;
@@ -89,5 +86,5 @@ var ControlFlow;
         MapEnum["Size"] = "size";
         MapEnum["Values"] = "values";
     })(MapEnum = ControlFlow.MapEnum || (ControlFlow.MapEnum = {}));
-})(ControlFlow = exports.ControlFlow || (exports.ControlFlow = {}));
+})(ControlFlow || (ControlFlow = {}));
 //# sourceMappingURL=Control.js.map

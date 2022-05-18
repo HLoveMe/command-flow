@@ -1,14 +1,20 @@
-import { ControlFlow } from "../../Control";
-import { CompareUnit, DefaultValue } from "../../util";
+
+import { DefaultValue } from "../../util";
 import { Value } from "../../../Types";
-
-
 export class ObjectTarget<T>
   implements Value.ObjectAble<T>
 {
+  get [Symbol.toStringTag]() {
+    return 'flow-object';
+  }
+  
+  toString() {
+    return `${this._value}`
+  }
+
   static attributes: Set<string> = new Set();
   static empty: ObjectTarget<Object> = new ObjectTarget({});
-  
+
   @DefaultValue(Object.prototype.toString.call({})) static type: string;
   _value: T;
   constructor(value: T) {

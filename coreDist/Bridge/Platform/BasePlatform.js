@@ -1,17 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlatformBridge = void 0;
-var rxjs_1 = require("rxjs");
-var ObjectAble_1 = require("../../Object/Able/ObjectAble");
-var QRCode = require("qrcode-generator");
-var axios_1 = require("axios");
-var Hardware_1 = require("./Hardware");
+import { Observable } from "rxjs";
+import { StringObject, ObjectTarget } from "../../Object/Able/ObjectAble";
+import * as QRCode from "qrcode-generator";
+import Axios from "axios";
+import { HardwareBase } from "./Hardware";
 var PlatformBridge = /** @class */ (function () {
     function PlatformBridge() {
-        this.hardwareSource = new Hardware_1.HardwareBase();
+        this.hardwareSource = new HardwareBase();
     }
     PlatformBridge.prototype.createQrCode = function (context, option) {
-        return new rxjs_1.Observable(function (sub) {
+        return new Observable(function (sub) {
             var _a;
             var width = (_a = option === null || option === void 0 ? void 0 : option.SideLength) !== null && _a !== void 0 ? _a : 200;
             var margin = 2;
@@ -22,7 +19,7 @@ var PlatformBridge = /** @class */ (function () {
             var cellSize = (width - margin * 2) / moduleCount;
             var base64 = qrcode.createDataURL(cellSize, margin);
             // const base64 = qrcode.createDataURL(cellSize, margin).replace('data:image/gif;base64', 'data:image/png;base64');
-            sub.next(new ObjectAble_1.StringObject(base64));
+            sub.next(new StringObject(base64));
             sub.complete();
             return {
                 unsubscribe: function () { return sub.unsubscribe(); },
@@ -33,7 +30,7 @@ var PlatformBridge = /** @class */ (function () {
         throw new Error("Method not implemented.");
     };
     PlatformBridge.prototype.runCommand = function (command, option) {
-        return new rxjs_1.Observable(function (subscriber) {
+        return new Observable(function (subscriber) {
             var result = null;
             var error = null;
             var status = false;
@@ -66,8 +63,8 @@ var PlatformBridge = /** @class */ (function () {
         throw new Error("Method not implemented.");
     };
     PlatformBridge.prototype.fetch = function (req) {
-        return new rxjs_1.Observable(function (subscriber) {
-            axios_1.default.request(req)
+        return new Observable(function (subscriber) {
+            Axios.request(req)
                 .then(function (response) {
                 var error = null;
                 var data = null;
@@ -81,7 +78,7 @@ var PlatformBridge = /** @class */ (function () {
                 content.data = data;
                 content.error = error;
                 content.response = response;
-                subscriber.next(new ObjectAble_1.ObjectTarget(content));
+                subscriber.next(new ObjectTarget(content));
                 subscriber.complete();
             })
                 .catch(function (error) {
@@ -96,5 +93,5 @@ var PlatformBridge = /** @class */ (function () {
     };
     return PlatformBridge;
 }());
-exports.PlatformBridge = PlatformBridge;
+export { PlatformBridge };
 //# sourceMappingURL=BasePlatform.js.map

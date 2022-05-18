@@ -1,12 +1,9 @@
-"use strict";
 // import { Observable } from "rxjs";
 // import * as InOutValue from "../Object/InOutputValue";
 // import { map } from "rxjs/operators";
 // import { InOutputAbleOrNil, WorkType } from "..";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.BufferValue = void 0;
-var rxjs_1 = require("rxjs");
-var operators_1 = require("rxjs/operators");
+import { Observable } from "rxjs";
+import { filter } from "rxjs/operators";
 // const ObjectMap = {
 //   "[object Object]": InOutValue.InOutObject,
 //   "[object Map]": InOutValue.InOutMap,
@@ -57,11 +54,11 @@ var operators_1 = require("rxjs/operators");
  * @param
  * @returns
  */
-function BufferValue() {
+export function BufferValue() {
     var buffer = null;
     return function (source) {
-        return new rxjs_1.Observable(function (observer) {
-            var sub = source.pipe((0, operators_1.filter)(function (nextValue) {
+        return new Observable(function (observer) {
+            var sub = source.pipe(filter(function (nextValue) {
                 if (buffer === null || nextValue[1].valueOf() != buffer[1].valueOf()) {
                     buffer = nextValue;
                     return true;
@@ -79,5 +76,4 @@ function BufferValue() {
         });
     };
 }
-exports.BufferValue = BufferValue;
 //# sourceMappingURL=rxjs_operators.js.map

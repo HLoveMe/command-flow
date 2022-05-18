@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -14,9 +13,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.PCNodejsBridge = void 0;
-var BasePlatform_1 = require("../BasePlatform");
+import { PlatformBridge } from "../BasePlatform";
 // const nodeOpen = require("open");
 // import * as process from "child_process";
 /*** */
@@ -26,6 +23,6 @@ var PCNodejsBridge = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return PCNodejsBridge;
-}(BasePlatform_1.PlatformBridge));
-exports.PCNodejsBridge = PCNodejsBridge;
+}(PlatformBridge));
+export { PCNodejsBridge };
 //# sourceMappingURL=PC.js.map

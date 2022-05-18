@@ -1,6 +1,7 @@
 import { Observable, interval, asyncScheduler, timer, of } from "rxjs"
 import { delay, take, timeout } from "rxjs/operators"
-import { BaseType, NumberObject } from "../.."
+import { BaseType, NumberObject, ObjectTarget } from "../.."
+import { ChannelObject } from "../../Types";
 import { InstructionOTM, InstructionOTO } from "../Instruction"
 
 // 一直发
@@ -14,14 +15,17 @@ class IntervalWork extends InstructionOTM {
     this.maxCount = max;
   }
 
-  run(input: BaseType): Observable<NumberObject> {
-    const intervalTime = input.valueOf() ?? this.intervalTime ?? 1000;
+  run(input: ChannelObject): Observable<ChannelObject<NumberObject>> {
+    const intervalTime = input._value.value.valueOf() ?? this.intervalTime ?? 1000;
     const that = this;
     return new Observable(observer => {
       const sub = interval(intervalTime, asyncScheduler).pipe(
         take(that.maxCount)
       ).subscribe({
-        next: (value) => observer.next(new NumberObject(value)),
+        next: (value) => observer.next(new ObjectTarget({
+          ...input._value,
+          value: new NumberObject(value)
+        })),
         error: (error) => observer.error(error),
         complete: () => observer.complete()
       })
@@ -43,14 +47,17 @@ class TimeoutWork extends InstructionOTO {
     super()
     this.intervalTime = interval || 1000;
   }
-  run(input: BaseType): Observable<NumberObject> {
-    const intervalTime = input.valueOf() ?? this.intervalTime ?? 1000;
+  run(input: ChannelObject): Observable<ChannelObject<NumberObject>> {
+    const intervalTime = input._value.value.valueOf() ?? this.intervalTime ?? 1000;
     const that = this;
     return new Observable(observer => {
       const sub = of(0).pipe(
         timeout(intervalTime, asyncScheduler)
       ).subscribe({
-        next: (value) => observer.next(new NumberObject(value)),
+        next: (value) => observer.next(new ObjectTarget({
+          ...input._value,
+          value: new NumberObject(value)
+        })),
         error: (error) => observer.error(error),
         complete: () => observer.complete()
       })
@@ -77,12 +84,15 @@ class DelayIntervalWork extends InstructionOTM {
     this.delayTime = delay;
   }
 
-  run(input: BaseType): Observable<NumberObject> {
-    const intervalTime = input.valueOf() ?? this.intervalTime ?? 1000;
+  run(input: ChannelObject): Observable<ChannelObject<NumberObject>> {
+    const intervalTime = input._value.value.valueOf() ?? this.intervalTime ?? 1000;
     const that = this;
     return new Observable(observer => {
       const sub = timer(that.delayTime, intervalTime, asyncScheduler).subscribe({
-        next: (value) => observer.next(new NumberObject(value)),
+        next: (value) => observer.next(new ObjectTarget({
+          ...input._value,
+          value: new NumberObject(value)
+        })),
         error: (error) => observer.error(error),
         complete: () => observer.complete()
       })

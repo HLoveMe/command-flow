@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -23,10 +22,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.SetObject = void 0;
-var util_1 = require("../../util");
-var ObjectTarget_1 = require("./ObjectTarget");
+import { attribute, DefaultValue, SetUint } from "../../util";
+import { ObjectTarget } from "./ObjectTarget";
 var SetObject = /** @class */ (function (_super) {
     __extends(SetObject, _super);
     function SetObject(value) {
@@ -51,20 +48,20 @@ var SetObject = /** @class */ (function (_super) {
     SetObject.attributes = new Set();
     SetObject.empty = new SetObject_1(new Set());
     __decorate([
-        (0, util_1.attribute)(),
+        attribute(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Number)
     ], SetObject.prototype, "len", null);
     __decorate([
-        (0, util_1.DefaultValue)(Object.prototype.toString.call(new Set())),
+        DefaultValue(Object.prototype.toString.call(new Set())),
         __metadata("design:type", String)
     ], SetObject, "type", void 0);
     SetObject = SetObject_1 = __decorate([
-        util_1.SetUint,
+        SetUint,
         __metadata("design:paramtypes", [Set])
     ], SetObject);
     return SetObject;
-}(ObjectTarget_1.ObjectTarget));
-exports.SetObject = SetObject;
+}(ObjectTarget));
+export { SetObject };
 //# sourceMappingURL=SetObject.js.map

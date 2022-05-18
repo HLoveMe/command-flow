@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
-    "dev": "webpack-dev-server --config webpack.config.dev.js"
+    "dev": "webpack-dev-server --config webpack.config.dev.js",
+    "dev_test": "vite"
   },
   "repository": {
     "type": "git",
@@ -31,14 +32,19 @@
   },
   "homepage": "https://github.com/HLoveMe/CommandFlow#readme",
   "devDependencies": {
-    "babel-preset-stage-0": "^6.24.1",
     "@babel/core": "^7.16.12",
     "@babel/plugin-proposal-optional-chaining": "^7.16.7",
     "@babel/preset-env": "^7.16.11",
+    "@vitejs/plugin-vue": "^1.6.0",
+    "@vue/compiler-sfc": "^3.2.6",
     "babel-loader": "^8.2.3",
+    "babel-preset-stage-0": "^6.24.1",
+    "less": "^4.1.2",
     "terser-webpack-plugin": "^5.3.1",
     "ts-loader": "^9.2.7",
     "typescript": "^4.6.2",
+    "vite": "^2.5.2",
+    "vue": "^3.2.6",
     "webpack": "^5.67.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.4"

@@ -1,19 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.isRunElectron = exports.isRunNode = exports.isRunWeb = void 0;
-var Equipment_1 = require("./Equipment");
-function isRunWeb($1, $2, descriptor) {
-    descriptor.value = function () { return Equipment_1.isWeb; };
+import { isWeb as _isWeb, isNode as _isNode } from "./Equipment";
+export function isRunWeb($1, $2, descriptor) {
+    descriptor.value = function () { return _isWeb; };
 }
-exports.isRunWeb = isRunWeb;
-function isRunNode($1, $2, descriptor) {
-    descriptor.value = function () { return Equipment_1.isNode; };
+export function isRunNode($1, $2, descriptor) {
+    descriptor.value = function () { return _isNode; };
 }
-exports.isRunNode = isRunNode;
-function isRunElectron($1, $2, descriptor) {
+export function isRunElectron($1, $2, descriptor) {
     descriptor.value = function () { return isRunElectron; };
 }
-exports.isRunElectron = isRunElectron;
 // export class BaseRunTime implements EnvironmentAble {
 //   isAble() {
 //     return true;

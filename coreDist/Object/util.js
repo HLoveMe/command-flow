@@ -1,43 +1,37 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.DefaultValue = exports.ObjectManager = exports.Params = exports.attribute = void 0;
-var ObjectAble_1 = require("./Able/ObjectAble");
-var Control_1 = require("./Control");
-var valueUtil_1 = require("./valueUtil");
-function attribute() {
+import { BooleanObject, NumberObject } from "./Able/ObjectAble";
+import { ControlFlow } from "./Control";
+import { decide } from "./valueUtil";
+export function attribute() {
     return function ($1, $2, descriptor) {
         $1.constructor.attributes.add($2);
     };
 }
-exports.attribute = attribute;
-function Params(params) {
+export function Params(params) {
     return function (target, methodName, paramsIndex) {
         !target.$Meta && (target.$Meta = {});
         !target.$Meta[methodName] && (target.$Meta[methodName] = {});
         target.$Meta[methodName][paramsIndex] = params;
     };
 }
-exports.Params = Params;
 var ObjectManager = /** @class */ (function () {
     function ObjectManager() {
     }
     ObjectManager.types = new Set();
     return ObjectManager;
 }());
-exports.ObjectManager = ObjectManager;
-function DefaultValue(value) {
+export { ObjectManager };
+export function DefaultValue(value) {
     return function (target, propertyName) {
         target[propertyName] = value;
         ObjectManager.types.add(value);
     };
 }
-exports.DefaultValue = DefaultValue;
-function CompareUnit(host) {
-    Object.keys(Control_1.ControlFlow.CompareEnum).forEach(function (item) {
-        var key = Control_1.ControlFlow.CompareEnum[item];
+export function CompareUnit(host) {
+    Object.keys(ControlFlow.CompareEnum).forEach(function (item) {
+        var key = ControlFlow.CompareEnum[item];
         var comFunction = host.prototype[key];
         if (!comFunction) {
-            host.prototype[key] = function () { return new ObjectAble_1.BooleanObject(false); };
+            host.prototype[key] = function () { return new BooleanObject(false); };
         }
     });
     !host.prototype.compare &&
@@ -49,13 +43,12 @@ function CompareUnit(host) {
             return false;
         });
 }
-exports.CompareUnit = CompareUnit;
-function CalcUnit(host) {
-    Object.keys(Control_1.ControlFlow.CalcEnum).forEach(function (item) {
-        var key = Control_1.ControlFlow.CalcEnum[item];
+export function CalcUnit(host) {
+    Object.keys(ControlFlow.CalcEnum).forEach(function (item) {
+        var key = ControlFlow.CalcEnum[item];
         var comFunction = host.prototype[key];
         if (!comFunction) {
-            host.prototype[key] = function () { return new ObjectAble_1.NumberObject(0); };
+            host.prototype[key] = function () { return new NumberObject(0); };
         }
     });
     !host.prototype.calc &&
@@ -67,10 +60,9 @@ function CalcUnit(host) {
             return false;
         });
 }
-exports.CalcUnit = CalcUnit;
-function ArrayUint(host) {
-    Object.keys(Control_1.ControlFlow.ArrayEnum).forEach(function (item) {
-        var key = Control_1.ControlFlow.ArrayEnum[item];
+export function ArrayUint(host) {
+    Object.keys(ControlFlow.ArrayEnum).forEach(function (item) {
+        var key = ControlFlow.ArrayEnum[item];
         var comFunction = host.prototype[key];
         if (!comFunction) {
             host.prototype[key] = function () {
@@ -86,7 +78,7 @@ function ArrayUint(host) {
                 }
                 else
                     result = value;
-                return (0, valueUtil_1.decide)(result);
+                return decide(result);
             };
         }
     });
@@ -103,10 +95,9 @@ function ArrayUint(host) {
             return false;
         });
 }
-exports.ArrayUint = ArrayUint;
-function SetUint(host) {
-    Object.keys(Control_1.ControlFlow.SetEnum).forEach(function (item) {
-        var key = Control_1.ControlFlow.SetEnum[item];
+export function SetUint(host) {
+    Object.keys(ControlFlow.SetEnum).forEach(function (item) {
+        var key = ControlFlow.SetEnum[item];
         var comFunction = host.prototype[key];
         if (!comFunction) {
             host.prototype[key] = function () {
@@ -122,7 +113,7 @@ function SetUint(host) {
                 }
                 else
                     result = value;
-                return (0, valueUtil_1.decide)(result);
+                return decide(result);
             };
         }
     });
@@ -139,10 +130,9 @@ function SetUint(host) {
             return false;
         });
 }
-exports.SetUint = SetUint;
-function MapUint(host) {
-    Object.keys(Control_1.ControlFlow.MapEnum).forEach(function (item) {
-        var key = Control_1.ControlFlow.MapEnum[item];
+export function MapUint(host) {
+    Object.keys(ControlFlow.MapEnum).forEach(function (item) {
+        var key = ControlFlow.MapEnum[item];
         var comFunction = host.prototype[key];
         if (!comFunction) {
             host.prototype[key] = function () {
@@ -158,7 +148,7 @@ function MapUint(host) {
                 }
                 else
                     result = value;
-                return (0, valueUtil_1.decide)(result);
+                return decide(result);
             };
         }
     });
@@ -175,5 +165,4 @@ function MapUint(host) {
             return false;
         });
 }
-exports.MapUint = MapUint;
 //# sourceMappingURL=util.js.map

@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -14,27 +13,25 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.MobileWebBridge = void 0;
-var rxjs_1 = require("rxjs");
-var ObjectAble_1 = require("../../../Object/Able/ObjectAble");
-var BasePlatform_1 = require("../BasePlatform");
+import { of } from "rxjs";
+import { BooleanObject, ObjectTarget, } from "../../../Object/Able/ObjectAble";
+import { PlatformBridge } from "../BasePlatform";
 var MobileWebBridge = /** @class */ (function (_super) {
     __extends(MobileWebBridge, _super);
     function MobileWebBridge() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     MobileWebBridge.prototype.open = function (url) {
-        return (0, rxjs_1.of)(new ObjectAble_1.BooleanObject(false));
+        return of(new BooleanObject(false));
     };
     MobileWebBridge.prototype.loadFile = function (url, option) {
-        return (0, rxjs_1.of)(new ObjectAble_1.ObjectTarget({
+        return of(new ObjectTarget({
             total: 0,
             loaded: 0,
             data: new ArrayBuffer(0),
         }));
     };
     return MobileWebBridge;
-}(BasePlatform_1.PlatformBridge));
-exports.MobileWebBridge = MobileWebBridge;
+}(PlatformBridge));
+export { MobileWebBridge };
 //# sourceMappingURL=Mobile.js.map

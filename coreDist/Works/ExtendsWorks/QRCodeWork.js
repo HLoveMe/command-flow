@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -14,11 +13,10 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.QRCodeWork = void 0;
-var Instruction_1 = require("../Instruction");
-var rxjs_1 = require("rxjs");
-var Equipment_1 = require("../../Util/Equipment");
+import { InstructionOTO } from "../Instruction";
+import { Observable } from "rxjs";
+import { isJS } from "../../Util/Equipment";
+import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 /**
  * 字符串生产QRcode base64
  * input => StringObject
@@ -33,17 +31,17 @@ var QRCodeWork = /** @class */ (function (_super) {
     }
     QRCodeWork.prototype.run = function (input, option) {
         var that = this;
-        return new rxjs_1.Observable(function (subscriber) {
+        return new Observable(function (subscriber) {
             var target;
             if (input === null || input === undefined)
                 target = "";
             else {
-                target = input.valueOf().toString();
+                target = unpackValue(input);
             }
             var sub = that.context.platform
                 .createQrCode(target, option)
                 .subscribe({
-                next: function (res) { return subscriber.next(res); },
+                next: function (res) { return subscriber.next(wrapperValue(input, res)); },
                 complete: function () { return subscriber.complete(); },
                 error: function (err) { return subscriber.error(err); },
             });
@@ -56,10 +54,10 @@ var QRCodeWork = /** @class */ (function (_super) {
         });
     };
     QRCodeWork.isAble = function () {
-        return Equipment_1.isJS;
+        return isJS;
         // return isNode || isWeb || isRN
     };
     return QRCodeWork;
-}(Instruction_1.InstructionOTO));
-exports.QRCodeWork = QRCodeWork;
+}(InstructionOTO));
+export { QRCodeWork };
 //# sourceMappingURL=QRCodeWork.js.map

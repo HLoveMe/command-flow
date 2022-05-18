@@ -1,4 +1,4 @@
-import { BaseType, ContextImpl, WorkType, Value } from "../Types";
+import { BaseType, ContextImpl, WorkType, Value, ChannelObject } from "../Types";
 import {
   Subject,
   Subscription,
@@ -29,7 +29,7 @@ import { StringObject } from "../Object/Able/ObjectAble";
  * n次输入---->m次输出 InstructionMTM
  */
 export class Instruction
-  extends Subject<BaseType>
+  extends Subject<ChannelObject>
   implements WorkType.Work, EnvironmentAble {
 
   static OPTION: WorkRunOption;
@@ -48,19 +48,6 @@ export class Instruction
     super();
     this.uuid = UUID();
   }
-  // run(input: InOutputAble): Observable<InOutputAble> {
-  //   throw new Error("Method not implemented.");
-  // }
-  // rn_run?(input: InOutputAble): Observable<InOutputAble> {
-  //   throw new Error("Method not implemented.");
-  // }
-  // web_run?(input: InOutputAble): Observable<InOutputAble> {
-  //   throw new Error("Method not implemented.");
-  // }
-  // node_run?(input: InOutputAble): Observable<InOutputAble> {
-  //   throw new Error("Method not implemented.");
-  // }
-
   // 连接上下通道
   prepare(before?: WorkType.Work, next?: WorkType.Work): void {
     this.beforeWork = before;
@@ -87,12 +74,12 @@ export class Instruction
       .subscribe({
         complete: () => { },
         error: (error) => that.error(error),
-        next: (value: BaseType) => that._run(value),
+        next: (value: BaseType) => that._run(value as ChannelObject),
       });
     this.pools.push(sub2);
   }
 
-  _run(value: BaseType) {
+  _run(value: ChannelObject) {
     value = this.nextValue(value) || value;
     const that = this;
     const execFunc: WorkType.WorkFunction = PlatformSelect({
@@ -210,7 +197,7 @@ export class Instruction
   }
 
   //重写
-  next(value: BaseType) {
+  next(value: ChannelObject) {
     if (this.closed === false) {
       super.next(value);
     } else {
@@ -223,7 +210,7 @@ export class Instruction
   }
   // 声明周期
   // 处理输入的值
-  nextValue(input: BaseType): BaseType { return input }
+  nextValue(input: ChannelObject): ChannelObject { return input }
   completeOneLoop(input: BaseType, toValue: BaseType, success: Boolean) { }
 
   // 基础
@@ -240,11 +227,11 @@ export class Instruction
 }
 
 export class InstructionOTO extends Instruction {
-  nextValue(input: BaseType): BaseType {
+  nextValue(input: ChannelObject): ChannelObject {
     return input;
   }
-  completeOneLoop(input: BaseType, toValue: BaseType, success: Boolean) { }
-  run(input: BaseType): Observable<BaseType> {
+  completeOneLoop(input: ChannelObject, toValue: ChannelObject, success: Boolean) { }
+  run(input: ChannelObject): Observable<ChannelObject> {
     return new Observable((subscriber) => {
       subscriber.next(input);
       subscriber.complete();
@@ -259,9 +246,9 @@ export class InstructionOTM extends Instruction {
   // 声明可以进行配置的属性 todo
   static OPTION: WorkRunOption;
   name: string = "MultipleInstruction";
-  nextValue(input: BaseType): BaseType { return input }
-  completeOneLoop(input: BaseType, next: BaseType, success: Boolean) { }
-  run(input: BaseType): Observable<BaseType> {
+  nextValue(input: ChannelObject): ChannelObject { return input }
+  completeOneLoop(input: ChannelObject, next: ChannelObject, success: Boolean) { }
+  run(input: ChannelObject): Observable<ChannelObject> {
     return new Observable((subscriber) => {
       // subscriber.next(input);
       // 输出多次
@@ -279,10 +266,10 @@ export class InstructionMTM extends Instruction {
   static OPTION: WorkRunOption;
   name: string = "MultipleInstruction";
 
-  nextValue(input: BaseType): BaseType { return input }
-  completeOneLoop(input: BaseType, next: BaseType, success: Boolean) { }
+  nextValue(input: ChannelObject): ChannelObject { return input }
+  completeOneLoop(input: ChannelObject, next: ChannelObject, success: Boolean) { }
 
-  run(input: BaseType): Observable<BaseType> {
+  run(input: ChannelObject): Observable<ChannelObject> {
     return new Observable((subscriber) => {
       // subscriber.next(input);
       // 输出多次

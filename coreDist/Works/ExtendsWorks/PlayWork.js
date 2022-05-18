@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -14,15 +13,13 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlayBase64MusicWork = void 0;
-var Instruction_1 = require("../Instruction");
+import { InstructionOTO } from "../Instruction";
 var PlayBase64MusicWork = /** @class */ (function (_super) {
     __extends(PlayBase64MusicWork, _super);
     function PlayBase64MusicWork() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return PlayBase64MusicWork;
-}(Instruction_1.InstructionOTO));
-exports.PlayBase64MusicWork = PlayBase64MusicWork;
+}(InstructionOTO));
+export { PlayBase64MusicWork };
 //# sourceMappingURL=PlayWork.js.map

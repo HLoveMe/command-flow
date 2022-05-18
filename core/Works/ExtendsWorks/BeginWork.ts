@@ -1,4 +1,4 @@
-import { BaseType, WorkType } from "../../Types";
+import { BaseType, ChannelObject, ChannelValue, WorkType } from "../../Types";
 import {
   Subject,
   Subscription,
@@ -8,7 +8,7 @@ import { v4 as UUID } from "uuid";
 import { EnvironmentAble } from "../../Util/EvalEquipment";
 import { InstructionOTO } from "../Instruction";
 import { isJS } from "../../Util/Equipment";
-import { take } from "rxjs/operators";
+import { ObjectTarget } from "../..";
 
 export class BeginWork
   extends InstructionOTO
@@ -48,8 +48,15 @@ export class BeginWork
    * 运行 头部
    * @param value
    */
-  startRun(value: BaseType) {
-    this.nextWork.next(value);
+  startRun(value: BaseType, runId?: string) {
+    const id = runId ?? UUID();
+    (this.nextWork as Subject<ChannelObject>).next(
+      new ObjectTarget<ChannelValue>({
+        id,
+        value,
+        option: {},
+      })
+    );
   }
 
   completeOneLoop() { }

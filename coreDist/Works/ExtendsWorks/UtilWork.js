@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -14,12 +13,21 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.DelayIntervalWork = exports.TimeoutWork = exports.IntervalWork = void 0;
-var rxjs_1 = require("rxjs");
-var operators_1 = require("rxjs/operators");
-var __1 = require("../..");
-var Instruction_1 = require("../Instruction");
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+import { Observable, interval, asyncScheduler, timer, of } from "rxjs";
+import { take, timeout } from "rxjs/operators";
+import { NumberObject, ObjectTarget } from "../..";
+import { InstructionOTM, InstructionOTO } from "../Instruction";
 // 一直发
 var IntervalWork = /** @class */ (function (_super) {
     __extends(IntervalWork, _super);
@@ -32,11 +40,11 @@ var IntervalWork = /** @class */ (function (_super) {
     }
     IntervalWork.prototype.run = function (input) {
         var _a, _b;
-        var intervalTime = (_b = (_a = input.valueOf()) !== null && _a !== void 0 ? _a : this.intervalTime) !== null && _b !== void 0 ? _b : 1000;
+        var intervalTime = (_b = (_a = input._value.value.valueOf()) !== null && _a !== void 0 ? _a : this.intervalTime) !== null && _b !== void 0 ? _b : 1000;
         var that = this;
-        return new rxjs_1.Observable(function (observer) {
-            var sub = (0, rxjs_1.interval)(intervalTime, rxjs_1.asyncScheduler).pipe((0, operators_1.take)(that.maxCount)).subscribe({
-                next: function (value) { return observer.next(new __1.NumberObject(value)); },
+        return new Observable(function (observer) {
+            var sub = interval(intervalTime, asyncScheduler).pipe(take(that.maxCount)).subscribe({
+                next: function (value) { return observer.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new NumberObject(value) }))); },
                 error: function (error) { return observer.error(error); },
                 complete: function () { return observer.complete(); }
             });
@@ -50,8 +58,7 @@ var IntervalWork = /** @class */ (function (_super) {
         });
     };
     return IntervalWork;
-}(Instruction_1.InstructionOTM));
-exports.IntervalWork = IntervalWork;
+}(InstructionOTM));
 // 定时发
 var TimeoutWork = /** @class */ (function (_super) {
     __extends(TimeoutWork, _super);
@@ -62,11 +69,11 @@ var TimeoutWork = /** @class */ (function (_super) {
     }
     TimeoutWork.prototype.run = function (input) {
         var _a, _b;
-        var intervalTime = (_b = (_a = input.valueOf()) !== null && _a !== void 0 ? _a : this.intervalTime) !== null && _b !== void 0 ? _b : 1000;
+        var intervalTime = (_b = (_a = input._value.value.valueOf()) !== null && _a !== void 0 ? _a : this.intervalTime) !== null && _b !== void 0 ? _b : 1000;
         var that = this;
-        return new rxjs_1.Observable(function (observer) {
-            var sub = (0, rxjs_1.of)(0).pipe((0, operators_1.timeout)(intervalTime, rxjs_1.asyncScheduler)).subscribe({
-                next: function (value) { return observer.next(new __1.NumberObject(value)); },
+        return new Observable(function (observer) {
+            var sub = of(0).pipe(timeout(intervalTime, asyncScheduler)).subscribe({
+                next: function (value) { return observer.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new NumberObject(value) }))); },
                 error: function (error) { return observer.error(error); },
                 complete: function () { return observer.complete(); }
             });
@@ -80,8 +87,7 @@ var TimeoutWork = /** @class */ (function (_super) {
         });
     };
     return TimeoutWork;
-}(Instruction_1.InstructionOTO));
-exports.TimeoutWork = TimeoutWork;
+}(InstructionOTO));
 // 延迟 然后一直发
 var DelayIntervalWork = /** @class */ (function (_super) {
     __extends(DelayIntervalWork, _super);
@@ -97,11 +103,11 @@ var DelayIntervalWork = /** @class */ (function (_super) {
     }
     DelayIntervalWork.prototype.run = function (input) {
         var _a, _b;
-        var intervalTime = (_b = (_a = input.valueOf()) !== null && _a !== void 0 ? _a : this.intervalTime) !== null && _b !== void 0 ? _b : 1000;
+        var intervalTime = (_b = (_a = input._value.value.valueOf()) !== null && _a !== void 0 ? _a : this.intervalTime) !== null && _b !== void 0 ? _b : 1000;
         var that = this;
-        return new rxjs_1.Observable(function (observer) {
-            var sub = (0, rxjs_1.timer)(that.delayTime, intervalTime, rxjs_1.asyncScheduler).subscribe({
-                next: function (value) { return observer.next(new __1.NumberObject(value)); },
+        return new Observable(function (observer) {
+            var sub = timer(that.delayTime, intervalTime, asyncScheduler).subscribe({
+                next: function (value) { return observer.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new NumberObject(value) }))); },
                 error: function (error) { return observer.error(error); },
                 complete: function () { return observer.complete(); }
             });
@@ -115,6 +121,6 @@ var DelayIntervalWork = /** @class */ (function (_super) {
         });
     };
     return DelayIntervalWork;
-}(Instruction_1.InstructionOTM));
-exports.DelayIntervalWork = DelayIntervalWork;
+}(InstructionOTM));
+export { IntervalWork, TimeoutWork, DelayIntervalWork };
 //# sourceMappingURL=UtilWork.js.map

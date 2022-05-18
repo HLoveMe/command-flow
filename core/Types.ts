@@ -1,4 +1,4 @@
-import { Observable, Subject, Subscription } from "rxjs";
+import { PartialObserver, Observable, Subject, Subscription } from "rxjs";
 
 import { ContextRunOption } from "./Configs";
 import { PlatformBridgeAble } from "./Bridge/ConfigTypes";
@@ -78,6 +78,9 @@ export type BaseType =
   | undefined
   | null;
 
+export type ChannelValue<T extends BaseType = BaseType> = { value: T, id: string, option?: any }
+export type ChannelObject<T extends BaseType = BaseType> = Value.ObjectAble<ChannelValue<T>>;
+
 export namespace WorkType {
   export declare type ConfigInfo = { [key: string]: any };
 
@@ -97,12 +100,11 @@ export namespace WorkType {
     RUNNING,//运行中
     COMPLETE,//完成
   }
-
-  export interface WorkStatus<T extends BaseType> {
+  export interface WorkStatus<T extends BaseType = BaseType> {
     content?: ContextImpl;
     work?: Work | Work[];
     desc?: any;
-    value?: T;
+    value?: T | ChannelValue<T>;
     date?: Date;
   }
 
@@ -123,7 +125,7 @@ export namespace WorkType {
   // 入口
   export interface WorkEntrance {
     // 仅仅头部work 有效
-    startRun(value: BaseType): void;
+    startRun(value: BaseType, runId?: string): void;
   }
   export interface WorkConfig {
     //根据该属性 控制Work 工作流程
@@ -171,10 +173,11 @@ export declare interface ContextImpl {
   runOptions: ContextRunOption;
   runConstant: Map<WorkType.WorkUUID, WorkType.WorkConstant>;
   works: WorkType.Work[];
-  msgChannel: Subject<BaseType>;
+  msgChannel: Subject<WorkType.WorkStatus<any>>;
   pools: Subscription[];
   addWork(work: WorkType.Work): void;
   addWorks(...works: WorkType.Work[]): void;
+  addWorkLog(tap: PartialObserver<WorkType.WorkStatus<ChannelObject>>): Subscription
   // 准备
   prepareWorks(): void;
   // 开始运行

@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,13 +7,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ObjectTarget = void 0;
-var util_1 = require("../../util");
+import { DefaultValue } from "../../util";
 var ObjectTarget = /** @class */ (function () {
     function ObjectTarget(value) {
         this._value = value;
     }
+    Object.defineProperty(ObjectTarget.prototype, Symbol.toStringTag, {
+        get: function () {
+            return 'flow-object';
+        },
+        enumerable: false,
+        configurable: true
+    });
+    ObjectTarget.prototype.toString = function () {
+        return "" + this._value;
+    };
     ObjectTarget.prototype.valueOf = function () {
         return this._value;
     };
@@ -39,10 +46,10 @@ var ObjectTarget = /** @class */ (function () {
     ObjectTarget.attributes = new Set();
     ObjectTarget.empty = new ObjectTarget({});
     __decorate([
-        (0, util_1.DefaultValue)(Object.prototype.toString.call({})),
+        DefaultValue(Object.prototype.toString.call({})),
         __metadata("design:type", String)
     ], ObjectTarget, "type", void 0);
     return ObjectTarget;
 }());
-exports.ObjectTarget = ObjectTarget;
+export { ObjectTarget };
 //# sourceMappingURL=ObjectTarget.js.map

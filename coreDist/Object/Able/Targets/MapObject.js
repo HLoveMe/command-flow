@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -23,10 +22,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.MapObject = void 0;
-var util_1 = require("../../util");
-var ObjectTarget_1 = require("./ObjectTarget");
+import { attribute, DefaultValue, MapUint } from "../../util";
+import { ObjectTarget } from "./ObjectTarget";
 var MapObject = /** @class */ (function (_super) {
     __extends(MapObject, _super);
     function MapObject(value) {
@@ -50,20 +47,20 @@ var MapObject = /** @class */ (function (_super) {
     MapObject.attributes = new Set();
     MapObject.empty = new MapObject_1(new Map());
     __decorate([
-        (0, util_1.attribute)(),
+        attribute(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Number)
     ], MapObject.prototype, "len", null);
     __decorate([
-        (0, util_1.DefaultValue)(Object.prototype.toString.call(new Map())),
+        DefaultValue(Object.prototype.toString.call(new Map())),
         __metadata("design:type", String)
     ], MapObject, "type", void 0);
     MapObject = MapObject_1 = __decorate([
-        util_1.MapUint,
+        MapUint,
         __metadata("design:paramtypes", [Map])
     ], MapObject);
     return MapObject;
-}(ObjectTarget_1.ObjectTarget));
-exports.MapObject = MapObject;
+}(ObjectTarget));
+export { MapObject };
 //# sourceMappingURL=MapObject.js.map

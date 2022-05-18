@@ -1,12 +1,13 @@
 
-import { WorkType, BaseType, ContextImpl } from "./Types";
-import { forkJoin, Observable, Subject, Subscription } from "rxjs";
+import { WorkType, BaseType, ContextImpl, ChannelObject, ChannelValue } from "./Types";
+import { CompletionObserver, forkJoin, Observable, PartialObserver, Subject, Subscription } from "rxjs";
 import { ContextRunOption } from "./Configs";
 import { BooleanObject, StringObject } from "./Object/Able/ObjectAble";
 import Platform from "./Bridge/Index";
 import { Value } from "./Types";
 import { PlatformBridge } from "./Bridge/Platform/BasePlatform";
 import { BeginWork } from "./Works/ExtendsWorks/BeginWork";
+import { decide } from "./Object/valueUtil";
 
 export class Context implements ContextImpl {
   status: WorkType.WorkRunStatus = WorkType.WorkRunStatus.INIT;
@@ -26,13 +27,13 @@ export class Context implements ContextImpl {
   /**
    * 消息传输通道
    */
-  msgChannel: Subject<BaseType> = new Subject();
+  msgChannel: Subject<WorkType.WorkStatus> = new Subject();
   constructor(runOptions?: ContextRunOption) {
     this.runOptions = runOptions || {} as ContextRunOption;
-    const sub = this.msgChannel.subscribe(
-      this.workMessage.bind(this),
-      this.workError.bind(this)
-    );
+    const sub = this.msgChannel.subscribe({
+      next: (value) => this.workMessage(value),
+      error: (error) => this.workError(error),
+    });
     this.pools.push(sub);
   }
   /**
@@ -51,24 +52,28 @@ export class Context implements ContextImpl {
     !w_map && this.runConstant.set(from.uuid, new Map());
     this.runConstant.get(from.uuid).set(name, value);
   }
-  workMessage(input: Value.ValueAble<any>) {
-    console.log("msgChannel", input.valueOf());
+  workMessage(input: WorkType.WorkStatus) {
+    // console.log("msgChannel", input);
   }
-  workError(error) {
-    console.log("msgChannelError", error);
+  workError(error: Error) {
+    // console.log("msgChannelError", error);
     this.stopWorkChain();
   }
 
-  sendLog(status: WorkType.WorkStatus<any>) {
+  addWorkLog(tap: PartialObserver<WorkType.WorkStatus>): Subscription {
+    return this.msgChannel.subscribe(tap);
+  }
+
+  sendLog(status: WorkType.WorkStatus) {
     const log = {
-      date: new Date().getTime(),
-      work: (Array.isArray(status.work) ? status.work : [status.work]).forEach(
+      date: new Date(),
+      work: (Array.isArray(status.work) ? status.work : [status.work]).filter(
         ($1) => $1?.name
       ),
-      info: status.desc,
+      desc: status.desc,
       value: status.value,
     };
-    this.msgChannel.next(new StringObject(JSON.stringify(log)));
+    this.msgChannel.next(log as WorkType.WorkStatus);
   }
 
   addWork(work: WorkType.Work) {
@@ -117,7 +122,7 @@ export class Context implements ContextImpl {
     };
     const inputWork = this.works[0];
     if (inputWork) {
-      (inputWork as unknown as WorkType.WorkEntrance).startRun(input);
+      (inputWork as unknown as WorkType.WorkEntrance).startRun(decide(input));
     }
     this.status = WorkType.WorkRunStatus.RUNNING;
   }
