@@ -27,6 +27,7 @@
         v-if="logInfo.size >= 1"
         :desc="'--'"
         :expect="'=='"
+        :success="result"
       ></RunResult>
     </div>
   </div>
@@ -47,7 +48,7 @@ import {
   SetObject,
   ObjectTarget,
 } from "../../coreDist/index";
-import { computed, onMounted, ref } from "vue";
+import { ref } from "vue";
 import RunGroup from "./RunGroup.vue";
 import RunResult from "./RunResult.vue";
 interface WorkStatus {
@@ -57,6 +58,7 @@ interface WorkStatus {
   value?: any;
   date?: Date;
 }
+const result = ref<boolean>(false);
 const codeRef = ref<HTMLDivElement>();
 const logInfo = ref<Map<string, Array<any>>>(new Map());
 const disabled = ref<boolean>(false);

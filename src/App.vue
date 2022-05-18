@@ -5,6 +5,7 @@
     <OpenSourceUrl></OpenSourceUrl>
     <QR></QR>
     <LoadFile></LoadFile>
+    <RunCommand></RunCommand>
   </div>
 </template>
 <script setup lang="ts">
@@ -13,6 +14,7 @@ import Base64 from "./components/Base64.vue";
 import OpenSourceUrl from "./components/OpenSourceUrl.vue";
 import QR from "./components/QRRun.vue";
 import LoadFile from "./components/LoadFile.vue";
+import RunCommand from './components/RunCommand.vue'
 </script>
 <style>
 * {

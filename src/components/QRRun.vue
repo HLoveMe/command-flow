@@ -27,6 +27,7 @@
         v-if="logInfo.size >= 1"
         :desc="'--'"
         :expect="'=='"
+        :success="result"
       ></RunResult>
       <img ref="qrCodeRef" />
     </div>
@@ -61,6 +62,7 @@ interface WorkStatus {
   value?: any;
   date?: Date;
 }
+const result = ref<boolean>(true);
 const codeRef = ref<HTMLDivElement>();
 const qrCodeRef = ref<HTMLImageElement>();
 const logInfo = ref<Map<string, Array<any>>>(new Map());

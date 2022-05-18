@@ -23,7 +23,12 @@
         :id="item"
         :items="logInfo.get(item)"
       ></RunGroup>
-      <RunResult v-if="logInfo.size>=1" :desc="'打开网页'" :expect="'打开网址'"></RunResult>
+      <RunResult
+        v-if="logInfo.size >= 1"
+        :desc="'打开网页'"
+        :expect="'打开网址'"
+        :success="result"
+      ></RunResult>
     </div>
   </div>
 </template>
@@ -53,6 +58,7 @@ interface WorkStatus {
   value?: any;
   date?: Date;
 }
+const result = ref<boolean>(true);
 const codeRef = ref<HTMLDivElement>();
 const logInfo = ref<Map<string, Array<any>>>(new Map());
 const disabled = ref<boolean>(false);

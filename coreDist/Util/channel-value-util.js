@@ -17,6 +17,8 @@ import { decide } from "../Object/valueUtil";
  * @returns
  */
 export var unpackValue = function (value) {
+    if (!!value === false)
+        return "";
     return value._value.value.valueOf();
 };
 /**

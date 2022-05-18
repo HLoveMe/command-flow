@@ -17,6 +17,7 @@ const init = () => {
       "[object String]": Value.StringObject,
       "[object ArrayBuffer]": Value.DataObject,
       "[object Uint8Array]": Value.DataObject,
+      "[object Promise]": Value.ObjectTarget,
       '[object Null]': Value.ObjectTarget,
       '[object Undefined]': Value.ObjectTarget,
     };
@@ -43,5 +44,5 @@ export const decide = function (value: any | BaseType, force: boolean = false): 
   if (Target) {
     return new Target(value || {});
   }
-  return new ObjectTarget({});
+  return new ObjectTarget(value || {});
 };

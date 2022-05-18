@@ -16,7 +16,6 @@ var __extends = (this && this.__extends) || (function () {
 import { InstructionOTO } from "../Instruction";
 import { Observable } from "rxjs";
 import { isJS } from "../../Util/Equipment";
-import { BooleanObject } from '../../Object/Able/ObjectAble';
 import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 /**
  * 默认：
@@ -37,19 +36,13 @@ var RunCommandWork = /** @class */ (function (_super) {
         var _this = this;
         var that = this;
         return new Observable(function (subscriber) {
-            var target;
-            if (command === null || command === undefined)
-                target = "";
-            else {
-                // target = ((command as Value.ValueAble<any>).valueOf() as Object).toString();
-                target = unpackValue(command);
-            }
+            var target = unpackValue(command);
             var sub = that.context.platform
                 .runCommand(target)
                 .subscribe({
                 next: function (info) {
-                    _this.logMsg(JSON.stringify(info), command);
-                    subscriber.next(wrapperValue(command, new BooleanObject(info.error !== null && info.status === true)));
+                    _this.logMsg("\u6267\u884Ccommand\uFF1A" + (info.error ? '失败' : '成功') + "\u3002\u7ED3\u679C\uFF1A" + info.result, command);
+                    subscriber.next(wrapperValue(command, info.error ? undefined : info.result));
                 },
                 complete: function () { return subscriber.complete(); },
                 error: function (err) { return subscriber.error(err); }

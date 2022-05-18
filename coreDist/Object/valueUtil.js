@@ -14,6 +14,7 @@ var init = function () {
             "[object String]": Value.StringObject,
             "[object ArrayBuffer]": Value.DataObject,
             "[object Uint8Array]": Value.DataObject,
+            "[object Promise]": Value.ObjectTarget,
             '[object Null]': Value.ObjectTarget,
             '[object Undefined]': Value.ObjectTarget,
         };
@@ -41,6 +42,6 @@ export var decide = function (value, force) {
     if (Target) {
         return new Target(value || {});
     }
-    return new ObjectTarget({});
+    return new ObjectTarget(value || {});
 };
 //# sourceMappingURL=valueUtil.js.map

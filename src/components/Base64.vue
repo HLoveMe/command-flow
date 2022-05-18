@@ -13,7 +13,7 @@
       :disabled="disabled"
       value="showCode"
     />
-    
+
     <input type="button" @click="clearLog" :disabled="disabled" value="clear" />
     <a class="name">Base64 decode encode test</a>
     <div class="run-container">
@@ -24,7 +24,12 @@
         :id="item"
         :items="logInfo.get(item)"
       ></RunGroup>
-      <RunResult v-if="logInfo.size>=1" :desc="'--'" :expect="'=='"></RunResult>
+      <RunResult
+        v-if="logInfo.size >= 1"
+        :desc="'--'"
+        :expect="'=='"
+        :success="result"
+      ></RunResult>
     </div>
   </div>
 </template>
@@ -54,6 +59,7 @@ interface WorkStatus {
   value?: any;
   date?: Date;
 }
+const result = ref<boolean>(true);
 const codeRef = ref<HTMLDivElement>();
 const logInfo = ref<Map<string, Array<any>>>(new Map());
 const disabled = ref<boolean>(false);

@@ -14,7 +14,7 @@
       value="showCode"
     />
     <input type="button" @click="clearLog" :disabled="disabled" value="clear" />
-    <a class="name">LoadFileWork</a>
+    <a class="name">Run command</a>
     <div class="run-container">
       <div class="code" ref="codeRef"></div>
       <RunGroup
@@ -25,18 +25,24 @@
       ></RunGroup>
       <RunResult
         v-if="logInfo.size >= 1"
-        :desc="'--'"
-        :expect="'=='"
+        :desc="'1+10000'"
+        :expect="'10001'"
         :success="result"
       ></RunResult>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { Context, LoadFileWork } from "../../coreDist/index";
-import { computed, onMounted, ref } from "vue";
+import {
+  Context,
+  RunCommandWork,
+  InstructionOTO,
+  unpackValue,
+} from "../../coreDist/index";
+import { ref } from "vue";
 import RunGroup from "./RunGroup.vue";
 import RunResult from "./RunResult.vue";
+import { Observable } from "rxjs";
 interface WorkStatus {
   content?: any;
   work?: any | any[];
@@ -44,7 +50,7 @@ interface WorkStatus {
   value?: any;
   date?: Date;
 }
-const result = ref<boolean>(true);
+const result = ref<boolean>(false);
 const codeRef = ref<HTMLDivElement>();
 const logInfo = ref<Map<string, Array<any>>>(new Map());
 const disabled = ref<boolean>(false);
@@ -75,14 +81,28 @@ const getContext = () => {
   });
   return context;
 };
+class RunResultShow extends InstructionOTO {
+  name = "RunResultShow";
+
+  run(input: any): Observable<any> {
+    return new Observable((subscriber) => {
+      const value = unpackValue(input);
+      result.value = value == "10001";
+      subscriber.complete();
+      return {
+        unsubscribe: () => subscriber.unsubscribe(),
+      };
+    });
+  }
+}
 const clearLog = () => {
   logInfo.value.clear();
 };
 async function codeDome() {
   const context = new Context();
-  context.addWork(new LoadFileWork());
+  context.addWork(new RunCommandWork());
   await context.prepareWorks();
-  context.dispatch();
+  context.dispatch("1+10000");
 }
 const reRun = () => {
   logInfo.value.clear();
@@ -90,9 +110,10 @@ const reRun = () => {
 };
 const startBegin = async () => {
   const context = getContext();
-  context.addWork(new LoadFileWork());
+  context.addWork(new RunCommandWork());
+  context.addWork(new RunResultShow());
   await context.prepareWorks();
-  context.dispatch();
+  context.dispatch("1+10000");
 };
 const showCode = () => {
   console.log(codeDome.toString());

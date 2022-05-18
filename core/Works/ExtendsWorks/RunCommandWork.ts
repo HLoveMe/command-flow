@@ -22,18 +22,13 @@ export default class RunCommandWork extends InstructionOTO {
   run(command: ChannelObject, option?: any): Observable<ChannelObject<BooleanObject>> {
     const that = this;
     return new Observable((subscriber: Subscriber<ChannelObject<BooleanObject>>) => {
-      let target: string;
-      if (command === null || command === undefined) target = "";
-      else {
-        // target = ((command as Value.ValueAble<any>).valueOf() as Object).toString();
-        target = unpackValue(command)
-      }
+      const target: string = unpackValue(command)
       const sub = (that.context as ContextImpl).platform
         .runCommand(target)
         .subscribe({
           next: (info: CommandStatus) => {
-            this.logMsg(JSON.stringify(info), command);
-            subscriber.next(wrapperValue(command, new BooleanObject(info.error !== null && info.status === true)))
+            this.logMsg(`执行command：${info.error ? '失败' : '成功'}。结果：${info.result}`, command);
+            subscriber.next(wrapperValue(command, info.error ? undefined : info.result))
           },
           complete: () => subscriber.complete(),
           error: (err) => subscriber.error(err)

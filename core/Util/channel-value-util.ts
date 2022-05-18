@@ -7,6 +7,7 @@ import { ChannelObject, ChannelValue } from "../Types";
  * @returns 
  */
 export const unpackValue = (value: ChannelObject): string => {
+  if (!!value === false) return "";
   return (value._value as ChannelValue).value.valueOf()
 }
 
