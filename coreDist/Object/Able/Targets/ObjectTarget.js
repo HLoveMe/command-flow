@@ -19,9 +19,6 @@ var ObjectTarget = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    ObjectTarget.prototype.toString = function () {
-        return "" + this._value;
-    };
     ObjectTarget.prototype.valueOf = function () {
         return this._value;
     };

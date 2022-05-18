@@ -138,7 +138,7 @@ export class Instruction
               that.context?.sendLog({
                 work: [that],
                 content: that.context,
-                desc: "[Work][Func:run]->下一个Work",
+                desc: "[Work][Func:run]->将执行下一个Work",
                 value: res,
               });
             that.completeOneLoop(value, res as BaseType, true);

@@ -125,7 +125,7 @@ var Instruction = /** @class */ (function (_super) {
                         ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                             work: [that],
                             content: that.context,
-                            desc: "[Work][Func:run]->下一个Work",
+                            desc: "[Work][Func:run]->将执行下一个Work",
                             value: res,
                         }));
                     that.completeOneLoop(value, res, true);

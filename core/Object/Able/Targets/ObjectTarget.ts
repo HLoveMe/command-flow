@@ -8,10 +8,6 @@ export class ObjectTarget<T>
     return 'flow-object';
   }
   
-  toString() {
-    return `${this._value}`
-  }
-
   static attributes: Set<string> = new Set();
   static empty: ObjectTarget<Object> = new ObjectTarget({});
 
