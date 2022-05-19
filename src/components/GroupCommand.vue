@@ -26,7 +26,7 @@
       <RunResult
         v-if="logInfo.size >= 1"
         :desc="'--'"
-        :expect="'打开 - 百度'"
+        :expect="'打开 - 百度 搜索vue'"
         :success="result"
       ></RunResult>
     </div>
@@ -39,7 +39,7 @@ import {
   DataObject,
   ControlFlow,
   Base64DecodeWork,
-  LoadFileWork,
+  RunCommandWork,
   OpenURLWork,
   QRCodeWork,
   NumberObject,
@@ -105,6 +105,7 @@ const reRun = () => {
 const startBegin = async () => {
   const context = getContext();
   context.addWork(new Base64DecodeWork());
+  context.addWork(new RunCommandWork(`'$I$'+'/s?&wd=vuejs'`));
   context.addWork(new OpenURLWork());
   await context.prepareWorks();
   context.dispatch("aHR0cDovL3d3dy5iYWlkdS5jb20=");
