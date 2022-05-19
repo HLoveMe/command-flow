@@ -94,7 +94,7 @@ async function codeDome() {
   const context = new Context();
   context.addWork(new FetchWork());
   await context.prepareWorks();
-  context.dispatch("www.baidu.com");
+  context.dispatch("http://localhost:3000");
 }
 const reRun = () => {
   logInfo.value.clear();
@@ -111,7 +111,7 @@ const startBegin = async () => {
     headers: {
       "Content-Type": "text/plain",
     },
-    url: "https://www.baidu.com",
+    url: "http://localhost:3000/",
   });
 };
 const showCode = () => {

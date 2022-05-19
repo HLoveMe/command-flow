@@ -43,7 +43,7 @@ var FetchWork = /** @class */ (function (_super) {
             url: url,
             method: initParams.method || baseOption.method || "GET",
             timeout: timeout || baseOption.timeout || 10000,
-            headers: __assign({}, (baseOption.headers || {})),
+            headers: __assign(__assign({}, (baseOption.headers || {})), (initParams.headers || {})),
         };
         request.data = data;
         if (method.toLocaleUpperCase() === "GET") {

@@ -19,6 +19,7 @@ export default class FetchWork extends InstructionOTO {
       timeout: timeout || baseOption.timeout || 10000,
       headers: {
         ...(baseOption.headers || {}),
+        ...(initParams.headers || {}),
       },
     } as AxiosRequestConfig
     request.data = data;
