@@ -4,10 +4,24 @@ import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
 import { isJS } from "../../Util/Equipment";
 import { CommandStatus } from "../../Bridge/ConfigTypes";
-import { BaseType, ChannelObject, ContextImpl } from "../../Types";
-import { Value } from '../../Types';
+import { ChannelObject, ContextImpl } from "../../Types";
 import { BooleanObject } from '../../Object/Able/ObjectAble';
 import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
+import { RunCommandWorkConfig } from "../../Configs";
+
+
+/**
+ * "1 + $I$ "
+ * @param template 
+ * @param input 
+ * @param option 
+ * @returns 
+ */
+function handleEvalCommand(template: string, input: string, option: RunCommandWorkConfig): string {
+  const inputKey = option.input;
+  const command = template.replace(inputKey, input);
+  return command;
+}
 
 /**
  * 默认：
@@ -18,11 +32,16 @@ import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
  *  = "#shell#echo hello world"
  */
 export default class RunCommandWork extends InstructionOTO {
+  template: string = '';
+  constructor(template: string = '$I$') {
+    super();
+    this.template = template;
+  }
   name: string = "RunCommandWork";
-  run(command: ChannelObject, option?: any): Observable<ChannelObject<BooleanObject>> {
+  run(command: ChannelObject, option?: RunCommandWorkConfig): Observable<ChannelObject<BooleanObject>> {
     const that = this;
     return new Observable((subscriber: Subscriber<ChannelObject<BooleanObject>>) => {
-      const target: string = unpackValue(command)
+      const target: string = handleEvalCommand(that.template, unpackValue(command), option)
       const sub = (that.context as ContextImpl).platform
         .runCommand(target)
         .subscribe({

@@ -41,12 +41,7 @@ var LoadFileWork = /** @class */ (function (_super) {
         var _this = this;
         var that = this;
         return new Observable(function (subscriber) {
-            var target;
-            if (input === null || input === undefined)
-                target = "";
-            else {
-                target = unpackValue(input);
-            }
+            var target = unpackValue(input);
             var sub = that.context.platform
                 .loadFile(target, option)
                 .pipe(tap(function (obj) {
@@ -55,8 +50,8 @@ var LoadFileWork = /** @class */ (function (_super) {
             }), takeLast(1))
                 .subscribe({
                 next: function (obj) {
-                    var data = obj.valueOf().data;
-                    subscriber.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new DataObject(data) })));
+                    var _a = obj.valueOf(), data = _a.data, file = _a.file;
+                    subscriber.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new DataObject(data), option: { file: file } })));
                     subscriber.complete();
                 },
                 complete: function () { return subscriber.complete(); },

@@ -35,7 +35,6 @@ var DataObject = /** @class */ (function (_super) {
         return this.valueOf();
     };
     DataObject.prototype.valueOf = function () {
-        Buffer;
         return this._value;
     };
     DataObject.attributes = new Set();

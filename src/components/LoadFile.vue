@@ -25,18 +25,24 @@
       ></RunGroup>
       <RunResult
         v-if="logInfo.size >= 1"
-        :desc="'--'"
-        :expect="'=='"
+        :desc="'打开文件选择'"
+        :expect="'打开文件预览'"
         :success="result"
       ></RunResult>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { Context, LoadFileWork } from "../../coreDist/index";
+import {
+  Context,
+  LoadFileWork,
+  InstructionOTO,
+  unpackValue,
+} from "../../coreDist/index";
 import { computed, onMounted, ref } from "vue";
 import RunGroup from "./RunGroup.vue";
 import RunResult from "./RunResult.vue";
+import { Observable } from "rxjs";
 interface WorkStatus {
   content?: any;
   work?: any | any[];
@@ -44,7 +50,7 @@ interface WorkStatus {
   value?: any;
   date?: Date;
 }
-const result = ref<boolean>(true);
+const result = ref<boolean>(false);
 const codeRef = ref<HTMLDivElement>();
 const logInfo = ref<Map<string, Array<any>>>(new Map());
 const disabled = ref<boolean>(false);
@@ -75,12 +81,31 @@ const getContext = () => {
   });
   return context;
 };
+class ShowFileContext extends InstructionOTO {
+  name = "ShowFileContext";
+  run(input: any): Observable<any> {
+    return new Observable((subscriber) => {
+      const value = unpackValue(input);
+      const file = input._value.option.file;
+      const blob = new Blob([value], { type: file.type });
+      const url = URL.createObjectURL(blob);
+      window.open(url,'__blank');
+      result.value = true;
+      subscriber.complete();
+      return {
+        unsubscribe: () => subscriber.unsubscribe(),
+      };
+    });
+  }
+}
+
 const clearLog = () => {
   logInfo.value.clear();
 };
 async function codeDome() {
   const context = new Context();
   context.addWork(new LoadFileWork());
+  context.addWork(new ShowFileContext());
   await context.prepareWorks();
   context.dispatch();
 }
@@ -91,6 +116,7 @@ const reRun = () => {
 const startBegin = async () => {
   const context = getContext();
   context.addWork(new LoadFileWork());
+  context.addWork(new ShowFileContext());
   await context.prepareWorks();
   context.dispatch();
 };

@@ -17,11 +17,7 @@ export default class LoadFileWork extends InstructionOTO {
   run(input: ChannelObject, option?: FileOption): Observable<ChannelObject<DataObject>> {
     const that = this;
     return new Observable((subscriber: Subscriber<ChannelObject<DataObject>>) => {
-      let target: string;
-      if (input === null || input === undefined) target = "";
-      else {
-        target = unpackValue(input);
-      }
+      const target = unpackValue(input);
       const sub = (that.context as ContextImpl).platform
         .loadFile(target, option)
         .pipe(
@@ -33,10 +29,11 @@ export default class LoadFileWork extends InstructionOTO {
         )
         .subscribe({
           next: (obj: ObjectTarget<FileLoadEvent>) => {
-            const { data } = obj.valueOf();
+            const { data, file } = obj.valueOf();
             subscriber.next(new ObjectTarget({
               ...input._value,
-              value: new DataObject(data)
+              value: new DataObject(data),
+              option: { file }
             }));
             subscriber.complete();
           },

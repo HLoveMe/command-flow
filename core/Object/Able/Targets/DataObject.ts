@@ -5,12 +5,11 @@ import { ObjectTarget } from "./ObjectTarget";
 
 export class DataObject
   extends ObjectTarget<ArrayBuffer>
-  implements  Value.DataAble
-{
+  implements Value.DataAble {
   static attributes: Set<string> = new Set();
   static empty: DataObject = new DataObject(new ArrayBuffer(0));
   _value: ArrayBuffer;
-  
+
   constructor(value: ArrayBuffer) {
     super(value);
     this._value = value;
@@ -22,7 +21,6 @@ export class DataObject
 
   @attribute()
   valueOf(): ArrayBuffer {
-    Buffer
     return this._value;
   }
 }

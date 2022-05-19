@@ -25,8 +25,8 @@
       ></RunGroup>
       <RunResult
         v-if="logInfo.size >= 1"
-        :desc="'1+10000'"
-        :expect="'10001'"
+        :desc="'1+10000 + 100'"
+        :expect="'10101'"
         :success="result"
       ></RunResult>
     </div>
@@ -87,7 +87,7 @@ class RunResultShow extends InstructionOTO {
   run(input: any): Observable<any> {
     return new Observable((subscriber) => {
       const value = unpackValue(input);
-      result.value = value == "10001";
+      result.value = value == "10101";
       subscriber.complete();
       return {
         unsubscribe: () => subscriber.unsubscribe(),
@@ -102,7 +102,7 @@ async function codeDome() {
   const context = new Context();
   context.addWork(new RunCommandWork());
   await context.prepareWorks();
-  context.dispatch("1+10000");
+  context.dispatch("1 + 10000");
 }
 const reRun = () => {
   logInfo.value.clear();
@@ -110,10 +110,10 @@ const reRun = () => {
 };
 const startBegin = async () => {
   const context = getContext();
-  context.addWork(new RunCommandWork());
+  context.addWork(new RunCommandWork("$I$ + 100"));
   context.addWork(new RunResultShow());
   await context.prepareWorks();
-  context.dispatch("1+10000");
+  context.dispatch("1 + 10000");
 };
 const showCode = () => {
   console.log(codeDome.toString());

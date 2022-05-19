@@ -18,6 +18,18 @@ import { Observable } from "rxjs";
 import { isJS } from "../../Util/Equipment";
 import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 /**
+ * "1 + $I$ "
+ * @param template
+ * @param input
+ * @param option
+ * @returns
+ */
+function handleEvalCommand(template, input, option) {
+    var inputKey = option.input;
+    var command = template.replace(inputKey, input);
+    return command;
+}
+/**
  * 默认：
  * run javascript
  *
@@ -27,16 +39,19 @@ import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
  */
 var RunCommandWork = /** @class */ (function (_super) {
     __extends(RunCommandWork, _super);
-    function RunCommandWork() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    function RunCommandWork(template) {
+        if (template === void 0) { template = '$I$'; }
+        var _this = _super.call(this) || this;
+        _this.template = '';
         _this.name = "RunCommandWork";
+        _this.template = template;
         return _this;
     }
     RunCommandWork.prototype.run = function (command, option) {
         var _this = this;
         var that = this;
         return new Observable(function (subscriber) {
-            var target = unpackValue(command);
+            var target = handleEvalCommand(that.template, unpackValue(command), option);
             var sub = that.context.platform
                 .runCommand(target)
                 .subscribe({

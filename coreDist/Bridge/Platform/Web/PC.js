@@ -35,6 +35,7 @@ var PCWebBridge = /** @class */ (function (_super) {
             document.body.append(input);
             input.addEventListener("change", function (_) {
                 var reader = new FileReader();
+                var file = input.files[0];
                 reader.onprogress = function (info) {
                     var total = info.total, loaded = info.loaded;
                     var data = reader.result;
@@ -43,18 +44,19 @@ var PCWebBridge = /** @class */ (function (_super) {
                         loaded: loaded,
                         data: data,
                         finish: false,
+                        file: file
                     }));
                 };
                 reader.onload = function (info) {
                     var data = reader.result;
                     var total = info.total, loaded = info.loaded;
-                    subscriber.next(new ObjectTarget({ total: total, loaded: loaded, data: data, finish: true }));
+                    subscriber.next(new ObjectTarget({ total: total, loaded: loaded, data: data, finish: true, file: file }));
                     subscriber.complete();
                 };
                 reader.onerror = function (ev) {
                     subscriber.error(ev);
                 };
-                reader.readAsArrayBuffer(input.files[0]);
+                reader.readAsArrayBuffer(file);
             });
             input.click();
             return {

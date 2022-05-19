@@ -26,7 +26,7 @@
       <RunResult
         v-if="logInfo.size >= 1"
         :desc="'--'"
-        :expect="'=='"
+        :expect="'打开 - 百度'"
         :success="result"
       ></RunResult>
     </div>
