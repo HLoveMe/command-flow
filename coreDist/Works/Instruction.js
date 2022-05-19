@@ -45,7 +45,7 @@ var Instruction = /** @class */ (function (_super) {
         this.nextWork = next;
         this.config = this.context.runOptions;
         this._connectChannel();
-        return null;
+        return Promise.resolve();
     };
     // 处理上一个的传入
     Instruction.prototype._connectChannel = function () {

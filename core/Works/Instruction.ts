@@ -55,7 +55,7 @@ export class Instruction
     this.nextWork = next;
     this.config = this.context.runOptions;
     this._connectChannel();
-    return null;
+    return Promise.resolve();
   }
 
   // 处理上一个的传入

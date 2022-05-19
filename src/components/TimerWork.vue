@@ -18,6 +18,7 @@
     <a class="name">Timeout Interval Timer</a>
     <div class="run-container">
       <div class="code" ref="codeRef"></div>
+      {{ result }}
       <RunGroup
         v-for="item in logInfo.keys()"
         :key="item"
@@ -26,9 +27,9 @@
       ></RunGroup>
       <RunResult
         v-if="logInfo.size >= 1"
-        :desc="'--'"
-        :expect="'=='"
-        :success="result"
+        :desc="'第一个1s后运行一次，第二个5.5后停止，第三个运行3次'"
+        :expect="'==='"
+        :success="result.every(($1) => $1 === true)"
       ></RunResult>
     </div>
   </div>
@@ -36,15 +37,16 @@
 <script lang="ts" setup>
 import {
   Context,
-  Base64DecodeWork,
-  Base64EnCodeWork,
   TimeoutWork,
   IntervalWork,
   DelayIntervalWork,
+  InstructionOTO,
+  unpackValue,
 } from "../../coreDist/index";
 import { ref } from "vue";
 import RunGroup from "./RunGroup.vue";
 import RunResult from "./RunResult.vue";
+import { from, Observable } from "rxjs";
 interface WorkStatus {
   content?: any;
   work?: any | any[];
@@ -52,7 +54,7 @@ interface WorkStatus {
   value?: any;
   date?: Date;
 }
-const result = ref<boolean>(false);
+const result = ref<boolean[]>([false]);
 const codeRef = ref<HTMLDivElement>();
 const logInfo = ref<Map<string, Array<any>>>(new Map());
 const disabled = ref<boolean>(false);
@@ -83,6 +85,34 @@ const getContext = () => {
   });
   return context;
 };
+class ShowTimerWork extends InstructionOTO {
+  name = "ShowTimerWork";
+  index: number = 0; // 索引
+
+  count: number = 0; // 期待值
+  runCount: number = 0; // 运行值
+  constructor(num: number, index: number) {
+    super();
+    this.count = num;
+    this.index = index;
+  }
+  prepare(before, next) {
+    super.prepare(before, next);
+    this.config = { development: false };
+    return Promise.resolve();
+  }
+  run(input: any): Observable<any> {
+    const that = this;
+    return new Observable((subscriber) => {
+      const value = unpackValue(input);
+      result.value[that.index] = value + 1 === that.count;
+      subscriber.complete();
+      return {
+        unsubscribe: () => subscriber.unsubscribe(),
+      };
+    });
+  }
+}
 const contexts = [];
 const clearLog = () => {
   logInfo.value.clear();
@@ -102,26 +132,40 @@ const startBegin = async () => {
   async function timeout() {
     const context = getContext();
     context.addWork(new TimeoutWork());
+    context.addWork(new ShowTimerWork(1, 0));
     await context.prepareWorks();
     context.dispatch();
     contexts.push(context);
   }
   async function interval() {
     const context = getContext();
-    context.addWork(new IntervalWork());
+    //5.5s后停止运行
+    context.addWork(
+      new IntervalWork(
+        null,
+        1000,
+        from(
+          new Promise((res) => {
+            setTimeout(() => res(1), 5500);
+          })
+        )
+      )
+    );
+    context.addWork(new ShowTimerWork(5, 1));
     await context.prepareWorks();
     context.dispatch();
     contexts.push(context);
   }
   async function timer() {
     const context = getContext();
-    context.addWork(new DelayIntervalWork());
+    context.addWork(new DelayIntervalWork(null, null, 3));
+    context.addWork(new ShowTimerWork(3, 2));
     await context.prepareWorks();
     context.dispatch();
     contexts.push(context);
   }
-  // timeout();
-  // interval();
+  timeout();
+  interval();
   timer();
 };
 const stopWork = () => {

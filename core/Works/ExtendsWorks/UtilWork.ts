@@ -1,5 +1,5 @@
-import { Observable, interval, asyncScheduler, timer } from "rxjs"
-import { delay, take } from "rxjs/operators"
+import { Observable, interval, asyncScheduler, timer, NEVER } from "rxjs"
+import { takeUntil, take } from "rxjs/operators"
 import { BaseType, NumberObject, ObjectTarget } from "../.."
 import { ChannelObject } from "../../Types";
 import { unpackValue } from "../../Util/channel-value-util";
@@ -10,10 +10,12 @@ class IntervalWork extends InstructionOTM {
   name = "IntervalWork"
   intervalTime: number;
   maxCount: number;
-  constructor(interval: number, max: number = Infinity) {
+  notifier: Observable<any>;
+  constructor(interval: number, max: number = Infinity, notifier?: Observable<any>) {
     super()
     this.intervalTime = interval || 1000;
     this.maxCount = max;
+    this.notifier = notifier || NEVER;
   }
 
   run(input: ChannelObject): Observable<ChannelObject<NumberObject>> {
@@ -21,7 +23,8 @@ class IntervalWork extends InstructionOTM {
     const that = this;
     return new Observable(observer => {
       const sub = interval(intervalTime, asyncScheduler).pipe(
-        take(that.maxCount)
+        take(that.maxCount),
+        takeUntil(this.notifier),
       ).subscribe({
         next: (value) => observer.next(new ObjectTarget({
           ...input._value,
@@ -57,7 +60,6 @@ class TimeoutWork extends InstructionOTO {
           take(1)
         ).subscribe({
           next: (value) => {
-            debugger
             observer.next(new ObjectTarget({
               ...input._value,
               value: new NumberObject(value)
@@ -82,11 +84,13 @@ class DelayIntervalWork extends InstructionOTM {
   intervalTime: number;
   maxCount: number;
   delayTime: number;
-  constructor(delay: number = 0, interval: number = 1000, max: number = Infinity) {
+  notifier: Observable<any>;
+  constructor(delay: number = 0, interval: number = 1000, max: number = Infinity, notifier?: Observable<any>) {
     super()
     this.intervalTime = interval || 1000;
     this.maxCount = max;
-    this.delayTime = delay;
+    this.delayTime = delay || 0;
+    this.notifier = notifier || NEVER;
   }
 
   run(input: ChannelObject): Observable<ChannelObject<NumberObject>> {
@@ -95,7 +99,8 @@ class DelayIntervalWork extends InstructionOTM {
     return new Observable(observer => {
       const sub = timer(that.delayTime, intervalTime, asyncScheduler)
         .pipe(
-          take(that.maxCount)
+          take(that.maxCount),
+          takeUntil(this.notifier),
         )
         .subscribe({
           next: (value) => observer.next(new ObjectTarget({

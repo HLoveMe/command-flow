@@ -24,27 +24,29 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import { Observable, interval, asyncScheduler, timer } from "rxjs";
-import { take } from "rxjs/operators";
+import { Observable, interval, asyncScheduler, timer, NEVER } from "rxjs";
+import { takeUntil, take } from "rxjs/operators";
 import { NumberObject, ObjectTarget } from "../..";
 import { unpackValue } from "../../Util/channel-value-util";
 import { InstructionOTM, InstructionOTO } from "../Instruction";
 // 一直发
 var IntervalWork = /** @class */ (function (_super) {
     __extends(IntervalWork, _super);
-    function IntervalWork(interval, max) {
+    function IntervalWork(interval, max, notifier) {
         if (max === void 0) { max = Infinity; }
         var _this = _super.call(this) || this;
         _this.name = "IntervalWork";
         _this.intervalTime = interval || 1000;
         _this.maxCount = max;
+        _this.notifier = notifier || NEVER;
         return _this;
     }
     IntervalWork.prototype.run = function (input) {
+        var _this = this;
         var intervalTime = parseInt(unpackValue(input)) || this.intervalTime || 1000;
         var that = this;
         return new Observable(function (observer) {
-            var sub = interval(intervalTime, asyncScheduler).pipe(take(that.maxCount)).subscribe({
+            var sub = interval(intervalTime, asyncScheduler).pipe(take(that.maxCount), takeUntil(_this.notifier)).subscribe({
                 next: function (value) { return observer.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new NumberObject(value) }))); },
                 error: function (error) { return observer.error(error); },
                 complete: function () { return observer.complete(); }
@@ -75,7 +77,6 @@ var TimeoutWork = /** @class */ (function (_super) {
             var sub = interval(intervalTime, asyncScheduler)
                 .pipe(take(1)).subscribe({
                 next: function (value) {
-                    debugger;
                     observer.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new NumberObject(value) })));
                 },
                 error: function (error) { return observer.error(error); },
@@ -94,7 +95,7 @@ var TimeoutWork = /** @class */ (function (_super) {
 // 延迟 然后一直发
 var DelayIntervalWork = /** @class */ (function (_super) {
     __extends(DelayIntervalWork, _super);
-    function DelayIntervalWork(delay, interval, max) {
+    function DelayIntervalWork(delay, interval, max, notifier) {
         if (delay === void 0) { delay = 0; }
         if (interval === void 0) { interval = 1000; }
         if (max === void 0) { max = Infinity; }
@@ -102,15 +103,17 @@ var DelayIntervalWork = /** @class */ (function (_super) {
         _this.name = 'DelayIntervalWork';
         _this.intervalTime = interval || 1000;
         _this.maxCount = max;
-        _this.delayTime = delay;
+        _this.delayTime = delay || 0;
+        _this.notifier = notifier || NEVER;
         return _this;
     }
     DelayIntervalWork.prototype.run = function (input) {
+        var _this = this;
         var intervalTime = parseInt(unpackValue(input)) || this.intervalTime || 1000;
         var that = this;
         return new Observable(function (observer) {
             var sub = timer(that.delayTime, intervalTime, asyncScheduler)
-                .pipe(take(that.maxCount))
+                .pipe(take(that.maxCount), takeUntil(_this.notifier))
                 .subscribe({
                 next: function (value) { return observer.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new NumberObject(value) }))); },
                 error: function (error) { return observer.error(error); },
