@@ -106,6 +106,7 @@ export namespace WorkType {
     desc?: any;
     value?: T | ChannelValue<T>;
     date?: Date;
+    error?: Error;
   }
 
   type WorkTypes = "electron_run" | "web_run" | "node_run";
@@ -184,5 +185,5 @@ export declare interface ContextImpl {
   addVariable(from: WorkType.Work, name: string, value: BaseType): void;
   sendLog(status: WorkType.WorkStatus<BaseType>): void;
   clear(): void;
-  stopWorkChain():Promise<boolean> ;
+  stopWorkChain(): Promise<boolean>;
 }

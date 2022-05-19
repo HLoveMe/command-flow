@@ -1,4 +1,4 @@
-import { BaseType, ContextImpl, WorkType, Value, ChannelObject } from "../Types";
+import { BaseType, ContextImpl, WorkType, Value, ChannelObject, ChannelValue } from "../Types";
 import {
   Subject,
   Subscription,
@@ -83,6 +83,16 @@ export class Instruction
   }
 
   _run(value: ChannelObject) {
+    const sendLog = (desc: string, _value?: ChannelObject, _error?: Error) => {
+      that.config?.development &&
+        that.context?.sendLog({
+          work: [that],
+          content: this.context,
+          desc: desc,
+          value: _value || value,
+          error: _error,
+        });
+    }
     value = this.nextValue(value) || value;
     const that = this;
     const nextOption = (this.config?.workConfig || {})[this.name] || {};
@@ -104,53 +114,33 @@ export class Instruction
           that
         )(value, nextOption)
     });
-    this.config?.development &&
-      that.context?.sendLog({
-        work: [that],
-        content: this.context,
-        desc: "[Work][Func:run]->入口",
-        value: value,
+    sendLog("[Work][Func:run]->入口", value);
+    if (!execFunc === true) return sendLog("[Work][Func:run]->没有实现run", value);;
+    const uuid = UUID();
+    const runSub: Subscription = execFunc(value)
+      .pipe(
+        tap((_value: ChannelObject) => sendLog("[Work][Func:run]->结果", _value)),
+        observeOn(asyncScheduler)
+      )
+      .subscribe({
+        complete: () => {
+          const unit = that.runSubscriptions.get(uuid);
+          unit?.sub.unsubscribe();
+          that.runSubscriptions.delete(uuid);
+        },
+        error: (err) => {
+          sendLog("[Work][Func:run]->执行错误", value, err);
+          that.completeOneLoop(value, null, false);
+        },
+        next: (res) => {
+          sendLog("[Work][Func:run]->将执行下一个Work", res);
+          that.completeOneLoop(value, res as BaseType, true);
+          that.nextWork?.next(res as BaseType);
+        },
       });
-    if (execFunc) {
-      const uuid = UUID();
-      const runSub: Subscription = execFunc(value)
-        .pipe(
-          tap((_value: ChannelObject) => {
-            that.config?.development &&
-              that.context?.sendLog({
-                work: [that],
-                content: this.context,
-                desc: "[Work][Func:run]->结果",
-                value: _value,
-              });
-          }),
-          observeOn(asyncScheduler)
-        )
-        .subscribe({
-          complete: () => {
-            const unit = that.runSubscriptions.get(uuid);
-            unit?.sub.unsubscribe();
-            that.runSubscriptions.delete(uuid);
-          },
-          error: (err) => {
-            that.context.msgChannel.error(new ExecError(that, err));
-            that.completeOneLoop(value, null, false);
-          },
-          next: (res) => {
-            that.config?.development &&
-              that.context?.sendLog({
-                work: [that],
-                content: that.context,
-                desc: "[Work][Func:run]->将执行下一个Work",
-                value: res,
-              });
-            that.completeOneLoop(value, res as BaseType, true);
-            that.nextWork?.next(res as BaseType);
-          },
-        });
-      const unit = new WorkUnit(that.context, that, runSub, uuid);
-      this.runSubscriptions.set(unit.uuid, unit);
-    }
+    const unit = new WorkUnit(that.context, that, runSub, uuid);
+    this.runSubscriptions.set(unit.uuid, unit);
+
   }
 
   stopWork(): Observable<Boolean> {

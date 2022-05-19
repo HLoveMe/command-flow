@@ -49,10 +49,10 @@ export interface RequestTimeOut {
 }
 export declare type RequestMethod = "GET" | "POST" | "PUT" | "OPTIONS" | "DELETE";
 export interface RequestParamsInit {
+  headers?: { [key: string]: any };
   method?: RequestMethod;
   timeout?: number;
   data?: any;
-  contextType?: SupportContentType;
   url: string;
 }
 export type RequestParams = AxiosRequestConfig

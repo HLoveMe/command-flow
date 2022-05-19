@@ -83,10 +83,10 @@ var Context = /** @class */ (function () {
         this.runConstant.get(from.uuid).set(name, value);
     };
     Context.prototype.workMessage = function (input) {
-        // console.log("msgChannel", input);
+        console.log("msgChannel", input);
     };
     Context.prototype.workError = function (error) {
-        // console.log("msgChannelError", error);
+        console.log("msgChannelError", error);
         this.stopWorkChain();
     };
     Context.prototype.addWorkLog = function (tap) {
@@ -98,6 +98,7 @@ var Context = /** @class */ (function () {
             work: status.work.filter(function ($1) { return $1 === null || $1 === void 0 ? void 0 : $1.name; }),
             desc: status.desc,
             value: status.value,
+            error: status.error,
         };
         this.msgChannel.next(log);
     };

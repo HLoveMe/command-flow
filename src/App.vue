@@ -8,6 +8,7 @@
     <RunCommand></RunCommand>
     <GroupCommand></GroupCommand>
     <Timer></Timer>
+    <FetchWork></FetchWork>
   </div>
 </template>
 <script setup lang="ts">
@@ -19,6 +20,7 @@ import LoadFile from "./components/LoadFile.vue";
 import RunCommand from './components/RunCommand.vue'
 import GroupCommand from './components/GroupCommand.vue'
 import Timer from './components/TimerWork.vue'
+import FetchWork from './components/FetchWork.vue'
 </script>
 <style>
 * {

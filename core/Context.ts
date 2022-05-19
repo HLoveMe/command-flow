@@ -55,10 +55,10 @@ export class Context implements ContextImpl {
     this.runConstant.get(from.uuid).set(name, value);
   }
   workMessage(input: WorkType.WorkStatus) {
-    // console.log("msgChannel", input);
+    console.log("msgChannel", input);
   }
   workError(error: Error) {
-    // console.log("msgChannelError", error);
+    console.log("msgChannelError", error);
     this.stopWorkChain();
   }
 
@@ -74,6 +74,7 @@ export class Context implements ContextImpl {
       ),
       desc: status.desc,
       value: status.value,
+      error: status.error,
     };
     this.msgChannel.next(log as WorkType.WorkStatus);
   }

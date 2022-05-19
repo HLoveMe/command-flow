@@ -10,31 +10,33 @@ import { tap } from "rxjs/operators";
 export default class FetchWork extends InstructionOTO {
   name: string = "FetchWork";
 
-  _getInitOption(input: Value.ObjectAble<RequestParamsInit>): AxiosRequestConfig {
+  _getInitOption(input: Value.ObjectAble<RequestParamsInit>, baseOption?: RequestParamsInit): AxiosRequestConfig {
     const initParams = input.valueOf();
-    const { url, method, timeout, data, contextType } = initParams;
+    const { url, method, timeout, data } = initParams;
     const request = {
       url,
-      method: initParams.method || "GET",
-      timeout: timeout || 10000,
-      headers: {},
+      method: initParams.method || baseOption.method || "GET",
+      timeout: timeout || baseOption.timeout || 10000,
+      headers: {
+        ...(baseOption.headers || {}),
+      },
     } as AxiosRequestConfig
     request.data = data;
-    if (method === "GET") {
-      request.headers['Content-Type'] = contextType || 'application/json';
+    if (method.toLocaleUpperCase() === "GET") {
+      request.headers['Content-Type'] = request.headers['Content-Type'] || 'application/json';
     }
     request.timeoutErrorMessage = '请求超时';
     return request;
   }
-  run(input: ChannelObject<Value.ObjectAble<RequestParamsInit>>): Observable<ChannelObject<Value.ObjectAble<any>>> {
+  run(input: ChannelObject<Value.ObjectAble<RequestParamsInit>>, baseOption?: RequestParamsInit): Observable<ChannelObject<Value.ObjectAble<any>>> {
     const that = this;
-    const options = this._getInitOption(input._value.value);
+    const options = this._getInitOption(input._value.value, baseOption);
     return new Observable((subscriber: Subscriber<ChannelObject<Value.ObjectAble<any>>>) => {
       const fetchSub = (that.context as ContextImpl).platform.fetch(options as AxiosRequestConfig)
         .pipe(
           tap((result: Value.ObjectAble<ResponseContent>) => {
             const { data } = result.valueOf();
-            this.logMsg(`[FetchWork][load:data]${data}`,input);
+            this.logMsg(`[FetchWork][load:data]${data}`, input);
           })
         ).subscribe({
           next: (data: Value.ObjectAble<ResponseContent>) => {

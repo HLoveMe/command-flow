@@ -36,26 +36,26 @@ var FetchWork = /** @class */ (function (_super) {
         _this.name = "FetchWork";
         return _this;
     }
-    FetchWork.prototype._getInitOption = function (input) {
+    FetchWork.prototype._getInitOption = function (input, baseOption) {
         var initParams = input.valueOf();
-        var url = initParams.url, method = initParams.method, timeout = initParams.timeout, data = initParams.data, contextType = initParams.contextType;
+        var url = initParams.url, method = initParams.method, timeout = initParams.timeout, data = initParams.data;
         var request = {
             url: url,
-            method: initParams.method || "GET",
-            timeout: timeout || 10000,
-            headers: {},
+            method: initParams.method || baseOption.method || "GET",
+            timeout: timeout || baseOption.timeout || 10000,
+            headers: __assign({}, (baseOption.headers || {})),
         };
         request.data = data;
-        if (method === "GET") {
-            request.headers['Content-Type'] = contextType || 'application/json';
+        if (method.toLocaleUpperCase() === "GET") {
+            request.headers['Content-Type'] = request.headers['Content-Type'] || 'application/json';
         }
         request.timeoutErrorMessage = '请求超时';
         return request;
     };
-    FetchWork.prototype.run = function (input) {
+    FetchWork.prototype.run = function (input, baseOption) {
         var _this = this;
         var that = this;
-        var options = this._getInitOption(input._value.value);
+        var options = this._getInitOption(input._value.value, baseOption);
         return new Observable(function (subscriber) {
             var fetchSub = that.context.platform.fetch(options)
                 .pipe(tap(function (result) {

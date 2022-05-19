@@ -24,6 +24,7 @@ import {
 import LoadFileWork from "./Works/ExtendsWorks/LoadFileWork";
 import OpenURLWork from "./Works/ExtendsWorks/OpenURLWork";
 import { QRCodeWork } from "./Works/ExtendsWorks/QRCodeWork";
+import FetchWork from "./Works/ExtendsWorks/FetchWork";
 import RunCommandWork from './Works/ExtendsWorks/RunCommandWork'
 import { IntervalWork, TimeoutWork, DelayIntervalWork } from "./Works/ExtendsWorks/UtilWork";
 import { unpackValue, wrapperValue } from './Util/channel-value-util'
@@ -57,6 +58,7 @@ export {
   IntervalWork,
   TimeoutWork,
   DelayIntervalWork,
+  FetchWork,
   unpackValue,
   wrapperValue,
   isAbleType, decide

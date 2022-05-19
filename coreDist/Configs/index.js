@@ -17,6 +17,11 @@ export var DefaultRunConfig = {
         LoadFileWork: {
             type: FileType.All
         },
+        FetchWork: {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+            },
+        },
     },
 };
 //# sourceMappingURL=index.js.map

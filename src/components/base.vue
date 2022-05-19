@@ -57,6 +57,7 @@ interface WorkStatus {
   desc?: any;
   value?: any;
   date?: Date;
+  error?:Error;
 }
 const result = ref<boolean>(false);
 const codeRef = ref<HTMLDivElement>();
@@ -70,6 +71,7 @@ const getContext = () => {
         desc,
         value: { _value },
         work,
+        error,
       } = log;
       const id = _value.id;
       const channeLValue = _value.value._value;
@@ -81,6 +83,7 @@ const getContext = () => {
         workName,
         desc,
         value: channeLValue,
+        error
       });
     },
     error: () => {

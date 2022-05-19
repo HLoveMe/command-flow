@@ -1,4 +1,4 @@
-import { FileOption, FileType, QRcodeOption } from "../Bridge/ConfigTypes";
+import { FileOption, FileType, QRcodeOption, RequestParamsInit } from "../Bridge/ConfigTypes";
 
 // 整体运行配置
 type WorkName = string
@@ -7,7 +7,8 @@ export type RunCommandWorkConfig = { [key: WorkName]: any }
 export declare interface WorkRunOption {
   RunCommandWork: RunCommandWorkConfig;
   QRCodeWork: QRcodeOption,
-  LoadFileWork: FileOption
+  LoadFileWork: FileOption,
+  FetchWork: RequestParamsInit
 }
 export declare interface Environment { }
 export declare interface ContextRunOption {
@@ -32,6 +33,11 @@ export const DefaultRunConfig = {
     },
     LoadFileWork: {
       type: FileType.All
+    },
+    FetchWork: {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
     },
   },
 }

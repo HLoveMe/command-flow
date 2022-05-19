@@ -14,7 +14,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { Subject, Observable, asyncScheduler, } from "rxjs";
-import { ExecError } from "../Error";
 import { isJS, PlatformSelect, } from "../Util/Equipment";
 import { observeOn, tap } from "rxjs/operators";
 import { v4 as UUID } from "uuid";
@@ -72,7 +71,18 @@ var Instruction = /** @class */ (function (_super) {
     };
     Instruction.prototype._run = function (value) {
         var _this = this;
-        var _a, _b, _c;
+        var _a;
+        var sendLog = function (desc, _value, _error) {
+            var _a, _b;
+            ((_a = that.config) === null || _a === void 0 ? void 0 : _a.development) &&
+                ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
+                    work: [that],
+                    content: _this.context,
+                    desc: desc,
+                    value: _value || value,
+                    error: _error,
+                }));
+        };
         value = this.nextValue(value) || value;
         var that = this;
         var nextOption = (((_a = this.config) === null || _a === void 0 ? void 0 : _a.workConfig) || {})[this.name] || {};
@@ -93,52 +103,32 @@ var Instruction = /** @class */ (function (_super) {
                 return (that.run).bind(that)(value, nextOption);
             }
         });
-        ((_b = this.config) === null || _b === void 0 ? void 0 : _b.development) &&
-            ((_c = that.context) === null || _c === void 0 ? void 0 : _c.sendLog({
-                work: [that],
-                content: this.context,
-                desc: "[Work][Func:run]->入口",
-                value: value,
-            }));
-        if (execFunc) {
-            var uuid_1 = UUID();
-            var runSub = execFunc(value)
-                .pipe(tap(function (_value) {
-                var _a, _b;
-                ((_a = that.config) === null || _a === void 0 ? void 0 : _a.development) &&
-                    ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
-                        work: [that],
-                        content: _this.context,
-                        desc: "[Work][Func:run]->结果",
-                        value: _value,
-                    }));
-            }), observeOn(asyncScheduler))
-                .subscribe({
-                complete: function () {
-                    var unit = that.runSubscriptions.get(uuid_1);
-                    unit === null || unit === void 0 ? void 0 : unit.sub.unsubscribe();
-                    that.runSubscriptions.delete(uuid_1);
-                },
-                error: function (err) {
-                    that.context.msgChannel.error(new ExecError(that, err));
-                    that.completeOneLoop(value, null, false);
-                },
-                next: function (res) {
-                    var _a, _b, _c;
-                    ((_a = that.config) === null || _a === void 0 ? void 0 : _a.development) &&
-                        ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
-                            work: [that],
-                            content: that.context,
-                            desc: "[Work][Func:run]->将执行下一个Work",
-                            value: res,
-                        }));
-                    that.completeOneLoop(value, res, true);
-                    (_c = that.nextWork) === null || _c === void 0 ? void 0 : _c.next(res);
-                },
-            });
-            var unit = new WorkUnit(that.context, that, runSub, uuid_1);
-            this.runSubscriptions.set(unit.uuid, unit);
-        }
+        sendLog("[Work][Func:run]->入口", value);
+        if (!execFunc === true)
+            return sendLog("[Work][Func:run]->没有实现run", value);
+        ;
+        var uuid = UUID();
+        var runSub = execFunc(value)
+            .pipe(tap(function (_value) { return sendLog("[Work][Func:run]->结果", _value); }), observeOn(asyncScheduler))
+            .subscribe({
+            complete: function () {
+                var unit = that.runSubscriptions.get(uuid);
+                unit === null || unit === void 0 ? void 0 : unit.sub.unsubscribe();
+                that.runSubscriptions.delete(uuid);
+            },
+            error: function (err) {
+                sendLog("[Work][Func:run]->执行错误", value, err);
+                that.completeOneLoop(value, null, false);
+            },
+            next: function (res) {
+                var _a;
+                sendLog("[Work][Func:run]->将执行下一个Work", res);
+                that.completeOneLoop(value, res, true);
+                (_a = that.nextWork) === null || _a === void 0 ? void 0 : _a.next(res);
+            },
+        });
+        var unit = new WorkUnit(that.context, that, runSub, uuid);
+        this.runSubscriptions.set(unit.uuid, unit);
     };
     Instruction.prototype.stopWork = function () {
         var that = this;

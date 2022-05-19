@@ -3,7 +3,10 @@
     <div id="id">Run-Id：{{ props.id }}</div>
     <div class="log-container">
       <div class="log" v-for="(item, index) in props.items" :key="index">
-        {{ item.desc }} -- {{ item.workName }} -- {{ item.value }}
+        <div :class="{ hasError: item.error }">
+          {{ item.desc }} -- {{ item.workName }} -- {{ item.value }}
+          <div class="error">{{ item.error?.stack }}</div>
+        </div>
         <div v-if="isNext(index)" class="diver"></div>
       </div>
     </div>
@@ -16,11 +19,12 @@ type V = {
   workName: string;
   desc: string;
   value: any;
+  error: Error;
 };
 const props = defineProps<{
   id: string;
   items: Array<V>;
-  expect:any
+  expect: any;
 }>();
 const isNext = (index: number) => {
   if (index === 0 || index === props.items.length - 1) return false;
@@ -43,6 +47,12 @@ const resultRef = ref<HTMLDivElement>();
   .log {
     .diver {
       height: 20px;
+    }
+  }
+  .hasError {
+    .error {
+      color: red;
+      margin-left: 20px;
     }
   }
 }
