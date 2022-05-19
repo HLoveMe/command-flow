@@ -24,9 +24,10 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import { Observable, interval, asyncScheduler, timer, of } from "rxjs";
-import { take, timeout } from "rxjs/operators";
+import { Observable, interval, asyncScheduler, timer } from "rxjs";
+import { take } from "rxjs/operators";
 import { NumberObject, ObjectTarget } from "../..";
+import { unpackValue } from "../../Util/channel-value-util";
 import { InstructionOTM, InstructionOTO } from "../Instruction";
 // 一直发
 var IntervalWork = /** @class */ (function (_super) {
@@ -34,13 +35,13 @@ var IntervalWork = /** @class */ (function (_super) {
     function IntervalWork(interval, max) {
         if (max === void 0) { max = Infinity; }
         var _this = _super.call(this) || this;
+        _this.name = "IntervalWork";
         _this.intervalTime = interval || 1000;
         _this.maxCount = max;
         return _this;
     }
     IntervalWork.prototype.run = function (input) {
-        var _a, _b;
-        var intervalTime = (_b = (_a = input._value.value.valueOf()) !== null && _a !== void 0 ? _a : this.intervalTime) !== null && _b !== void 0 ? _b : 1000;
+        var intervalTime = parseInt(unpackValue(input)) || this.intervalTime || 1000;
         var that = this;
         return new Observable(function (observer) {
             var sub = interval(intervalTime, asyncScheduler).pipe(take(that.maxCount)).subscribe({
@@ -48,7 +49,6 @@ var IntervalWork = /** @class */ (function (_super) {
                 error: function (error) { return observer.error(error); },
                 complete: function () { return observer.complete(); }
             });
-            that.pools.push(sub);
             return {
                 unsubscribe: function () {
                     observer.unsubscribe();
@@ -64,20 +64,23 @@ var TimeoutWork = /** @class */ (function (_super) {
     __extends(TimeoutWork, _super);
     function TimeoutWork(interval) {
         var _this = _super.call(this) || this;
+        _this.name = "TimeoutWork";
         _this.intervalTime = interval || 1000;
         return _this;
     }
     TimeoutWork.prototype.run = function (input) {
-        var _a, _b;
-        var intervalTime = (_b = (_a = input._value.value.valueOf()) !== null && _a !== void 0 ? _a : this.intervalTime) !== null && _b !== void 0 ? _b : 1000;
+        var intervalTime = parseInt(unpackValue(input)) || this.intervalTime || 1000;
         var that = this;
         return new Observable(function (observer) {
-            var sub = of(0).pipe(timeout(intervalTime, asyncScheduler)).subscribe({
-                next: function (value) { return observer.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new NumberObject(value) }))); },
+            var sub = interval(intervalTime, asyncScheduler)
+                .pipe(take(1)).subscribe({
+                next: function (value) {
+                    debugger;
+                    observer.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new NumberObject(value) })));
+                },
                 error: function (error) { return observer.error(error); },
                 complete: function () { return observer.complete(); }
             });
-            that.pools.push(sub);
             return {
                 unsubscribe: function () {
                     observer.unsubscribe();
@@ -96,22 +99,23 @@ var DelayIntervalWork = /** @class */ (function (_super) {
         if (interval === void 0) { interval = 1000; }
         if (max === void 0) { max = Infinity; }
         var _this = _super.call(this) || this;
+        _this.name = 'DelayIntervalWork';
         _this.intervalTime = interval || 1000;
         _this.maxCount = max;
         _this.delayTime = delay;
         return _this;
     }
     DelayIntervalWork.prototype.run = function (input) {
-        var _a, _b;
-        var intervalTime = (_b = (_a = input._value.value.valueOf()) !== null && _a !== void 0 ? _a : this.intervalTime) !== null && _b !== void 0 ? _b : 1000;
+        var intervalTime = parseInt(unpackValue(input)) || this.intervalTime || 1000;
         var that = this;
         return new Observable(function (observer) {
-            var sub = timer(that.delayTime, intervalTime, asyncScheduler).subscribe({
+            var sub = timer(that.delayTime, intervalTime, asyncScheduler)
+                .pipe(take(that.maxCount))
+                .subscribe({
                 next: function (value) { return observer.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new NumberObject(value) }))); },
                 error: function (error) { return observer.error(error); },
                 complete: function () { return observer.complete(); }
             });
-            that.pools.push(sub);
             return {
                 unsubscribe: function () {
                     observer.unsubscribe();

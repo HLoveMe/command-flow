@@ -1,13 +1,14 @@
 
 import { WorkType, BaseType, ContextImpl, ChannelObject, ChannelValue } from "./Types";
-import { CompletionObserver, forkJoin, Observable, PartialObserver, Subject, Subscription } from "rxjs";
+import { zip, forkJoin, Observable, PartialObserver, Subject, Subscription } from "rxjs";
 import { ContextRunOption, DefaultRunConfig } from "./Configs";
-import { BooleanObject, StringObject } from "./Object/Able/ObjectAble";
+import { BooleanObject, ObjectTarget } from "./Object/Able/ObjectAble";
 import Platform from "./Bridge/Index";
 import { Value } from "./Types";
 import { PlatformBridge } from "./Bridge/Platform/BasePlatform";
 import { BeginWork } from "./Works/ExtendsWorks/BeginWork";
 import { decide } from "./Object/valueUtil";
+import { take } from "rxjs/operators";
 
 export class Context implements ContextImpl {
   status: WorkType.WorkRunStatus = WorkType.WorkRunStatus.INIT;
@@ -153,41 +154,39 @@ export class Context implements ContextImpl {
    * 停止执行
    * 关闭
    */
-  stopWorkChain(): Observable<boolean> {
+  stopWorkChain(): Promise<boolean> {
     const that = this;
-    return new Observable((subscribe) => {
-      const taskUns: Observable<Boolean>[] = this.works.map(($1) =>
-        $1.stopWork()
-      );
+    return new Promise((resolve, reject) => {
+      const taskUns: Observable<Boolean>[] = this.works.map(($1) => $1.stopWork());
       let isSuccess: boolean = false;
       let errors: WorkType.Work[] = [];
-      const sub = forkJoin(taskUns).subscribe({
-        next: (values) =>
-        (isSuccess = values.every(($1, index) => {
-          if ($1 === true) return true;
-          errors.push(this.works[index]);
-          return false;
-        })),
-        error: () => {
+      forkJoin(taskUns).pipe(take(1)).subscribe({
+        next: (values) => {
+          (isSuccess = values.every(($1, index) => {
+            if ($1 === true) return true;
+            errors.push(this.works[index]);
+            return false;
+          }))
+          resolve(isSuccess)
+        },
+        error: (error: Error) => {
           // 关闭报错
+          reject(error)
         },
         complete: () => {
           this.sendLog({
             content: that,
             work: errors,
             desc: "[content][Func:stopWorkChain]",
-            value: new BooleanObject(isSuccess),
+            value: new ObjectTarget({
+              id: 'stopWorkChain',
+              value: decide(isSuccess),
+              option: {},
+            }),
           });
-          subscribe.next(isSuccess);
-          subscribe.complete();
         },
       });
-      return {
-        unsubscribe: () => {
-          subscribe.unsubscribe();
-          sub.unsubscribe();
-        },
-      };
+
     });
   }
 

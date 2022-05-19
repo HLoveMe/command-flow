@@ -33,7 +33,7 @@ var Instruction = /** @class */ (function (_super) {
         _this.name = "Instruction";
         _this.id = Instruction._id++;
         _this.runSubscriptions = new Map();
-        _this.pools = [];
+        _this.pools = []; // 订阅自己的
         // 运行配置 config:OPTION todo
         _this.config = { development: true };
         _this.uuid = UUID();
@@ -143,7 +143,6 @@ var Instruction = /** @class */ (function (_super) {
     Instruction.prototype.stopWork = function () {
         var that = this;
         return new Observable(function (subscribe) {
-            that.stop();
             that.runSubscriptions.forEach(function (value) {
                 value === null || value === void 0 ? void 0 : value.sub.unsubscribe();
             });
@@ -153,9 +152,6 @@ var Instruction = /** @class */ (function (_super) {
                 unsubscribe: function () { return subscribe.unsubscribe(); },
             };
         });
-    };
-    Instruction.prototype.stop = function () {
-        // this.inputSubscription.unsubscribe();
     };
     Instruction.prototype.clear = function () {
         this.pools && this.pools.forEach(function ($1) { return $1.unsubscribe(); });

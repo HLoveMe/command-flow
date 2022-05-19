@@ -7,6 +7,7 @@
     <LoadFile></LoadFile>
     <RunCommand></RunCommand>
     <GroupCommand></GroupCommand>
+    <Timer></Timer>
   </div>
 </template>
 <script setup lang="ts">
@@ -17,6 +18,7 @@ import QR from "./components/QRRun.vue";
 import LoadFile from "./components/LoadFile.vue";
 import RunCommand from './components/RunCommand.vue'
 import GroupCommand from './components/GroupCommand.vue'
+import Timer from './components/TimerWork.vue'
 </script>
 <style>
 * {

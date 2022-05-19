@@ -42,7 +42,7 @@ export class Instruction
   nextWork?: WorkType.Work;
   context?: ContextImpl;
   runSubscriptions: Map<string, WorkUnit> = new Map();
-  pools: Subscription[] = [];
+  pools: Subscription[] = [];// 订阅自己的
   // 运行配置 config:OPTION todo
   config: ContextRunOption = { development: true };
   constructor() {
@@ -156,7 +156,6 @@ export class Instruction
   stopWork(): Observable<Boolean> {
     const that = this
     return new Observable<Boolean>((subscribe: Subscriber<Boolean>) => {
-      that.stop();
       that.runSubscriptions.forEach((value) => {
         value?.sub.unsubscribe();
       });
@@ -167,11 +166,6 @@ export class Instruction
       };
     });
   }
-
-  stop(): void {
-    // this.inputSubscription.unsubscribe();
-  }
-
   clear(): void {
     this.pools && this.pools.forEach(($1) => $1.unsubscribe());
     this.pools.length = 0;

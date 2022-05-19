@@ -35,12 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { WorkType } from "./Types";
-import { forkJoin, Observable, Subject } from "rxjs";
+import { forkJoin, Subject } from "rxjs";
 import { DefaultRunConfig } from "./Configs";
-import { BooleanObject } from "./Object/Able/ObjectAble";
+import { BooleanObject, ObjectTarget } from "./Object/Able/ObjectAble";
 import Platform from "./Bridge/Index";
 import { BeginWork } from "./Works/ExtendsWorks/BeginWork";
 import { decide } from "./Object/valueUtil";
+import { take } from "rxjs/operators";
 var Context = /** @class */ (function () {
     function Context(runOptions) {
         var _this = this;
@@ -189,41 +190,37 @@ var Context = /** @class */ (function () {
     Context.prototype.stopWorkChain = function () {
         var _this = this;
         var that = this;
-        return new Observable(function (subscribe) {
-            var taskUns = _this.works.map(function ($1) {
-                return $1.stopWork();
-            });
+        return new Promise(function (resolve, reject) {
+            var taskUns = _this.works.map(function ($1) { return $1.stopWork(); });
             var isSuccess = false;
             var errors = [];
-            var sub = forkJoin(taskUns).subscribe({
+            forkJoin(taskUns).pipe(take(1)).subscribe({
                 next: function (values) {
-                    return (isSuccess = values.every(function ($1, index) {
+                    (isSuccess = values.every(function ($1, index) {
                         if ($1 === true)
                             return true;
                         errors.push(_this.works[index]);
                         return false;
                     }));
+                    resolve(isSuccess);
                 },
-                error: function () {
+                error: function (error) {
                     // 关闭报错
+                    reject(error);
                 },
                 complete: function () {
                     _this.sendLog({
                         content: that,
                         work: errors,
                         desc: "[content][Func:stopWorkChain]",
-                        value: new BooleanObject(isSuccess),
+                        value: new ObjectTarget({
+                            id: 'stopWorkChain',
+                            value: decide(isSuccess),
+                            option: {},
+                        }),
                     });
-                    subscribe.next(isSuccess);
-                    subscribe.complete();
                 },
             });
-            return {
-                unsubscribe: function () {
-                    subscribe.unsubscribe();
-                    sub.unsubscribe();
-                },
-            };
         });
     };
     Context.prototype.clear = function () {

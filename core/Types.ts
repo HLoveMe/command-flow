@@ -151,8 +151,6 @@ export namespace WorkType {
     node_run?(input: BaseType, option?: any): Observable<BaseType>;
     electron_run?(input: BaseType, option?: any): Observable<BaseType>;
     prepare(before?: Work, next?: Work): Promise<void>;
-    // 停止接受上一任务的消息
-    stop(): void;
     // 关闭Work
     stopWork(): Observable<Boolean>;
     clear(): void;
@@ -186,5 +184,5 @@ export declare interface ContextImpl {
   addVariable(from: WorkType.Work, name: string, value: BaseType): void;
   sendLog(status: WorkType.WorkStatus<BaseType>): void;
   clear(): void;
-  stopWorkChain(): Observable<boolean>;
+  stopWorkChain():Promise<boolean> ;
 }
