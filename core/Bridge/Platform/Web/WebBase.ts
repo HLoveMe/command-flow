@@ -31,7 +31,7 @@ export class WebBridge
   ): Observable<Value.ObjectAble<FileLoadEvent>> {
     return new Observable((subscriber) => {
       const input = document.createElement("input");
-      input.value = url.toString();
+      //input.value = url.toString();
       input.type = "file";
       input.id = "_temp_input_select";
       input.accept = option?.type || "*";

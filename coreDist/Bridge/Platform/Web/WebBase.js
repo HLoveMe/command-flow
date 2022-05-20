@@ -34,7 +34,7 @@ var WebBridge = /** @class */ (function (_super) {
     WebBridge.prototype.loadFile = function (url, option) {
         return new Observable(function (subscriber) {
             var input = document.createElement("input");
-            input.value = url.toString();
+            //input.value = url.toString();
             input.type = "file";
             input.id = "_temp_input_select";
             input.accept = (option === null || option === void 0 ? void 0 : option.type) || "*";

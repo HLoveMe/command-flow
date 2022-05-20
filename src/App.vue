@@ -9,6 +9,7 @@
     <GroupCommand></GroupCommand>
     <Timer></Timer>
     <FetchWork></FetchWork>
+    <Operation></Operation>
   </div>
 </template>
 <script setup lang="ts">
@@ -21,6 +22,7 @@ import RunCommand from './components/RunCommand.vue'
 import GroupCommand from './components/GroupCommand.vue'
 import Timer from './components/TimerWork.vue'
 import FetchWork from './components/FetchWork.vue'
+import Operation from './components/Operations/index.vue'
 </script>
 <style>
 * {

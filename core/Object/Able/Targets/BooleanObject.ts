@@ -5,11 +5,10 @@ import { ObjectTarget } from "./ObjectTarget";
 
 export class BooleanObject
   extends ObjectTarget<Boolean>
-  implements Value.BooleanAble
-{
+  implements Value.BooleanAble {
   static attributes: Set<string> = new Set();
   static empty: BooleanObject = new BooleanObject(false);
-  
+
   @DefaultValue(Object.prototype.toString.call(new Boolean(1)))
   static type: string;
   _value: Boolean;
@@ -19,6 +18,6 @@ export class BooleanObject
   }
   @attribute()
   valueOf(): boolean {
-    return Boolean(this._value);
+    return !!(this._value);
   }
 }

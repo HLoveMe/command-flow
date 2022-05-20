@@ -80,6 +80,16 @@ export class Context implements ContextImpl {
   }
 
   addWork(work: WorkType.Work) {
+    if ((work.constructor as any).isAble && (work.constructor as any).isAble() === false) {
+      const desc = "[content][Func:addWork][work isAble is false]"
+      return this.sendLog({
+        content: this,
+        work: [],
+        desc,
+        value: null,
+        error: new Error(desc),
+      })
+    }
     if (this.status !== WorkType.WorkRunStatus.INIT) {
       return this.sendLog({
         content: this,
@@ -91,6 +101,7 @@ export class Context implements ContextImpl {
     work.context = this;
     this.works.push(work);
   }
+  
   addWorks(...works: WorkType.Work[]): void {
     works.forEach(this.addWork);
   }
@@ -129,27 +140,6 @@ export class Context implements ContextImpl {
     }
     this.status = WorkType.WorkRunStatus.RUNNING;
   }
-
-  // /**
-  //  * 尝试再次输入某个值
-  //  * 成功与否和Work是否支持有关
-  //  * @param input 
-  //  * @returns 
-  //  */
-  // tryInsertInput(input: BaseType) {
-  //   if (this.status !== WorkType.WorkRunStatus.RUNNING) {
-  //     return this.sendLog({
-  //       content: this,
-  //       work: [],
-  //       desc: "[content][Func:tryInsertInput][run status is not running]",
-  //       value: new BooleanObject(false),
-  //     });
-  //   };
-  //   const inputWork = this.works[0];
-  //   if (inputWork) {
-  //     // (inputWork as unknown as WorkType.WorkEntrance).inputSubject.next(input);
-  //   }
-  // }
 
   /**
    * 停止执行

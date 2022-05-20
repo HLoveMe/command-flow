@@ -103,6 +103,16 @@ var Context = /** @class */ (function () {
         this.msgChannel.next(log);
     };
     Context.prototype.addWork = function (work) {
+        if (work.constructor.isAble && work.constructor.isAble() === false) {
+            var desc = "[content][Func:addWork][work isAble is false]";
+            return this.sendLog({
+                content: this,
+                work: [],
+                desc: desc,
+                value: null,
+                error: new Error(desc),
+            });
+        }
         if (this.status !== WorkType.WorkRunStatus.INIT) {
             return this.sendLog({
                 content: this,
@@ -164,26 +174,6 @@ var Context = /** @class */ (function () {
         }
         this.status = WorkType.WorkRunStatus.RUNNING;
     };
-    // /**
-    //  * 尝试再次输入某个值
-    //  * 成功与否和Work是否支持有关
-    //  * @param input 
-    //  * @returns 
-    //  */
-    // tryInsertInput(input: BaseType) {
-    //   if (this.status !== WorkType.WorkRunStatus.RUNNING) {
-    //     return this.sendLog({
-    //       content: this,
-    //       work: [],
-    //       desc: "[content][Func:tryInsertInput][run status is not running]",
-    //       value: new BooleanObject(false),
-    //     });
-    //   };
-    //   const inputWork = this.works[0];
-    //   if (inputWork) {
-    //     // (inputWork as unknown as WorkType.WorkEntrance).inputSubject.next(input);
-    //   }
-    // }
     /**
      * 停止执行
      * 关闭

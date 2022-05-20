@@ -32,7 +32,7 @@ var BooleanObject = /** @class */ (function (_super) {
         return _this;
     }
     BooleanObject.prototype.valueOf = function () {
-        return Boolean(this._value);
+        return !!(this._value);
     };
     BooleanObject.attributes = new Set();
     BooleanObject.empty = new BooleanObject(false);
