@@ -13,26 +13,13 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { of } from "rxjs";
-import { BooleanObject, ObjectTarget, } from "../../../Object/Able/ObjectAble";
-import { PlatformBridge } from "../BasePlatform";
+import { WebBridge } from "./WebBase";
 var MobileWebBridge = /** @class */ (function (_super) {
     __extends(MobileWebBridge, _super);
     function MobileWebBridge() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    MobileWebBridge.prototype.open = function (url) {
-        return of(new BooleanObject(false));
-    };
-    MobileWebBridge.prototype.loadFile = function (url, option) {
-        return of(new ObjectTarget({
-            total: 0,
-            loaded: 0,
-            data: new ArrayBuffer(0),
-            finish: true,
-        }));
-    };
     return MobileWebBridge;
-}(PlatformBridge));
+}(WebBridge));
 export { MobileWebBridge };
 //# sourceMappingURL=Mobile.js.map

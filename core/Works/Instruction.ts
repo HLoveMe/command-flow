@@ -7,13 +7,8 @@ import {
   Subscriber,
   asyncScheduler,
 } from "rxjs";
-import { ExecError } from "../Error";
 import {
-  currentEnir,
   isJS,
-  isMobile,
-  isPC,
-  JSRUNEnvirType,
   PlatformSelect,
 } from "../Util/Equipment";
 import { ContextRunOption, WorkRunOption } from "../Configs";
@@ -22,7 +17,6 @@ import { v4 as UUID } from "uuid";
 import { WorkUnit } from "./WorkUnit";
 import { EnvironmentAble } from "../Util/EvalEquipment";
 import { StringObject } from "../Object/Able/ObjectAble";
-import { decide } from "../Object/valueUtil";
 import { wrapperValue } from "../Util/channel-value-util";
 
 /**

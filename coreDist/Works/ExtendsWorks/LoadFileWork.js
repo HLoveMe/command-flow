@@ -28,22 +28,26 @@ import { InstructionOTO } from "../Instruction";
 import { Observable } from "rxjs";
 import { DataObject, ObjectTarget, } from "../../Object/Able/ObjectAble";
 import { isMobile } from "../../Util/Equipment";
+import { FileType } from "../../Bridge/ConfigTypes";
 import { takeLast, tap } from "rxjs/operators";
 import { unpackValue } from "../../Util/channel-value-util";
 var LoadFileWork = /** @class */ (function (_super) {
     __extends(LoadFileWork, _super);
-    function LoadFileWork() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    function LoadFileWork(config) {
+        var _this = _super.call(this) || this;
         _this.name = "LoadFileWork";
+        _this.currentConfig = { type: FileType.All };
+        _this.currentConfig = config || { type: FileType.All };
         return _this;
     }
     LoadFileWork.prototype.run = function (input, option) {
         var _this = this;
         var that = this;
+        var runOption = __assign(__assign({}, (option)), (this.currentConfig));
         return new Observable(function (subscriber) {
             var target = unpackValue(input);
             var sub = that.context.platform
-                .loadFile(target, option)
+                .loadFile(target, runOption)
                 .pipe(tap(function (obj) {
                 var _a = obj.valueOf(), loaded = _a.loaded, total = _a.total, finish = _a.finish;
                 _this.logMsg("\u52A0\u8F7D\u8FDB\u5EA6[load:progress]---\uFF1A" + loaded + "/" + total + " \u662F\u5426\u5B8C\u6210\uFF1A" + finish, input);

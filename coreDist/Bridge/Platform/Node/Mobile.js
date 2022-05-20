@@ -30,6 +30,7 @@ var MobileNodejsBridge = /** @class */ (function (_super) {
             loaded: 0,
             data: new ArrayBuffer(0),
             finish: true,
+            file: null,
         }));
     };
     return MobileNodejsBridge;

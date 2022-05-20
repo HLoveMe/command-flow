@@ -8,56 +8,8 @@ import {
   PCWebBridgeAble,
 } from "../../ConfigTypes";
 import { PlatformBridge } from "../BasePlatform";
+import { WebBridge } from "./WebBase";
 
-export class PCWebBridge extends PlatformBridge implements PCWebBridgeAble {
-  open(url: string): Observable<BooleanObject> {
-    const result = window.open(url, "__blank");
-    return of(new BooleanObject(result !== null));
-  }
-  loadFile(
-    url: PathLike,
-    option?: FileOption
-  ): Observable<Value.ObjectAble<FileLoadEvent>> {
-    return new Observable((subscriber) => {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.id = "_temp_input_select";
-      input.accept = option?.type || "*";
-      input.style.display = "none";
-      document.body.append(input);
-      input.addEventListener("change", (_) => {
-        const reader = new FileReader();
-        const file = input.files[0];
-        reader.onprogress = (info: ProgressEvent) => {
-          const { total, loaded } = info;
-          const data = reader.result as ArrayBuffer;
-          subscriber.next(
-            new ObjectTarget<FileLoadEvent>({
-              total,
-              loaded,
-              data: data,
-              finish: false,
-              file
-            })
-          );
-        };
-        reader.onload = (info: ProgressEvent) => {
-          const data = reader.result as ArrayBuffer;
-          const { total, loaded } = info;
-          subscriber.next(
-            new ObjectTarget<FileLoadEvent>({ total, loaded, data, finish: true, file })
-          );
-          subscriber.complete();
-        };
-        reader.onerror = (ev: ProgressEvent<FileReader>) => {
-          subscriber.error(ev);
-        }
-        reader.readAsArrayBuffer(file);
-      });
-      input.click();
-      return {
-        unsubscribe: () => subscriber.unsubscribe(),
-      };
-    });
-  }
+export class PCWebBridge extends WebBridge implements PCWebBridgeAble {
+  
 }

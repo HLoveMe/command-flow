@@ -203,10 +203,8 @@ export interface BasePlatformBridgeAble extends PlatformBridgeAble { }
 
 export interface PCWebBridgeAble extends BasePlatformBridgeAble { }
 export interface PCNodejsBridgeAble extends BasePlatformBridgeAble { }
-export interface PCRnBridgeAble extends BasePlatformBridgeAble { }
 
 export interface MobilePlatformBridgeAble extends PlatformBridgeAble { }
 
 export interface MobileWebBridgeAble extends MobilePlatformBridgeAble { }
 export interface MobileNodejsBridgeAble extends MobilePlatformBridgeAble { }
-export interface MobileRnBridgeAble extends MobilePlatformBridgeAble { }

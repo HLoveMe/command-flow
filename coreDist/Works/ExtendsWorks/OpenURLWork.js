@@ -33,6 +33,9 @@ import { unpackValue } from "../../Util/channel-value-util";
  * 打开路径
  * http://www.baidu.com
  * window: file:///C:/Users/Administrator    file:///C:/Users/Administrator/Desktop/116513f379bd664b7cfe5b3b40f5737d.jpg
+ *
+ * node:可以打开文件 网页
+ * web:只能代开网页
  */
 var OpenURLWork = /** @class */ (function (_super) {
     __extends(OpenURLWork, _super);
