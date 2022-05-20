@@ -27,7 +27,7 @@ var __assign = (this && this.__assign) || function () {
 import { InstructionOTO } from "../Instruction";
 import { Observable } from "rxjs";
 import { DataObject, ObjectTarget, } from "../../Object/Able/ObjectAble";
-import { isMobile } from "../../Util/Equipment";
+import { isJS } from "../../Util/Equipment";
 import { FileType } from "../../Bridge/ConfigTypes";
 import { takeLast, tap } from "rxjs/operators";
 import { unpackValue } from "../../Util/channel-value-util";
@@ -70,7 +70,7 @@ var LoadFileWork = /** @class */ (function (_super) {
         });
     };
     LoadFileWork.isAble = function () {
-        return !isMobile;
+        return isJS;
     };
     return LoadFileWork;
 }(InstructionOTO));

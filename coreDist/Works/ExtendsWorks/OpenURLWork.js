@@ -27,12 +27,12 @@ var __assign = (this && this.__assign) || function () {
 import { InstructionOTO } from "../Instruction";
 import { Observable } from "rxjs";
 import { BooleanObject, ObjectTarget } from "../../Object/Able/ObjectAble";
-import { isJS } from "../../Util/Equipment";
+import { isJS, } from "../../Util/Equipment";
 import { unpackValue } from "../../Util/channel-value-util";
 /**
  * 打开路径
  * http://www.baidu.com
- * window: file:///C:/Users/Administrator    file:///C:/Users/Administrator/Desktop/116513f379bd664b7cfe5b3b40f5737d.jpg
+ * node window: file:///C:/Users/Administrator    file:///C:/Users/Administrator/Desktop/116513f379bd664b7cfe5b3b40f5737d.jpg
  *
  * node:可以打开文件 网页
  * web:只能代开网页
@@ -47,14 +47,9 @@ var OpenURLWork = /** @class */ (function (_super) {
     OpenURLWork.prototype.run = function (input, option) {
         var that = this;
         return new Observable(function (subscriber) {
-            var target;
-            if (input === null || input === undefined)
-                target = "";
-            else {
-                target = unpackValue(input);
-            }
+            var target = unpackValue(input);
             var sub = that.context.platform
-                .open(target)
+                .open(target, option)
                 .subscribe({
                 next: function (_) { return subscriber.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new BooleanObject(true) }))); },
                 complete: function () { return subscriber.complete(); },
@@ -70,7 +65,6 @@ var OpenURLWork = /** @class */ (function (_super) {
     };
     OpenURLWork.isAble = function () {
         return isJS;
-        // return isNode || isWeb || isRN || isElectron
     };
     return OpenURLWork;
 }(InstructionOTO));

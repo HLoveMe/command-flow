@@ -1,11 +1,27 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 import { Observable } from "rxjs";
 import { StringObject, ObjectTarget } from "../../Object/Able/ObjectAble";
 import * as QRCode from "qrcode-generator";
 import Axios from "axios";
 import { HardwareBase } from "./Hardware";
-var PlatformBridge = /** @class */ (function () {
+var PlatformBridge = /** @class */ (function (_super) {
+    __extends(PlatformBridge, _super);
     function PlatformBridge() {
-        this.hardwareSource = new HardwareBase();
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     PlatformBridge.prototype.createQrCode = function (context, option) {
         return new Observable(function (sub) {
@@ -92,6 +108,6 @@ var PlatformBridge = /** @class */ (function () {
         });
     };
     return PlatformBridge;
-}());
+}(HardwareBase));
 export { PlatformBridge };
 //# sourceMappingURL=BasePlatform.js.map

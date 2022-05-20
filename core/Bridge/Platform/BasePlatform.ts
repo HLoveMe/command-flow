@@ -16,8 +16,7 @@ import { Value } from "../../Types";
 import Axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { HardwareBase } from "./Hardware";
 
-export class PlatformBridge implements BasePlatformBridgeAble {
-  hardwareSource: Hardware.PlatformDrive = new HardwareBase();
+export class PlatformBridge extends HardwareBase implements BasePlatformBridgeAble {
   createQrCode(
     context: String,
     option?: QRcodeOption

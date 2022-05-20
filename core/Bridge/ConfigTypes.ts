@@ -166,9 +166,9 @@ export namespace Hardware {
 }
 
 
-export declare interface PlatformBridgeAble {
-  // 硬件相关
-  hardwareSource?: Hardware.PlatformDrive;
+export declare interface PlatformBridgeAble extends Hardware.PlatformDrive {
+  // // 硬件相关
+  // hardwareSource?: Hardware.PlatformDrive;
 
   //计算机运行相关硬件
   loadRunInfo(): Observable<RunTimeInfo>;

@@ -6,7 +6,7 @@ import {
   DataObject,
   ObjectTarget,
 } from "../../Object/Able/ObjectAble";
-import { isElectron, isMobile, isNode, isPC, isWeb } from "../../Util/Equipment";
+import { isElectron, isJS, isMobile, isNode, isPC, isWeb } from "../../Util/Equipment";
 import { FileLoadEvent, FileOption, FileType } from "../../Bridge/ConfigTypes";
 import { takeLast, tap } from "rxjs/operators";
 import { unpackValue } from "../../Util/channel-value-util";
@@ -55,6 +55,6 @@ export default class LoadFileWork extends InstructionOTO {
     });
   }
   static isAble() {
-    return !isMobile;
+    return isJS;
   }
 }

@@ -4,13 +4,13 @@ import { ChannelObject, ChannelValue } from "../../Types";
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
 import { BooleanObject, ObjectTarget } from "../../Object/Able/ObjectAble";
-import { isElectron, isJS, isNode, isWeb } from "../../Util/Equipment";
+import { isJS, } from "../../Util/Equipment";
 import { unpackValue } from "../../Util/channel-value-util";
 
 /**
  * 打开路径
  * http://www.baidu.com
- * window: file:///C:/Users/Administrator    file:///C:/Users/Administrator/Desktop/116513f379bd664b7cfe5b3b40f5737d.jpg
+ * node window: file:///C:/Users/Administrator    file:///C:/Users/Administrator/Desktop/116513f379bd664b7cfe5b3b40f5737d.jpg
  * 
  * node:可以打开文件 网页
  * web:只能代开网页
@@ -20,13 +20,9 @@ export default class OpenURLWork extends InstructionOTO {
   run(input: ChannelObject, option?: any): Observable<ChannelObject<BooleanObject>> {
     const that = this;
     return new Observable((subscriber: Subscriber<ChannelObject<BooleanObject>>) => {
-      let target: string;
-      if (input === null || input === undefined) target = "";
-      else {
-        target = unpackValue(input);
-      }
+      const target: string = unpackValue(input);
       const sub = (that.context as ContextImpl).platform
-        .open(target)
+        .open(target, option)
         .subscribe({
           next: _ => subscriber.next(new ObjectTarget({
             ...input._value,
@@ -45,6 +41,5 @@ export default class OpenURLWork extends InstructionOTO {
   }
   static isAble() {
     return isJS
-    // return isNode || isWeb || isRN || isElectron
   }
 }
