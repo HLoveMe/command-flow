@@ -42,6 +42,7 @@ const utils = {
     desc: " 1 > 2 ",
     expect: false,
     run: () => {
+      const a = new NumberObject(1);
       return new NumberObject(1).more(new NumberObject(2)).valueOf();
     },
   },
@@ -78,6 +79,13 @@ const utils = {
     expect: 102,
     run: () => {
       return new NumberObject(100).plus(new NumberObject(2)).valueOf();
+    },
+  },
+  plu2: {
+    desc: " 0.1 + 0.2 ",
+    expect: 0.3,
+    run: () => {
+      return new NumberObject(0.1).plus(new NumberObject(0.2)).valueOf();
     },
   },
   reduce: {

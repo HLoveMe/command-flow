@@ -134,7 +134,7 @@ export namespace ControlFlow {
   ) => BaseType;
   export declare type SetFunction = ArrayFunction;
   declare type SetAbsoluteAble = {
-    [T in SetEnum]: ArrayFunction;
+    [T in SetEnum]: SetFunction;
   };
   export interface CollectionSet extends SetAbsoluteAble {
     collectionSet(key: SetEnum, ...args: any[]): BaseType;
@@ -146,7 +146,7 @@ export namespace ControlFlow {
     ...args: any[]
   ) => BaseType;
   export declare type MapFunction = ArrayFunction;
-  declare type MapAbsoluteAble = {
+  export declare type MapAbsoluteAble = {
     [T in MapEnum]: MapFunction;
   };
   export interface CollectionMap extends MapAbsoluteAble {

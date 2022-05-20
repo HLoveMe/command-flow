@@ -3,6 +3,8 @@ import { Value } from "../Types";
 import { ControlFlow } from "./Control";
 import { decide } from "./valueUtil";
 
+export const onlyDeclarationTag: string = 'onlyDeclaration'
+
 export function attribute() {
   return function ($1: any, $2: string, descriptor: PropertyDescriptor) {
     ($1.constructor.attributes as Set<string>).add($2);
@@ -26,16 +28,22 @@ export function DefaultValue(value: string) {
     ObjectManager.types.add(value);
   };
 }
+/**
+ * 声明 方式无效 仅仅作为标记
+ */
+export function onlyDeclaration(target: any, name: string, dec: PropertyDescriptor) {
+  dec.value.declaration = onlyDeclarationTag;
+}
 
 export function CompareUnit(host: any) {
   Object.keys(ControlFlow.CompareEnum).forEach((item) => {
     const key = ControlFlow.CompareEnum[item];
     const comFunction = host.prototype[key];
-    if (!comFunction) {
+    if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
       host.prototype[key] = () => new BooleanObject(false);
     }
   });
-  !host.prototype.compare &&
+  if (host.prototype.compare?.declaration === onlyDeclarationTag || !!host.prototype.compare === false)
     (host.prototype.compare = function (
       type: ControlFlow.CompareEnum,
       target: Value.ValueAble<any>
@@ -53,11 +61,11 @@ export function CalcUnit(host: any) {
   Object.keys(ControlFlow.CalcEnum).forEach((item) => {
     const key = ControlFlow.CalcEnum[item];
     const comFunction = host.prototype[key];
-    if (!comFunction) {
+    if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
       host.prototype[key] = () => new NumberObject(0);
     }
   });
-  !host.prototype.calc &&
+  if (host.prototype.calc?.declaration === onlyDeclarationTag || !!host.prototype.calc === false)
     (host.prototype.calc = function (
       type: ControlFlow.CalcEnum,
       target: Value.ValueAble<any>
@@ -75,7 +83,7 @@ export function ArrayUint(host: any) {
   Object.keys(ControlFlow.ArrayEnum).forEach((item) => {
     const key = ControlFlow.ArrayEnum[item];
     const comFunction = host.prototype[key];
-    if (!comFunction) {
+    if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
       host.prototype[key] = function (...args: any[]) {
         const value = (this as Value.ArrayAble<any>).valueOf();
         const execFunc = value[key];
@@ -87,7 +95,7 @@ export function ArrayUint(host: any) {
       };
     }
   });
-  !host.prototype.collectionArray &&
+  if (host.prototype.collectionArray?.declaration === onlyDeclarationTag || !!host.prototype.collectionArray === false)
     (host.prototype.collectionArray = function (
       type: ControlFlow.ArrayEnum,
       ...args: any[]
@@ -104,11 +112,11 @@ export function SetUint(host: any) {
   Object.keys(ControlFlow.SetEnum).forEach((item) => {
     const key = ControlFlow.SetEnum[item];
     const comFunction = host.prototype[key];
-    if (!comFunction) {
+    if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
       host.prototype[key] = function (...args: any[]) {
         const value = (this as Value.SetAble<any>).valueOf();
         const execFunc = value[key];
-        let result;
+        let result: any;
         if (typeof execFunc === "function") {
           result = execFunc.bind(value)(...args);
         } else result = value;
@@ -116,8 +124,8 @@ export function SetUint(host: any) {
       };
     }
   });
-  !host.prototype.collectionArray &&
-    (host.prototype.collectionArray = function (
+  if (host.prototype.collectionSet?.declaration === onlyDeclarationTag || !!host.prototype.collectionSet === false)
+    (host.prototype.collectionSet = function (
       type: ControlFlow.SetEnum,
       ...args: any[]
     ) {
@@ -133,7 +141,7 @@ export function MapUint(host: any) {
   Object.keys(ControlFlow.MapEnum).forEach((item) => {
     const key = ControlFlow.MapEnum[item];
     const comFunction = host.prototype[key];
-    if (!comFunction) {
+    if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
       host.prototype[key] = function (...args: any[]) {
         const value = (this as Value.MapAble<any, any>).valueOf();
         const execFunc = value[key];
@@ -145,8 +153,8 @@ export function MapUint(host: any) {
       };
     }
   });
-  !host.prototype.collectionArray &&
-    (host.prototype.collectionArray = function (
+  if (host.prototype.collectionMap?.declaration === onlyDeclarationTag || !!host.prototype.collectionMap === false)
+    (host.prototype.collectionMap = function (
       type: ControlFlow.MapEnum,
       ...args: any[]
     ) {
