@@ -43,28 +43,82 @@ const disabled = ref<boolean>(false);
 const clearLog = () => {
   logInfo.value.length = 0;
 };
-// enum CollectionEnum {
-//     Get = "get",
-//     Set = "set",
-//     Has = "has",
-//     Delete = "delete",
-//     Clear = "clear",
-//     Entries = "entries",
-//     ForEach = "forEach",
-//     Keys = "keys",
-//     Size = "size",
-//     Values = "values",
-//   }
 const utils = {
-  contain: {
-    desc: "map 是否包含 'b'",
-    expect: true,
+  get: {
+    desc: "map 获取值 get",
+    expect: 200,
     run: () => {
       const map = new MapObject(new Map());
       map.set("a", 1);
       map.set("b", 200);
       map.set("c", 1300);
-      return !!map.has("b");
+      return map.get("b").valueOf();
+    },
+  },
+  set: {
+    desc: "map set ",
+    expect: 1,
+    run: () => {
+      const map = new MapObject(new Map());
+      map.set("a", 1);
+      return map.size;
+    },
+  },
+  has: {
+    desc: "map 是否包含 'b'",
+    expect: false,
+    run: () => {
+      const map = new MapObject(new Map());
+      map.set("a", 1);
+      map.set("b", 200);
+      map.set("c", 1300);
+      return map.has("sas").valueOf();
+    },
+  },
+  delete: {
+    desc: "map delete 'b',删除后是否包含b",
+    expect: false,
+    run: () => {
+      const map = new MapObject(new Map());
+      map.set("a", 1);
+      map.set("b", 200);
+      map.set("c", 1300);
+      map.delete("b");
+      return map.has("b").valueOf();
+    },
+  },
+  clear: {
+    desc: "map 清空,长度是否为0",
+    expect: 0,
+    run: () => {
+      const map = new MapObject(new Map());
+      map.set("a", 1);
+      map.set("b", 200);
+      map.set("c", 1300);
+      map.clear();
+      return map.size;
+    },
+  },
+  keys: {
+    desc: "map keys",
+    expect: "a-b-c",
+    run: () => {
+      const map = new MapObject(new Map());
+      map.set("a", 1);
+      map.set("b", 200);
+      map.set("c", 1300);
+      return [...map.keys().valueOf()].join('-');
+    },
+  },
+  values: {
+    desc: "map values",
+    expect: "1-200-1300",
+    run: () => {
+      const map = new MapObject(new Map());
+      map.set("a", 1);
+      map.set("b", 200);
+      map.set("c", 1300);
+      return [...map.values().valueOf()].join('-');
     },
   },
 };

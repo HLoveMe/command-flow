@@ -3,7 +3,7 @@ import { Value } from "../Types";
 import { ControlFlow } from "./Control";
 import { decide } from "./valueUtil";
 
-export const onlyDeclarationTag: string = 'onlyDeclaration'
+export const onlyDeclarationTag: string = 'onlyDeclaration';
 
 export function attribute() {
   return function ($1: any, $2: string, descriptor: PropertyDescriptor) {

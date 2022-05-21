@@ -42,7 +42,7 @@ export const decide = function (value: any | BaseType, force: boolean = false): 
   const key = Object.prototype.toString.call(value);
   const Target = ObjectMap[key];
   if (Target) {
-    return new Target(value || {});
+    return new Target(value ?? {});
   }
-  return new ObjectTarget(value || {});
+  return new ObjectTarget(value ?? {});
 };

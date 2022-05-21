@@ -46,9 +46,11 @@ export class MapObject<T, U>
   @onlyDeclaration
   forEach(callback: ControlFlow.MapFunction, thisArg?: any): BaseType { return null }
   @onlyDeclaration
-  size(): BaseType { return null }
-  @onlyDeclaration
   values(): BaseType { return null }
   @onlyDeclaration
   keys(): BaseType { return null }
+
+  get size(){
+    return this._value.size;
+  }
 }

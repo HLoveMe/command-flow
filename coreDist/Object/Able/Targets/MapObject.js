@@ -58,9 +58,15 @@ var MapObject = /** @class */ (function (_super) {
     MapObject.prototype.clear = function () { return null; };
     MapObject.prototype.entries = function () { return null; };
     MapObject.prototype.forEach = function (callback, thisArg) { return null; };
-    MapObject.prototype.size = function () { return null; };
     MapObject.prototype.values = function () { return null; };
     MapObject.prototype.keys = function () { return null; };
+    Object.defineProperty(MapObject.prototype, "size", {
+        get: function () {
+            return this._value.size;
+        },
+        enumerable: false,
+        configurable: true
+    });
     var MapObject_1;
     MapObject.attributes = new Set();
     MapObject.empty = new MapObject_1(new Map());
@@ -118,12 +124,6 @@ var MapObject = /** @class */ (function (_super) {
         __metadata("design:paramtypes", [Function, Object]),
         __metadata("design:returntype", Object)
     ], MapObject.prototype, "forEach", null);
-    __decorate([
-        onlyDeclaration,
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", Object)
-    ], MapObject.prototype, "size", null);
     __decorate([
         onlyDeclaration,
         __metadata("design:type", Function),

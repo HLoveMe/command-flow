@@ -1,5 +1,5 @@
 import { ControlFlow } from "../../Control";
-import { ArrayUint, attribute, DefaultValue, Params } from "../../util";
+import { ArrayUint, attribute, DefaultValue, onlyDeclaration, Params } from "../../util";
 import { Value } from "../../../index";
 import { ObjectTarget } from "./ObjectTarget";
 import { BaseType } from "../../../Types";
@@ -7,8 +7,7 @@ import { BaseType } from "../../../Types";
 @ArrayUint
 export class ArrayObject<T>
   extends ObjectTarget<Array<T>>
-  implements Value.ArrayAble<T>, ControlFlow.CollectionArray
-{
+  implements Value.ArrayAble<T>, ControlFlow.CollectionArray {
   static attributes: Set<string> = new Set();
   static empty: ArrayObject<Object> = new ArrayObject([]);
 
@@ -44,40 +43,68 @@ export class ArrayObject<T>
     return new ArrayObject([...this._value, ...target._value]);
   }
 
-  //collection
-  collectionArray: ControlFlow.CollectionArrayExec;
+  @onlyDeclaration
+  collectionArray(key: ControlFlow.ArrayEnum, ...args: any[]): BaseType { return null };
   // array function
-  length: ControlFlow.ArrayFunction;
-  concat: ControlFlow.ArrayFunction;
-  copyWithin: ControlFlow.ArrayFunction;
-  fill: ControlFlow.ArrayFunction;
-  find: ControlFlow.ArrayFunction;
-  findIndex: ControlFlow.ArrayFunction;
-  lastIndexOf: ControlFlow.ArrayFunction;
-  pop: ControlFlow.ArrayFunction;
-  push: ControlFlow.ArrayFunction;
-  reverse: ControlFlow.ArrayFunction;
-  shift: ControlFlow.ArrayFunction;
-  unshift: ControlFlow.ArrayFunction;
-  slice: ControlFlow.ArrayFunction;
-  sort: ControlFlow.ArrayFunction;
-  splice: ControlFlow.ArrayFunction;
-  includes: ControlFlow.ArrayFunction;
-  indexOf: ControlFlow.ArrayFunction;
-  join: ControlFlow.ArrayFunction;
-  keys: ControlFlow.ArrayFunction;
-  entries: ControlFlow.ArrayFunction;
-  values: ControlFlow.ArrayFunction;
-  forEach: ControlFlow.ArrayFunction;
-  filter: ControlFlow.ArrayFunction;
-  flat: ControlFlow.ArrayFunction;
-  flatMap: ControlFlow.ArrayFunction;
-  map: ControlFlow.ArrayFunction;
-  every: ControlFlow.ArrayFunction;
-  some: ControlFlow.ArrayFunction;
-  reduce: ControlFlow.ArrayFunction;
-  reduceRight: ControlFlow.ArrayFunction;
-  toLocaleString: ControlFlow.ArrayFunction;
-  toString: ControlFlow.ArrayFunction;
-  at: ControlFlow.ArrayFunction;
+  @onlyDeclaration
+  length() { return null }
+  @onlyDeclaration
+  concat(...items: (T | ArrayObject<T>)[]): BaseType { return null };
+  @onlyDeclaration
+  copyWithin(target: number, start: number, end?: number): BaseType { return null }
+  @onlyDeclaration
+  fill(value: number, start?: number, end?: number): BaseType { return null };
+  @onlyDeclaration
+  find(predicate: (value: number, index: number, obj: Uint8Array) => boolean, thisArg?: any): BaseType { return null }
+
+  @onlyDeclaration
+  findIndex(predicate: (value: number, index: number, obj: Uint8Array) => boolean, thisArg?: any): BaseType { return null }
+  @onlyDeclaration
+  lastIndexOf(searchElement: number, fromIndex?: number): BaseType { return null };
+  @onlyDeclaration
+  pop(): BaseType { return null }
+  @onlyDeclaration
+  push(...items: T[]): BaseType { return null }
+  @onlyDeclaration
+  reverse(): BaseType { return null }
+  @onlyDeclaration
+  shift(): BaseType { return null }
+  @onlyDeclaration
+  unshift(...items: T[]): BaseType { return null }
+  @onlyDeclaration
+  slice(start?: number, end?: number): BaseType { return null }
+  @onlyDeclaration
+  sort(compareFn?: (a: number, b: number) => number): BaseType { return null }
+  @onlyDeclaration
+  splice(start: number, deleteCount?: number): BaseType { return null }
+  @onlyDeclaration
+  includes(searchElement: T, fromIndex?: number): BaseType { return null }
+  @onlyDeclaration
+  indexOf(searchElement: T, fromIndex?: number): BaseType { return null }
+  @onlyDeclaration
+  join(separator?: string): BaseType { return null }
+  @onlyDeclaration
+  keys(): BaseType { return null }
+  @onlyDeclaration
+  entries(): BaseType { return null }
+  @onlyDeclaration
+  values(): BaseType { return null }
+  @onlyDeclaration
+  forEach(callbackfn: (value: T, index: number, array: readonly T[]) => void, thisArg?: any): BaseType { return null }
+  @onlyDeclaration
+  filter<S extends T>(predicate: (value: T, index: number, array: readonly T[]) => value is S, thisArg?: any): BaseType { return null }
+
+  @onlyDeclaration
+  map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): BaseType { return null }
+  @onlyDeclaration
+  every<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): BaseType { return null }
+  @onlyDeclaration
+  some(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): BaseType { return null }
+
+  @onlyDeclaration
+  reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): BaseType { return null }
+  @onlyDeclaration
+  reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): BaseType { return null }
+  @onlyDeclaration
+  toLocaleString(): BaseType { return null }
 }

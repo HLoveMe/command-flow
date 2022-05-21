@@ -50,14 +50,11 @@ export namespace ControlFlow {
     Values = "values",
     ForEach = "forEach",
     Filter = "filter",
-    Flat = "flat",
-    FlatMap = "flatMap",
     Map = "map",
     Every = "every",
     Some = "some",
     Reduce = "reduce",
     ReduceRight = "reduceRight",
-    At = "at",
   }
 
   export enum SetEnum {
@@ -81,7 +78,6 @@ export namespace ControlFlow {
     Entries = "entries",
     ForEach = "forEach",
     Keys = "keys",
-    Size = "size",
     Values = "values",
   }
 

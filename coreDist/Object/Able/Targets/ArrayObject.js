@@ -34,7 +34,8 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-import { ArrayUint, attribute, DefaultValue, Params } from "../../util";
+import { ControlFlow } from "../../Control";
+import { ArrayUint, attribute, DefaultValue, onlyDeclaration, Params } from "../../util";
 import { ObjectTarget } from "./ObjectTarget";
 var ArrayObject = /** @class */ (function (_super) {
     __extends(ArrayObject, _super);
@@ -62,6 +63,65 @@ var ArrayObject = /** @class */ (function (_super) {
     ArrayObject.prototype.merge = function (target) {
         return new ArrayObject_1(__spreadArray(__spreadArray([], this._value, true), target._value, true));
     };
+    ArrayObject.prototype.collectionArray = function (key) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        return null;
+    };
+    ;
+    // array function
+    ArrayObject.prototype.length = function () { return null; };
+    ArrayObject.prototype.concat = function () {
+        var items = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            items[_i] = arguments[_i];
+        }
+        return null;
+    };
+    ;
+    ArrayObject.prototype.copyWithin = function (target, start, end) { return null; };
+    ArrayObject.prototype.fill = function (value, start, end) { return null; };
+    ;
+    ArrayObject.prototype.find = function (predicate, thisArg) { return null; };
+    ArrayObject.prototype.findIndex = function (predicate, thisArg) { return null; };
+    ArrayObject.prototype.lastIndexOf = function (searchElement, fromIndex) { return null; };
+    ;
+    ArrayObject.prototype.pop = function () { return null; };
+    ArrayObject.prototype.push = function () {
+        var items = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            items[_i] = arguments[_i];
+        }
+        return null;
+    };
+    ArrayObject.prototype.reverse = function () { return null; };
+    ArrayObject.prototype.shift = function () { return null; };
+    ArrayObject.prototype.unshift = function () {
+        var items = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            items[_i] = arguments[_i];
+        }
+        return null;
+    };
+    ArrayObject.prototype.slice = function (start, end) { return null; };
+    ArrayObject.prototype.sort = function (compareFn) { return null; };
+    ArrayObject.prototype.splice = function (start, deleteCount) { return null; };
+    ArrayObject.prototype.includes = function (searchElement, fromIndex) { return null; };
+    ArrayObject.prototype.indexOf = function (searchElement, fromIndex) { return null; };
+    ArrayObject.prototype.join = function (separator) { return null; };
+    ArrayObject.prototype.keys = function () { return null; };
+    ArrayObject.prototype.entries = function () { return null; };
+    ArrayObject.prototype.values = function () { return null; };
+    ArrayObject.prototype.forEach = function (callbackfn, thisArg) { return null; };
+    ArrayObject.prototype.filter = function (predicate, thisArg) { return null; };
+    ArrayObject.prototype.map = function (callbackfn, thisArg) { return null; };
+    ArrayObject.prototype.every = function (predicate, thisArg) { return null; };
+    ArrayObject.prototype.some = function (predicate, thisArg) { return null; };
+    ArrayObject.prototype.reduce = function (callbackfn) { return null; };
+    ArrayObject.prototype.reduceRight = function (callbackfn) { return null; };
+    ArrayObject.prototype.toLocaleString = function () { return null; };
     var ArrayObject_1;
     ArrayObject.attributes = new Set();
     ArrayObject.empty = new ArrayObject_1([]);
@@ -90,6 +150,186 @@ var ArrayObject = /** @class */ (function (_super) {
         __metadata("design:paramtypes", [Number]),
         __metadata("design:returntype", Object)
     ], ArrayObject.prototype, "valueOfIndex", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [String, Object]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "collectionArray", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], ArrayObject.prototype, "length", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "concat", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Number, Number, Number]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "copyWithin", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Number, Number, Number]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "fill", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function, Object]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "find", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function, Object]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "findIndex", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Number, Number]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "lastIndexOf", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "pop", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "push", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "reverse", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "shift", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "unshift", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Number, Number]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "slice", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "sort", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Number, Number]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "splice", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Number]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "includes", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Number]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "indexOf", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [String]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "join", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "keys", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "entries", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "values", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function, Object]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "forEach", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function, Object]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "filter", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function, Object]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "map", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function, Object]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "every", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function, Object]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "some", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "reduce", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function]),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "reduceRight", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", Object)
+    ], ArrayObject.prototype, "toLocaleString", null);
     __decorate([
         DefaultValue(Object.prototype.toString.call([])),
         __metadata("design:type", String)

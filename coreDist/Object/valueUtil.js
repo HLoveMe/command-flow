@@ -40,8 +40,8 @@ export var decide = function (value, force) {
     var key = Object.prototype.toString.call(value);
     var Target = ObjectMap[key];
     if (Target) {
-        return new Target(value || {});
+        return new Target(value !== null && value !== void 0 ? value : {});
     }
-    return new ObjectTarget(value || {});
+    return new ObjectTarget(value !== null && value !== void 0 ? value : {});
 };
 //# sourceMappingURL=valueUtil.js.map
