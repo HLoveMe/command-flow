@@ -27,8 +27,9 @@ import { ObjectTarget } from "./ObjectTarget";
 var SetObject = /** @class */ (function (_super) {
     __extends(SetObject, _super);
     function SetObject(value) {
+        if (value === void 0) { value = new Set(); }
         var _this = _super.call(this, value) || this;
-        _this._value = value;
+        _this._value = new Set(value);
         return _this;
     }
     SetObject_1 = SetObject;

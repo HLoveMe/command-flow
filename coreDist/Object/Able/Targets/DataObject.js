@@ -27,6 +27,7 @@ import { ObjectTarget } from "./ObjectTarget";
 var DataObject = /** @class */ (function (_super) {
     __extends(DataObject, _super);
     function DataObject(value) {
+        if (value === void 0) { value = new ArrayBuffer(0); }
         var _this = _super.call(this, value) || this;
         _this._value = value;
         return _this;

@@ -10,7 +10,7 @@ export class DataObject
   static empty: DataObject = new DataObject(new ArrayBuffer(0));
   _value: ArrayBuffer;
 
-  constructor(value: ArrayBuffer) {
+  constructor(value: ArrayBuffer = new ArrayBuffer(0)) {
     super(value);
     this._value = value;
   }

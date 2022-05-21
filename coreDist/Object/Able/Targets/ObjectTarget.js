@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { DefaultValue } from "../../util";
 var ObjectTarget = /** @class */ (function () {
     function ObjectTarget(value) {
+        if (value === void 0) { value = {}; }
         this._value = value;
     }
     Object.defineProperty(ObjectTarget.prototype, Symbol.toStringTag, {

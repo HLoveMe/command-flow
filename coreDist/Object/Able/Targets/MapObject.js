@@ -28,8 +28,9 @@ import { ObjectTarget } from "./ObjectTarget";
 var MapObject = /** @class */ (function (_super) {
     __extends(MapObject, _super);
     function MapObject(value) {
+        if (value === void 0) { value = new Map(); }
         var _this = _super.call(this, value) || this;
-        _this._value = value;
+        _this._value = new Map(value);
         return _this;
     }
     MapObject_1 = MapObject;

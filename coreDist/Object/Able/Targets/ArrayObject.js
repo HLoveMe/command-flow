@@ -40,8 +40,9 @@ import { ObjectTarget } from "./ObjectTarget";
 var ArrayObject = /** @class */ (function (_super) {
     __extends(ArrayObject, _super);
     function ArrayObject(value) {
+        if (value === void 0) { value = []; }
         var _this = _super.call(this, value) || this;
-        _this._value = value;
+        _this._value = __spreadArray([], value, true);
         return _this;
     }
     ArrayObject_1 = ArrayObject;

@@ -14,9 +14,9 @@ export class ArrayObject<T>
   @DefaultValue(Object.prototype.toString.call([])) static type: string;
   _value: Array<T>;
 
-  constructor(value: Array<T>) {
+  constructor(value: Array<T> = []) {
     super(value);
-    this._value = value;
+    this._value = [...value];
   }
 
   @attribute()

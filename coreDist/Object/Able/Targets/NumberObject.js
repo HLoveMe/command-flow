@@ -28,6 +28,7 @@ import { BooleanObject } from "./BooleanObject";
 var NumberObject = /** @class */ (function (_super) {
     __extends(NumberObject, _super);
     function NumberObject(value) {
+        if (value === void 0) { value = 1; }
         var _this = _super.call(this, value) || this;
         _this._value = value;
         return _this;

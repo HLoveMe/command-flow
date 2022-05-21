@@ -27,6 +27,7 @@ import { ObjectTarget } from "./ObjectTarget";
 var BooleanObject = /** @class */ (function (_super) {
     __extends(BooleanObject, _super);
     function BooleanObject(value) {
+        if (value === void 0) { value = false; }
         var _this = _super.call(this, value) || this;
         _this._value = value;
         return _this;

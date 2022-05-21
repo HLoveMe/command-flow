@@ -9,9 +9,9 @@ import { BooleanObject } from "./BooleanObject";
 export class NumberObject
   extends ObjectTarget<number>
   implements
-    Value.NumberAble,
-    ControlFlow.Compare<Value.NumberAble>,
-    ControlFlow.Calc<Value.NumberAble>
+  Value.NumberAble,
+  ControlFlow.Compare<Value.NumberAble>,
+  ControlFlow.Calc<Value.NumberAble>
 {
   static attributes: Set<string> = new Set();
   static empty: NumberObject = new NumberObject(0);
@@ -20,7 +20,7 @@ export class NumberObject
   @DefaultValue(Object.prototype.toString.call(new Number()))
   static type: string;
   _value: number;
-  constructor(value: number) {
+  constructor(value: number = 1) {
     super(value);
     this._value = value;
   }

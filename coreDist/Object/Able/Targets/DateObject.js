@@ -27,6 +27,7 @@ import { ObjectTarget } from "./ObjectTarget";
 var DateObject = /** @class */ (function (_super) {
     __extends(DateObject, _super);
     function DateObject(value) {
+        if (value === void 0) { value = new Date(); }
         var _this = _super.call(this, value) || this;
         _this._value = value;
         return _this;

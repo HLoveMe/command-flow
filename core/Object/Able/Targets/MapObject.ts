@@ -11,9 +11,9 @@ export class MapObject<T, U>
 
   @DefaultValue(Object.prototype.toString.call(new Map())) static type: string;
   _value: Map<T, U>;
-  constructor(value: Map<T, U>) {
+  constructor(value: Map<T, U> = new Map()) {
     super(value);
-    this._value = value;
+    this._value = new Map(value);
   }
 
   @attribute()
@@ -50,7 +50,7 @@ export class MapObject<T, U>
   @onlyDeclaration
   keys(): BaseType { return null }
 
-  get size(){
+  get size() {
     return this._value.size;
   }
 }

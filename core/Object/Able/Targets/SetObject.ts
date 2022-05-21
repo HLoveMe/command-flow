@@ -6,16 +6,15 @@ import { ObjectTarget } from "./ObjectTarget";
 @SetUint
 export class SetObject<T>
   extends ObjectTarget<Set<T>>
-  implements Value.SetAble<T>, ControlFlow.CollectionSet
-{
+  implements Value.SetAble<T>, ControlFlow.CollectionSet {
   static attributes: Set<string> = new Set();
   static empty: SetObject<any> = new SetObject(new Set());
 
   @DefaultValue(Object.prototype.toString.call(new Set())) static type: string;
   _value: Set<T>;
-  constructor(value: Set<T>) {
+  constructor(value: Set<T> = new Set()) {
     super(value);
-    this._value = value;
+    this._value = new Set(value);
   }
   @attribute()
   len(): number {

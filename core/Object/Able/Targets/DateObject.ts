@@ -5,14 +5,13 @@ import { ObjectTarget } from "./ObjectTarget";
 
 export class DateObject
   extends ObjectTarget<Date>
-  implements Value.DateAble
-{
+  implements Value.DateAble {
   static attributes: Set<string> = new Set();
   static empty: DateObject = new DateObject(new Date());
-  
+
   @DefaultValue(Object.prototype.toString.call(new Date())) static type: string;
   _value: Date;
-  constructor(value: Date) {
+  constructor(value: Date = new Date()) {
     super(value);
     this._value = value;
   }
