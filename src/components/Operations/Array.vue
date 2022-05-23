@@ -45,16 +45,6 @@ const clearLog = () => {
 };
 /***
  *  
-    CopyWithin = "copyWithin",
-    Fill = "fill",
-    Find = "find",
-    FindIndex = "findIndex",
-    LastIndexOf = "lastIndexOf",
-    Pop = "pop",
-    Push = "push",
-    Reverse = "reverse",
-    Shift = "shift",
-    Unshift = "unshift",
     Slice = "slice",
     Sort = "sort",
     Splice = "splice",
@@ -94,13 +84,124 @@ const utils = {
       return [...array.valueOf()].join("-");
     },
   },
+  fill: {
+    concat: "array fill",
+    expect: "1-1-1-1",
+    run: () => {
+      const array = new ArrayObject(4);
+      array.fill(1);
+      return [...array.valueOf()].join("-");
+    },
+  },
+  find: {
+    concat: "array find",
+    expect: "2222",
+    run: () => {
+      const array = new ArrayObject();
+      array.push("1111");
+      array.push("2222");
+      array.push("3333");
+      return array.find(($1) => $1 == "2222").valueOf();
+    },
+  },
+  findIndex: {
+    concat: "array findIndex",
+    expect: 1,
+    run: () => {
+      const array = new ArrayObject();
+      array.push("1111");
+      array.push("2222");
+      array.push("3333");
+      return array.findIndex(($1) => $1 == "2222").valueOf();
+    },
+  },
+  lastIndexOf: {
+    concat: "array lastIndexOf",
+    expect: 4,
+    run: () => {
+      const array = new ArrayObject();
+      array.push("2222");
+      array.push("1111");
+      array.push("2222");
+      array.push("3333");
+      array.push("2222");
+
+      return array.lastIndexOf("2222").valueOf();
+    },
+  },
+  pop: {
+    concat: "array pop",
+    expect: "2222-1111",
+    run: () => {
+      const array = new ArrayObject();
+      array.push("2222");
+      array.push("1111");
+      array.push("2222");
+      array.pop();
+      return array.join("-").valueOf();
+    },
+  },
+  push: {
+    concat: "array push",
+    expect: "2222-1111",
+    run: () => {
+      const array = new ArrayObject();
+      array.push("2222");
+      array.push("1111");
+      return array.join("-").valueOf();
+    },
+  },
+  reverse: {
+    concat: "array reverse",
+    expect: "1111-1111-2222",
+    run: () => {
+      const array = new ArrayObject();
+      array.push("2222");
+      array.push("1111");
+      array.push("1111");
+      array.reverse();
+      return array.join("-").valueOf();
+    },
+  },
+  shift: {
+    concat: "array shift",
+    expect: "2222",
+    run: () => {
+      const array = new ArrayObject();
+      array.push("2222");
+      array.push("1111");
+      array.push("1111");
+      return [array.shift().valueOf()].join("-");
+    },
+  },
+  unshift: {
+    concat: "array unshift",
+    expect: "3333-4444-2222",
+    run: () => {
+      const array = new ArrayObject();
+      array.push("2222");
+      array.unshift("3333", "4444");
+      return array.join("-").valueOf();
+    },
+  },
+  slice: {
+    concat: "array slice",
+    expect: "4444-2222",
+    run: () => {
+      const array = new ArrayObject();
+      array.push("2222");
+      array.unshift("3333", "4444");
+      array.push("5555");
+      return array.slice(-3, -1).join("-").valueOf();
+    },
+  },
 };
 const startBegin = async () => {
   Object.keys(utils).forEach((key) => {
     const item = utils[key];
     const result = item.run();
     logInfo.value.push({
-      desc: `[ ${item.desc} ]: 结果：${result}，期待：${item.expect} `,
+      desc: `[ ${item.concat} ]: 结果：${result}，期待：${item.expect} `,
       success: result === item.expect,
     });
   });

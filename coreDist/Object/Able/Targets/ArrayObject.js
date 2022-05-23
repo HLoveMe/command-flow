@@ -40,9 +40,10 @@ import { ObjectTarget } from "./ObjectTarget";
 var ArrayObject = /** @class */ (function (_super) {
     __extends(ArrayObject, _super);
     function ArrayObject(value) {
-        if (value === void 0) { value = []; }
-        var _this = _super.call(this, value) || this;
-        _this._value = __spreadArray([], value, true);
+        var _this = this;
+        var init = typeof value === 'number' ? new Array(value) : (Array.isArray(value) ? value : []);
+        _this = _super.call(this, init) || this;
+        _this._value = init;
         return _this;
     }
     ArrayObject_1 = ArrayObject;
@@ -337,7 +338,7 @@ var ArrayObject = /** @class */ (function (_super) {
     ], ArrayObject, "type", void 0);
     ArrayObject = ArrayObject_1 = __decorate([
         ArrayUint,
-        __metadata("design:paramtypes", [Array])
+        __metadata("design:paramtypes", [Object])
     ], ArrayObject);
     return ArrayObject;
 }(ObjectTarget));

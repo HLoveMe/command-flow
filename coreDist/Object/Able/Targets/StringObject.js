@@ -27,6 +27,7 @@ import { ObjectTarget } from "./ObjectTarget";
 var StringObject = /** @class */ (function (_super) {
     __extends(StringObject, _super);
     function StringObject(value) {
+        if (value === void 0) { value = ''; }
         var _this = _super.call(this, value) || this;
         _this._value = value;
         return _this;

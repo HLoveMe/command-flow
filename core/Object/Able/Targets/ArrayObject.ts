@@ -14,9 +14,10 @@ export class ArrayObject<T>
   @DefaultValue(Object.prototype.toString.call([])) static type: string;
   _value: Array<T>;
 
-  constructor(value: Array<T> = []) {
-    super(value);
-    this._value = [...value];
+  constructor(value: Array<T> | number) {
+    var init = typeof value === 'number' ? new Array(value) : (Array.isArray(value) ? value : [])
+    super(init);
+    this._value = init;
   }
 
   @attribute()
