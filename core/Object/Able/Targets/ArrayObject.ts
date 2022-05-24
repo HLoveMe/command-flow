@@ -103,7 +103,7 @@ export class ArrayObject<T>
   some(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): BaseType { return null }
 
   @onlyDeclaration
-  reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): BaseType { return null }
+  reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): BaseType { return null }
   @onlyDeclaration
   reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): BaseType { return null }
   @onlyDeclaration

@@ -45,10 +45,6 @@ const clearLog = () => {
 };
 /***
  * 
-    Filter = "filter",
-    Map = "map",
-    Every = "every",
-    Some = "some",
     Reduce = "reduce",
     ReduceRight = "reduceRight",
  */
@@ -191,7 +187,7 @@ const utils = {
     run: () => {
       const array = new ArrayObject([3, 1, 7, 2]);
       const result = array.sort(($1, $2) => $1 - $2);
-      return [result.valueOf()].join('-');
+      return [...result.valueOf()].join('-');
     },
   },
   splice: {
@@ -200,7 +196,7 @@ const utils = {
     run: () => {
       const array = new ArrayObject([1, 7]);
       array.splice(1, 0, 0, 0);
-      return [array.valueOf()].join('-');
+      return array.valueOf().join('-');
     },
   },
   includes: {
@@ -232,7 +228,7 @@ const utils = {
     expect: '0-1',
     run: () => {
       const array = new ArrayObject([1, 3]);
-      return [...array.keys()].join('-').valueOf();
+      return [...array.keys().valueOf()].join('-').valueOf();
     },
   },
   values: {
@@ -240,7 +236,7 @@ const utils = {
     expect: '1-3',
     run: () => {
       const array = new ArrayObject([1, 3]);
-      return [...array.values()].join('-').valueOf();
+      return [...array.values().valueOf()].join('-').valueOf();
     },
   },
   entries: {
@@ -253,10 +249,10 @@ const utils = {
   },
   forEach: {
     concat: 'array forEach',
-    expect: '1-1-1-1',
+    expect: '0-0-0-0',
     run: () => {
       const array = new ArrayObject(4);
-      const result = new ArrayObject(4);
+      const result = new ArrayObject([]);
       array.fill(0);
       array.forEach(($1) => {
         result.push($1);
@@ -275,10 +271,56 @@ const utils = {
         .valueOf();
     },
   },
+  map: {
+    concat: 'array map',
+    expect: '1-1-1-1',
+    run: () => {
+      const array = new ArrayObject(4);
+      array.fill(0);
+      const result = array.map(($1) => {
+        return 1;
+      });
+      return result.join('-').valueOf();
+    },
+  },
+  every: {
+    concat: 'array every',
+    expect: true,
+    run: () => {
+      const array = new ArrayObject([4, 7, 9, 11]);
+      const result = array.every(($1) => {
+        return $1 >= 4;
+      });
+      return result.valueOf();
+    },
+  },
+  some: {
+    concat: 'array some',
+    expect: false,
+    run: () => {
+      const array = new ArrayObject([4, 7, 9, 11]);
+      const result = array.some(($1) => {
+        return $1 > 12;
+      });
+      return result.valueOf();
+    },
+  },
+  reduce: {
+    concat: 'array reduce',
+    expect: 15,
+    run: () => {
+      const array = new ArrayObject([1, 2, 3, 4]);
+      const result = array.reduce(($1, $2) => {
+        return $1 + $2;
+      }, 5);
+      return result.valueOf();
+    },
+  },
 };
 const startBegin = async () => {
   Object.keys(utils).forEach((key) => {
     const item = utils[key];
+    console.log('1111111111111111111', key);
     const result = item.run();
     logInfo.value.push({
       desc: `[ ${item.concat} ]: 结果：${result}，期待：${item.expect} `,

@@ -127,7 +127,7 @@ var ArrayObject = /** @class */ (function (_super) {
     ArrayObject.prototype.map = function (callbackfn, thisArg) { return null; };
     ArrayObject.prototype.every = function (predicate, thisArg) { return null; };
     ArrayObject.prototype.some = function (predicate, thisArg) { return null; };
-    ArrayObject.prototype.reduce = function (callbackfn) { return null; };
+    ArrayObject.prototype.reduce = function (callbackfn, initialValue) { return null; };
     ArrayObject.prototype.reduceRight = function (callbackfn) { return null; };
     ArrayObject.prototype.toLocaleString = function () { return null; };
     var ArrayObject_1;
@@ -323,7 +323,7 @@ var ArrayObject = /** @class */ (function (_super) {
     __decorate([
         onlyDeclaration,
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Function]),
+        __metadata("design:paramtypes", [Function, Object]),
         __metadata("design:returntype", Object)
     ], ArrayObject.prototype, "reduce", null);
     __decorate([
