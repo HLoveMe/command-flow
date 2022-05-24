@@ -77,7 +77,7 @@ export class ArrayObject<T>
   @onlyDeclaration
   sort(compareFn?: (a: number, b: number) => number): BaseType { return null }
   @onlyDeclaration
-  splice(start: number, deleteCount?: number): BaseType { return null }
+  splice(start: number, deleteCount?: number, ...items: any[]): BaseType { return null }
   @onlyDeclaration
   includes(searchElement: T, fromIndex?: number): BaseType { return null }
   @onlyDeclaration

@@ -34,9 +34,9 @@ import {
   BooleanObject,
   DateObject,
   DataObject,
-} from "../../../coreDist/index";
-import { ref } from "vue";
-import { ControlFlow } from "../../../core";
+} from '../../../coreDist/index';
+import { ref } from 'vue';
+import { ControlFlow } from '../../../core';
 const logInfo = ref<Array<{ desc: string; success: boolean }>>([]);
 const disabled = ref<boolean>(false);
 
@@ -44,17 +44,7 @@ const clearLog = () => {
   logInfo.value.length = 0;
 };
 /***
- *  
-    Slice = "slice",
-    Sort = "sort",
-    Splice = "splice",
-    Includes = "includes",
-    IndexOf = "indexOf",
-    Join = "join",
-    Keys = "keys",
-    Entries = "entries",
-    Values = "values",
-    ForEach = "forEach",
+ * 
     Filter = "filter",
     Map = "map",
     Every = "every",
@@ -64,135 +54,225 @@ const clearLog = () => {
  */
 const utils = {
   concat: {
-    concat: "array concat",
-    expect: "1111-2222-3333-44444",
+    concat: 'array concat',
+    expect: '1111-2222-3333-44444',
     run: () => {
       const array = new ArrayObject();
-      array.push("1111");
-      array.push("2222");
-      array.push("3333");
-      const _array = array.concat(["44444"]);
-      return [..._array.valueOf()].join("-");
+      array.push('1111');
+      array.push('2222');
+      array.push('3333');
+      const _array = array.concat(['44444']);
+      return [..._array.valueOf()].join('-');
     },
   },
   copyWithin: {
-    concat: "array copyWithin",
-    expect: "1-2-1-2",
+    concat: 'array copyWithin',
+    expect: '1-2-1-2',
     run: () => {
       const array = new ArrayObject([1, 2, 3, 4]);
       array.copyWithin(2, 0);
-      return [...array.valueOf()].join("-");
+      return [...array.valueOf()].join('-');
     },
   },
   fill: {
-    concat: "array fill",
-    expect: "1-1-1-1",
+    concat: 'array fill',
+    expect: '1-1-1-1',
     run: () => {
       const array = new ArrayObject(4);
       array.fill(1);
-      return [...array.valueOf()].join("-");
+      return [...array.valueOf()].join('-');
     },
   },
   find: {
-    concat: "array find",
-    expect: "2222",
+    concat: 'array find',
+    expect: '2222',
     run: () => {
       const array = new ArrayObject();
-      array.push("1111");
-      array.push("2222");
-      array.push("3333");
-      return array.find(($1) => $1 == "2222").valueOf();
+      array.push('1111');
+      array.push('2222');
+      array.push('3333');
+      return array.find(($1) => $1 == '2222').valueOf();
     },
   },
   findIndex: {
-    concat: "array findIndex",
+    concat: 'array findIndex',
     expect: 1,
     run: () => {
       const array = new ArrayObject();
-      array.push("1111");
-      array.push("2222");
-      array.push("3333");
-      return array.findIndex(($1) => $1 == "2222").valueOf();
+      array.push('1111');
+      array.push('2222');
+      array.push('3333');
+      return array.findIndex(($1) => $1 == '2222').valueOf();
     },
   },
   lastIndexOf: {
-    concat: "array lastIndexOf",
+    concat: 'array lastIndexOf',
     expect: 4,
     run: () => {
       const array = new ArrayObject();
-      array.push("2222");
-      array.push("1111");
-      array.push("2222");
-      array.push("3333");
-      array.push("2222");
+      array.push('2222');
+      array.push('1111');
+      array.push('2222');
+      array.push('3333');
+      array.push('2222');
 
-      return array.lastIndexOf("2222").valueOf();
+      return array.lastIndexOf('2222').valueOf();
     },
   },
   pop: {
-    concat: "array pop",
-    expect: "2222-1111",
+    concat: 'array pop',
+    expect: '2222-1111',
     run: () => {
       const array = new ArrayObject();
-      array.push("2222");
-      array.push("1111");
-      array.push("2222");
+      array.push('2222');
+      array.push('1111');
+      array.push('2222');
       array.pop();
-      return array.join("-").valueOf();
+      return array.join('-').valueOf();
     },
   },
   push: {
-    concat: "array push",
-    expect: "2222-1111",
+    concat: 'array push',
+    expect: '2222-1111',
     run: () => {
       const array = new ArrayObject();
-      array.push("2222");
-      array.push("1111");
-      return array.join("-").valueOf();
+      array.push('2222');
+      array.push('1111');
+      return array.join('-').valueOf();
     },
   },
   reverse: {
-    concat: "array reverse",
-    expect: "1111-1111-2222",
+    concat: 'array reverse',
+    expect: '1111-1111-2222',
     run: () => {
       const array = new ArrayObject();
-      array.push("2222");
-      array.push("1111");
-      array.push("1111");
+      array.push('2222');
+      array.push('1111');
+      array.push('1111');
       array.reverse();
-      return array.join("-").valueOf();
+      return array.join('-').valueOf();
     },
   },
   shift: {
-    concat: "array shift",
-    expect: "2222",
+    concat: 'array shift',
+    expect: '2222',
     run: () => {
       const array = new ArrayObject();
-      array.push("2222");
-      array.push("1111");
-      array.push("1111");
-      return [array.shift().valueOf()].join("-");
+      array.push('2222');
+      array.push('1111');
+      array.push('1111');
+      return [array.shift().valueOf()].join('-');
     },
   },
   unshift: {
-    concat: "array unshift",
-    expect: "3333-4444-2222",
+    concat: 'array unshift',
+    expect: '3333-4444-2222',
     run: () => {
       const array = new ArrayObject();
-      array.push("2222");
-      array.unshift("3333", "4444");
-      return array.join("-").valueOf();
+      array.push('2222');
+      array.unshift('3333', '4444');
+      return array.join('-').valueOf();
     },
   },
   slice: {
-    concat: "array slice",
-    expect: "4444-2222",
+    concat: 'array slice',
+    expect: '4444-2222',
     run: () => {
       const array = new ArrayObject();
-      array.push("2222");
-      array.unshift("3333", "4444");
-      array.push("5555");
-      return array.slice(-3, -1).join("-").valueOf();
+      array.push('2222');
+      array.unshift('3333', '4444');
+      array.push('5555');
+      return array.slice(-3, -1).join('-').valueOf();
+    },
+  },
+  sort: {
+    concat: 'array sort',
+    expect: '1-2-3-7',
+    run: () => {
+      const array = new ArrayObject([3, 1, 7, 2]);
+      const result = array.sort(($1, $2) => $1 - $2);
+      return [result.valueOf()].join('-');
+    },
+  },
+  splice: {
+    concat: 'array splice',
+    expect: '1-0-0-7',
+    run: () => {
+      const array = new ArrayObject([1, 7]);
+      array.splice(1, 0, 0, 0);
+      return [array.valueOf()].join('-');
+    },
+  },
+  includes: {
+    concat: 'array includes',
+    expect: true,
+    run: () => {
+      const array = new ArrayObject([1, 0, 3, 0, 7]);
+      return array.includes(0, 2).valueOf();
+    },
+  },
+  indexOf: {
+    concat: 'array indexOf',
+    expect: 3,
+    run: () => {
+      const array = new ArrayObject([1, 0, 3, 0, 7]);
+      return array.indexOf(0, 2).valueOf();
+    },
+  },
+  join: {
+    concat: 'array join',
+    expect: '1-3',
+    run: () => {
+      const array = new ArrayObject([1, 3]);
+      return array.join('-').valueOf();
+    },
+  },
+  keys: {
+    concat: 'array keys',
+    expect: '0-1',
+    run: () => {
+      const array = new ArrayObject([1, 3]);
+      return [...array.keys()].join('-').valueOf();
+    },
+  },
+  values: {
+    concat: 'array values',
+    expect: '1-3',
+    run: () => {
+      const array = new ArrayObject([1, 3]);
+      return [...array.values()].join('-').valueOf();
+    },
+  },
+  entries: {
+    concat: 'array entries',
+    expect: '0,1-1,5-2,4-3,3',
+    run: () => {
+      const array = new ArrayObject([1, 5, 4, 3]);
+      return [...array.entries().valueOf()].join('-').valueOf();
+    },
+  },
+  forEach: {
+    concat: 'array forEach',
+    expect: '1-1-1-1',
+    run: () => {
+      const array = new ArrayObject(4);
+      const result = new ArrayObject(4);
+      array.fill(0);
+      array.forEach(($1) => {
+        result.push($1);
+      });
+      return result.join('-').valueOf();
+    },
+  },
+  filter: {
+    concat: 'array filter',
+    expect: '1',
+    run: () => {
+      const array = new ArrayObject([1, 2, 3, 4]);
+      return array
+        .filter(($1) => $1 === 1)
+        .join('-')
+        .valueOf();
     },
   },
 };

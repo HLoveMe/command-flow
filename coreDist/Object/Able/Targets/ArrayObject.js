@@ -109,7 +109,13 @@ var ArrayObject = /** @class */ (function (_super) {
     };
     ArrayObject.prototype.slice = function (start, end) { return null; };
     ArrayObject.prototype.sort = function (compareFn) { return null; };
-    ArrayObject.prototype.splice = function (start, deleteCount) { return null; };
+    ArrayObject.prototype.splice = function (start, deleteCount) {
+        var items = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+            items[_i - 2] = arguments[_i];
+        }
+        return null;
+    };
     ArrayObject.prototype.includes = function (searchElement, fromIndex) { return null; };
     ArrayObject.prototype.indexOf = function (searchElement, fromIndex) { return null; };
     ArrayObject.prototype.join = function (separator) { return null; };
@@ -245,7 +251,7 @@ var ArrayObject = /** @class */ (function (_super) {
     __decorate([
         onlyDeclaration,
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Number, Number]),
+        __metadata("design:paramtypes", [Number, Number, Object]),
         __metadata("design:returntype", Object)
     ], ArrayObject.prototype, "splice", null);
     __decorate([
