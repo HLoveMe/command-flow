@@ -45,7 +45,6 @@ const clearLog = () => {
 };
 /***
  * 
-    Reduce = "reduce",
     ReduceRight = "reduceRight",
  */
 const utils = {
@@ -316,11 +315,21 @@ const utils = {
       return result.valueOf();
     },
   },
+  reduceRight: {
+    concat: 'array reduceRight',
+    expect: 15,
+    run: () => {
+      const array = new ArrayObject([1, 2, 3, 4]);
+      const result = array.reduceRight(($1, $2) => {
+        return $1 + $2;
+      }, 5);
+      return result.valueOf();
+    },
+  },
 };
 const startBegin = async () => {
   Object.keys(utils).forEach((key) => {
     const item = utils[key];
-    console.log('1111111111111111111', key);
     const result = item.run();
     logInfo.value.push({
       desc: `[ ${item.concat} ]: 结果：${result}，期待：${item.expect} `,

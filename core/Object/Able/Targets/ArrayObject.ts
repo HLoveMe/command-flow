@@ -3,6 +3,8 @@ import { ArrayUint, attribute, DefaultValue, onlyDeclaration, Params } from "../
 import { Value } from "../../../index";
 import { ObjectTarget } from "./ObjectTarget";
 import { BaseType } from "../../../Types";
+import { NumberObject } from "./NumberObject";
+import { decide } from "../../valueUtil";
 
 @ArrayUint
 export class ArrayObject<T>
@@ -48,8 +50,6 @@ export class ArrayObject<T>
   collectionArray(key: ControlFlow.ArrayEnum, ...args: any[]): BaseType { return null };
   // array function
   @onlyDeclaration
-  length() { return null }
-  @onlyDeclaration
   concat(...items: (T | ArrayObject<T>)[]): BaseType { return null };
   @onlyDeclaration
   copyWithin(target: number, start: number, end?: number): BaseType { return null }
@@ -84,12 +84,14 @@ export class ArrayObject<T>
   indexOf(searchElement: T, fromIndex?: number): BaseType { return null }
   @onlyDeclaration
   join(separator?: string): BaseType { return null }
+
   @onlyDeclaration
-  keys(): BaseType { return null }
+  entries(): ObjectTarget<IterableIterator<[T, T]>> { return null };
   @onlyDeclaration
-  entries(): BaseType { return null }
+  values(): ObjectTarget<IterableIterator<T>> { return null };
   @onlyDeclaration
-  values(): BaseType { return null }
+  keys(): ObjectTarget<IterableIterator<T>> { return null };
+
   @onlyDeclaration
   forEach(callbackfn: (value: T, index: number, array: readonly T[]) => void, thisArg?: any): BaseType { return null }
   @onlyDeclaration
@@ -105,7 +107,11 @@ export class ArrayObject<T>
   @onlyDeclaration
   reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): BaseType { return null }
   @onlyDeclaration
-  reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): BaseType { return null }
+  reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): BaseType { return null }
   @onlyDeclaration
   toLocaleString(): BaseType { return null }
+
+  get length(): NumberObject {
+    return decide(this._value.length) as NumberObject;
+  }
 }

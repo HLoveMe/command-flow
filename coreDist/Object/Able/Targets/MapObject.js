@@ -25,6 +25,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { ControlFlow } from "../../Control";
 import { attribute, DefaultValue, MapUint, onlyDeclaration } from "../../util";
 import { ObjectTarget } from "./ObjectTarget";
+import { decide } from "../../valueUtil";
 var MapObject = /** @class */ (function (_super) {
     __extends(MapObject, _super);
     function MapObject(value) {
@@ -63,7 +64,7 @@ var MapObject = /** @class */ (function (_super) {
     MapObject.prototype.keys = function () { return null; };
     Object.defineProperty(MapObject.prototype, "size", {
         get: function () {
-            return this._value.size;
+            return decide(this._value.size);
         },
         enumerable: false,
         configurable: true

@@ -7,7 +7,7 @@
       value="start"
     />
     <input type="button" @click="clearLog" :disabled="disabled" value="clear" />
-    <a class="name">Map test</a>
+    <a class="name">Set test</a>
     <div class="run-container">
       <div
         class="run-result"
@@ -24,101 +24,79 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {
-  ObjectTarget,
-  ArrayObject,
-  MapObject,
-  SetObject,
-  NumberObject,
-  StringObject,
-  BooleanObject,
-  DateObject,
-  DataObject,
-} from "../../../coreDist/index";
-import { ref } from "vue";
-import { ControlFlow } from "../../../core";
+import { SetObject } from '../../../coreDist/index';
+import { ref } from 'vue';
+import { ControlFlow } from '../../../core';
 const logInfo = ref<Array<{ desc: string; success: boolean }>>([]);
 const disabled = ref<boolean>(false);
 
 const clearLog = () => {
   logInfo.value.length = 0;
 };
+/***
+    Entries = "entries",
+    ForEach = "forEach",
+    Values = "values",
+    Keys = "keys",
+ */
 const utils = {
-  get: {
-    desc: "map 获取值 get",
-    expect: 200,
-    run: () => {
-      const map = new MapObject(new Map());
-      map.set("a", 1);
-      map.set("b", 200);
-      map.set("c", 1300);
-      return map.get("b").valueOf();
-    },
-  },
-  set: {
-    desc: "map set ",
-    expect: 1,
-    run: () => {
-      const map = new MapObject(new Map());
-      map.set("a", 1);
-      return map.size.valueOf();
-    },
-  },
   has: {
-    desc: "map 是否包含 'b'",
-    expect: false,
+    desc: 'set has',
+    expect: true,
     run: () => {
-      const map = new MapObject(new Map());
-      map.set("a", 1);
-      map.set("b", 200);
-      map.set("c", 1300);
-      return map.has("sas").valueOf();
+      const map = new SetObject([1, 1, 2]);
+      return map.has(2).valueOf();
+    },
+  },
+  add: {
+    desc: 'set add',
+    expect: true,
+    run: () => {
+      const map = new SetObject([1, 1, 2]);
+      map.add(3);
+      return map.has(3).valueOf();
     },
   },
   delete: {
-    desc: "map delete 'b',删除后是否包含b",
+    desc: 'set delete',
     expect: false,
     run: () => {
-      const map = new MapObject(new Map());
-      map.set("a", 1);
-      map.set("b", 200);
-      map.set("c", 1300);
-      map.delete("b");
-      return map.has("b").valueOf();
+      const map = new SetObject([1, 1, 2]);
+      map.delete(2);
+      return map.has(2).valueOf();
     },
   },
   clear: {
-    desc: "map 清空,长度是否为0",
+    desc: 'set clear',
     expect: 0,
     run: () => {
-      const map = new MapObject(new Map());
-      map.set("a", 1);
-      map.set("b", 200);
-      map.set("c", 1300);
+      const map = new SetObject([1, 1, 2]);
       map.clear();
       return map.size.valueOf();
     },
   },
   keys: {
-    desc: "map keys",
-    expect: "a-b-c",
+    desc: 'array keys',
+    expect: '1-3',
     run: () => {
-      const map = new MapObject(new Map());
-      map.set("a", 1);
-      map.set("b", 200);
-      map.set("c", 1300);
-      return [...map.keys().valueOf()].join('-');
+      const array = new SetObject([1, 3]);
+      return [...array.keys().valueOf()].join('-').valueOf();
     },
   },
   values: {
-    desc: "map values",
-    expect: "1-200-1300",
+    desc: 'array values',
+    expect: '1-3',
     run: () => {
-      const map = new MapObject(new Map());
-      map.set("a", 1);
-      map.set("b", 200);
-      map.set("c", 1300);
-      return [...map.values().valueOf()].join('-');
+      const array = new SetObject([1, 3]);
+      return [...array.values().valueOf()].join('-').valueOf();
+    },
+  },
+  entries: {
+    desc: 'array entries',
+    expect: '1,1-5,5-4,4-3,3',
+    run: () => {
+      const array = new SetObject([1, 5, 4, 3]);
+      return [...array.entries().valueOf()].join('-').valueOf();
     },
   },
 };

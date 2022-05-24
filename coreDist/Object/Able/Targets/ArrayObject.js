@@ -37,6 +37,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 import { ControlFlow } from "../../Control";
 import { ArrayUint, attribute, DefaultValue, onlyDeclaration, Params } from "../../util";
 import { ObjectTarget } from "./ObjectTarget";
+import { decide } from "../../valueUtil";
 var ArrayObject = /** @class */ (function (_super) {
     __extends(ArrayObject, _super);
     function ArrayObject(value) {
@@ -74,7 +75,6 @@ var ArrayObject = /** @class */ (function (_super) {
     };
     ;
     // array function
-    ArrayObject.prototype.length = function () { return null; };
     ArrayObject.prototype.concat = function () {
         var items = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -119,17 +119,27 @@ var ArrayObject = /** @class */ (function (_super) {
     ArrayObject.prototype.includes = function (searchElement, fromIndex) { return null; };
     ArrayObject.prototype.indexOf = function (searchElement, fromIndex) { return null; };
     ArrayObject.prototype.join = function (separator) { return null; };
-    ArrayObject.prototype.keys = function () { return null; };
     ArrayObject.prototype.entries = function () { return null; };
+    ;
     ArrayObject.prototype.values = function () { return null; };
+    ;
+    ArrayObject.prototype.keys = function () { return null; };
+    ;
     ArrayObject.prototype.forEach = function (callbackfn, thisArg) { return null; };
     ArrayObject.prototype.filter = function (predicate, thisArg) { return null; };
     ArrayObject.prototype.map = function (callbackfn, thisArg) { return null; };
     ArrayObject.prototype.every = function (predicate, thisArg) { return null; };
     ArrayObject.prototype.some = function (predicate, thisArg) { return null; };
     ArrayObject.prototype.reduce = function (callbackfn, initialValue) { return null; };
-    ArrayObject.prototype.reduceRight = function (callbackfn) { return null; };
+    ArrayObject.prototype.reduceRight = function (callbackfn, initialValue) { return null; };
     ArrayObject.prototype.toLocaleString = function () { return null; };
+    Object.defineProperty(ArrayObject.prototype, "length", {
+        get: function () {
+            return decide(this._value.length);
+        },
+        enumerable: false,
+        configurable: true
+    });
     var ArrayObject_1;
     ArrayObject.attributes = new Set();
     ArrayObject.empty = new ArrayObject_1([]);
@@ -164,12 +174,6 @@ var ArrayObject = /** @class */ (function (_super) {
         __metadata("design:paramtypes", [String, Object]),
         __metadata("design:returntype", Object)
     ], ArrayObject.prototype, "collectionArray", null);
-    __decorate([
-        onlyDeclaration,
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
-    ], ArrayObject.prototype, "length", null);
     __decorate([
         onlyDeclaration,
         __metadata("design:type", Function),
@@ -276,20 +280,20 @@ var ArrayObject = /** @class */ (function (_super) {
         onlyDeclaration,
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
-        __metadata("design:returntype", Object)
-    ], ArrayObject.prototype, "keys", null);
-    __decorate([
-        onlyDeclaration,
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", Object)
+        __metadata("design:returntype", ObjectTarget)
     ], ArrayObject.prototype, "entries", null);
     __decorate([
         onlyDeclaration,
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
-        __metadata("design:returntype", Object)
+        __metadata("design:returntype", ObjectTarget)
     ], ArrayObject.prototype, "values", null);
+    __decorate([
+        onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", ObjectTarget)
+    ], ArrayObject.prototype, "keys", null);
     __decorate([
         onlyDeclaration,
         __metadata("design:type", Function),
@@ -329,7 +333,7 @@ var ArrayObject = /** @class */ (function (_super) {
     __decorate([
         onlyDeclaration,
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Function]),
+        __metadata("design:paramtypes", [Function, Object]),
         __metadata("design:returntype", Object)
     ], ArrayObject.prototype, "reduceRight", null);
     __decorate([

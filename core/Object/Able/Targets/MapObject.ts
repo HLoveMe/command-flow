@@ -2,6 +2,8 @@ import { ControlFlow } from "../../Control";
 import { attribute, DefaultValue, MapUint, onlyDeclaration } from "../../util";
 import { BaseType, Value } from "../../../Types";
 import { ObjectTarget } from "./ObjectTarget";
+import { decide } from "../../valueUtil";
+import { NumberObject } from "./NumberObject";
 @MapUint
 export class MapObject<T, U>
   extends ObjectTarget<Map<T, U>>
@@ -50,7 +52,7 @@ export class MapObject<T, U>
   @onlyDeclaration
   keys(): BaseType { return null }
 
-  get size() {
-    return this._value.size;
+  get size(): NumberObject {
+    return decide(this._value.size) as NumberObject;
   }
 }

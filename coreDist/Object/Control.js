@@ -66,7 +66,6 @@ export var ControlFlow;
         SetEnum["Clear"] = "clear";
         SetEnum["Entries"] = "entries";
         SetEnum["ForEach"] = "forEach";
-        SetEnum["Size"] = "size";
         SetEnum["Values"] = "values";
         SetEnum["Keys"] = "keys";
     })(SetEnum = ControlFlow.SetEnum || (ControlFlow.SetEnum = {}));

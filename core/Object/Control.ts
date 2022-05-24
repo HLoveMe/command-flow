@@ -64,7 +64,6 @@ export namespace ControlFlow {
     Clear = "clear",
     Entries = "entries",
     ForEach = "forEach",
-    Size = "size",
     Values = "values",
     Keys = "keys",
   }

@@ -1,7 +1,10 @@
 import { ControlFlow } from "../../Control";
-import { attribute, DefaultValue, SetUint } from "../../util";
+import { attribute, DefaultValue, onlyDeclaration, SetUint } from "../../util";
 import { Value } from "../../../Types";
 import { ObjectTarget } from "./ObjectTarget";
+import { BaseType } from "../../..";
+import { NumberObject } from "./NumberObject";
+import { decide } from "../../valueUtil";
 
 @SetUint
 export class SetObject<T>
@@ -12,9 +15,10 @@ export class SetObject<T>
 
   @DefaultValue(Object.prototype.toString.call(new Set())) static type: string;
   _value: Set<T>;
-  constructor(value: Set<T> = new Set()) {
-    super(value);
-    this._value = new Set(value);
+  constructor(value: Set<T> | Array<T>) {
+    const init = !!value ? (Array.isArray(value) ? new Set(value) : value) : new Set<T>();
+    super(init);
+    this._value = init;
   }
   @attribute()
   len(): number {
@@ -29,17 +33,32 @@ export class SetObject<T>
     const newSet = new Set<T>();
     this._value.forEach(($1) => newSet.add($1));
     target.forEach(($1) => newSet.add($1));
+    new Set().keys
     return new SetObject(newSet);
   }
 
-  collectionSet: ControlFlow.CollectionSetExec;
-  has: ControlFlow.SetFunction;
-  add: ControlFlow.SetFunction;
-  delete: ControlFlow.SetFunction;
-  clear: ControlFlow.SetFunction;
-  entries: ControlFlow.SetFunction;
-  forEach: ControlFlow.SetFunction;
-  size: ControlFlow.SetFunction;
-  values: ControlFlow.SetFunction;
-  keys: ControlFlow.SetFunction;
+  @onlyDeclaration
+  collectionSet(key: ControlFlow.SetEnum, ...args: any[]): BaseType { return null };
+  @onlyDeclaration
+  has(value: T): BaseType { return null }
+  @onlyDeclaration
+  add(value: T): BaseType { return null }
+  @onlyDeclaration
+  delete(value: T): BaseType { return null }
+  @onlyDeclaration
+  clear(): BaseType { return null }
+
+  @onlyDeclaration
+  forEach(callbackfn: (value: T, value2: T, set: Set<T>) => void, thisArg?: any): BaseType { return null };
+
+  @onlyDeclaration
+  entries(): ObjectTarget<IterableIterator<[T, T]>> { return null };
+  @onlyDeclaration
+  values(): ObjectTarget<IterableIterator<T>> { return null };
+  @onlyDeclaration
+  keys(): ObjectTarget<IterableIterator<T>> { return null };
+
+  get size(): NumberObject {
+    return decide(this._value.size) as NumberObject;
+  }
 }
