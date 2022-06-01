@@ -1,12 +1,15 @@
-import { of } from "rxjs";
-import { BooleanObject, ObjectTarget } from "../../../Object/Able/ObjectAble";
-import { PlatformBridge } from "../BasePlatform";
-export class MobileNodejsBridge extends PlatformBridge {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MobileNodejsBridge = void 0;
+const rxjs_1 = require("rxjs");
+const ObjectAble_1 = require("../../../Object/Able/ObjectAble");
+const BasePlatform_1 = require("../BasePlatform");
+class MobileNodejsBridge extends BasePlatform_1.PlatformBridge {
     open(url) {
-        return of(new BooleanObject(false));
+        return (0, rxjs_1.of)(new ObjectAble_1.BooleanObject(false));
     }
     loadFile(url, option) {
-        return of(new ObjectTarget({
+        return (0, rxjs_1.of)(new ObjectAble_1.ObjectTarget({
             total: 0,
             loaded: 0,
             data: new ArrayBuffer(0),
@@ -15,4 +18,5 @@ export class MobileNodejsBridge extends PlatformBridge {
         }));
     }
 }
+exports.MobileNodejsBridge = MobileNodejsBridge;
 //# sourceMappingURL=Mobile.js.map

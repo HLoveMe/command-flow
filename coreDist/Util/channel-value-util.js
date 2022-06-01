@@ -1,23 +1,28 @@
-import { ObjectTarget } from "..";
-import { decide } from "../Object/valueUtil";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.wrapperValue = exports.unpackValue = void 0;
+const __1 = require("..");
+const valueUtil_1 = require("../Object/valueUtil");
 /**
  * 解包
  * @param value
  * @returns
  */
-export const unpackValue = (value) => {
+const unpackValue = (value) => {
     if (!!value === false)
         return "";
     return value._value.value.valueOf();
 };
+exports.unpackValue = unpackValue;
 /**
  * 组合包装
  * @param input
  * @param value
  * @returns
  */
-export function wrapperValue(input, value) {
-    const nextValue = decide(value);
-    return new ObjectTarget(Object.assign(Object.assign({}, (input._value)), { value: nextValue }));
+function wrapperValue(input, value) {
+    const nextValue = (0, valueUtil_1.decide)(value);
+    return new __1.ObjectTarget(Object.assign(Object.assign({}, (input._value)), { value: nextValue }));
 }
+exports.wrapperValue = wrapperValue;
 //# sourceMappingURL=channel-value-util.js.map

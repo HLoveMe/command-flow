@@ -1,5 +1,8 @@
-import { ObjectTarget } from "..";
-import * as Value from './Able/ObjectAble';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.decide = exports.isAbleType = void 0;
+const __1 = require("..");
+const Value = require("./Able/ObjectAble");
 let ObjectMap = null;
 const init = () => {
     if (ObjectMap === null) {
@@ -21,10 +24,11 @@ const init = () => {
     }
     return ObjectMap;
 };
-export const isAbleType = (value) => {
+const isAbleType = (value) => {
     init();
     return Object.prototype.toString.call(value) === '[object flow-object]';
 };
+exports.isAbleType = isAbleType;
 /**
  * 将js 数据转为 BaseType
  * 如果是BaseType类型 将不会包装。见[force]
@@ -32,15 +36,16 @@ export const isAbleType = (value) => {
  * @param force 是否强制包装
  * @returns
  */
-export const decide = function (value, force = false) {
+const decide = function (value, force = false) {
     init();
-    if (isAbleType(value) && force === false)
+    if ((0, exports.isAbleType)(value) && force === false)
         return value;
     const key = Object.prototype.toString.call(value);
     const Target = ObjectMap[key];
     if (Target) {
         return new Target(value !== null && value !== void 0 ? value : {});
     }
-    return new ObjectTarget(value !== null && value !== void 0 ? value : {});
+    return new __1.ObjectTarget(value !== null && value !== void 0 ? value : {});
 };
+exports.decide = decide;
 //# sourceMappingURL=valueUtil.js.map

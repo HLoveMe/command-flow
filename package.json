@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc_web": "node ./build-pre.js 0 && tsc",
     "tsc_node": "node ./build-pre.js 1 && tsc -p tsconfig.node.json",
-    "dev": "webpack-dev-server --config webpack.config.dev.js",
+    "dev_web": "webpack-dev-server --config webpack.config.dev.js",
+    "dev_node": "webpack-dev-server --config webpack.config.dev.node.js",
     "dev_test": "vite"
   },
   "repository": {

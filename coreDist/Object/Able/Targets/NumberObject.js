@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var NumberObject_1;
-import { attribute, CalcUnit, CompareUnit, DefaultValue } from "../../util";
-import { ObjectTarget } from "./ObjectTarget";
-import { BooleanObject } from "./BooleanObject";
-let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NumberObject = void 0;
+const util_1 = require("../../util");
+const ObjectTarget_1 = require("./ObjectTarget");
+const BooleanObject_1 = require("./BooleanObject");
+let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget_1.ObjectTarget {
     constructor(value = 1) {
         super(value);
         this._value = value;
@@ -25,19 +28,19 @@ let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget {
     // Compare
     // compare: ControlFlow.CompareExec;
     more(target) {
-        return new BooleanObject(this._value > target._value);
+        return new BooleanObject_1.BooleanObject(this._value > target._value);
     }
     equal(target) {
-        return new BooleanObject(this._value === target._value);
+        return new BooleanObject_1.BooleanObject(this._value === target._value);
     }
     less(target) {
-        return new BooleanObject(this._value < target._value);
+        return new BooleanObject_1.BooleanObject(this._value < target._value);
     }
     moreEqual(target) {
-        return new BooleanObject(this._value >= target._value);
+        return new BooleanObject_1.BooleanObject(this._value >= target._value);
     }
     lessEqual(target) {
-        return new BooleanObject(this._value <= target._value);
+        return new BooleanObject_1.BooleanObject(this._value <= target._value);
     }
     // Calc
     // calc: ControlFlow.CalcFunction;
@@ -57,19 +60,19 @@ let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget {
 NumberObject.attributes = new Set();
 NumberObject.empty = new NumberObject_1(0);
 __decorate([
-    attribute(),
+    (0, util_1.attribute)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Number)
 ], NumberObject.prototype, "valueOf", null);
 __decorate([
-    DefaultValue(Object.prototype.toString.call(new Number())),
+    (0, util_1.DefaultValue)(Object.prototype.toString.call(new Number())),
     __metadata("design:type", String)
 ], NumberObject, "type", void 0);
 NumberObject = NumberObject_1 = __decorate([
-    CalcUnit,
-    CompareUnit,
+    util_1.CalcUnit,
+    util_1.CompareUnit,
     __metadata("design:paramtypes", [Number])
 ], NumberObject);
-export { NumberObject };
+exports.NumberObject = NumberObject;
 //# sourceMappingURL=NumberObject.js.map

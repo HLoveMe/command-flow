@@ -1,4 +1,7 @@
-export var FileType;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SupportContentType = exports.FileType = void 0;
+var FileType;
 (function (FileType) {
     FileType["Audio"] = "audio/*";
     FileType["Video"] = "video/*";
@@ -9,12 +12,12 @@ export var FileType;
     FileType["Pdf"] = "application/pdf";
     FileType["Word"] = "application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/msword\uFF0Capplication/vnd.openxmlformats-officedocument.wordprocessingml.document";
     FileType["All"] = "*";
-})(FileType || (FileType = {}));
-export var SupportContentType;
+})(FileType = exports.FileType || (exports.FileType = {}));
+var SupportContentType;
 (function (SupportContentType) {
     SupportContentType["JSON"] = "application/json";
     SupportContentType["TEXT"] = "text/plain";
-})(SupportContentType || (SupportContentType = {}));
+})(SupportContentType = exports.SupportContentType || (exports.SupportContentType = {}));
 // export interface BasePlatformBridgeAble extends PlatformBridgeAble { }
 // export interface WebBridgeAble extends BasePlatformBridgeAble { }
 // export interface NodejsBridgeAble extends BasePlatformBridgeAble { }

@@ -1,8 +1,10 @@
-import { InstructionOTO } from "../Instruction";
-import { Observable } from "rxjs";
-import { BooleanObject } from "../../Object/Able/ObjectAble";
-import { isJS, } from "../../Util/Equipment";
-import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Instruction_1 = require("../Instruction");
+const rxjs_1 = require("rxjs");
+const ObjectAble_1 = require("../../Object/Able/ObjectAble");
+const Equipment_1 = require("../../Util/Equipment");
+const channel_value_util_1 = require("../../Util/channel-value-util");
 /**
  * 打开路径
  * http://www.baidu.com
@@ -11,19 +13,19 @@ import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
  * node:可以打开文件 网页
  * web:只能代开网页
  */
-export default class OpenURLWork extends InstructionOTO {
+class OpenURLWork extends Instruction_1.InstructionOTO {
     constructor() {
         super(...arguments);
         this.name = "OpenURLWork";
     }
     run(input, option) {
         const that = this;
-        return new Observable((subscriber) => {
-            const target = unpackValue(input);
+        return new rxjs_1.Observable((subscriber) => {
+            const target = (0, channel_value_util_1.unpackValue)(input);
             const sub = that.context.platform
                 .open(target, option)
                 .subscribe({
-                next: _ => subscriber.next(wrapperValue(input, new BooleanObject(true))),
+                next: _ => subscriber.next((0, channel_value_util_1.wrapperValue)(input, new ObjectAble_1.BooleanObject(true))),
                 complete: () => subscriber.complete(),
                 error: (err) => subscriber.error(err)
             });
@@ -36,7 +38,8 @@ export default class OpenURLWork extends InstructionOTO {
         });
     }
     static isAble() {
-        return isJS;
+        return Equipment_1.isJS;
     }
 }
+exports.default = OpenURLWork;
 //# sourceMappingURL=OpenURLWork.js.map

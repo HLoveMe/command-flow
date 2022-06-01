@@ -1,4 +1,7 @@
-export class HardwareBase {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.HardwareBase = void 0;
+class HardwareBase {
     takePhoto(option) {
         throw new Error("Method not implemented.");
     }
@@ -75,4 +78,5 @@ export class HardwareBase {
         throw new Error("Method not implemented.");
     }
 }
+exports.HardwareBase = HardwareBase;
 //# sourceMappingURL=Hardware.js.map

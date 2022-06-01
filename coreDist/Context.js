@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,18 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { WorkType } from "./Types";
-import { forkJoin, Subject } from "rxjs";
-import { DefaultRunConfig } from "./Configs";
-import { BooleanObject, ObjectTarget } from "./Object/Able/ObjectAble";
-import Platform from "./Bridge/Index";
-import { BeginWork } from "./Works/ExtendsWorks/BeginWork";
-import { decide } from "./Object/valueUtil";
-import { take } from "rxjs/operators";
-export class Context {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Context = void 0;
+const Types_1 = require("./Types");
+const rxjs_1 = require("rxjs");
+const Configs_1 = require("./Configs");
+const ObjectAble_1 = require("./Object/Able/ObjectAble");
+const Index_1 = require("./Bridge/Index");
+const BeginWork_1 = require("./Works/ExtendsWorks/BeginWork");
+const valueUtil_1 = require("./Object/valueUtil");
+const operators_1 = require("rxjs/operators");
+class Context {
     constructor(runOptions) {
-        this.status = WorkType.WorkRunStatus.INIT;
-        this.platform = Platform;
+        this.status = Types_1.WorkType.WorkRunStatus.INIT;
+        this.platform = Index_1.default;
         /**
          * 上下文变量
          */
@@ -30,18 +33,18 @@ export class Context {
         /**
          * 消息传输通道
          */
-        this.msgChannel = new Subject();
+        this.msgChannel = new rxjs_1.Subject();
         /**
          * 需要销毁的Subscription
          */
         this.pools = [];
-        this.runOptions = (runOptions || DefaultRunConfig);
+        this.runOptions = (runOptions || Configs_1.DefaultRunConfig);
         const sub = this.msgChannel.subscribe({
             next: (value) => this.workMessage(value),
             error: (error) => this.workError(error),
         });
         this.pools.push(sub);
-        this.addWork(new BeginWork());
+        this.addWork(new BeginWork_1.BeginWork());
     }
     /**
      * 增加上下文变量
@@ -85,12 +88,12 @@ export class Context {
                 error: new Error(desc),
             });
         }
-        if (this.status !== WorkType.WorkRunStatus.INIT) {
+        if (this.status !== Types_1.WorkType.WorkRunStatus.INIT) {
             return this.sendLog({
                 content: this,
                 work: [],
                 desc: "[content][Func:addWork][context status is not init]",
-                value: new BooleanObject(false),
+                value: new ObjectAble_1.BooleanObject(false),
             });
         }
         work.context = this;
@@ -101,12 +104,12 @@ export class Context {
     }
     prepareWorks() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (this.status !== WorkType.WorkRunStatus.INIT) {
+            if (this.status !== Types_1.WorkType.WorkRunStatus.INIT) {
                 return this.sendLog({
                     content: this,
                     work: [],
                     desc: "[content][Func:prepareWorks][context status is not init]",
-                    value: new BooleanObject(false),
+                    value: new ObjectAble_1.BooleanObject(false),
                 });
             }
             ;
@@ -115,24 +118,24 @@ export class Context {
                 const after = source[index + 1];
                 return $1.prepare(before, after);
             }));
-            this.status = WorkType.WorkRunStatus.READY;
+            this.status = Types_1.WorkType.WorkRunStatus.READY;
         });
     }
     dispatch(input) {
-        if (this.status === WorkType.WorkRunStatus.INIT) {
+        if (this.status === Types_1.WorkType.WorkRunStatus.INIT) {
             return this.sendLog({
                 content: this,
                 work: [],
                 desc: "[context][Func:run][run status is not ready  or 已经初始化]",
-                value: new BooleanObject(false),
+                value: new ObjectAble_1.BooleanObject(false),
             });
         }
         ;
         const inputWork = this.works[0];
         if (inputWork) {
-            inputWork.startRun(decide(input));
+            inputWork.startRun((0, valueUtil_1.decide)(input));
         }
-        this.status = WorkType.WorkRunStatus.RUNNING;
+        this.status = Types_1.WorkType.WorkRunStatus.RUNNING;
     }
     /**
      * 停止执行
@@ -144,7 +147,7 @@ export class Context {
             const taskUns = this.works.map(($1) => $1.stopWork());
             let isSuccess = false;
             let errors = [];
-            forkJoin(taskUns).pipe(take(1)).subscribe({
+            (0, rxjs_1.forkJoin)(taskUns).pipe((0, operators_1.take)(1)).subscribe({
                 next: (values) => {
                     (isSuccess = values.every(($1, index) => {
                         if ($1 === true)
@@ -163,9 +166,9 @@ export class Context {
                         content: that,
                         work: errors,
                         desc: "[content][Func:stopWorkChain]",
-                        value: new ObjectTarget({
+                        value: new ObjectAble_1.ObjectTarget({
                             id: 'stopWorkChain',
-                            value: decide(isSuccess),
+                            value: (0, valueUtil_1.decide)(isSuccess),
                             option: {},
                         }),
                     });
@@ -177,4 +180,5 @@ export class Context {
         this.pools.forEach(($1) => $1.unsubscribe());
     }
 }
+exports.Context = Context;
 //# sourceMappingURL=Context.js.map

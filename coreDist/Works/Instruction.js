@@ -1,16 +1,19 @@
-import { Subject, Observable, asyncScheduler, } from "rxjs";
-import { isJS, PlatformSelect, } from "../Util/Equipment";
-import { observeOn, tap } from "rxjs/operators";
-import { v4 as UUID } from "uuid";
-import { WorkUnit } from "./WorkUnit";
-import { StringObject } from "../Object/Able/ObjectAble";
-import { wrapperValue } from "../Util/channel-value-util";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.InstructionMTM = exports.InstructionOTM = exports.InstructionOTO = exports.Instruction = void 0;
+const rxjs_1 = require("rxjs");
+const Equipment_1 = require("../Util/Equipment");
+const operators_1 = require("rxjs/operators");
+const uuid_1 = require("uuid");
+const WorkUnit_1 = require("./WorkUnit");
+const ObjectAble_1 = require("../Object/Able/ObjectAble");
+const channel_value_util_1 = require("../Util/channel-value-util");
 /**
  * 一次输入--->一次输出 InstructionOTO
  * 一次输入--->多次输出 InstructionOTM
  * n次输入---->m次输出 InstructionMTM
  */
-export class Instruction extends Subject {
+class Instruction extends rxjs_1.Subject {
     constructor() {
         super();
         this.name = "Instruction";
@@ -19,7 +22,7 @@ export class Instruction extends Subject {
         this.pools = []; // 订阅自己的
         // 运行配置 config:OPTION todo
         this.config = { development: true };
-        this.uuid = UUID();
+        this.uuid = (0, uuid_1.v4)();
     }
     // 连接上下通道
     prepare(before, next) {
@@ -34,7 +37,7 @@ export class Instruction extends Subject {
         const that = this;
         // // 处理数据
         const sub2 = this
-            .pipe(tap((value) => {
+            .pipe((0, operators_1.tap)((value) => {
             var _a, _b;
             ((_a = this.config) === null || _a === void 0 ? void 0 : _a.development) &&
                 ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
@@ -67,7 +70,7 @@ export class Instruction extends Subject {
         value = this.nextValue(value) || value;
         const that = this;
         const nextOption = (((_a = this.config) === null || _a === void 0 ? void 0 : _a.workConfig) || {})[this.name] || {};
-        const execFunc = PlatformSelect({
+        const execFunc = (0, Equipment_1.PlatformSelect)({
             web: () => {
                 var _a;
                 return ((_a = that.web_run) !== null && _a !== void 0 ? _a : that.run).bind(that)(value, nextOption);
@@ -86,9 +89,9 @@ export class Instruction extends Subject {
         if (!execFunc === true)
             return sendLog("[Work][Func:run]->没有实现run", value);
         ;
-        const uuid = UUID();
+        const uuid = (0, uuid_1.v4)();
         const runSub = execFunc(value)
-            .pipe(tap((_value) => sendLog("[Work][Func:run]->结果", _value)), observeOn(asyncScheduler))
+            .pipe((0, operators_1.tap)((_value) => sendLog("[Work][Func:run]->结果", _value)), (0, operators_1.observeOn)(rxjs_1.asyncScheduler))
             .subscribe({
             complete: () => {
                 const unit = that.runSubscriptions.get(uuid);
@@ -106,12 +109,12 @@ export class Instruction extends Subject {
                 (_a = that.nextWork) === null || _a === void 0 ? void 0 : _a.next(res);
             },
         });
-        const unit = new WorkUnit(that.context, that, runSub, uuid);
+        const unit = new WorkUnit_1.WorkUnit(that.context, that, runSub, uuid);
         this.runSubscriptions.set(unit.uuid, unit);
     }
     stopWork() {
         const that = this;
-        return new Observable((subscribe) => {
+        return new rxjs_1.Observable((subscribe) => {
             that.runSubscriptions.forEach((value) => {
                 value === null || value === void 0 ? void 0 : value.sub.unsubscribe();
             });
@@ -134,7 +137,7 @@ export class Instruction extends Subject {
                 content: this.context,
                 desc: "[Work:preRun]-接受上一个消息错误",
                 date: new Date(),
-                value: new StringObject(err.message),
+                value: new ObjectAble_1.StringObject(err.message),
             });
     }
     addVariable(name, value) {
@@ -147,7 +150,7 @@ export class Instruction extends Subject {
                 work: [this],
                 content: this.context,
                 desc: msg,
-                value: wrapperValue(input, null),
+                value: (0, channel_value_util_1.wrapperValue)(input, null),
             }));
     }
     //重写
@@ -160,7 +163,7 @@ export class Instruction extends Subject {
                 work: [this],
                 content: this.context,
                 desc: this.toString() + " 已经关闭",
-                value: wrapperValue(value, null),
+                value: (0, channel_value_util_1.wrapperValue)(value, null),
             });
         }
     }
@@ -176,17 +179,18 @@ export class Instruction extends Subject {
         return this.__proto__.isAble();
     }
     static isAble() {
-        return isJS;
+        return Equipment_1.isJS;
     }
 }
+exports.Instruction = Instruction;
 Instruction._id = 0;
-export class InstructionOTO extends Instruction {
+class InstructionOTO extends Instruction {
     nextValue(input) {
         return input;
     }
     completeOneLoop(input, toValue, success) { }
     run(input) {
-        return new Observable((subscriber) => {
+        return new rxjs_1.Observable((subscriber) => {
             subscriber.next(input);
             subscriber.complete();
             return {
@@ -195,7 +199,8 @@ export class InstructionOTO extends Instruction {
         });
     }
 }
-export class InstructionOTM extends Instruction {
+exports.InstructionOTO = InstructionOTO;
+class InstructionOTM extends Instruction {
     constructor() {
         super(...arguments);
         this.name = "MultipleInstruction";
@@ -203,7 +208,7 @@ export class InstructionOTM extends Instruction {
     nextValue(input) { return input; }
     completeOneLoop(input, next, success) { }
     run(input) {
-        return new Observable((subscriber) => {
+        return new rxjs_1.Observable((subscriber) => {
             // subscriber.next(input);
             // 输出多次
             subscriber.next(input);
@@ -214,7 +219,8 @@ export class InstructionOTM extends Instruction {
         });
     }
 }
-export class InstructionMTM extends Instruction {
+exports.InstructionOTM = InstructionOTM;
+class InstructionMTM extends Instruction {
     constructor() {
         super(...arguments);
         this.name = "MultipleInstruction";
@@ -222,7 +228,7 @@ export class InstructionMTM extends Instruction {
     nextValue(input) { return input; }
     completeOneLoop(input, next, success) { }
     run(input) {
-        return new Observable((subscriber) => {
+        return new rxjs_1.Observable((subscriber) => {
             // subscriber.next(input);
             // 输出多次
             subscriber.next(input);
@@ -233,4 +239,5 @@ export class InstructionMTM extends Instruction {
         });
     }
 }
+exports.InstructionMTM = InstructionMTM;
 //# sourceMappingURL=Instruction.js.map

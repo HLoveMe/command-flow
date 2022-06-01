@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,8 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { DefaultValue } from "../../util";
-export class ObjectTarget {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ObjectTarget = void 0;
+const util_1 = require("../../util");
+class ObjectTarget {
     constructor(value = {}) {
         this._value = value;
     }
@@ -40,7 +43,8 @@ export class ObjectTarget {
 ObjectTarget.attributes = new Set();
 ObjectTarget.empty = new ObjectTarget({});
 __decorate([
-    DefaultValue(Object.prototype.toString.call({})),
+    (0, util_1.DefaultValue)(Object.prototype.toString.call({})),
     __metadata("design:type", String)
 ], ObjectTarget, "type", void 0);
+exports.ObjectTarget = ObjectTarget;
 //# sourceMappingURL=ObjectTarget.js.map

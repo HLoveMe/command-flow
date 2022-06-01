@@ -1,11 +1,14 @@
-import { Observable } from "rxjs";
-import { StringObject, ObjectTarget } from "../../Object/Able/ObjectAble";
-import * as QRCode from "qrcode-generator";
-import Axios from "axios";
-import { HardwareBase } from "./Hardware";
-export class PlatformBridge extends HardwareBase {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PlatformBridge = void 0;
+const rxjs_1 = require("rxjs");
+const ObjectAble_1 = require("../../Object/Able/ObjectAble");
+const QRCode = require("qrcode-generator");
+const axios_1 = require("axios");
+const Hardware_1 = require("./Hardware");
+class PlatformBridge extends Hardware_1.HardwareBase {
     createQrCode(context, option) {
-        return new Observable((sub) => {
+        return new rxjs_1.Observable((sub) => {
             var _a;
             let width = (_a = option === null || option === void 0 ? void 0 : option.SideLength) !== null && _a !== void 0 ? _a : 200;
             let margin = 2;
@@ -16,7 +19,7 @@ export class PlatformBridge extends HardwareBase {
             const cellSize = (width - margin * 2) / moduleCount;
             const base64 = qrcode.createDataURL(cellSize, margin);
             // const base64 = qrcode.createDataURL(cellSize, margin).replace('data:image/gif;base64', 'data:image/png;base64');
-            sub.next(new StringObject(base64));
+            sub.next(new ObjectAble_1.StringObject(base64));
             sub.complete();
             return {
                 unsubscribe: () => sub.unsubscribe(),
@@ -27,7 +30,7 @@ export class PlatformBridge extends HardwareBase {
         throw new Error("Method not implemented.");
     }
     runCommand(command, option) {
-        return new Observable((subscriber) => {
+        return new rxjs_1.Observable((subscriber) => {
             let result = null;
             let error = null;
             let status = false;
@@ -60,8 +63,8 @@ export class PlatformBridge extends HardwareBase {
         throw new Error("Method not implemented.");
     }
     fetch(req) {
-        return new Observable((subscriber) => {
-            Axios.request(req)
+        return new rxjs_1.Observable((subscriber) => {
+            axios_1.default.request(req)
                 .then((response) => {
                 let error = null;
                 let data = null;
@@ -75,7 +78,7 @@ export class PlatformBridge extends HardwareBase {
                 content.data = data;
                 content.error = error;
                 content.response = response;
-                subscriber.next(new ObjectTarget(content));
+                subscriber.next(new ObjectAble_1.ObjectTarget(content));
                 subscriber.complete();
             })
                 .catch((error) => {
@@ -89,4 +92,5 @@ export class PlatformBridge extends HardwareBase {
         });
     }
 }
+exports.PlatformBridge = PlatformBridge;
 //# sourceMappingURL=BasePlatform.js.map

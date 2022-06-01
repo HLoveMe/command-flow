@@ -1,44 +1,52 @@
-import { BooleanObject, NumberObject } from "./Able/ObjectAble";
-import { ControlFlow } from "./Control";
-import { decide } from "./valueUtil";
-export const onlyDeclarationTag = 'onlyDeclaration';
-export function attribute() {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.DefaultValue = exports.ObjectManager = exports.Params = exports.attribute = exports.onlyDeclarationTag = void 0;
+const ObjectAble_1 = require("./Able/ObjectAble");
+const Control_1 = require("./Control");
+const valueUtil_1 = require("./valueUtil");
+exports.onlyDeclarationTag = 'onlyDeclaration';
+function attribute() {
     return function ($1, $2, descriptor) {
         $1.constructor.attributes.add($2);
     };
 }
-export function Params(params) {
+exports.attribute = attribute;
+function Params(params) {
     return function (target, methodName, paramsIndex) {
         !target.$Meta && (target.$Meta = {});
         !target.$Meta[methodName] && (target.$Meta[methodName] = {});
         target.$Meta[methodName][paramsIndex] = params;
     };
 }
-export class ObjectManager {
+exports.Params = Params;
+class ObjectManager {
 }
+exports.ObjectManager = ObjectManager;
 ObjectManager.types = new Set();
-export function DefaultValue(value) {
+function DefaultValue(value) {
     return function (target, propertyName) {
         target[propertyName] = value;
         ObjectManager.types.add(value);
     };
 }
+exports.DefaultValue = DefaultValue;
 /**
  * 声明 方式无效 仅仅作为标记
  */
-export function onlyDeclaration(target, name, dec) {
-    dec.value.declaration = onlyDeclarationTag;
+function onlyDeclaration(target, name, dec) {
+    dec.value.declaration = exports.onlyDeclarationTag;
 }
-export function CompareUnit(host) {
+exports.onlyDeclaration = onlyDeclaration;
+function CompareUnit(host) {
     var _a;
-    Object.keys(ControlFlow.CompareEnum).forEach((item) => {
-        const key = ControlFlow.CompareEnum[item];
+    Object.keys(Control_1.ControlFlow.CompareEnum).forEach((item) => {
+        const key = Control_1.ControlFlow.CompareEnum[item];
         const comFunction = host.prototype[key];
-        if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
-            host.prototype[key] = () => new BooleanObject(false);
+        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
+            host.prototype[key] = () => new ObjectAble_1.BooleanObject(false);
         }
     });
-    if (((_a = host.prototype.compare) === null || _a === void 0 ? void 0 : _a.declaration) === onlyDeclarationTag || !!host.prototype.compare === false)
+    if (((_a = host.prototype.compare) === null || _a === void 0 ? void 0 : _a.declaration) === exports.onlyDeclarationTag || !!host.prototype.compare === false)
         (host.prototype.compare = function (type, target) {
             var _a;
             const execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
@@ -47,16 +55,17 @@ export function CompareUnit(host) {
             return false;
         });
 }
-export function CalcUnit(host) {
+exports.CompareUnit = CompareUnit;
+function CalcUnit(host) {
     var _a;
-    Object.keys(ControlFlow.CalcEnum).forEach((item) => {
-        const key = ControlFlow.CalcEnum[item];
+    Object.keys(Control_1.ControlFlow.CalcEnum).forEach((item) => {
+        const key = Control_1.ControlFlow.CalcEnum[item];
         const comFunction = host.prototype[key];
-        if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
-            host.prototype[key] = () => new NumberObject(0);
+        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
+            host.prototype[key] = () => new ObjectAble_1.NumberObject(0);
         }
     });
-    if (((_a = host.prototype.calc) === null || _a === void 0 ? void 0 : _a.declaration) === onlyDeclarationTag || !!host.prototype.calc === false)
+    if (((_a = host.prototype.calc) === null || _a === void 0 ? void 0 : _a.declaration) === exports.onlyDeclarationTag || !!host.prototype.calc === false)
         (host.prototype.calc = function (type, target) {
             var _a;
             const execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
@@ -65,12 +74,13 @@ export function CalcUnit(host) {
             return false;
         });
 }
-export function ArrayUint(host) {
+exports.CalcUnit = CalcUnit;
+function ArrayUint(host) {
     var _a;
-    Object.keys(ControlFlow.ArrayEnum).forEach((item) => {
-        const key = ControlFlow.ArrayEnum[item];
+    Object.keys(Control_1.ControlFlow.ArrayEnum).forEach((item) => {
+        const key = Control_1.ControlFlow.ArrayEnum[item];
         const comFunction = host.prototype[key];
-        if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
+        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
             host.prototype[key] = function (...args) {
                 const value = this.valueOf();
                 const execFunc = value[key];
@@ -80,11 +90,11 @@ export function ArrayUint(host) {
                 }
                 else
                     result = value;
-                return decide(result);
+                return (0, valueUtil_1.decide)(result);
             };
         }
     });
-    if (((_a = host.prototype.collectionArray) === null || _a === void 0 ? void 0 : _a.declaration) === onlyDeclarationTag || !!host.prototype.collectionArray === false)
+    if (((_a = host.prototype.collectionArray) === null || _a === void 0 ? void 0 : _a.declaration) === exports.onlyDeclarationTag || !!host.prototype.collectionArray === false)
         (host.prototype.collectionArray = function (type, ...args) {
             var _a;
             const execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
@@ -93,12 +103,13 @@ export function ArrayUint(host) {
             return false;
         });
 }
-export function SetUint(host) {
+exports.ArrayUint = ArrayUint;
+function SetUint(host) {
     var _a;
-    Object.keys(ControlFlow.SetEnum).forEach((item) => {
-        const key = ControlFlow.SetEnum[item];
+    Object.keys(Control_1.ControlFlow.SetEnum).forEach((item) => {
+        const key = Control_1.ControlFlow.SetEnum[item];
         const comFunction = host.prototype[key];
-        if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
+        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
             host.prototype[key] = function (...args) {
                 const value = this.valueOf();
                 const execFunc = value[key];
@@ -108,11 +119,11 @@ export function SetUint(host) {
                 }
                 else
                     result = value;
-                return decide(result);
+                return (0, valueUtil_1.decide)(result);
             };
         }
     });
-    if (((_a = host.prototype.collectionSet) === null || _a === void 0 ? void 0 : _a.declaration) === onlyDeclarationTag || !!host.prototype.collectionSet === false)
+    if (((_a = host.prototype.collectionSet) === null || _a === void 0 ? void 0 : _a.declaration) === exports.onlyDeclarationTag || !!host.prototype.collectionSet === false)
         (host.prototype.collectionSet = function (type, ...args) {
             var _a;
             const execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
@@ -121,12 +132,13 @@ export function SetUint(host) {
             return false;
         });
 }
-export function MapUint(host) {
+exports.SetUint = SetUint;
+function MapUint(host) {
     var _a;
-    Object.keys(ControlFlow.MapEnum).forEach((item) => {
-        const key = ControlFlow.MapEnum[item];
+    Object.keys(Control_1.ControlFlow.MapEnum).forEach((item) => {
+        const key = Control_1.ControlFlow.MapEnum[item];
         const comFunction = host.prototype[key];
-        if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
+        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
             host.prototype[key] = function (...args) {
                 const value = this.valueOf();
                 const execFunc = value[key];
@@ -136,11 +148,11 @@ export function MapUint(host) {
                 }
                 else
                     result = value;
-                return decide(result);
+                return (0, valueUtil_1.decide)(result);
             };
         }
     });
-    if (((_a = host.prototype.collectionMap) === null || _a === void 0 ? void 0 : _a.declaration) === onlyDeclarationTag || !!host.prototype.collectionMap === false)
+    if (((_a = host.prototype.collectionMap) === null || _a === void 0 ? void 0 : _a.declaration) === exports.onlyDeclarationTag || !!host.prototype.collectionMap === false)
         (host.prototype.collectionMap = function (type, ...args) {
             var _a;
             const execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
@@ -149,4 +161,5 @@ export function MapUint(host) {
             return false;
         });
 }
+exports.MapUint = MapUint;
 //# sourceMappingURL=util.js.map

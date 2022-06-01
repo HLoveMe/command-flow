@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PlatformSelect = exports.isJS = exports.isMobile = exports.isElectron = exports.isPC = exports.isNode = exports.isWeb = exports.currentEnir = exports.JSRUNEnvirType = exports.getJSEnvironment = exports.isReactNative = void 0;
 var JSRUNEnvirType;
 (function (JSRUNEnvirType) {
     JSRUNEnvirType[JSRUNEnvirType["NODE_PC"] = 10] = "NODE_PC";
@@ -6,6 +9,7 @@ var JSRUNEnvirType;
     JSRUNEnvirType[JSRUNEnvirType["ELECTRON_PC"] = 40] = "ELECTRON_PC";
     JSRUNEnvirType[JSRUNEnvirType["OTHER"] = 100] = "OTHER";
 })(JSRUNEnvirType || (JSRUNEnvirType = {}));
+exports.JSRUNEnvirType = JSRUNEnvirType;
 const EnvirType = {
     /**
      * WIndow 浏览器 运行环境
@@ -40,7 +44,7 @@ const EnvirType = {
 /**
  * 是否为 rn 代码
  */
-export function isReactNative() {
+function isReactNative() {
     var GLOBAL;
     try {
         GLOBAL = window;
@@ -52,7 +56,8 @@ export function isReactNative() {
         GLOBAL.ReactNative &&
         GLOBAL.ReactNative.NativeModules);
 }
-export function getJSEnvironment() {
+exports.isReactNative = isReactNative;
+function getJSEnvironment() {
     if (navigator.userAgent) {
         var userAgent = navigator.userAgent;
         var platform, result;
@@ -135,48 +140,56 @@ export function getJSEnvironment() {
         return { name: EnvirType.Other, versionStr: "" };
     }
 }
+exports.getJSEnvironment = getJSEnvironment;
 var currentEnir;
+exports.currentEnir = currentEnir;
 if ((globalThis || window).process) {
     if ((globalThis || window) &&
         (globalThis || window).process &&
         (globalThis || window).process.versions &&
         (globalThis || window).process.versions["electron"]) {
-        currentEnir = JSRUNEnvirType.ELECTRON_PC;
+        exports.currentEnir = currentEnir = JSRUNEnvirType.ELECTRON_PC;
     }
     else
-        currentEnir = JSRUNEnvirType.NODE_PC;
+        exports.currentEnir = currentEnir = JSRUNEnvirType.NODE_PC;
 }
 else {
     const typeName = getJSEnvironment().name;
     switch (typeName) {
         case EnvirType.WINDOWS:
-            currentEnir = JSRUNEnvirType.WEB_PC;
+            exports.currentEnir = currentEnir = JSRUNEnvirType.WEB_PC;
             break;
         case EnvirType.MACINTOSH:
-            currentEnir = JSRUNEnvirType.WEB_PC;
+            exports.currentEnir = currentEnir = JSRUNEnvirType.WEB_PC;
             break;
         case EnvirType.IOS:
-            currentEnir = JSRUNEnvirType.WEB_MOBILE;
+            exports.currentEnir = currentEnir = JSRUNEnvirType.WEB_MOBILE;
             break;
         case EnvirType.ANDROID:
-            currentEnir = JSRUNEnvirType.WEB_MOBILE;
+            exports.currentEnir = currentEnir = JSRUNEnvirType.WEB_MOBILE;
             break;
         case EnvirType.LINUX:
-            currentEnir = JSRUNEnvirType.WEB_PC;
+            exports.currentEnir = currentEnir = JSRUNEnvirType.WEB_PC;
             break;
         default:
-            currentEnir = JSRUNEnvirType.OTHER;
+            exports.currentEnir = currentEnir = JSRUNEnvirType.OTHER;
             break;
     }
 }
 const isWeb = currentEnir === JSRUNEnvirType.WEB_MOBILE || currentEnir === JSRUNEnvirType.WEB_PC;
+exports.isWeb = isWeb;
 const isNode = currentEnir === JSRUNEnvirType.NODE_PC;
+exports.isNode = isNode;
 const isElectron = currentEnir === JSRUNEnvirType.ELECTRON_PC;
+exports.isElectron = isElectron;
 const isPC = currentEnir === JSRUNEnvirType.NODE_PC ||
     currentEnir === JSRUNEnvirType.WEB_PC ||
     currentEnir === JSRUNEnvirType.ELECTRON_PC;
+exports.isPC = isPC;
 const isMobile = currentEnir === JSRUNEnvirType.WEB_MOBILE;
+exports.isMobile = isMobile;
 const isJS = true;
+exports.isJS = isJS;
 const PlatformSelect = (select) => {
     let target;
     if (isElectron) {
@@ -190,5 +203,5 @@ const PlatformSelect = (select) => {
     }
     return target;
 };
-export { JSRUNEnvirType, currentEnir, isWeb, isNode, isPC, isElectron, isMobile, isJS, PlatformSelect, };
+exports.PlatformSelect = PlatformSelect;
 //# sourceMappingURL=Equipment.js.map

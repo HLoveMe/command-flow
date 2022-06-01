@@ -1,30 +1,33 @@
-import { InstructionOTO } from "../Instruction";
-import { Observable } from "rxjs";
-import { isJS } from "../../Util/Equipment";
-import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.QRCodeWork = void 0;
+const Instruction_1 = require("../Instruction");
+const rxjs_1 = require("rxjs");
+const Equipment_1 = require("../../Util/Equipment");
+const channel_value_util_1 = require("../../Util/channel-value-util");
 /**
  * 字符串生产QRcode base64
  * input => StringObject
  * output => StringObject
  */
-class QRCodeWork extends InstructionOTO {
+class QRCodeWork extends Instruction_1.InstructionOTO {
     constructor() {
         super(...arguments);
         this.name = "QRCodeWork";
     }
     run(input, option) {
         const that = this;
-        return new Observable((subscriber) => {
+        return new rxjs_1.Observable((subscriber) => {
             let target;
             if (input === null || input === undefined)
                 target = "";
             else {
-                target = unpackValue(input);
+                target = (0, channel_value_util_1.unpackValue)(input);
             }
             const sub = that.context.platform
                 .createQrCode(target, option)
                 .subscribe({
-                next: (res) => subscriber.next(wrapperValue(input, res)),
+                next: (res) => subscriber.next((0, channel_value_util_1.wrapperValue)(input, res)),
                 complete: () => subscriber.complete(),
                 error: (err) => subscriber.error(err),
             });
@@ -37,9 +40,9 @@ class QRCodeWork extends InstructionOTO {
         });
     }
     static isAble() {
-        return isJS;
+        return Equipment_1.isJS;
         // return isNode || isWeb || isRN
     }
 }
-export { QRCodeWork };
+exports.QRCodeWork = QRCodeWork;
 //# sourceMappingURL=QRCodeWork.js.map

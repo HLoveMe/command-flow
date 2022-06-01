@@ -1,9 +1,11 @@
-import { InstructionOTO } from "../Instruction";
-import { Observable } from "rxjs";
-import { isJS } from "../../Util/Equipment";
-import { ObjectTarget } from "../..";
-import { tap } from "rxjs/operators";
-export default class FetchWork extends InstructionOTO {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Instruction_1 = require("../Instruction");
+const rxjs_1 = require("rxjs");
+const Equipment_1 = require("../../Util/Equipment");
+const __1 = require("../..");
+const operators_1 = require("rxjs/operators");
+class FetchWork extends Instruction_1.InstructionOTO {
     constructor() {
         super(...arguments);
         this.name = "FetchWork";
@@ -27,9 +29,9 @@ export default class FetchWork extends InstructionOTO {
     run(input, baseOption) {
         const that = this;
         const options = this._getInitOption(input._value.value, baseOption);
-        return new Observable((subscriber) => {
+        return new rxjs_1.Observable((subscriber) => {
             const fetchSub = that.context.platform.fetch(options)
-                .pipe(tap((result) => {
+                .pipe((0, operators_1.tap)((result) => {
                 const { data } = result.valueOf();
                 this.logMsg(`[FetchWork][load:data]${data}`, input);
             })).subscribe({
@@ -39,7 +41,7 @@ export default class FetchWork extends InstructionOTO {
                         subscriber.error(result.error);
                     }
                     else {
-                        subscriber.next(new ObjectTarget(Object.assign(Object.assign({}, input._value), { value: result.data })));
+                        subscriber.next(new __1.ObjectTarget(Object.assign(Object.assign({}, input._value), { value: result.data })));
                         subscriber.complete();
                     }
                 },
@@ -55,7 +57,8 @@ export default class FetchWork extends InstructionOTO {
         });
     }
     static isAble() {
-        return isJS;
+        return Equipment_1.isJS;
     }
 }
+exports.default = FetchWork;
 //# sourceMappingURL=FetchWork.js.map

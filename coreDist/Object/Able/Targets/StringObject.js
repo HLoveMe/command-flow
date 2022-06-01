@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,9 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { attribute, DefaultValue } from "../../util";
-import { ObjectTarget } from "./ObjectTarget";
-export class StringObject extends ObjectTarget {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.StringObject = void 0;
+const util_1 = require("../../util");
+const ObjectTarget_1 = require("./ObjectTarget");
+class StringObject extends ObjectTarget_1.ObjectTarget {
     constructor(value = '') {
         super(value);
         this._value = value;
@@ -21,13 +24,14 @@ export class StringObject extends ObjectTarget {
 StringObject.attributes = new Set();
 StringObject.empty = new StringObject("");
 __decorate([
-    attribute(),
+    (0, util_1.attribute)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", String)
 ], StringObject.prototype, "valueOf", null);
 __decorate([
-    DefaultValue(Object.prototype.toString.call(new String())),
+    (0, util_1.DefaultValue)(Object.prototype.toString.call(new String())),
     __metadata("design:type", String)
 ], StringObject, "type", void 0);
+exports.StringObject = StringObject;
 //# sourceMappingURL=StringObject.js.map

@@ -7,12 +7,12 @@
     "outDir": "./coreDist",
     "sourceMap": true,
     "noImplicitAny": false,
-    "module": "es5",
+    "module": "commonjs",
     "watch": true,
     "types": ["node"],
     "skipLibCheck": true,
     "moduleResolution": "node"
   },
   "include": ["core/**/*.ts", "core/**/*.d.ts", "**/*.d.ts", "core/**/*", "test.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules","core/**/*.ignore.node.ts","core/**/*.ignore.web.ts"]
 }

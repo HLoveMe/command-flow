@@ -1,8 +1,11 @@
-import { FileType } from "../Bridge/ConfigTypes";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DefaultRunConfig = void 0;
+const ConfigTypes_1 = require("../Bridge/ConfigTypes");
 /**
  * 默认的配置
  */
-export const DefaultRunConfig = {
+exports.DefaultRunConfig = {
     development: true,
     environment: {},
     workConfig: {
@@ -15,7 +18,7 @@ export const DefaultRunConfig = {
             input: '$I$',
         },
         LoadFileWork: {
-            type: FileType.All
+            type: ConfigTypes_1.FileType.All
         },
         FetchWork: {
             headers: {

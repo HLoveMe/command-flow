@@ -6,7 +6,7 @@ module.exports = {
   entry: path.join(__dirname, "coreDist", 'index.js'),
   // watch: true,
   output: {
-    path: path.join(__dirname, "dist"),
+    path: path.join(__dirname, "dist/web"),
   },
   module: {
     rules: [{

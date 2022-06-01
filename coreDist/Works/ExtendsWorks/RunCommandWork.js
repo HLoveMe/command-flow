@@ -1,7 +1,9 @@
-import { InstructionOTO } from "../Instruction";
-import { Observable } from "rxjs";
-import { isJS } from "../../Util/Equipment";
-import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Instruction_1 = require("../Instruction");
+const rxjs_1 = require("rxjs");
+const Equipment_1 = require("../../Util/Equipment");
+const channel_value_util_1 = require("../../Util/channel-value-util");
 /**
  * "1 + $I$ "
  * @param template
@@ -22,7 +24,7 @@ function handleEvalCommand(template, input, option) {
  *  = "#javascript#console.log('hello world')"
  *  = "#shell#echo hello world"
  */
-export default class RunCommandWork extends InstructionOTO {
+class RunCommandWork extends Instruction_1.InstructionOTO {
     constructor(template = '$I$') {
         super();
         this.template = '';
@@ -31,14 +33,14 @@ export default class RunCommandWork extends InstructionOTO {
     }
     run(command, option) {
         const that = this;
-        return new Observable((subscriber) => {
-            const target = handleEvalCommand(that.template, unpackValue(command), option);
+        return new rxjs_1.Observable((subscriber) => {
+            const target = handleEvalCommand(that.template, (0, channel_value_util_1.unpackValue)(command), option);
             const sub = that.context.platform
                 .runCommand(target)
                 .subscribe({
                 next: (info) => {
                     this.logMsg(`执行command：${info.error ? '失败' : '成功'}。结果：${info.result}`, command);
-                    subscriber.next(wrapperValue(command, info.error ? undefined : info.result));
+                    subscriber.next((0, channel_value_util_1.wrapperValue)(command, info.error ? undefined : info.result));
                 },
                 complete: () => subscriber.complete(),
                 error: (err) => subscriber.error(err)
@@ -52,8 +54,9 @@ export default class RunCommandWork extends InstructionOTO {
         });
     }
     static isAble() {
-        return isJS;
+        return Equipment_1.isJS;
         // return isNode || isWeb || isRN || isElectron
     }
 }
+exports.default = RunCommandWork;
 //# sourceMappingURL=RunCommandWork.js.map

@@ -1,4 +1,7 @@
-export class ExecError extends Error {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ExecError = void 0;
+class ExecError extends Error {
     constructor(work, error) {
         super();
         this.date = new Date();
@@ -8,4 +11,5 @@ export class ExecError extends Error {
         this.work = work;
     }
 }
+exports.ExecError = ExecError;
 //# sourceMappingURL=index.js.map

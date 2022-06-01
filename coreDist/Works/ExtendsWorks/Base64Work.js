@@ -1,23 +1,26 @@
-import { Base64 } from 'js-base64';
-import { InstructionMTM } from "../Instruction";
-import { Observable } from "rxjs";
-import { isJS } from "../../Util/Equipment";
-import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Base64EnCodeWork = exports.Base64DecodeWork = void 0;
+const js_base64_1 = require("js-base64");
+const Instruction_1 = require("../Instruction");
+const rxjs_1 = require("rxjs");
+const Equipment_1 = require("../../Util/Equipment");
+const channel_value_util_1 = require("../../Util/channel-value-util");
 //编码
-class Base64EnCodeWork extends InstructionMTM {
+class Base64EnCodeWork extends Instruction_1.InstructionMTM {
     constructor() {
         super(...arguments);
         this.name = "Base64EnCodeWork";
     }
     run(input) {
-        return new Observable((subscriber) => {
+        return new rxjs_1.Observable((subscriber) => {
             let target;
             if (input === null || input === undefined)
                 target = '';
             else {
-                target = unpackValue(input);
+                target = (0, channel_value_util_1.unpackValue)(input);
             }
-            subscriber.next(wrapperValue(input, Base64.encode(target)));
+            subscriber.next((0, channel_value_util_1.wrapperValue)(input, js_base64_1.Base64.encode(target)));
             subscriber.complete();
             return {
                 unsubscribe: () => subscriber.unsubscribe(),
@@ -25,24 +28,25 @@ class Base64EnCodeWork extends InstructionMTM {
         });
     }
     static isAble() {
-        return isJS;
+        return Equipment_1.isJS;
     }
 }
+exports.Base64EnCodeWork = Base64EnCodeWork;
 //解码
-class Base64DecodeWork extends InstructionMTM {
+class Base64DecodeWork extends Instruction_1.InstructionMTM {
     constructor() {
         super(...arguments);
         this.name = "Base64DecodeWork";
     }
     run(input) {
-        return new Observable((subscriber) => {
+        return new rxjs_1.Observable((subscriber) => {
             let target;
             if (input === null || input === undefined)
                 target = '';
             else {
-                target = unpackValue(input);
+                target = (0, channel_value_util_1.unpackValue)(input);
             }
-            subscriber.next(wrapperValue(input, Base64.decode(target)));
+            subscriber.next((0, channel_value_util_1.wrapperValue)(input, js_base64_1.Base64.decode(target)));
             subscriber.complete();
             return {
                 unsubscribe: () => subscriber.unsubscribe(),
@@ -50,8 +54,8 @@ class Base64DecodeWork extends InstructionMTM {
         });
     }
     static isAble() {
-        return isJS;
+        return Equipment_1.isJS;
     }
 }
-export { Base64DecodeWork, Base64EnCodeWork };
+exports.Base64DecodeWork = Base64DecodeWork;
 //# sourceMappingURL=Base64Work.js.map
