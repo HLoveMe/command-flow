@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc_web": "tsc",
-    "tsc_node": "tsc -p tsconfig.node.json",
+    "tsc_web": "node ./build-pre.js 0 && tsc",
+    "tsc_node": "node ./build-pre.js 1 && tsc -p tsconfig.node.json",
     "dev": "webpack-dev-server --config webpack.config.dev.js",
     "dev_test": "vite"
   },
