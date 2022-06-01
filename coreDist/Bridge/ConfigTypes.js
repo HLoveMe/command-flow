@@ -15,4 +15,10 @@ export var SupportContentType;
     SupportContentType["JSON"] = "application/json";
     SupportContentType["TEXT"] = "text/plain";
 })(SupportContentType || (SupportContentType = {}));
+// export interface BasePlatformBridgeAble extends PlatformBridgeAble { }
+// export interface WebBridgeAble extends BasePlatformBridgeAble { }
+// export interface NodejsBridgeAble extends BasePlatformBridgeAble { }
+// export interface MobilePlatformBridgeAble extends PlatformBridgeAble { }
+// export interface MobileWebBridgeAble extends MobilePlatformBridgeAble { }
+// export interface MobileNodejsBridgeAble extends MobilePlatformBridgeAble { }
 //# sourceMappingURL=ConfigTypes.js.map

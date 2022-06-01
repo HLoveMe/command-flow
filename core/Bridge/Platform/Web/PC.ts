@@ -5,11 +5,10 @@ import {
   FileLoadEvent,
   FileOption,
   PathLike,
-  PCWebBridgeAble,
 } from "../../ConfigTypes";
 import { PlatformBridge } from "../BasePlatform";
 import { WebBridge } from "./WebBase";
 
-export class PCWebBridge extends WebBridge implements PCWebBridgeAble {
-  
+export class PCWebBridge extends WebBridge {
+
 }

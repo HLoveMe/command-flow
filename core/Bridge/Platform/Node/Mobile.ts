@@ -5,14 +5,11 @@ import {
   PathLike,
   FileLoadEvent,
   FileOption,
-  MobileNodejsBridgeAble,
 } from "../../ConfigTypes";
 import { PlatformBridge } from "../BasePlatform";
 
 export class MobileNodejsBridge
-  extends PlatformBridge
-  implements MobileNodejsBridgeAble
-{
+  extends PlatformBridge {
   open(url: string): Observable<BooleanObject> {
     return of(new BooleanObject(false));
   }
@@ -26,7 +23,7 @@ export class MobileNodejsBridge
         loaded: 0,
         data: new ArrayBuffer(0),
         finish: true,
-        file:null,
+        file: null,
       })
     );
   }

@@ -5,7 +5,7 @@ import {
   FileLoadEvent,
   FileOption,
   PathLike,
-  BasePlatformBridgeAble,
+  PlatformBridgeAble,
   QRcodeOption,
   RunTimeInfo,
   ResponseContent,
@@ -16,7 +16,7 @@ import { Value } from "../../Types";
 import Axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { HardwareBase } from "./Hardware";
 
-export class PlatformBridge extends HardwareBase implements BasePlatformBridgeAble {
+export class PlatformBridge extends HardwareBase implements PlatformBridgeAble {
   createQrCode(
     context: String,
     option?: QRcodeOption

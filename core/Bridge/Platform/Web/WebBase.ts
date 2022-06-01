@@ -8,13 +8,11 @@ import {
   PathLike,
   FileLoadEvent,
   FileOption,
-  MobileWebBridgeAble,
 } from "../../ConfigTypes";
 import { PlatformBridge } from "../BasePlatform";
 
 export class WebBridge
-  extends PlatformBridge
-  implements MobileWebBridgeAble {
+  extends PlatformBridge {
   open(url: string): Observable<BooleanObject> {
     const result = window.open(url, "__blank");
     return of(new BooleanObject(result !== null));

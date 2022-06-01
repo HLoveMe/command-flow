@@ -1,1 +1,1 @@
-{"version":3,"file":"Mobile.js","sourceRoot":"","sources":["../../../../core/Bridge/Platform/Web/Mobile.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;AAIA,OAAO,EAAE,SAAS,EAAE,MAAM,WAAW,CAAC;AAEtC;IACU,mCAAS;IADnB;;IAGA,CAAC;IAAD,sBAAC;AAAD,CAAC,AAHD,CACU,SAAS,GAElB"}
+{"version":3,"file":"Mobile.js","sourceRoot":"","sources":["../../../../core/Bridge/Platform/Web/Mobile.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;AACA,OAAO,EAAE,SAAS,EAAE,MAAM,WAAW,CAAC;AAEtC;IACU,mCAAS;IADnB;;IAEA,CAAC;IAAD,sBAAC;AAAD,CAAC,AAFD,CACU,SAAS,GAClB"}

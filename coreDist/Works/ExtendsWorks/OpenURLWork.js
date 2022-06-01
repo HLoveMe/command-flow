@@ -13,22 +13,11 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 import { InstructionOTO } from "../Instruction";
 import { Observable } from "rxjs";
-import { BooleanObject, ObjectTarget } from "../../Object/Able/ObjectAble";
+import { BooleanObject } from "../../Object/Able/ObjectAble";
 import { isJS, } from "../../Util/Equipment";
-import { unpackValue } from "../../Util/channel-value-util";
+import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 /**
  * 打开路径
  * http://www.baidu.com
@@ -51,7 +40,7 @@ var OpenURLWork = /** @class */ (function (_super) {
             var sub = that.context.platform
                 .open(target, option)
                 .subscribe({
-                next: function (_) { return subscriber.next(new ObjectTarget(__assign(__assign({}, input._value), { value: new BooleanObject(true) }))); },
+                next: function (_) { return subscriber.next(wrapperValue(input, new BooleanObject(true))); },
                 complete: function () { return subscriber.complete(); },
                 error: function (err) { return subscriber.error(err); }
             });

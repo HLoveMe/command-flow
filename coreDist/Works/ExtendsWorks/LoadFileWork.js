@@ -50,7 +50,7 @@ var LoadFileWork = /** @class */ (function (_super) {
                 .loadFile(target, runOption)
                 .pipe(tap(function (obj) {
                 var _a = obj.valueOf(), loaded = _a.loaded, total = _a.total, finish = _a.finish;
-                _this.logMsg("\u52A0\u8F7D\u8FDB\u5EA6[load:progress]---\uFF1A" + loaded + "/" + total + " \u662F\u5426\u5B8C\u6210\uFF1A" + finish, input);
+                _this.logMsg("\u52A0\u8F7D\u8FDB\u5EA6[load:progress]---\uFF1A".concat(loaded, "/").concat(total, " \u662F\u5426\u5B8C\u6210\uFF1A").concat(finish), input);
             }), takeLast(1))
                 .subscribe({
                 next: function (obj) {

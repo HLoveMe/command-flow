@@ -86,7 +86,7 @@ var PlatformBridge = /** @class */ (function (_super) {
                 var data = null;
                 var content = {};
                 if (response.status !== 200) {
-                    error = new Error(response.status + " " + response.statusText);
+                    error = new Error("".concat(response.status, " ").concat(response.statusText));
                 }
                 else {
                     data = response.data;

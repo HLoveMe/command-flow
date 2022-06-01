@@ -5,7 +5,7 @@ import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
 import { BooleanObject, ObjectTarget } from "../../Object/Able/ObjectAble";
 import { isJS, } from "../../Util/Equipment";
-import { unpackValue } from "../../Util/channel-value-util";
+import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 
 /**
  * 打开路径
@@ -24,10 +24,7 @@ export default class OpenURLWork extends InstructionOTO {
       const sub = (that.context as ContextImpl).platform
         .open(target, option)
         .subscribe({
-          next: _ => subscriber.next(new ObjectTarget({
-            ...input._value,
-            value: new BooleanObject(true)
-          })),
+          next: _ => subscriber.next(wrapperValue(input, new BooleanObject(true))),
           complete: () => subscriber.complete(),
           error: (err) => subscriber.error(err)
         });

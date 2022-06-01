@@ -56,7 +56,7 @@ var RunCommandWork = /** @class */ (function (_super) {
                 .runCommand(target)
                 .subscribe({
                 next: function (info) {
-                    _this.logMsg("\u6267\u884Ccommand\uFF1A" + (info.error ? '失败' : '成功') + "\u3002\u7ED3\u679C\uFF1A" + info.result, command);
+                    _this.logMsg("\u6267\u884Ccommand\uFF1A".concat(info.error ? '失败' : '成功', "\u3002\u7ED3\u679C\uFF1A").concat(info.result), command);
                     subscriber.next(wrapperValue(command, info.error ? undefined : info.result));
                 },
                 complete: function () { return subscriber.complete(); },

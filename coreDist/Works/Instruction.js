@@ -191,7 +191,7 @@ var Instruction = /** @class */ (function (_super) {
     Instruction.prototype.completeOneLoop = function (input, toValue, success) { };
     // 基础
     Instruction.prototype.toString = function () {
-        return "[" + this.name + ":" + this.id + "]";
+        return "[".concat(this.name, ":").concat(this.id, "]");
     };
     Instruction.prototype.isAble = function () {
         return this.__proto__.isAble();

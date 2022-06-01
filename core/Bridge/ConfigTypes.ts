@@ -199,12 +199,12 @@ export declare interface PlatformBridgeAble extends Hardware.PlatformDrive {
   fetch(req: AxiosRequestConfig): Observable<Value.ObjectAble<ResponseContent>>;
 }
 
-export interface BasePlatformBridgeAble extends PlatformBridgeAble { }
+// export interface BasePlatformBridgeAble extends PlatformBridgeAble { }
 
-export interface PCWebBridgeAble extends BasePlatformBridgeAble { }
-export interface PCNodejsBridgeAble extends BasePlatformBridgeAble { }
+// export interface WebBridgeAble extends BasePlatformBridgeAble { }
+// export interface NodejsBridgeAble extends BasePlatformBridgeAble { }
 
-export interface MobilePlatformBridgeAble extends PlatformBridgeAble { }
+// export interface MobilePlatformBridgeAble extends PlatformBridgeAble { }
 
-export interface MobileWebBridgeAble extends MobilePlatformBridgeAble { }
-export interface MobileNodejsBridgeAble extends MobilePlatformBridgeAble { }
+// export interface MobileWebBridgeAble extends MobilePlatformBridgeAble { }
+// export interface MobileNodejsBridgeAble extends MobilePlatformBridgeAble { }
