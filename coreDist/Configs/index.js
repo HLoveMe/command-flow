@@ -2,7 +2,7 @@ import { FileType } from "../Bridge/ConfigTypes";
 /**
  * 默认的配置
  */
-export var DefaultRunConfig = {
+export const DefaultRunConfig = {
     development: true,
     environment: {},
     workConfig: {

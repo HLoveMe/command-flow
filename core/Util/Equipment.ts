@@ -186,7 +186,7 @@ export type PlatformOSType = "web" | "node" | "electron" | 'other';
 type Select<T> = (select: { [platform in PlatformOSType]?: T }) => T;
 
 const PlatformSelect: Select<any> = (select) => {
-  let target;
+  let target: any;
   if (isElectron) {
     target = select.electron;
   } else if (isWeb) {

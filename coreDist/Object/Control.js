@@ -2,7 +2,7 @@
 export var ControlFlow;
 (function (ControlFlow) {
     // 比较属性 compare
-    var CompareEnum;
+    let CompareEnum;
     (function (CompareEnum) {
         CompareEnum["More"] = "more";
         CompareEnum["Equal"] = "equal";
@@ -11,7 +11,7 @@ export var ControlFlow;
         CompareEnum["LessEqual"] = "lessEqual";
     })(CompareEnum = ControlFlow.CompareEnum || (ControlFlow.CompareEnum = {}));
     // 计算属性
-    var CalcEnum;
+    let CalcEnum;
     (function (CalcEnum) {
         CalcEnum["Plus"] = "plus";
         CalcEnum["Reduce"] = "reduce";
@@ -19,7 +19,7 @@ export var ControlFlow;
         CalcEnum["Divide"] = "divide";
     })(CalcEnum = ControlFlow.CalcEnum || (ControlFlow.CalcEnum = {}));
     //集合属性
-    var CollectionEnum;
+    let CollectionEnum;
     (function (CollectionEnum) {
         CollectionEnum["Contain"] = "contain";
         CollectionEnum["Add"] = "add";
@@ -28,7 +28,7 @@ export var ControlFlow;
         CollectionEnum["Values"] = "values";
     })(CollectionEnum = ControlFlow.CollectionEnum || (ControlFlow.CollectionEnum = {}));
     //Object.keys(Object.getOwnPropertyDescriptors(Array.prototype)).map($1=>`${$1}: ControlFlow.ArrayFunction`).join('\n')
-    var ArrayEnum;
+    let ArrayEnum;
     (function (ArrayEnum) {
         ArrayEnum["Concat"] = "concat";
         ArrayEnum["CopyWithin"] = "copyWithin";
@@ -58,7 +58,7 @@ export var ControlFlow;
         ArrayEnum["Reduce"] = "reduce";
         ArrayEnum["ReduceRight"] = "reduceRight";
     })(ArrayEnum = ControlFlow.ArrayEnum || (ControlFlow.ArrayEnum = {}));
-    var SetEnum;
+    let SetEnum;
     (function (SetEnum) {
         SetEnum["Has"] = "has";
         SetEnum["Add"] = "add";
@@ -69,7 +69,7 @@ export var ControlFlow;
         SetEnum["Values"] = "values";
         SetEnum["Keys"] = "keys";
     })(SetEnum = ControlFlow.SetEnum || (ControlFlow.SetEnum = {}));
-    var MapEnum;
+    let MapEnum;
     (function (MapEnum) {
         MapEnum["Get"] = "get";
         MapEnum["Set"] = "set";

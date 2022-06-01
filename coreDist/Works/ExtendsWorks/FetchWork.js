@@ -1,49 +1,21 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 import { InstructionOTO } from "../Instruction";
 import { Observable } from "rxjs";
 import { isJS } from "../../Util/Equipment";
 import { ObjectTarget } from "../..";
 import { tap } from "rxjs/operators";
-var FetchWork = /** @class */ (function (_super) {
-    __extends(FetchWork, _super);
-    function FetchWork() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.name = "FetchWork";
-        return _this;
+export default class FetchWork extends InstructionOTO {
+    constructor() {
+        super(...arguments);
+        this.name = "FetchWork";
     }
-    FetchWork.prototype._getInitOption = function (input, baseOption) {
-        var initParams = input.valueOf();
-        var url = initParams.url, method = initParams.method, timeout = initParams.timeout, data = initParams.data;
-        var request = {
-            url: url,
+    _getInitOption(input, baseOption) {
+        const initParams = input.valueOf();
+        const { url, method, timeout, data } = initParams;
+        const request = {
+            url,
             method: initParams.method || baseOption.method || "GET",
             timeout: timeout || baseOption.timeout || 10000,
-            headers: __assign(__assign({}, (baseOption.headers || {})), (initParams.headers || {})),
+            headers: Object.assign(Object.assign({}, (baseOption.headers || {})), (initParams.headers || {})),
         };
         request.data = data;
         if (method.toLocaleUpperCase() === "GET") {
@@ -51,42 +23,39 @@ var FetchWork = /** @class */ (function (_super) {
         }
         request.timeoutErrorMessage = '请求超时';
         return request;
-    };
-    FetchWork.prototype.run = function (input, baseOption) {
-        var _this = this;
-        var that = this;
-        var options = this._getInitOption(input._value.value, baseOption);
-        return new Observable(function (subscriber) {
-            var fetchSub = that.context.platform.fetch(options)
-                .pipe(tap(function (result) {
-                var data = result.valueOf().data;
-                _this.logMsg("[FetchWork][load:data]".concat(data), input);
+    }
+    run(input, baseOption) {
+        const that = this;
+        const options = this._getInitOption(input._value.value, baseOption);
+        return new Observable((subscriber) => {
+            const fetchSub = that.context.platform.fetch(options)
+                .pipe(tap((result) => {
+                const { data } = result.valueOf();
+                this.logMsg(`[FetchWork][load:data]${data}`, input);
             })).subscribe({
-                next: function (data) {
-                    var result = data.valueOf();
+                next: (data) => {
+                    const result = data.valueOf();
                     if (result.error) {
                         subscriber.error(result.error);
                     }
                     else {
-                        subscriber.next(new ObjectTarget(__assign(__assign({}, input._value), { value: result.data })));
+                        subscriber.next(new ObjectTarget(Object.assign(Object.assign({}, input._value), { value: result.data })));
                         subscriber.complete();
                     }
                 },
-                error: function (error) { return subscriber.error(error); },
-                complete: function () { return subscriber.complete(); },
+                error: (error) => subscriber.error(error),
+                complete: () => subscriber.complete(),
             });
             return {
-                unsubscribe: function () {
+                unsubscribe: () => {
                     subscriber.unsubscribe();
                     fetchSub.unsubscribe();
                 }
             };
         });
-    };
-    FetchWork.isAble = function () {
+    }
+    static isAble() {
         return isJS;
-    };
-    return FetchWork;
-}(InstructionOTO));
-export default FetchWork;
+    }
+}
 //# sourceMappingURL=FetchWork.js.map

@@ -6,7 +6,7 @@ var JSRUNEnvirType;
     JSRUNEnvirType[JSRUNEnvirType["ELECTRON_PC"] = 40] = "ELECTRON_PC";
     JSRUNEnvirType[JSRUNEnvirType["OTHER"] = 100] = "OTHER";
 })(JSRUNEnvirType || (JSRUNEnvirType = {}));
-var EnvirType = {
+const EnvirType = {
     /**
      * WIndow 浏览器 运行环境
      */
@@ -56,7 +56,7 @@ export function getJSEnvironment() {
     if (navigator.userAgent) {
         var userAgent = navigator.userAgent;
         var platform, result;
-        var getDesktopOS = function () {
+        const getDesktopOS = () => {
             var pf = navigator.platform;
             if (pf.indexOf("Win") != -1) {
                 // 说明当前是Windows操作系统
@@ -147,7 +147,7 @@ if ((globalThis || window).process) {
         currentEnir = JSRUNEnvirType.NODE_PC;
 }
 else {
-    var typeName = getJSEnvironment().name;
+    const typeName = getJSEnvironment().name;
     switch (typeName) {
         case EnvirType.WINDOWS:
             currentEnir = JSRUNEnvirType.WEB_PC;
@@ -169,16 +169,16 @@ else {
             break;
     }
 }
-var isWeb = currentEnir === JSRUNEnvirType.WEB_MOBILE || currentEnir === JSRUNEnvirType.WEB_PC;
-var isNode = currentEnir === JSRUNEnvirType.NODE_PC;
-var isElectron = currentEnir === JSRUNEnvirType.ELECTRON_PC;
-var isPC = currentEnir === JSRUNEnvirType.NODE_PC ||
+const isWeb = currentEnir === JSRUNEnvirType.WEB_MOBILE || currentEnir === JSRUNEnvirType.WEB_PC;
+const isNode = currentEnir === JSRUNEnvirType.NODE_PC;
+const isElectron = currentEnir === JSRUNEnvirType.ELECTRON_PC;
+const isPC = currentEnir === JSRUNEnvirType.NODE_PC ||
     currentEnir === JSRUNEnvirType.WEB_PC ||
     currentEnir === JSRUNEnvirType.ELECTRON_PC;
-var isMobile = currentEnir === JSRUNEnvirType.WEB_MOBILE;
-var isJS = true;
-var PlatformSelect = function (select) {
-    var target;
+const isMobile = currentEnir === JSRUNEnvirType.WEB_MOBILE;
+const isJS = true;
+const PlatformSelect = (select) => {
+    let target;
     if (isElectron) {
         target = select.electron;
     }

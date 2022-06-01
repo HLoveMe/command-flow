@@ -7,33 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 import { WorkType } from "./Types";
 import { forkJoin, Subject } from "rxjs";
 import { DefaultRunConfig } from "./Configs";
@@ -42,9 +15,8 @@ import Platform from "./Bridge/Index";
 import { BeginWork } from "./Works/ExtendsWorks/BeginWork";
 import { decide } from "./Object/valueUtil";
 import { take } from "rxjs/operators";
-var Context = /** @class */ (function () {
-    function Context(runOptions) {
-        var _this = this;
+export class Context {
+    constructor(runOptions) {
         this.status = WorkType.WorkRunStatus.INIT;
         this.platform = Platform;
         /**
@@ -64,9 +36,9 @@ var Context = /** @class */ (function () {
          */
         this.pools = [];
         this.runOptions = (runOptions || DefaultRunConfig);
-        var sub = this.msgChannel.subscribe({
-            next: function (value) { return _this.workMessage(value); },
-            error: function (error) { return _this.workError(error); },
+        const sub = this.msgChannel.subscribe({
+            next: (value) => this.workMessage(value),
+            error: (error) => this.workError(error),
         });
         this.pools.push(sub);
         this.addWork(new BeginWork());
@@ -77,38 +49,38 @@ var Context = /** @class */ (function () {
      * @param name
      * @param value
      */
-    Context.prototype.addVariable = function (from, name, value) {
-        var w_map = this.runConstant.get(from.uuid);
+    addVariable(from, name, value) {
+        const w_map = this.runConstant.get(from.uuid);
         !w_map && this.runConstant.set(from.uuid, new Map());
         this.runConstant.get(from.uuid).set(name, value);
-    };
-    Context.prototype.workMessage = function (input) {
+    }
+    workMessage(input) {
         console.log("msgChannel", input);
-    };
-    Context.prototype.workError = function (error) {
+    }
+    workError(error) {
         console.log("msgChannelError", error);
         this.stopWorkChain();
-    };
-    Context.prototype.addWorkLog = function (tap) {
+    }
+    addWorkLog(tap) {
         return this.msgChannel.subscribe(tap);
-    };
-    Context.prototype.sendLog = function (status) {
-        var log = {
+    }
+    sendLog(status) {
+        const log = {
             date: new Date(),
-            work: status.work.filter(function ($1) { return $1 === null || $1 === void 0 ? void 0 : $1.name; }),
+            work: status.work.filter(($1) => $1 === null || $1 === void 0 ? void 0 : $1.name),
             desc: status.desc,
             value: status.value,
             error: status.error,
         };
         this.msgChannel.next(log);
-    };
-    Context.prototype.addWork = function (work) {
+    }
+    addWork(work) {
         if (work.constructor.isAble && work.constructor.isAble() === false) {
-            var desc = "[content][Func:addWork][work isAble is false]";
+            const desc = "[content][Func:addWork][work isAble is false]";
             return this.sendLog({
                 content: this,
                 work: [],
-                desc: desc,
+                desc,
                 value: null,
                 error: new Error(desc),
             });
@@ -123,42 +95,30 @@ var Context = /** @class */ (function () {
         }
         work.context = this;
         this.works.push(work);
-    };
-    Context.prototype.addWorks = function () {
-        var works = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            works[_i] = arguments[_i];
-        }
+    }
+    addWorks(...works) {
         works.forEach(this.addWork);
-    };
-    Context.prototype.prepareWorks = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (this.status !== WorkType.WorkRunStatus.INIT) {
-                            return [2 /*return*/, this.sendLog({
-                                    content: this,
-                                    work: [],
-                                    desc: "[content][Func:prepareWorks][context status is not init]",
-                                    value: new BooleanObject(false),
-                                })];
-                        }
-                        ;
-                        return [4 /*yield*/, Promise.all(this.works.map(function ($1, index, source) {
-                                var before = source[index - 1];
-                                var after = source[index + 1];
-                                return $1.prepare(before, after);
-                            }))];
-                    case 1:
-                        _a.sent();
-                        this.status = WorkType.WorkRunStatus.READY;
-                        return [2 /*return*/];
-                }
-            });
+    }
+    prepareWorks() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.status !== WorkType.WorkRunStatus.INIT) {
+                return this.sendLog({
+                    content: this,
+                    work: [],
+                    desc: "[content][Func:prepareWorks][context status is not init]",
+                    value: new BooleanObject(false),
+                });
+            }
+            ;
+            yield Promise.all(this.works.map(($1, index, source) => {
+                const before = source[index - 1];
+                const after = source[index + 1];
+                return $1.prepare(before, after);
+            }));
+            this.status = WorkType.WorkRunStatus.READY;
         });
-    };
-    Context.prototype.dispatch = function (input) {
+    }
+    dispatch(input) {
         if (this.status === WorkType.WorkRunStatus.INIT) {
             return this.sendLog({
                 content: this,
@@ -168,39 +128,38 @@ var Context = /** @class */ (function () {
             });
         }
         ;
-        var inputWork = this.works[0];
+        const inputWork = this.works[0];
         if (inputWork) {
             inputWork.startRun(decide(input));
         }
         this.status = WorkType.WorkRunStatus.RUNNING;
-    };
+    }
     /**
      * 停止执行
      * 关闭
      */
-    Context.prototype.stopWorkChain = function () {
-        var _this = this;
-        var that = this;
-        return new Promise(function (resolve, reject) {
-            var taskUns = _this.works.map(function ($1) { return $1.stopWork(); });
-            var isSuccess = false;
-            var errors = [];
+    stopWorkChain() {
+        const that = this;
+        return new Promise((resolve, reject) => {
+            const taskUns = this.works.map(($1) => $1.stopWork());
+            let isSuccess = false;
+            let errors = [];
             forkJoin(taskUns).pipe(take(1)).subscribe({
-                next: function (values) {
-                    (isSuccess = values.every(function ($1, index) {
+                next: (values) => {
+                    (isSuccess = values.every(($1, index) => {
                         if ($1 === true)
                             return true;
-                        errors.push(_this.works[index]);
+                        errors.push(this.works[index]);
                         return false;
                     }));
                     resolve(isSuccess);
                 },
-                error: function (error) {
+                error: (error) => {
                     // 关闭报错
                     reject(error);
                 },
-                complete: function () {
-                    _this.sendLog({
+                complete: () => {
+                    this.sendLog({
                         content: that,
                         work: errors,
                         desc: "[content][Func:stopWorkChain]",
@@ -213,11 +172,9 @@ var Context = /** @class */ (function () {
                 },
             });
         });
-    };
-    Context.prototype.clear = function () {
-        this.pools.forEach(function ($1) { return $1.unsubscribe(); });
-    };
-    return Context;
-}());
-export { Context };
+    }
+    clear() {
+        this.pools.forEach(($1) => $1.unsubscribe());
+    }
+}
 //# sourceMappingURL=Context.js.map

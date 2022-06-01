@@ -1,6 +1,6 @@
 export var WorkType;
 (function (WorkType) {
-    var WorkRunStatus;
+    let WorkRunStatus;
     (function (WorkRunStatus) {
         WorkRunStatus[WorkRunStatus["INIT"] = 0] = "INIT";
         // FROZEN,//冻结状态 

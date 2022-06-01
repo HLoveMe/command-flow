@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata":true,
     "outDir": "./coreDist",
     "sourceMap": true,
     "noImplicitAny": false,
-    "module": "es2015",
+    "module": "es5",
     "watch": true,
     "types": ["node"],
     "skipLibCheck": true,

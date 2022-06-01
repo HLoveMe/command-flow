@@ -1,30 +1,13 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 import { v4 as UUID } from "uuid";
 import { InstructionOTO } from "../Instruction";
 import { isJS } from "../../Util/Equipment";
 import { ObjectTarget } from "../../Object/Able/ObjectAble";
 import { decide } from '../../Object/valueUtil';
-var BeginWork = /** @class */ (function (_super) {
-    __extends(BeginWork, _super);
-    function BeginWork() {
-        var _this = _super.call(this) || this;
-        _this.name = "BeginWork";
-        _this.uuid = UUID();
-        return _this;
+export class BeginWork extends InstructionOTO {
+    constructor() {
+        super();
+        this.name = "BeginWork";
+        this.uuid = UUID();
     }
     // // 处理上一个的传入
     // _connectChannel() {
@@ -50,20 +33,18 @@ var BeginWork = /** @class */ (function (_super) {
      * 运行 头部
      * @param value
      */
-    BeginWork.prototype.startRun = function (value, runId) {
-        var id = runId !== null && runId !== void 0 ? runId : UUID();
+    startRun(value, runId) {
+        const id = runId !== null && runId !== void 0 ? runId : UUID();
         this.nextWork.next(new ObjectTarget({
-            id: id,
+            id,
             value: decide(value),
             option: {},
         }));
-    };
-    BeginWork.prototype.completeOneLoop = function () { };
-    BeginWork.isAble = function () {
+    }
+    completeOneLoop() { }
+    static isAble() {
         return isJS;
-    };
-    BeginWork._id = 0;
-    return BeginWork;
-}(InstructionOTO));
-export { BeginWork };
+    }
+}
+BeginWork._id = 0;
 //# sourceMappingURL=BeginWork.js.map

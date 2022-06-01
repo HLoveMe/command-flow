@@ -1,18 +1,3 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -24,29 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { attribute } from "../../util";
 import { ObjectTarget } from "./ObjectTarget";
-var DataObject = /** @class */ (function (_super) {
-    __extends(DataObject, _super);
-    function DataObject(value) {
-        if (value === void 0) { value = new ArrayBuffer(0); }
-        var _this = _super.call(this, value) || this;
-        _this._value = value;
-        return _this;
+export class DataObject extends ObjectTarget {
+    constructor(value = new ArrayBuffer(0)) {
+        super(value);
+        this._value = value;
     }
-    DataObject.prototype.data = function () {
+    data() {
         return this.valueOf();
-    };
-    DataObject.prototype.valueOf = function () {
+    }
+    valueOf() {
         return this._value;
-    };
-    DataObject.attributes = new Set();
-    DataObject.empty = new DataObject(new ArrayBuffer(0));
-    __decorate([
-        attribute(),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", ArrayBuffer)
-    ], DataObject.prototype, "valueOf", null);
-    return DataObject;
-}(ObjectTarget));
-export { DataObject };
+    }
+}
+DataObject.attributes = new Set();
+DataObject.empty = new DataObject(new ArrayBuffer(0));
+__decorate([
+    attribute(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", ArrayBuffer)
+], DataObject.prototype, "valueOf", null);
 //# sourceMappingURL=DataObject.js.map

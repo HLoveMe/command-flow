@@ -1,82 +1,78 @@
-var HardwareBase = /** @class */ (function () {
-    function HardwareBase() {
+export class HardwareBase {
+    takePhoto(option) {
+        throw new Error("Method not implemented.");
     }
-    HardwareBase.prototype.takePhoto = function (option) {
+    recordVideo(option) {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.recordVideo = function (option) {
+    }
+    getPhotos() {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.getPhotos = function () {
+    }
+    getCurrentPosition() {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.getCurrentPosition = function () {
+    }
+    watchPosition(option) {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.watchPosition = function (option) {
+    }
+    closePosition() {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.closePosition = function () {
+    }
+    recordAudio() {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.recordAudio = function () {
+    }
+    stopAudio() {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.stopAudio = function () {
+    }
+    getFile(option) {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.getFile = function (option) {
+    }
+    startVibrator(option) {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.startVibrator = function (option) {
+    }
+    stopVibrator() {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.stopVibrator = function () {
+    }
+    getSystemInfo() {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.getSystemInfo = function () {
+    }
+    getVolume() {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.getVolume = function () {
+    }
+    setVolume(volume) {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.setVolume = function (volume) {
+    }
+    getBrightness() {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.getBrightness = function () {
+    }
+    setBrightness(brightness) {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.setBrightness = function (brightness) {
+    }
+    scanBluetooth() {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.scanBluetooth = function () {
+    }
+    connectBluetooth(device) {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.connectBluetooth = function (device) {
+    }
+    bluetoothSendData(data) {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.bluetoothSendData = function (data) {
+    }
+    bluetoothReceiveData(device) {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.bluetoothReceiveData = function (device) {
+    }
+    bluetoothClose(device) {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.bluetoothClose = function (device) {
+    }
+    speechInit(option) {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.speechInit = function (option) {
+    }
+    speak(text) {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.speak = function (text) {
+    }
+    stopSpeak() {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.stopSpeak = function () {
+    }
+    clearSpeech() {
         throw new Error("Method not implemented.");
-    };
-    HardwareBase.prototype.clearSpeech = function () {
-        throw new Error("Method not implemented.");
-    };
-    return HardwareBase;
-}());
-export { HardwareBase };
+    }
+}
 //# sourceMappingURL=Hardware.js.map

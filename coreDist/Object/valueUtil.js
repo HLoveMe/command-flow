@@ -1,7 +1,7 @@
 import { ObjectTarget } from "..";
 import * as Value from './Able/ObjectAble';
-var ObjectMap = null;
-var init = function () {
+let ObjectMap = null;
+const init = () => {
     if (ObjectMap === null) {
         ObjectMap = {
             "[object Object]": Value.ObjectTarget,
@@ -21,7 +21,7 @@ var init = function () {
     }
     return ObjectMap;
 };
-export var isAbleType = function (value) {
+export const isAbleType = (value) => {
     init();
     return Object.prototype.toString.call(value) === '[object flow-object]';
 };
@@ -32,13 +32,12 @@ export var isAbleType = function (value) {
  * @param force 是否强制包装
  * @returns
  */
-export var decide = function (value, force) {
-    if (force === void 0) { force = false; }
+export const decide = function (value, force = false) {
     init();
     if (isAbleType(value) && force === false)
         return value;
-    var key = Object.prototype.toString.call(value);
-    var Target = ObjectMap[key];
+    const key = Object.prototype.toString.call(value);
+    const Target = ObjectMap[key];
     if (Target) {
         return new Target(value !== null && value !== void 0 ? value : {});
     }

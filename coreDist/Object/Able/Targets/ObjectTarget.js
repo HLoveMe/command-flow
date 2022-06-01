@@ -8,46 +8,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { DefaultValue } from "../../util";
-var ObjectTarget = /** @class */ (function () {
-    function ObjectTarget(value) {
-        if (value === void 0) { value = {}; }
+export class ObjectTarget {
+    constructor(value = {}) {
         this._value = value;
     }
-    Object.defineProperty(ObjectTarget.prototype, Symbol.toStringTag, {
-        get: function () {
-            return 'flow-object';
-        },
-        enumerable: false,
-        configurable: true
-    });
-    ObjectTarget.prototype.valueOf = function () {
+    get [Symbol.toStringTag]() {
+        return 'flow-object';
+    }
+    valueOf() {
         return this._value;
-    };
-    ObjectTarget.prototype.merge = function (target) {
+    }
+    merge(target) {
         try {
-            var result = Object.assign(this._value, target._value);
+            const result = Object.assign(this._value, target._value);
             return new ObjectTarget(result);
         }
         catch (error) {
             return new ObjectTarget(null);
         }
-    };
-    ObjectTarget.prototype.json = function () {
-        var StringObject = require("./StringObject").StringObject;
+    }
+    json() {
+        const { StringObject } = require("./StringObject");
         try {
             return new StringObject(JSON.stringify(this._value));
         }
         catch (error) {
             return new StringObject("{}");
         }
-    };
-    ObjectTarget.attributes = new Set();
-    ObjectTarget.empty = new ObjectTarget({});
-    __decorate([
-        DefaultValue(Object.prototype.toString.call({})),
-        __metadata("design:type", String)
-    ], ObjectTarget, "type", void 0);
-    return ObjectTarget;
-}());
-export { ObjectTarget };
+    }
+}
+ObjectTarget.attributes = new Set();
+ObjectTarget.empty = new ObjectTarget({});
+__decorate([
+    DefaultValue(Object.prototype.toString.call({})),
+    __metadata("design:type", String)
+], ObjectTarget, "type", void 0);
 //# sourceMappingURL=ObjectTarget.js.map

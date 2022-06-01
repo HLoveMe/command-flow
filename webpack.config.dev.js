@@ -3,7 +3,7 @@ const webpack = require("webpack");
 console.log("----------------------------------------------------")
 module.exports = {
   mode: 'development',
-  entry: path.join(__dirname, "public", 'index.js'),
+  entry: path.join(__dirname, "coreDist", 'index.js'),
   // watch: true,
   output: {
     path: path.join(__dirname, "dist"),

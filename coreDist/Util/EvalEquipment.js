@@ -1,12 +1,12 @@
 import { isWeb as _isWeb, isNode as _isNode } from "./Equipment";
 export function isRunWeb($1, $2, descriptor) {
-    descriptor.value = function () { return _isWeb; };
+    descriptor.value = () => _isWeb;
 }
 export function isRunNode($1, $2, descriptor) {
-    descriptor.value = function () { return _isNode; };
+    descriptor.value = () => _isNode;
 }
 export function isRunElectron($1, $2, descriptor) {
-    descriptor.value = function () { return isRunElectron; };
+    descriptor.value = () => isRunElectron;
 }
 // export class BaseRunTime implements EnvironmentAble {
 //   isAble() {

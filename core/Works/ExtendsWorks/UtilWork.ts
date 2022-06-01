@@ -2,7 +2,7 @@ import { Observable, interval, asyncScheduler, timer, NEVER } from "rxjs"
 import { takeUntil, take } from "rxjs/operators"
 import { BaseType, NumberObject, ObjectTarget } from "../.."
 import { ChannelObject } from "../../Types";
-import { unpackValue } from "../../Util/channel-value-util";
+import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 import { InstructionOTM, InstructionOTO } from "../Instruction"
 
 // 一直发
@@ -26,10 +26,7 @@ class IntervalWork extends InstructionOTM {
         take(that.maxCount),
         takeUntil(this.notifier),
       ).subscribe({
-        next: (value) => observer.next(new ObjectTarget({
-          ...input._value,
-          value: new NumberObject(value)
-        })),
+        next: (value) => observer.next(wrapperValue(input, new NumberObject(value))),
         error: (error) => observer.error(error),
         complete: () => observer.complete()
       })
@@ -54,16 +51,14 @@ class TimeoutWork extends InstructionOTO {
   run(input: ChannelObject): Observable<ChannelObject<NumberObject>> {
     const intervalTime = parseInt(unpackValue(input)) || this.intervalTime || 1000;
     const that = this;
+
     return new Observable(observer => {
       const sub = interval(intervalTime, asyncScheduler)
         .pipe(
           take(1)
         ).subscribe({
           next: (value) => {
-            observer.next(new ObjectTarget({
-              ...input._value,
-              value: new NumberObject(value)
-            }))
+            observer.next(wrapperValue(input, new NumberObject(value)))
           },
           error: (error) => observer.error(error),
           complete: () => observer.complete()
@@ -103,10 +98,7 @@ class DelayIntervalWork extends InstructionOTM {
           takeUntil(this.notifier),
         )
         .subscribe({
-          next: (value) => observer.next(new ObjectTarget({
-            ...input._value,
-            value: new NumberObject(value)
-          })),
+          next: (value) => observer.next(wrapperValue(input, new NumberObject(value))),
           error: (error) => observer.error(error),
           complete: () => observer.complete()
         })

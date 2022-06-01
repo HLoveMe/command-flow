@@ -1,18 +1,3 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -22,74 +7,69 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var NumberObject_1;
 import { attribute, CalcUnit, CompareUnit, DefaultValue } from "../../util";
 import { ObjectTarget } from "./ObjectTarget";
 import { BooleanObject } from "./BooleanObject";
-var NumberObject = /** @class */ (function (_super) {
-    __extends(NumberObject, _super);
-    function NumberObject(value) {
-        if (value === void 0) { value = 1; }
-        var _this = _super.call(this, value) || this;
-        _this._value = value;
-        return _this;
+let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget {
+    constructor(value = 1) {
+        super(value);
+        this._value = value;
     }
-    NumberObject_1 = NumberObject;
-    NumberObject.prototype.valueOf = function () {
+    valueOf() {
         return this._value;
-    };
-    NumberObject.prototype.merge = function (target) {
+    }
+    merge(target) {
         return new NumberObject_1(this._value + target._value);
-    };
+    }
     // Compare
     // compare: ControlFlow.CompareExec;
-    NumberObject.prototype.more = function (target) {
+    more(target) {
         return new BooleanObject(this._value > target._value);
-    };
-    NumberObject.prototype.equal = function (target) {
+    }
+    equal(target) {
         return new BooleanObject(this._value === target._value);
-    };
-    NumberObject.prototype.less = function (target) {
+    }
+    less(target) {
         return new BooleanObject(this._value < target._value);
-    };
-    NumberObject.prototype.moreEqual = function (target) {
+    }
+    moreEqual(target) {
         return new BooleanObject(this._value >= target._value);
-    };
-    NumberObject.prototype.lessEqual = function (target) {
+    }
+    lessEqual(target) {
         return new BooleanObject(this._value <= target._value);
-    };
+    }
     // Calc
     // calc: ControlFlow.CalcFunction;
-    NumberObject.prototype.plus = function (target) {
+    plus(target) {
         return new NumberObject_1(this._value + target._value);
-    };
-    NumberObject.prototype.reduce = function (target) {
+    }
+    reduce(target) {
         return new NumberObject_1(this._value - target._value);
-    };
-    NumberObject.prototype.multi = function (target) {
+    }
+    multi(target) {
         return new NumberObject_1(this._value * target._value);
-    };
-    NumberObject.prototype.divide = function (target) {
+    }
+    divide(target) {
         return new NumberObject_1(target._value === 0 ? Infinity : this._value / target._value);
-    };
-    var NumberObject_1;
-    NumberObject.attributes = new Set();
-    NumberObject.empty = new NumberObject_1(0);
-    __decorate([
-        attribute(),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", Number)
-    ], NumberObject.prototype, "valueOf", null);
-    __decorate([
-        DefaultValue(Object.prototype.toString.call(new Number())),
-        __metadata("design:type", String)
-    ], NumberObject, "type", void 0);
-    NumberObject = NumberObject_1 = __decorate([
-        CalcUnit,
-        CompareUnit,
-        __metadata("design:paramtypes", [Number])
-    ], NumberObject);
-    return NumberObject;
-}(ObjectTarget));
+    }
+};
+NumberObject.attributes = new Set();
+NumberObject.empty = new NumberObject_1(0);
+__decorate([
+    attribute(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Number)
+], NumberObject.prototype, "valueOf", null);
+__decorate([
+    DefaultValue(Object.prototype.toString.call(new Number())),
+    __metadata("design:type", String)
+], NumberObject, "type", void 0);
+NumberObject = NumberObject_1 = __decorate([
+    CalcUnit,
+    CompareUnit,
+    __metadata("design:paramtypes", [Number])
+], NumberObject);
 export { NumberObject };
 //# sourceMappingURL=NumberObject.js.map
