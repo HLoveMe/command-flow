@@ -26,7 +26,7 @@ export enum FileType {
   Audio = "audio/*",
   Video = "video/*",
   HTML = "text/html",
-  txt = "text/plain",
+  Txt = "text/plain",
   Image = "image/*",
   Csv = ".csv",
   Pdf = "application/pdf",
