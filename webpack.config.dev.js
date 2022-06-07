@@ -1,12 +1,13 @@
 const path = require('path');
-const webpack = require("webpack");
-console.log("----------------------------------------------------")
 module.exports = {
   mode: 'development',
-  entry: path.join(__dirname, "coreDist", 'index.js'),
-  // watch: true,
+  entry: {
+    'index': path.join(__dirname, "dist", 'web', 'index.js')
+  },
   output: {
-    path: path.join(__dirname, "dist/web"),
+    path: path.join(__dirname, "dist", 'web2'),
+    library: 'WorkFlow',// 
+    libraryTarget: 'umd',
   },
   module: {
     rules: [{
@@ -22,27 +23,37 @@ module.exports = {
           "plugins": [
             ["@babel/plugin-proposal-optional-chaining"],
           ],
-          presets: ["@babel/preset-env"]
+          presets: [
+            [
+              "@babel/preset-env", {
+                // 要兼容的目标浏览器
+                targets: {
+                  chrome: '74',
+                  firefox: '60',
+                  ie: '11',
+                  safari: '10',
+                  edge: '17'
+                },
+                // 指定corejs版本
+                "corejs": "3",
+                // 使用corejs的方式  usage表示按需加载
+                "useBuiltIns": "usage"
+              }
+            ]
+          ]
         }
       },
     },]
-  },
-  externals: {
-    os: 'os',
   },
   plugins: [
     // new webpack.HotModuleReplacementPlugin(),
   ],
   resolve: {
-    extensions: ['.json', '.js', '.jsx', 'ts', '.tsx'],
+    extensions: ['.json', '.js', '.jsx', '.ts', '.tsx'],
   },
-  // devServer: {
-  //   static: {
-  //     directory: path.join(__dirname, 'public'),
-  //   },
-  //   open: true,
-  //   port: 9000,
-  //   hot: true,
-  // },
+  externals:{
+    axios:'axios',
+    rxjs:'rxjs'
+  },
   devtool: 'cheap-module-source-map',
 };

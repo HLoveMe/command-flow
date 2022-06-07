@@ -44,4 +44,5 @@ Object.defineProperty(exports, "wrapperValue", { enumerable: true, get: function
 const valueUtil_1 = require("./Object/valueUtil");
 Object.defineProperty(exports, "isAbleType", { enumerable: true, get: function () { return valueUtil_1.isAbleType; } });
 Object.defineProperty(exports, "decide", { enumerable: true, get: function () { return valueUtil_1.decide; } });
+// 1
 //# sourceMappingURL=index.js.map

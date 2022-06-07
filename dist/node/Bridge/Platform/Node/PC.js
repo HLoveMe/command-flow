@@ -5,7 +5,7 @@ const rxjs_1 = require("rxjs");
 const ObjectAble_1 = require("../../../Object/Able/ObjectAble");
 const fs = require("fs");
 const BasePlatform_1 = require("../BasePlatform");
-const nodeOpen = require("open");
+const nodeOpen = require('open');
 const process = require("child_process");
 /*** */
 class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
@@ -25,7 +25,7 @@ class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
             else {
                 const rs = fs.createReadStream(url);
                 let data = Buffer.of();
-                const sub1 = (0, rxjs_1.fromEvent)(rs, "data").subscribe({
+                const sub1 = (0, rxjs_1.fromEvent)(rs, 'data').subscribe({
                     next: (chunk) => {
                         data = Buffer.concat([data, chunk]);
                         subscriber.next(new ObjectAble_1.ObjectTarget({
@@ -36,8 +36,10 @@ class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
                             file: null,
                         }));
                     },
+                    complete: () => { },
+                    error: (err) => { }
                 });
-                const sub2 = (0, rxjs_1.fromEvent)(rs, "end").subscribe({
+                const sub2 = (0, rxjs_1.fromEvent)(rs, 'end').subscribe({
                     next: () => {
                         subscriber.complete();
                     },
@@ -54,12 +56,12 @@ class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
         });
     }
     /**
-   * = "#javascript#console.log('hello world')" :default
-   *  = "#shell#echo hello world"
-   * @param command
-   * @param option
-   * @returns
-   */
+     * = "#javascript#console.log('hello world')" :default
+     *  = "#shell#echo hello world"
+     * @param command
+     * @param option
+     * @returns
+     */
     runCommand(command, option) {
         return new rxjs_1.Observable((subscriber) => {
             const runJs = () => {
@@ -76,10 +78,13 @@ class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
                     error = err;
                 }
                 return {
-                    status, result, command, error
+                    status,
+                    result,
+                    command,
+                    error,
                 };
             };
-            if (command.startsWith("#shell#")) {
+            if (command.startsWith('#shell#')) {
                 process.exec(command, function (error, stdout, stderr) {
                     subscriber.next({
                         result: stdout,
@@ -90,7 +95,7 @@ class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
                     subscriber.complete();
                 });
             }
-            else if (command.startsWith("#javascript#")) {
+            else if (command.startsWith('#javascript#')) {
                 subscriber.next(runJs());
                 subscriber.complete();
             }

@@ -1,20 +1,19 @@
-import { from, fromEvent, Observable, of, Subscription } from "rxjs";
-import { BooleanObject, ObjectTarget } from "../../../Object/Able/ObjectAble";
+import { from, fromEvent, Observable, of, Subscription } from 'rxjs';
+import { BooleanObject, ObjectTarget } from '../../../Object/Able/ObjectAble';
 import {
   PathLike,
   FileLoadEvent,
   FileOption,
   CommandStatus,
-} from "../../ConfigTypes";
-import * as fs from "fs";
-import { Value } from "../../../Types";
-import { PlatformBridge } from "../BasePlatform";
-const nodeOpen = require("open");
-import * as process from "child_process";
+} from '../../ConfigTypes';
+import * as fs from 'fs';
+import { Value } from '../../../Types';
+import { PlatformBridge } from '../BasePlatform';
+const nodeOpen = require('open');
+import * as process from 'child_process';
 
 /*** */
-export class PCNodejsBridge
-  extends PlatformBridge {
+export class PCNodejsBridge extends PlatformBridge {
   open(url: string): Observable<BooleanObject> {
     return from(nodeOpen(url, { wait: true }) as Observable<BooleanObject>);
   }
@@ -33,7 +32,7 @@ export class PCNodejsBridge
       } else {
         const rs = fs.createReadStream(url as unknown as fs.PathLike);
         let data = Buffer.of();
-        const sub1 = fromEvent(rs, "data").subscribe({
+        const sub1 = fromEvent<Buffer>(rs, 'data').subscribe({
           next: (chunk: Buffer) => {
             data = Buffer.concat([data, chunk]);
             subscriber.next(
@@ -46,8 +45,10 @@ export class PCNodejsBridge
               })
             );
           },
+          complete: () => { },
+          error: (err) => { }
         });
-        const sub2 = fromEvent(rs, "end").subscribe({
+        const sub2 = fromEvent(rs, 'end').subscribe({
           next: () => {
             subscriber.complete();
           },
@@ -64,12 +65,12 @@ export class PCNodejsBridge
     });
   }
   /**
- * = "#javascript#console.log('hello world')" :default
- *  = "#shell#echo hello world"
- * @param command 
- * @param option 
- * @returns 
- */
+   * = "#javascript#console.log('hello world')" :default
+   *  = "#shell#echo hello world"
+   * @param command
+   * @param option
+   * @returns
+   */
   runCommand(command: string, option?: any): Observable<CommandStatus> {
     return new Observable((subscriber) => {
       const runJs = () => {
@@ -77,7 +78,7 @@ export class PCNodejsBridge
         let status = false;
         let error = null;
         try {
-          result = eval(command?.toString())
+          result = eval(command?.toString());
           status = true;
         } catch (err) {
           result = null;
@@ -85,10 +86,13 @@ export class PCNodejsBridge
           error = err;
         }
         return {
-          status, result, command, error
+          status,
+          result,
+          command,
+          error,
         } as CommandStatus;
-      }
-      if (command.startsWith("#shell#")) {
+      };
+      if (command.startsWith('#shell#')) {
         process.exec(command, function (error, stdout, stderr) {
           subscriber.next({
             result: stdout,
@@ -98,7 +102,7 @@ export class PCNodejsBridge
           } as CommandStatus);
           subscriber.complete();
         });
-      } else if (command.startsWith("#javascript#")) {
+      } else if (command.startsWith('#javascript#')) {
         subscriber.next(runJs());
         subscriber.complete();
       } else {
