@@ -29,7 +29,7 @@ import {
   BooleanObject,
   DateObject,
   DataObject,
-} from "../../../coreDist/index";
+} from "../../../core/index";
 import { ref } from "vue";
 const logInfo = ref<Array<{ desc: string; success: boolean }>>([]);
 const disabled = ref<boolean>(false);

@@ -41,7 +41,7 @@ import {
   Base64DecodeWork,
   Base64EnCodeWork,
   FetchWork,
-} from "../../coreDist/index";
+} from "../../core/index";
 import { ref } from "vue";
 import RunGroup from "./RunGroup.vue";
 import RunResult from "./RunResult.vue";

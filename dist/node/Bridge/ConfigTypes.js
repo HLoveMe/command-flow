@@ -6,7 +6,7 @@ var FileType;
     FileType["Audio"] = "audio/*";
     FileType["Video"] = "video/*";
     FileType["HTML"] = "text/html";
-    FileType["txt"] = "text/plain";
+    FileType["Txt"] = "text/plain";
     FileType["Image"] = "image/*";
     FileType["Csv"] = ".csv";
     FileType["Pdf"] = "application/pdf";

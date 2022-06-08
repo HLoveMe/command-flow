@@ -24,7 +24,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { SetObject } from '../../../coreDist/index';
+import { SetObject } from '../../../core/index';
 import { ref } from 'vue';
 import { ControlFlow } from '../../../core';
 const logInfo = ref<Array<{ desc: string; success: boolean }>>([]);
