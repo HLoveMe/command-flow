@@ -8,7 +8,7 @@
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "CommonJS",
-    "watch": false,
+    "watch": true,
     "types": ["node"],
     "skipLibCheck": true,
     "moduleResolution": "node"

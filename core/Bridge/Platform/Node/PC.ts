@@ -15,7 +15,16 @@ import * as process from 'child_process';
 /*** */
 export class PCNodejsBridge extends PlatformBridge {
   open(url: string): Observable<BooleanObject> {
-    return from(nodeOpen(url, { wait: true }) as Observable<BooleanObject>);
+    return new Observable((subscriber) => {
+      nodeOpen(url, { wait: true }).then($1 => {
+        debugger
+        subscriber.next(new BooleanObject(true));
+        subscriber.complete();
+      })
+      return {
+        unsubscribe: () => subscriber.unsubscribe(),
+      }
+    })
   }
 
   loadFile(

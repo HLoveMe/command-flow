@@ -10,7 +10,16 @@ const process = require("child_process");
 /*** */
 class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
     open(url) {
-        return (0, rxjs_1.from)(nodeOpen(url, { wait: true }));
+        return new rxjs_1.Observable((subscriber) => {
+            nodeOpen(url, { wait: true }).then($1 => {
+                debugger;
+                subscriber.next(new ObjectAble_1.BooleanObject(true));
+                subscriber.complete();
+            });
+            return {
+                unsubscribe: () => subscriber.unsubscribe(),
+            };
+        });
     }
     loadFile(url, option) {
         return new rxjs_1.Observable((subscriber) => {
