@@ -47,7 +47,7 @@ import {
   ArrayObject,
   SetObject,
   ObjectTarget,
-} from "../../core/index";
+} from "../../dist/web/index";
 import { ref } from "vue";
 import RunGroup from "./RunGroup.vue";
 import RunResult from "./RunResult.vue";

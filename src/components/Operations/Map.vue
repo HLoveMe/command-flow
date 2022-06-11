@@ -34,7 +34,7 @@ import {
   BooleanObject,
   DateObject,
   DataObject,
-} from "../../../core/index";
+} from "../../../dist/web/index";
 import { ref } from "vue";
 import { ControlFlow } from "../../../core";
 const logInfo = ref<Array<{ desc: string; success: boolean }>>([]);

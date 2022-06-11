@@ -7,7 +7,7 @@
     "outDir": "./dist/web",
     "sourceMap": true,
     "noImplicitAny": false,
-    "module": "es2015",
+    "module": "commonjs",
     "watch": false,
     "skipLibCheck": true,
     "moduleResolution": "node"

@@ -38,7 +38,7 @@ import {
   LoadFileWork,
   InstructionOTO,
   unpackValue,
-} from "../../core/index";
+} from "../../dist/web/index";
 import { computed, onMounted, ref } from "vue";
 import RunGroup from "./RunGroup.vue";
 import RunResult from "./RunResult.vue";
