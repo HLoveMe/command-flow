@@ -1,6 +1,6 @@
 {
   "name": "command-flow",
-  "version": "1.0.0-beta.01",
+  "version": "1.0.1-beta.01",
   "main": "index.js",
   "scripts": {
     "tsc": "node ./build-pre.js 0 && tsc -p tsconfig.web.json && node ./build-pre.js 1 && tsc -p tsconfig.node.json",
