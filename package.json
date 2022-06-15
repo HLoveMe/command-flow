@@ -3,19 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "tsc_node_build": "node ./build-pre.js 1 && tsc -p tsconfig.node.json",
-    "tsc_web": "node ./build-pre.js 0 && tsc -p tsconfig.web.json",
-    "build_web": "webpack --config webpack.config.dev.js",
-    "web_test": "vite"
+    "tsc": "node ./build-pre.js 0 && tsc -p tsconfig.web.json && node ./build-pre.js 1 && tsc -p tsconfig.node.json",
+    "build_dev_web": "webpack --config webpack.config.dev.js",
+    "build_prod_web": "webpack --config webpack.config.prod.js",
+    "build_web": "webpack --config webpack.config.dev.js && webpack --config webpack.config.prod.js",
+    "build_node": "webpack --config webpack.config.node.js",
+    "web_serve": "vite"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HLoveMe/CommandFlow.git"
   },
   "dependencies": {
-    "@types/node": "^14.0.9",
-    "@types/ws": "^7.2.6",
-    "@vue/cli-plugin-babel": "^5.0.4",
     "axios": "^0.20.0",
     "js-base64": "^3.4.5",
     "open": "^8.3.0",
@@ -30,13 +29,45 @@
   "bugs": {
     "url": "https://github.com/HLoveMe/CommandFlow/issues"
   },
+  "types":"index.d.ts",
+  "exports":{
+    ".": {
+      "types": "index.d.ts",
+      "node": "./cjs/flow.prod.js",
+      "require": "./cjs/flow.prod.js",
+      "es2015": "./cjs/flow.prod.js",
+      "default":"./cjs/flow.prod.js"
+    },
+    "./web": {
+      "types": "index.d.ts",
+      "node": "./cjs/flow.prod.js",
+      "require": "./cjs/flow.prod.js",
+      "es2015": "./cjs/flow.prod.js",
+      "default":"./cjs/flow.prod.js"
+    },
+    "./node":{
+      "types": "index.d.ts",
+      "node": "./cjs/flow.node.js",
+      "require": "./cjs/flow.node.js",
+      "es2015": "./cjs/flow.node.js",
+      "default":"./cjs/flow.node.js"
+    }
+  },
   "homepage": "https://github.com/HLoveMe/CommandFlow#readme",
   "devDependencies": {
     "@babel/core": "^7.16.12",
     "@babel/plugin-proposal-optional-chaining": "^7.16.7",
-    "@babel/preset-env": "^7.16.11",
+    "@babel/plugin-transform-runtime": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-set-env": "^7.16.11",
     "@babel/preset-typescript": "^7.17.12",
+    "@babel/runtime": "^7.18.3",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/runtime-corejs3": "^7.18.3",
+    "@types/node": "^14.0.9",
+    "@types/ws": "^7.2.6",
     "@vitejs/plugin-vue": "^1.6.0",
+    "@vue/cli-plugin-babel": "^5.0.4",
     "@vue/compiler-sfc": "^3.2.6",
     "babel-loader": "^8.2.3",
     "core-js": "^3.22.8",

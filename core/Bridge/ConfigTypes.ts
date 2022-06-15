@@ -41,7 +41,7 @@ export interface FileLoadEvent {
   loaded: number;
   data: ArrayBuffer;
   finish: boolean;
-  file: File,
+  file?: File,
 }
 
 export interface RequestTimeOut {

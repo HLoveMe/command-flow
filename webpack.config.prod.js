@@ -1,11 +1,12 @@
 const path = require('path');
+const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: {
     'index': path.join(__dirname, "dist", 'web', 'index.js')
   },
   output: {
-    filename: 'flow.dev.js',
+    filename: 'flow.prod.js',
     path: path.join(__dirname, "cjs"),
     library: 'WorkFlow',// 
     libraryTarget: 'umd',
@@ -42,11 +43,13 @@ module.exports = {
       },
     },]
   },
-  plugins: [
-    // new webpack.HotModuleReplacementPlugin(),
-  ],
+  plugins: [],
   resolve: {
     extensions: ['.json', '.js', '.jsx', '.ts', '.tsx'],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
   },
   externals: [
     'axios',
@@ -58,5 +61,4 @@ module.exports = {
     'uuid',
     'open'
   ],
-  devtool: 'cheap-module-source-map',
 };

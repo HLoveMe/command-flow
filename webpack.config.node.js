@@ -1,14 +1,16 @@
 const path = require('path');
+const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   mode: 'development',
   entry: {
-    'index': path.join(__dirname, "dist", 'web', 'index.js')
+    'index': path.join(__dirname, "dist", 'node', 'index.js')
   },
+  target:'node',
   output: {
-    filename: 'flow.dev.js',
+    filename: 'flow.node.js',
     path: path.join(__dirname, "cjs"),
     library: 'WorkFlow',// 
-    libraryTarget: 'umd',
+    libraryTarget: 'commonjs2',
   },
   module: {
     rules: [{
@@ -42,9 +44,7 @@ module.exports = {
       },
     },]
   },
-  plugins: [
-    // new webpack.HotModuleReplacementPlugin(),
-  ],
+  plugins: [],
   resolve: {
     extensions: ['.json', '.js', '.jsx', '.ts', '.tsx'],
   },
