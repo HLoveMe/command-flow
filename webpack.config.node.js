@@ -10,7 +10,7 @@ module.exports = {
     filename: 'flow.node.js',
     path: path.join(__dirname, "cjs"),
     library: 'WorkFlow',// 
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'commonjs',
   },
   module: {
     rules: [{

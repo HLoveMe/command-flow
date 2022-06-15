@@ -53,6 +53,15 @@
       "default":"./cjs/flow.node.js"
     }
   },
+  "files":[
+    "index.js",
+    "index.d.ts",
+    "cjs/flow.prod.js",
+    "cjs/flow.node.js",
+    "cjs/flow.dev.js",
+    "core",
+    "package.json"
+  ],
   "homepage": "https://github.com/HLoveMe/CommandFlow#readme",
   "devDependencies": {
     "@babel/core": "^7.16.12",
@@ -66,17 +75,12 @@
     "@babel/runtime-corejs3": "^7.18.3",
     "@types/node": "^14.0.9",
     "@types/ws": "^7.2.6",
-    "@vitejs/plugin-vue": "^1.6.0",
-    "@vue/cli-plugin-babel": "^5.0.4",
-    "@vue/compiler-sfc": "^3.2.6",
     "babel-loader": "^8.2.3",
     "core-js": "^3.22.8",
     "less": "^4.1.2",
     "terser-webpack-plugin": "^5.3.1",
     "ts-loader": "^9.2.7",
     "typescript": "^4.6.2",
-    "vite": "^2.5.2",
-    "vue": "^3.2.6",
     "webpack": "^5.67.0",
     "webpack-cli": "^4.9.2"
   }
