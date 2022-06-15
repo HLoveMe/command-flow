@@ -1006,7 +1006,7 @@ var PCNodejsBridge = /*#__PURE__*/function (_BasePlatform_1$Platf) {
                 loaded: data.byteLength,
                 data: data,
                 finish: false,
-                file: null
+                file: undefined
               }));
             },
             complete: function complete() {},
@@ -1044,15 +1044,15 @@ var PCNodejsBridge = /*#__PURE__*/function (_BasePlatform_1$Platf) {
     value: function runCommand(command, option) {
       return new rxjs_1.Observable(function (subscriber) {
         var runJs = function runJs() {
-          var result = null;
+          var result = undefined;
           var status = false;
-          var error = null;
+          var error = undefined;
 
           try {
             result = eval(command === null || command === void 0 ? void 0 : command.toString());
             status = true;
           } catch (err) {
-            result = null;
+            result = undefined;
             status = false;
             error = err;
           }
@@ -5832,7 +5832,9 @@ module.exports = require("fs");
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
 /******/ 	var __webpack_exports__ = __webpack_require__("./dist/node/index.js");
-/******/ 	exports.WorkFlow = __webpack_exports__;
+/******/ 	var __webpack_export_target__ = exports;
+/******/ 	for(var i in __webpack_exports__) __webpack_export_target__[i] = __webpack_exports__[i];
+/******/ 	if(__webpack_exports__.__esModule) Object.defineProperty(__webpack_export_target__, "__esModule", { value: true });
 /******/ 	
 /******/ })()
 ;

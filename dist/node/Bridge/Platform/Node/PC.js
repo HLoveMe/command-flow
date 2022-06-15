@@ -42,7 +42,7 @@ class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
                             loaded: data.byteLength,
                             data: data,
                             finish: false,
-                            file: null,
+                            file: undefined,
                         }));
                     },
                     complete: () => { },
@@ -74,15 +74,15 @@ class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
     runCommand(command, option) {
         return new rxjs_1.Observable((subscriber) => {
             const runJs = () => {
-                let result = null;
+                let result = undefined;
                 let status = false;
-                let error = null;
+                let error = undefined;
                 try {
                     result = eval(command?.toString());
                     status = true;
                 }
                 catch (err) {
-                    result = null;
+                    result = undefined;
                     status = false;
                     error = err;
                 }

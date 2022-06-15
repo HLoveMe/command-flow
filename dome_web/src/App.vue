@@ -24,9 +24,9 @@
 // import Timer from './components/TimerWork.vue'
 // import FetchWork from './components/FetchWork.vue'
 // import Operation from './components/Operations/index.vue'
-import WorkFlow from 'command-flow/web'
-import * as WorkFlow2 from 'command-flow/web'
-console.log(WorkFlow,WorkFlow2)
+import { Context } from 'command-flow'
+import * as WorkFlow from 'command-flow'
+console.log(Context,WorkFlow.Context)
 debugger
 </script>
 <style>

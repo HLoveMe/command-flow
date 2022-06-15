@@ -11,6 +11,414 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/@babel/runtime/helpers/regeneratorRuntime.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/regeneratorRuntime.js ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _typeof = (__webpack_require__(/*! ./typeof.js */ "./node_modules/@babel/runtime/helpers/typeof.js")["default"]);
+
+function _regeneratorRuntime() {
+  "use strict";
+  /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+
+  module.exports = _regeneratorRuntime = function _regeneratorRuntime() {
+    return exports;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
+  var exports = {},
+      Op = Object.prototype,
+      hasOwn = Op.hasOwnProperty,
+      $Symbol = "function" == typeof Symbol ? Symbol : {},
+      iteratorSymbol = $Symbol.iterator || "@@iterator",
+      asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator",
+      toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  function define(obj, key, value) {
+    return Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: !0,
+      configurable: !0,
+      writable: !0
+    }), obj[key];
+  }
+
+  try {
+    define({}, "");
+  } catch (err) {
+    define = function define(obj, key, value) {
+      return obj[key] = value;
+    };
+  }
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator,
+        generator = Object.create(protoGenerator.prototype),
+        context = new Context(tryLocsList || []);
+    return generator._invoke = function (innerFn, self, context) {
+      var state = "suspendedStart";
+      return function (method, arg) {
+        if ("executing" === state) throw new Error("Generator is already running");
+
+        if ("completed" === state) {
+          if ("throw" === method) throw arg;
+          return doneResult();
+        }
+
+        for (context.method = method, context.arg = arg;;) {
+          var delegate = context.delegate;
+
+          if (delegate) {
+            var delegateResult = maybeInvokeDelegate(delegate, context);
+
+            if (delegateResult) {
+              if (delegateResult === ContinueSentinel) continue;
+              return delegateResult;
+            }
+          }
+
+          if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
+            if ("suspendedStart" === state) throw state = "completed", context.arg;
+            context.dispatchException(context.arg);
+          } else "return" === context.method && context.abrupt("return", context.arg);
+          state = "executing";
+          var record = tryCatch(innerFn, self, context);
+
+          if ("normal" === record.type) {
+            if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
+            return {
+              value: record.arg,
+              done: context.done
+            };
+          }
+
+          "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
+        }
+      };
+    }(innerFn, self, context), generator;
+  }
+
+  function tryCatch(fn, obj, arg) {
+    try {
+      return {
+        type: "normal",
+        arg: fn.call(obj, arg)
+      };
+    } catch (err) {
+      return {
+        type: "throw",
+        arg: err
+      };
+    }
+  }
+
+  exports.wrap = wrap;
+  var ContinueSentinel = {};
+
+  function Generator() {}
+
+  function GeneratorFunction() {}
+
+  function GeneratorFunctionPrototype() {}
+
+  var IteratorPrototype = {};
+  define(IteratorPrototype, iteratorSymbol, function () {
+    return this;
+  });
+  var getProto = Object.getPrototypeOf,
+      NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype);
+  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype);
+
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function (method) {
+      define(prototype, method, function (arg) {
+        return this._invoke(method, arg);
+      });
+    });
+  }
+
+  function AsyncIterator(generator, PromiseImpl) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+
+      if ("throw" !== record.type) {
+        var result = record.arg,
+            value = result.value;
+        return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) {
+          invoke("next", value, resolve, reject);
+        }, function (err) {
+          invoke("throw", err, resolve, reject);
+        }) : PromiseImpl.resolve(value).then(function (unwrapped) {
+          result.value = unwrapped, resolve(result);
+        }, function (error) {
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+
+      reject(record.arg);
+    }
+
+    var previousPromise;
+
+    this._invoke = function (method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new PromiseImpl(function (resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+    };
+  }
+
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+
+    if (undefined === method) {
+      if (context.delegate = null, "throw" === context.method) {
+        if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel;
+        context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+    if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
+    var info = record.arg;
+    return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel);
+  }
+
+  function pushTryEntry(locs) {
+    var entry = {
+      tryLoc: locs[0]
+    };
+    1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal", delete record.arg, entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    this.tryEntries = [{
+      tryLoc: "root"
+    }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0);
+  }
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) return iteratorMethod.call(iterable);
+      if ("function" == typeof iterable.next) return iterable;
+
+      if (!isNaN(iterable.length)) {
+        var i = -1,
+            next = function next() {
+          for (; ++i < iterable.length;) {
+            if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next;
+          }
+
+          return next.value = undefined, next.done = !0, next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    return {
+      next: doneResult
+    };
+  }
+
+  function doneResult() {
+    return {
+      value: undefined,
+      done: !0
+    };
+  }
+
+  return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
+    var ctor = "function" == typeof genFun && genFun.constructor;
+    return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
+  }, exports.mark = function (genFun) {
+    return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun;
+  }, exports.awrap = function (arg) {
+    return {
+      __await: arg
+    };
+  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
+    return this;
+  }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+    void 0 === PromiseImpl && (PromiseImpl = Promise);
+    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
+    return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) {
+      return result.done ? result.value : iter.next();
+    });
+  }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () {
+    return this;
+  }), define(Gp, "toString", function () {
+    return "[object Generator]";
+  }), exports.keys = function (object) {
+    var keys = [];
+
+    for (var key in object) {
+      keys.push(key);
+    }
+
+    return keys.reverse(), function next() {
+      for (; keys.length;) {
+        var key = keys.pop();
+        if (key in object) return next.value = key, next.done = !1, next;
+      }
+
+      return next.done = !0, next;
+    };
+  }, exports.values = values, Context.prototype = {
+    constructor: Context,
+    reset: function reset(skipTempReset) {
+      if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) {
+        "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined);
+      }
+    },
+    stop: function stop() {
+      this.done = !0;
+      var rootRecord = this.tryEntries[0].completion;
+      if ("throw" === rootRecord.type) throw rootRecord.arg;
+      return this.rval;
+    },
+    dispatchException: function dispatchException(exception) {
+      if (this.done) throw exception;
+      var context = this;
+
+      function handle(loc, caught) {
+        return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i],
+            record = entry.completion;
+        if ("root" === entry.tryLoc) return handle("end");
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc"),
+              hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+          } else {
+            if (!hasFinally) throw new Error("try statement without catch or finally");
+            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+          }
+        }
+      }
+    },
+    abrupt: function abrupt(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+
+        if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null);
+      var record = finallyEntry ? finallyEntry.completion : {};
+      return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record);
+    },
+    complete: function complete(record, afterLoc) {
+      if ("throw" === record.type) throw record.arg;
+      return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel;
+    },
+    finish: function finish(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel;
+      }
+    },
+    "catch": function _catch(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+
+          if ("throw" === record.type) {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+
+          return thrown;
+        }
+      }
+
+      throw new Error("illegal catch attempt");
+    },
+    delegateYield: function delegateYield(iterable, resultName, nextLoc) {
+      return this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      }, "next" === this.method && (this.arg = undefined), ContinueSentinel;
+    }
+  }, exports;
+}
+
+module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/typeof.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/typeof.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
+}
+
+module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/regenerator/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// TODO(Babel 8): Remove this file.
+
+var runtime = __webpack_require__(/*! ../helpers/regeneratorRuntime */ "./node_modules/@babel/runtime/helpers/regeneratorRuntime.js")();
+module.exports = runtime;
+
+// Copied from https://github.com/facebook/regenerator/blob/main/packages/runtime/runtime.js#L736=
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  if (typeof globalThis === "object") {
+    globalThis.regeneratorRuntime = runtime;
+  } else {
+    Function("r", "regeneratorRuntime = r")(runtime);
+  }
+}
+
+
+/***/ }),
+
 /***/ "./dist/web/Bridge/ConfigTypes.js":
 /*!****************************************!*\
   !*** ./dist/web/Bridge/ConfigTypes.js ***!
@@ -827,16 +1235,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Context": () => (/* binding */ Context)
 /* harmony export */ });
-/* harmony import */ var _Types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Types */ "./dist/web/Types.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Configs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Configs */ "./dist/web/Configs/index.js");
-/* harmony import */ var _Object_Able_ObjectAble__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Object/Able/ObjectAble */ "./dist/web/Object/Able/ObjectAble.js");
-/* harmony import */ var _Bridge_Index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Bridge/Index */ "./dist/web/Bridge/Index.js");
-/* harmony import */ var _Works_ExtendsWorks_BeginWork__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Works/ExtendsWorks/BeginWork */ "./dist/web/Works/ExtendsWorks/BeginWork.js");
-/* harmony import */ var _Object_valueUtil__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Object/valueUtil */ "./dist/web/Object/valueUtil.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Types */ "./dist/web/Types.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "rxjs");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Configs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Configs */ "./dist/web/Configs/index.js");
+/* harmony import */ var _Object_Able_ObjectAble__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Object/Able/ObjectAble */ "./dist/web/Object/Able/ObjectAble.js");
+/* harmony import */ var _Bridge_Index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Bridge/Index */ "./dist/web/Bridge/Index.js");
+/* harmony import */ var _Works_ExtendsWorks_BeginWork__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Works/ExtendsWorks/BeginWork */ "./dist/web/Works/ExtendsWorks/BeginWork.js");
+/* harmony import */ var _Object_valueUtil__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Object/valueUtil */ "./dist/web/Object/valueUtil.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__);
+
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -861,8 +1273,8 @@ var Context = /*#__PURE__*/function () {
 
     _classCallCheck(this, Context);
 
-    this.status = _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.INIT;
-    this.platform = _Bridge_Index__WEBPACK_IMPORTED_MODULE_4__["default"];
+    this.status = _Types__WEBPACK_IMPORTED_MODULE_1__.WorkType.WorkRunStatus.INIT;
+    this.platform = _Bridge_Index__WEBPACK_IMPORTED_MODULE_5__["default"];
     /**
      * 上下文变量
      */
@@ -877,13 +1289,13 @@ var Context = /*#__PURE__*/function () {
      * 消息传输通道
      */
 
-    this.msgChannel = new rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject();
+    this.msgChannel = new rxjs__WEBPACK_IMPORTED_MODULE_2__.Subject();
     /**
      * 需要销毁的Subscription
      */
 
     this.pools = [];
-    this.runOptions = runOptions || _Configs__WEBPACK_IMPORTED_MODULE_2__.DefaultRunConfig;
+    this.runOptions = runOptions || _Configs__WEBPACK_IMPORTED_MODULE_3__.DefaultRunConfig;
     var sub = this.msgChannel.subscribe({
       next: function next(value) {
         return _this.workMessage(value);
@@ -893,7 +1305,7 @@ var Context = /*#__PURE__*/function () {
       }
     });
     this.pools.push(sub);
-    this.addWork(new _Works_ExtendsWorks_BeginWork__WEBPACK_IMPORTED_MODULE_5__.BeginWork());
+    this.addWork(new _Works_ExtendsWorks_BeginWork__WEBPACK_IMPORTED_MODULE_6__.BeginWork());
   }
   /**
    * 增加上下文变量
@@ -954,12 +1366,12 @@ var Context = /*#__PURE__*/function () {
         });
       }
 
-      if (this.status !== _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.INIT) {
+      if (this.status !== _Types__WEBPACK_IMPORTED_MODULE_1__.WorkType.WorkRunStatus.INIT) {
         return this.sendLog({
           content: this,
           work: [],
           desc: "[content][Func:addWork][context status is not init]",
-          value: new _Object_Able_ObjectAble__WEBPACK_IMPORTED_MODULE_3__.BooleanObject(false)
+          value: new _Object_Able_ObjectAble__WEBPACK_IMPORTED_MODULE_4__.BooleanObject(false)
         });
       }
 
@@ -978,12 +1390,12 @@ var Context = /*#__PURE__*/function () {
   }, {
     key: "prepareWorks",
     value: function () {
-      var _prepareWorks = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+      var _prepareWorks = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(this.status !== _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.INIT)) {
+                if (!(this.status !== _Types__WEBPACK_IMPORTED_MODULE_1__.WorkType.WorkRunStatus.INIT)) {
                   _context.next = 2;
                   break;
                 }
@@ -992,7 +1404,7 @@ var Context = /*#__PURE__*/function () {
                   content: this,
                   work: [],
                   desc: "[content][Func:prepareWorks][context status is not init]",
-                  value: new _Object_Able_ObjectAble__WEBPACK_IMPORTED_MODULE_3__.BooleanObject(false)
+                  value: new _Object_Able_ObjectAble__WEBPACK_IMPORTED_MODULE_4__.BooleanObject(false)
                 }));
 
               case 2:
@@ -1005,7 +1417,7 @@ var Context = /*#__PURE__*/function () {
                 }));
 
               case 5:
-                this.status = _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.READY;
+                this.status = _Types__WEBPACK_IMPORTED_MODULE_1__.WorkType.WorkRunStatus.READY;
 
               case 6:
               case "end":
@@ -1024,12 +1436,12 @@ var Context = /*#__PURE__*/function () {
   }, {
     key: "dispatch",
     value: function dispatch(input) {
-      if (this.status === _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.INIT) {
+      if (this.status === _Types__WEBPACK_IMPORTED_MODULE_1__.WorkType.WorkRunStatus.INIT) {
         return this.sendLog({
           content: this,
           work: [],
           desc: "[context][Func:run][run status is not ready  or 已经初始化]",
-          value: new _Object_Able_ObjectAble__WEBPACK_IMPORTED_MODULE_3__.BooleanObject(false)
+          value: new _Object_Able_ObjectAble__WEBPACK_IMPORTED_MODULE_4__.BooleanObject(false)
         });
       }
 
@@ -1037,10 +1449,10 @@ var Context = /*#__PURE__*/function () {
       var inputWork = this.works[0];
 
       if (inputWork) {
-        inputWork.startRun((0,_Object_valueUtil__WEBPACK_IMPORTED_MODULE_6__.decide)(input));
+        inputWork.startRun((0,_Object_valueUtil__WEBPACK_IMPORTED_MODULE_7__.decide)(input));
       }
 
-      this.status = _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.RUNNING;
+      this.status = _Types__WEBPACK_IMPORTED_MODULE_1__.WorkType.WorkRunStatus.RUNNING;
     }
     /**
      * 停止执行
@@ -1060,7 +1472,7 @@ var Context = /*#__PURE__*/function () {
 
         var isSuccess = false;
         var errors = [];
-        (0,rxjs__WEBPACK_IMPORTED_MODULE_1__.forkJoin)(taskUns).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.take)(1)).subscribe({
+        (0,rxjs__WEBPACK_IMPORTED_MODULE_2__.forkJoin)(taskUns).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.take)(1)).subscribe({
           next: function next(values) {
             isSuccess = values.every(function ($1, index) {
               if ($1 === true) return true;
@@ -1078,9 +1490,9 @@ var Context = /*#__PURE__*/function () {
               content: that,
               work: errors,
               desc: "[content][Func:stopWorkChain]",
-              value: new _Object_Able_ObjectAble__WEBPACK_IMPORTED_MODULE_3__.ObjectTarget({
+              value: new _Object_Able_ObjectAble__WEBPACK_IMPORTED_MODULE_4__.ObjectTarget({
                 id: 'stopWorkChain',
-                value: (0,_Object_valueUtil__WEBPACK_IMPORTED_MODULE_6__.decide)(isSuccess),
+                value: (0,_Object_valueUtil__WEBPACK_IMPORTED_MODULE_7__.decide)(isSuccess),
                 option: {}
               })
             });

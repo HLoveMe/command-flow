@@ -1,13 +1,14 @@
 {
   "name": "command-flow",
-  "version": "1.0.1-beta.01",
+  "version": "1.0.1-beta.02",
   "main": "index.js",
   "scripts": {
     "tsc": "node ./build-pre.js 0 && tsc -p tsconfig.web.json && node ./build-pre.js 1 && tsc -p tsconfig.node.json",
-    "build_dev_web": "webpack --config webpack.config.dev.js",
-    "build_prod_web": "webpack --config webpack.config.prod.js",
-    "build_web": "webpack --config webpack.config.dev.js && webpack --config webpack.config.prod.js",
-    "build_node": "webpack --config webpack.config.node.js",
+    "build_dev_web": "npm run tsc && webpack --config webpack.config.dev.js",
+    "build_prod_web": "npm run tsc &&  webpack --config webpack.config.prod.js",
+    "build_web": "npm run tsc &&  webpack --config webpack.config.dev.js && webpack --config webpack.config.prod.js",
+    "build_node": "npm run tsc &&  webpack --config webpack.config.node.js",
+    "build":"npm run tsc && npm run build_web && npm run build_node",
     "web_serve": "vite"
   },
   "repository": {
@@ -33,10 +34,10 @@
   "exports":{
     ".": {
       "types": "index.d.ts",
-      "node": "./cjs/flow.prod.js",
-      "require": "./cjs/flow.prod.js",
-      "es2015": "./cjs/flow.prod.js",
-      "default":"./cjs/flow.prod.js"
+      "node": "./index.js",
+      "require": "./index.js",
+      "es2015": "./index.js",
+      "default":"./index.js"
     },
     "./web": {
       "types": "index.d.ts",

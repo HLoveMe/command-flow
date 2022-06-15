@@ -50,7 +50,7 @@ export class PCNodejsBridge extends PlatformBridge {
                 loaded: data.byteLength,
                 data: data,
                 finish: false,
-                file: null,
+                file: undefined,
               })
             );
           },
@@ -83,14 +83,14 @@ export class PCNodejsBridge extends PlatformBridge {
   runCommand(command: string, option?: any): Observable<CommandStatus> {
     return new Observable((subscriber) => {
       const runJs = () => {
-        let result = null;
+        let result = undefined;
         let status = false;
-        let error = null;
+        let error = undefined;
         try {
           result = eval(command?.toString());
           status = true;
         } catch (err) {
-          result = null;
+          result = undefined;
           status = false;
           error = err;
         }
