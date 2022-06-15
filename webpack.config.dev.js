@@ -7,7 +7,6 @@ module.exports = {
   output: {
     filename: 'flow.dev.js',
     path: path.join(__dirname, "cjs"),
-    library: 'WorkFlow',// 
     libraryTarget: 'umd',
   },
   module: {
@@ -27,7 +26,7 @@ module.exports = {
               {
                 "helpers": false,
                 "corejs": false,
-                "regenerator": true,
+                "regenerator": false,
                 "useESModules": false,
                 "absoluteRuntime": false,
               }

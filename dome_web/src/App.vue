@@ -2,7 +2,7 @@
   <div>
     A
     <!-- <Base></Base> -->
-    <Base64></Base64>
+    <!-- <Base64></Base64>
     <OpenSourceUrl></OpenSourceUrl>
     <QR></QR>
     <LoadFile></LoadFile>
@@ -10,7 +10,7 @@
     <GroupCommand></GroupCommand>
     <Timer></Timer>
     <FetchWork></FetchWork>
-    <Operation></Operation>
+    <Operation></Operation> -->
   </div>
 </template>
 <script setup lang="ts">
@@ -24,9 +24,10 @@
 // import Timer from './components/TimerWork.vue'
 // import FetchWork from './components/FetchWork.vue'
 // import Operation from './components/Operations/index.vue'
-import * as A from 'command-flow'
+import WorkFlow from 'command-flow/web'
+import * as WorkFlow2 from 'command-flow/web'
+console.log(WorkFlow,WorkFlow2)
 debugger
-console.log(A)
 </script>
 <style>
 * {
