@@ -1,26 +1,7 @@
-require('./dist/test.js');
+'use strict';
 
-
-"exports":{
-  ".": {
-    "types": "index.d.ts",
-    "node": "./cjs/flow.prod.js",
-    "require": "./cjs/flow.prod.js",
-    "es2015": "./cjs/flow.prod.js",
-    "default":"./cjs/flow.prod.js"
-  },
-  "./web": {
-    "types": "index.d.ts",
-    "node": "./cjs/flow.prod.js",
-    "require": "./cjs/flow.prod.js",
-    "es2015": "./cjs/flow.prod.js",
-    "default":"./cjs/flow.prod.js"
-  },
-  "./node":{
-    "types": "index.d.ts",
-    "node": "./cjs/flow.node.js",
-    "require": "./cjs/flow.node.js",
-    "es2015": "./cjs/flow.node.js",
-    "default":"./cjs/flow.node.js"
-  }
-},
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./cjs/flow.prod.js');
+} else {
+  module.exports = require('./cjs/flow.dev.js');
+}
