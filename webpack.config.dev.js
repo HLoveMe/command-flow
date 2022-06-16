@@ -57,5 +57,5 @@ module.exports = {
     'uuid',
     'open'
   ],
-  devtool: 'cheap-module-source-map',
+  devtool: 'cheap-module-source-map'
 };

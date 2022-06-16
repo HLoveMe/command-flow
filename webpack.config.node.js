@@ -8,7 +8,7 @@ module.exports = {
   target:'node',
   output: {
     filename: 'index.js',
-    path: path.join(__dirname, "dist","esm-node"),
+    path: path.join(__dirname, "dist",""),
     libraryTarget: 'commonjs2',
   },
   module: {
@@ -56,6 +56,5 @@ module.exports = {
     'qrcode-generator',
     'uuid',
     'open'
-  ],
-  devtool: 'cheap-module-source-map',
+  ]
 };
