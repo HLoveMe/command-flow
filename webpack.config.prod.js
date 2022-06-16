@@ -3,11 +3,11 @@ const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   mode: 'production',
   entry: {
-    'index': path.join(__dirname, "dist", 'web', 'index.js')
+    'index': path.join(__dirname, "source", 'web', 'index.js')
   },
   output: {
-    filename: 'flow.prod.js',
-    path: path.join(__dirname, "cjs"),
+    filename: 'index.js',
+    path: path.join(__dirname, "dist","esm-browser"),
     libraryTarget: 'umd',
   },
   module: {

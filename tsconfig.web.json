@@ -4,7 +4,7 @@
     "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata":true,
-    "outDir": "./dist/web",
+    "outDir": "./source/web",
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "es2015",

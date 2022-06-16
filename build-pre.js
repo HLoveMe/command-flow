@@ -79,4 +79,4 @@ function replaceFile(currentPath) {
   })
 }
 
-replaceFile(path.join(__dirname, 'core'))
+replaceFile(path.join(__dirname, 'src'))

@@ -3,13 +3,13 @@ const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   mode: 'development',
   entry: {
-    'index': path.join(__dirname, "dist", 'node', 'index.js')
+    'index': path.join(__dirname, "source", 'node', 'index.js')
   },
   target:'node',
   output: {
-    filename: 'flow.node.js',
-    path: path.join(__dirname, "cjs"),
-    libraryTarget: 'commonjs',
+    filename: 'index.js',
+    path: path.join(__dirname, "dist","esm-node"),
+    libraryTarget: 'commonjs2',
   },
   module: {
     rules: [{

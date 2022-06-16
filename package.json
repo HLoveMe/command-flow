@@ -6,7 +6,7 @@
     "tsc": "node ./build-pre.js 0 && tsc -p tsconfig.web.json && node ./build-pre.js 1 && tsc -p tsconfig.node.json",
     "build_dev_web": "npm run tsc && webpack --config webpack.config.dev.js",
     "build_prod_web": "npm run tsc &&  webpack --config webpack.config.prod.js",
-    "build_web": "npm run tsc &&  webpack --config webpack.config.dev.js && webpack --config webpack.config.prod.js",
+    "build_web": "npm run tsc &&  webpack --config webpack.config.prod.js",
     "build_node": "npm run tsc &&  webpack --config webpack.config.node.js",
     "build":"npm run tsc && npm run build_web && npm run build_node",
     "web_serve": "vite"
@@ -33,25 +33,11 @@
   "typings":"index.d.ts",
   "exports":{
     ".": {
-      "types": "index.d.ts",
-      "node": "./index.js",
-      "require": "./index.js",
-      "es2015": "./index.js",
-      "default":"./index.js"
-    },
-    "./web": {
-      "types": "index.d.ts",
-      "node": "./cjs/flow.prod.js",
-      "require": "./cjs/flow.prod.js",
-      "es2015": "./cjs/flow.prod.js",
-      "default":"./cjs/flow.prod.js"
-    },
-    "./node":{
-      "types": "index.d.ts",
-      "node": "./cjs/flow.node.js",
-      "require": "./cjs/flow.node.js",
-      "es2015": "./cjs/flow.node.js",
-      "default":"./cjs/flow.node.js"
+      "node": {
+        "module": "./dist/esm-web/index.js",
+      },
+      "default": "./dist/esm-browser/index.js",
+      "types": "./dist/vue.d.ts"
     }
   },
   "files":[
