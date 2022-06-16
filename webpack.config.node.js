@@ -8,7 +8,7 @@ module.exports = {
   target:'node',
   output: {
     filename: 'index.js',
-    path: path.join(__dirname, "dist",""),
+    path: path.join(__dirname, "dist","cjs"),
     libraryTarget: 'commonjs2',
   },
   module: {
@@ -46,6 +46,10 @@ module.exports = {
   plugins: [],
   resolve: {
     extensions: ['.json', '.js', '.jsx', '.ts', '.tsx'],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
   },
   externals: [
     'axios',

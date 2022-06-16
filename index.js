@@ -1,7 +1,7 @@
 'use strict';
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./cjs/flow.prod.js');
+  module.exports = require('./dist/esm-browser/index.js');
 } else {
-  module.exports = require('./cjs/flow.dev.js');
+  module.exports = require('./dist/esm-browser/index.dev.js');
 }

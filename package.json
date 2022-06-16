@@ -2,6 +2,7 @@
   "name": "command-flow",
   "version": "1.0.1-beta.04",
   "main": "index.js",
+  "module":"./index.mjs",
   "scripts": {
     "tsc": "node ./build-pre.js 0 && tsc -p tsconfig.web.json && node ./build-pre.js 1 && tsc -p tsconfig.node.json",
     "build_dev_web": "npm run tsc && webpack --config webpack.config.dev.js",
@@ -34,7 +35,7 @@
   "exports":{
     ".": {
       "node": {
-        "module": "./dist/esm-web/index.js"
+        "module": "./dist/cjs/index.js"
       },
       "default": "./dist/esm-browser/index.js",
       "types": "./dist/vue.d.ts"
