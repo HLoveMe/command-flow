@@ -38,7 +38,7 @@
         "module": "./dist/cjs/index.js"
       },
       "default": "./dist/esm-browser/index.js",
-      "types": "./dist/vue.d.ts"
+      "types": "index.d.ts"
     }
   },
   "files":[
