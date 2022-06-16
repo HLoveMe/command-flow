@@ -4,7 +4,7 @@
     "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata":true,
-    "outDir": "./source/node",
+    "outDir": "source/node",
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "CommonJS",
@@ -13,7 +13,7 @@
     "skipLibCheck": true,
     "moduleResolution": "node"
   },
-  "include": ["core/**/*.ts", "core/**/*.d.ts", "**/*.d.ts", "core/**/*", "test.ts"],
-  "exclude": ["node_modules","core/**/*.ignore.node.ts","core/**/*.ignore.web.ts"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "**/*.d.ts", "src/**/*", "test.ts"],
+  "exclude": ["node_modules","src/**/*.ignore.node.ts","src/**/*.ignore.web.ts"]
 }
 

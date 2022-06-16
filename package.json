@@ -1,6 +1,6 @@
 {
   "name": "command-flow",
-  "version": "1.0.1-beta.02",
+  "version": "1.0.1-beta.03",
   "main": "index.js",
   "scripts": {
     "tsc": "node ./build-pre.js 0 && tsc -p tsconfig.web.json && node ./build-pre.js 1 && tsc -p tsconfig.node.json",
@@ -34,7 +34,7 @@
   "exports":{
     ".": {
       "node": {
-        "module": "./dist/esm-web/index.js",
+        "module": "./dist/esm-web/index.js"
       },
       "default": "./dist/esm-browser/index.js",
       "types": "./dist/vue.d.ts"
@@ -43,10 +43,8 @@
   "files":[
     "index.js",
     "index.d.ts",
-    "cjs/flow.prod.js",
-    "cjs/flow.node.js",
-    "cjs/flow.dev.js",
-    "core",
+    "dist",
+    "src",
     "package.json"
   ],
   "homepage": "https://github.com/HLoveMe/command-flow#readme",
