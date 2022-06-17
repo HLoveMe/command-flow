@@ -1,16 +1,17 @@
-import { Subject } from 'rxjs';
+import { Observable, PartialObserver, Subject, Subscription } from 'rxjs';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 declare module 'command-flow' {
   export namespace Value {
-    export declare interface ValueAble<V> {
+    export interface ValueAble<V> {
       _value: V;
       valueOf(): V;
     }
-    export declare interface ObjectAble<V> extends ValueAble<V> {
+    export interface ObjectAble<V> extends ValueAble<V> {
       json(): Value.StringAble;
       merge(target: ObjectAble<V>): ObjectAble<V>;
     }
-    export declare interface ArrayAble<T>
+    export interface ArrayAble<T>
       extends ValueAble<Array<T>>,
         ObjectAble<Array<T>> {
       len(): number;
@@ -20,45 +21,37 @@ declare module 'command-flow' {
       valueOf(): Array<T>;
     }
 
-    export declare interface MapAble<T, U>
+    export interface MapAble<T, U>
       extends ValueAble<Map<T, U>>,
         ObjectAble<Map<T, U>> {
       len(): number;
       valueOf(): Map<T, U>;
     }
 
-    export declare interface SetAble<T>
-      extends ValueAble<Set<T>>,
-        ObjectAble<Set<T>> {
+    export interface SetAble<T> extends ValueAble<Set<T>>, ObjectAble<Set<T>> {
       len(): number;
       valueOf(): Set<T>;
     }
 
-    export declare interface NumberAble
-      extends ValueAble<Number>,
-        ObjectAble<Number> {
+    export interface NumberAble extends ValueAble<Number>, ObjectAble<Number> {
       valueOf(): Number;
     }
 
-    export declare interface StringAble
-      extends ValueAble<String>,
-        ObjectAble<String> {
+    export interface StringAble extends ValueAble<String>, ObjectAble<String> {
       valueOf(): String;
     }
 
-    export declare interface BooleanAble
+    export interface BooleanAble
       extends ValueAble<Boolean>,
         ObjectAble<Boolean> {
       valueOf(): Boolean;
     }
 
-    export declare interface DateAble
-      extends ValueAble<Date>,
-        ObjectAble<Date> {
+    export interface DateAble extends ValueAble<Date>, ObjectAble<Date> {
       timestamp(): number;
     }
 
-    export declare interface DataAble
+    export interface DataAble
       extends ValueAble<ArrayBuffer>,
         ObjectAble<ArrayBuffer> {
       data(): ArrayBuffer;
@@ -88,7 +81,7 @@ declare module 'command-flow' {
   >;
 
   export namespace WorkType {
-    export declare type ConfigInfo = { [key: string]: any };
+    export type ConfigInfo = { [key: string]: any };
 
     export type WorkUUID = string;
 
@@ -144,7 +137,7 @@ declare module 'command-flow' {
       uuid: string;
       sub: Subscription;
     }
-    export declare interface Work
+    export interface Work
       extends WorkOperation,
         WorkContext,
         WorkChain,
@@ -175,11 +168,226 @@ declare module 'command-flow' {
       ): void;
     }
   }
+  export namespace Bridge {
+    export interface RunTimeInfo {
+      name: string;
+      platform: any;
+    }
 
-  export declare interface ContextImpl {
+    export type PathLike = string | URL;
+    export interface CommandStatus {
+      command: string;
+      status: boolean;
+      error?: Error;
+      result?: string;
+    }
+
+    export interface QRcodeOption {
+      type: TypeNumber;
+      Level: ErrorCorrectionLevel;
+      SideLength: number;
+    }
+
+    export enum FileType {
+      Audio = 'audio/*',
+      Video = 'video/*',
+      HTML = 'text/html',
+      Txt = 'text/plain',
+      Image = 'image/*',
+      Csv = '.csv',
+      Pdf = 'application/pdf',
+      Word = 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/msword，application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      All = '*',
+    }
+    export interface FileOption {
+      type: FileType;
+    }
+    export interface FileLoadEvent {
+      total: number;
+      loaded: number;
+      data: ArrayBuffer;
+      finish: boolean;
+      file?: File;
+    }
+
+    export interface RequestTimeOut {
+      timeout: number;
+    }
+    export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'OPTIONS' | 'DELETE';
+    export interface RequestParamsInit {
+      headers?: { [key: string]: any };
+      method?: RequestMethod;
+      timeout?: number;
+      data?: any;
+      url: string;
+    }
+    export type RequestParams = AxiosRequestConfig;
+    export enum SupportContentType {
+      JSON = 'application/json',
+      TEXT = 'text/plain',
+    }
+    export interface ResponseContent {
+      error?: Error;
+      data?: any;
+      response: AxiosResponse;
+    }
+
+    /**
+     * 硬件驱动部分
+     */
+    export namespace Hardware {
+      // 拍照
+      // 视频
+      // 相片
+      // 地理位置
+      // 录音
+      // 文件
+      // 震动 =>手机
+      // 传感器
+      // 调节/获取音量 =>手机
+      // 调节/获取亮度 =>手机
+      // 系统信息
+      // 蓝牙状态/开关/发送数据/监听/关闭
+      // 语音播放文字
+      export type DataString = string;
+      export interface ImageResponse {
+        image: DataString;
+        error?: Error;
+      }
+      export interface TakePhotoOption {}
+
+      export interface VideoOption {}
+      export interface VideoResponse {
+        videoUrl?: string;
+        error?: Error;
+      }
+      export interface PositionResponse {
+        longitude?: number;
+        latitude?: number;
+        accuracy?: number;
+      }
+      export interface PositionOption {}
+      export interface AudioResponse {}
+
+      export interface VibratorOption {}
+      export interface BluetoothDevice {}
+      export interface SpeechOption {}
+      export interface SpeechResponse {}
+
+      export interface Permission {
+        // 权限处理
+      }
+      export interface PlatformDrive extends Permission {
+        // 拍照
+        takePhoto(option: TakePhotoOption): Promise<ImageResponse>;
+        // 视频
+        recordVideo(option: VideoOption): Promise<VideoResponse>;
+
+        // 相片
+        getPhotos(): Promise<Array<ImageResponse>>;
+
+        // 地理位置
+        getCurrentPosition(): Promise<PositionResponse>;
+        watchPosition(option: PositionOption): Observable<PositionResponse>;
+        closePosition(): Promise<boolean>;
+
+        // 录音
+        recordAudio(): Promise<AudioResponse>;
+        stopAudio(): Promise<Boolean>;
+
+        // 文件
+        getFile(option: any): Promise<any>;
+
+        // start 震动
+        startVibrator(option: VibratorOption): Promise<Boolean>;
+        stopVibrator(): Promise<Boolean>;
+
+        //传感器 距离传感器 加速度传感器 陀螺仪 磁力计
+
+        // 系统信息
+        getSystemInfo(): Promise<RunTimeInfo>;
+
+        //音量
+        getVolume(): Promise<number>;
+        setVolume(volume: number): Promise<Boolean>;
+
+        //亮度
+        getBrightness(): Promise<number>;
+        setBrightness(brightness: number): Promise<Boolean>;
+
+        //蓝牙
+        scanBluetooth(): Promise<Array<BluetoothDevice>>;
+        connectBluetooth(device: BluetoothDevice): Promise<Boolean>;
+        bluetoothSendData(data: String): Promise<Boolean>;
+        bluetoothReceiveData(device: BluetoothDevice): Observable<String>;
+        bluetoothClose(device: BluetoothDevice): Promise<Boolean>;
+
+        //语音
+        speechInit(option: SpeechOption): Promise<Boolean>;
+        speak(text: string): Promise<SpeechResponse>;
+        stopSpeak(): Promise<SpeechResponse>;
+        clearSpeech(): Promise<Boolean>;
+      }
+    }
+
+    export interface PlatformBridgeAble extends Hardware.PlatformDrive {
+      // // 硬件相关
+      // hardwareSource?: Hardware.PlatformDrive;
+
+      //计算机运行相关硬件
+      loadRunInfo(): Observable<RunTimeInfo>;
+      //命令行工具
+      /***
+       * 运行一个脚本 path
+       * 运行 javascript
+       */
+      runCommand(command: string, option?: any): Observable<CommandStatus>;
+
+      //计算机操作
+      open(url: String, option?: any): Observable<BooleanObject>;
+
+      //文件相关
+      loadFile(
+        url: PathLike,
+        option?: FileOption
+      ): Observable<Value.ObjectAble<FileLoadEvent>>;
+
+      // 工具
+      createQrCode(
+        context: String,
+        option?: QRcodeOption
+      ): Observable<StringObject>;
+
+      // 网络
+      // 仅仅支持json/txt
+      fetch(
+        req: AxiosRequestConfig
+      ): Observable<Value.ObjectAble<ResponseContent>>;
+    }
+  }
+
+  export namespace Config {
+    type WorkName = string;
+    // Work 运行过程中可以配置的选项
+    export type RunCommandWorkConfig = { [key: WorkName]: any };
+    export interface WorkRunOption {
+      RunCommandWork: RunCommandWorkConfig;
+      QRCodeWork: Bridge.QRcodeOption;
+      LoadFileWork: Bridge.FileOption;
+      FetchWork: Bridge.RequestParamsInit;
+    }
+    export interface Environment {}
+    export interface ContextRunOption {
+      development: boolean;
+      environment?: Environment;
+      workConfig?: WorkRunOption;
+    }
+  }
+
+  export interface ContextImpl {
     status: WorkType.WorkRunStatus;
-    platform: PlatformBridgeAble;
-    runOptions: ContextRunOption;
+    platform: Bridge.PlatformBridgeAble;
+    runOptions: Config.ContextRunOption;
     runConstant: Map<WorkType.WorkUUID, WorkType.WorkConstant>;
     works: WorkType.Work[];
     msgChannel: Subject<WorkType.WorkStatus<any>>;
@@ -279,16 +487,16 @@ declare module 'command-flow' {
     }
 
     // 比较 接口
-    export declare type CompareExec = (
+    export type CompareExec = (
       type: CompareEnum,
       target: Value.ValueAble<any>
     ) => Value.BooleanAble;
 
-    export declare type CompareFunction = (
+    export type CompareFunction = (
       target: Value.ValueAble<any>
     ) => Value.BooleanAble;
 
-    declare type CompareAble = {
+    type CompareAble = {
       [T in CompareEnum]: CompareFunction;
     };
     export interface Compare<U extends Value.ValueAble<any>>
@@ -297,11 +505,9 @@ declare module 'command-flow' {
     }
 
     // 计算接口
-    export declare type CalcFunction = (
-      target: Value.NumberAble
-    ) => Value.NumberAble;
+    export type CalcFunction = (target: Value.NumberAble) => Value.NumberAble;
 
-    declare type CalcAble = {
+    type CalcAble = {
       [T in CalcEnum]: CalcFunction;
     };
     export interface Calc<U extends Value.NumberAble> extends CalcAble {
@@ -309,12 +515,12 @@ declare module 'command-flow' {
     }
 
     // Array
-    export declare type CollectionArrayExec = (
+    export type CollectionArrayExec = (
       key: ArrayEnum,
       ...args: any[]
     ) => BaseType;
-    export declare type ArrayFunction = (...args) => BaseType;
-    declare type ArrayAbsoluteAble = {
+    export type ArrayFunction = (...args) => BaseType;
+    type ArrayAbsoluteAble = {
       [T in ArrayEnum]: ArrayFunction;
     };
     export interface CollectionArray extends ArrayAbsoluteAble {
@@ -322,12 +528,9 @@ declare module 'command-flow' {
     }
 
     // Set
-    export declare type CollectionSetExec = (
-      key: SetEnum,
-      ...args: any[]
-    ) => BaseType;
-    export declare type SetFunction = ArrayFunction;
-    declare type SetAbsoluteAble = {
+    export type CollectionSetExec = (key: SetEnum, ...args: any[]) => BaseType;
+    export type SetFunction = ArrayFunction;
+    type SetAbsoluteAble = {
       [T in SetEnum]: SetFunction;
     };
     export interface CollectionSet extends SetAbsoluteAble {
@@ -335,19 +538,16 @@ declare module 'command-flow' {
     }
 
     // Map
-    export declare type CollectionMapExec = (
-      key: MapEnum,
-      ...args: any[]
-    ) => BaseType;
-    export declare type MapFunction = ArrayFunction;
-    export declare type MapAbsoluteAble = {
+    export type CollectionMapExec = (key: MapEnum, ...args: any[]) => BaseType;
+    export type MapFunction = ArrayFunction;
+    export type MapAbsoluteAble = {
       [T in MapEnum]: MapFunction;
     };
     export interface CollectionMap extends MapAbsoluteAble {
       collectionMap(key: MapEnum, ...args: any[]): BaseType;
     }
   }
-  export class Context implements ContextImpl {}
+  export abstract class Context implements ContextImpl {}
   export class Instruction
     extends Subject<ChannelObject>
     implements WorkType.Work, EnvironmentAble {}
@@ -358,15 +558,20 @@ declare module 'command-flow' {
     constructor(interval: number);
   }
   export class IntervalWork extends InstructionOTM {
-    constructor(interval: number, max: number = Infinity, notifier?: Observable<any>);
+    constructor(interval: number, max?: number, notifier?: Observable<any>);
   }
   export class DelayIntervalWork extends InstructionOTM {
-    constructor(delay: number = 0, interval: number = 1000, max: number = Infinity, notifier?: Observable<any>)
+    constructor(
+      delay: number,
+      interval?: number,
+      max?: number,
+      notifier?: Observable<any>
+    );
   }
   export class Base64EnCodeWork extends InstructionMTM {}
   export class Base64DecodeWork extends InstructionMTM {}
   export class LoadFileWork extends InstructionOTO {
-    constructor(config?: FileOption);
+    constructor(config?: Bridge.FileOption);
   }
   export class OpenURLWork extends InstructionOTO {}
   export class QRCodeWork extends InstructionOTO {}
@@ -411,15 +616,14 @@ declare module 'command-flow' {
     extends ObjectTarget<ArrayBuffer>
     implements Value.DataAble {}
 
-  export const unpackValue = (value: ChannelObject) => string;
+  export function unpackValue(value: ChannelObject): string;
 
   export function wrapperValue<T extends BaseType = BaseType>(
     input: ChannelObject,
     value: T | any
   ): ChannelObject<T>;
 
-  export const isAbleType = (value: any) => boolean;
+  export function isAbleType(value: any): boolean;
 
-  export const decide = (value: any | BaseType, force: boolean = false) =>
-    BaseType;
+  export function decide(value: any | BaseType, force?: boolean): BaseType;
 }
