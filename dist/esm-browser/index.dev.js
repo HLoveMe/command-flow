@@ -537,10 +537,10 @@ class Context {
         this.runConstant.get(from.uuid).set(name, value);
     }
     workMessage(input) {
-        console.log("msgChannel", input);
+        console.log('msgChannel', input);
     }
     workError(error) {
-        console.log("msgChannelError", error);
+        console.log('msgChannelError', error);
         this.stopWorkChain();
     }
     addWorkLog(tap) {
@@ -557,8 +557,9 @@ class Context {
         this.msgChannel.next(log);
     }
     addWork(work) {
-        if (work.constructor.isAble && work.constructor.isAble() === false) {
-            const desc = "[content][Func:addWork][work isAble is false]";
+        if (work.constructor.isAble &&
+            work.constructor.isAble() === false) {
+            const desc = '[content][Func:addWork][work isAble is false]';
             return this.sendLog({
                 content: this,
                 work: [],
@@ -571,7 +572,7 @@ class Context {
             return this.sendLog({
                 content: this,
                 work: [],
-                desc: "[content][Func:addWork][context status is not init]",
+                desc: '[content][Func:addWork][context status is not init]',
                 value: new ObjectAble_1.BooleanObject(false),
             });
         }
@@ -586,11 +587,10 @@ class Context {
             return this.sendLog({
                 content: this,
                 work: [],
-                desc: "[content][Func:prepareWorks][context status is not init]",
+                desc: '[content][Func:prepareWorks][context status is not init]',
                 value: new ObjectAble_1.BooleanObject(false),
             });
         }
-        ;
         await Promise.all(this.works.map(($1, index, source) => {
             const before = source[index - 1];
             const after = source[index + 1];
@@ -603,11 +603,10 @@ class Context {
             return this.sendLog({
                 content: this,
                 work: [],
-                desc: "[context][Func:run][run status is not ready  or 已经初始化]",
+                desc: '[context][Func:run][run status is not ready  or 已经初始化]',
                 value: new ObjectAble_1.BooleanObject(false),
             });
         }
-        ;
         const inputWork = this.works[0];
         if (inputWork) {
             inputWork.startRun((0, valueUtil_1.decide)(input));
@@ -624,14 +623,16 @@ class Context {
             const taskUns = this.works.map(($1) => $1.stopWork());
             let isSuccess = false;
             let errors = [];
-            (0, rxjs_1.forkJoin)(taskUns).pipe((0, operators_1.take)(1)).subscribe({
+            (0, rxjs_1.forkJoin)(taskUns)
+                .pipe((0, operators_1.take)(1))
+                .subscribe({
                 next: (values) => {
-                    (isSuccess = values.every(($1, index) => {
+                    isSuccess = values.every(($1, index) => {
                         if ($1 === true)
                             return true;
                         errors.push(this.works[index]);
                         return false;
-                    }));
+                    });
                     resolve(isSuccess);
                 },
                 error: (error) => {
@@ -642,7 +643,7 @@ class Context {
                     this.sendLog({
                         content: that,
                         work: errors,
-                        desc: "[content][Func:stopWorkChain]",
+                        desc: '[content][Func:stopWorkChain]',
                         value: new ObjectAble_1.ObjectTarget({
                             id: 'stopWorkChain',
                             value: (0, valueUtil_1.decide)(isSuccess),
@@ -1971,7 +1972,7 @@ var WorkType;
     let WorkRunStatus;
     (function (WorkRunStatus) {
         WorkRunStatus[WorkRunStatus["INIT"] = 0] = "INIT";
-        // FROZEN,//冻结状态 
+        // FROZEN,//冻结状态
         WorkRunStatus[WorkRunStatus["READY"] = 1] = "READY";
         // PRE_RUN,//预运行状态 已经初始化
         WorkRunStatus[WorkRunStatus["RUNNING"] = 2] = "RUNNING";

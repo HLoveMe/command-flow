@@ -1,7 +1,7 @@
-import { PartialObserver, Observable, Subject, Subscription } from "rxjs";
+import { PartialObserver, Observable, Subject, Subscription } from 'rxjs';
 
-import { ContextRunOption } from "./Configs";
-import { PlatformBridgeAble } from "./Bridge/ConfigTypes";
+import { ContextRunOption } from './Configs';
+import { PlatformBridgeAble } from './Bridge/ConfigTypes';
 
 export namespace Value {
   export declare interface ValueAble<V> {
@@ -14,7 +14,7 @@ export namespace Value {
   }
   export declare interface ArrayAble<T>
     extends ValueAble<Array<T>>,
-    ObjectAble<Array<T>> {
+      ObjectAble<Array<T>> {
     len(): number;
     first(): T;
     last(): T;
@@ -24,33 +24,33 @@ export namespace Value {
 
   export declare interface MapAble<T, U>
     extends ValueAble<Map<T, U>>,
-    ObjectAble<Map<T, U>> {
+      ObjectAble<Map<T, U>> {
     len(): number;
     valueOf(): Map<T, U>;
   }
 
   export declare interface SetAble<T>
     extends ValueAble<Set<T>>,
-    ObjectAble<Set<T>> {
+      ObjectAble<Set<T>> {
     len(): number;
     valueOf(): Set<T>;
   }
 
   export declare interface NumberAble
     extends ValueAble<number>,
-    ObjectAble<number> {
+      ObjectAble<number> {
     valueOf(): number;
   }
 
   export declare interface StringAble
     extends ValueAble<string>,
-    ObjectAble<string> {
+      ObjectAble<string> {
     valueOf(): string;
   }
 
   export declare interface BooleanAble
     extends ValueAble<Boolean>,
-    ObjectAble<Boolean> {
+      ObjectAble<Boolean> {
     valueOf(): Boolean;
   }
 
@@ -60,26 +60,32 @@ export namespace Value {
 
   export declare interface DataAble
     extends ValueAble<ArrayBuffer>,
-    ObjectAble<ArrayBuffer> {
+      ObjectAble<ArrayBuffer> {
     data(): ArrayBuffer;
   }
 }
 
 export type BaseType =
-  Value.ObjectAble<any> // ObjectTarget
+  | Value.ObjectAble<any> // ObjectTarget
   | Value.ArrayAble<any> // ArrayTarget
-  | Value.MapAble<any, any>// MapTarget
-  | Value.SetAble<any>// SetTarget
-  | Value.StringAble// StringTarget
-  | Value.NumberAble// NumberTarget
-  | Value.BooleanAble// BooleanTarget
-  | Value.DateAble//  DateTarget
-  | Value.DataAble// DataTarget
+  | Value.MapAble<any, any> // MapTarget
+  | Value.SetAble<any> // SetTarget
+  | Value.StringAble // StringTarget
+  | Value.NumberAble // NumberTarget
+  | Value.BooleanAble // BooleanTarget
+  | Value.DateAble //  DateTarget
+  | Value.DataAble // DataTarget
   | undefined
   | null;
 
-export type ChannelValue<T extends BaseType = BaseType> = { value: T, id: string, option?: any }
-export type ChannelObject<T extends BaseType = BaseType> = Value.ObjectAble<ChannelValue<T>>;
+export type ChannelValue<T extends BaseType = BaseType> = {
+  value: T;
+  id: string;
+  option?: any;
+};
+export type ChannelObject<T extends BaseType = BaseType> = Value.ObjectAble<
+  ChannelValue<T>
+>;
 
 export namespace WorkType {
   export declare type ConfigInfo = { [key: string]: any };
@@ -90,15 +96,17 @@ export namespace WorkType {
 
   export type WorkConstant = Map<WorkConstantKey, BaseType>;
 
-  export type WorkFunction = (input: ChannelObject) => Observable<ChannelObject>;
+  export type WorkFunction = (
+    input: ChannelObject
+  ) => Observable<ChannelObject>;
 
   export enum WorkRunStatus {
-    INIT,//初始状态
-    // FROZEN,//冻结状态 
-    READY,//准备状态 已经初始化
+    INIT, //初始状态
+    // FROZEN,//冻结状态
+    READY, //准备状态 已经初始化
     // PRE_RUN,//预运行状态 已经初始化
-    RUNNING,//运行中
-    COMPLETE,//完成
+    RUNNING, //运行中
+    COMPLETE, //完成
   }
   export interface WorkStatus<T extends BaseType = BaseType> {
     content?: ContextImpl;
@@ -109,7 +117,7 @@ export namespace WorkType {
     error?: Error;
   }
 
-  type WorkTypes = "electron_run" | "web_run" | "node_run";
+  type WorkTypes = 'electron_run' | 'web_run' | 'node_run';
 
   export type WorkOperation = {
     [P in WorkTypes]?: WorkFunction;
@@ -140,9 +148,9 @@ export namespace WorkType {
   }
   export declare interface Work
     extends WorkOperation,
-    WorkContext,
-    WorkChain,
-    WorkConfig {
+      WorkContext,
+      WorkChain,
+      WorkConfig {
     name: string;
     id: number;
     uuid: WorkUUID;
@@ -150,7 +158,10 @@ export namespace WorkType {
     run?(input: ChannelObject, option?: any): Observable<ChannelObject>;
     web_run?(input: ChannelObject, option?: any): Observable<ChannelObject>;
     node_run?(input: ChannelObject, option?: any): Observable<ChannelObject>;
-    electron_run?(input: ChannelObject, option?: any): Observable<ChannelObject>;
+    electron_run?(
+      input: ChannelObject,
+      option?: any
+    ): Observable<ChannelObject>;
     prepare(before?: Work, next?: Work): Promise<void>;
     // 关闭Work
     stopWork(): Observable<Boolean>;
@@ -160,14 +171,14 @@ export namespace WorkType {
     logMsg(msg: string, inputValue: ChannelObject): void;
     // 节点
     // 收到一个消息
-    nextValue(input: BaseType): BaseType
+    nextValue(input: BaseType): BaseType;
     //完成一次 [输入->输出]
     completeOneLoop(input: BaseType, toValue: BaseType, success: Boolean): void;
   }
 }
 
 export declare interface ContextImpl {
-  status: WorkType.WorkRunStatus,
+  status: WorkType.WorkRunStatus;
   platform: PlatformBridgeAble;
   runOptions: ContextRunOption;
   runConstant: Map<WorkType.WorkUUID, WorkType.WorkConstant>;
@@ -176,12 +187,14 @@ export declare interface ContextImpl {
   pools: Subscription[];
   addWork(work: WorkType.Work): void;
   addWorks(...works: WorkType.Work[]): void;
-  addWorkLog(tap: PartialObserver<WorkType.WorkStatus<ChannelObject>>): Subscription
+  addWorkLog(
+    tap: PartialObserver<WorkType.WorkStatus<ChannelObject>>
+  ): Subscription;
   // 准备
   prepareWorks(): Promise<void>;
   // 开始运行
-  dispatch(input?: BaseType): void;
-  // 
+  dispatch(input?: any | BaseType): void;
+  //
   addVariable(from: WorkType.Work, name: string, value: BaseType): void;
   sendLog(status: WorkType.WorkStatus<BaseType>): void;
   clear(): void;
