@@ -47,8 +47,8 @@ import {
   ArrayObject,
   SetObject,
   ObjectTarget,
-} from 'command-flow';
-import {  } from 'vue/compiler-sfc'
+} from 'command-flow'
+import {} from 'vue/compiler-sfc'
 import { ref } from 'vue'
 import RunGroup from './RunGroup.vue'
 import RunResult from './RunResult.vue'
@@ -65,7 +65,7 @@ const codeRef = ref<HTMLDivElement>()
 const logInfo = ref<Map<string, Array<any>>>(new Map())
 const disabled = ref<boolean>(false)
 const getContext = () => {
-  const context = new Context();
+  const context = new Context()
   context.addWorkLog({
     next: (log: WorkStatus) => {
       const {

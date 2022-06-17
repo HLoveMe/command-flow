@@ -47,10 +47,10 @@ import {
   ArrayObject,
   SetObject,
   ObjectTarget,
-} from "../../dist/web/index";
-import { computed, onMounted, ref } from "vue";
-import RunGroup from "./RunGroup.vue";
-import RunResult from "./RunResult.vue";
+} from 'command-flow';
+import { computed, onMounted, ref } from 'vue';
+import RunGroup from './RunGroup.vue';
+import RunResult from './RunResult.vue';
 interface WorkStatus {
   content?: any;
   work?: any | any[];
@@ -59,7 +59,7 @@ interface WorkStatus {
   date?: Date;
 }
 const result = ref<boolean>(true);
-const codeRef = ref<HTMLDivElement>();
+const codeRef = ref<HTMLDivElement>({} as any);
 const logInfo = ref<Map<string, Array<any>>>(new Map());
 const disabled = ref<boolean>(false);
 const getContext = () => {
@@ -73,7 +73,7 @@ const getContext = () => {
       } = log;
       const id = _value.id;
       const channeLValue = _value.value._value;
-      const workName = work.map(($1) => $1.name).join("-");
+      const workName = work.map(($1: any) => $1.name).join('-');
       const currentRun = logInfo.value.get(id) || [];
       logInfo.value.set(id, currentRun);
       currentRun.push({
@@ -96,7 +96,7 @@ async function codeDome() {
   const context = new Context();
   context.addWork(new OpenURLWork());
   await context.prepareWorks();
-  context.dispatch("http://www.baidu.com");
+  context.dispatch('http://www.baidu.com');
 }
 const reRun = () => {
   logInfo.value.clear();
@@ -106,14 +106,14 @@ const startBegin = async () => {
   const context = getContext();
   context.addWork(new OpenURLWork());
   await context.prepareWorks();
-  context.dispatch("http://www.baidu.com");
+  context.dispatch('http://www.baidu.com');
 };
 const showCode = () => {
   console.log(codeDome.toString());
   if (codeRef.value.innerText.length === 0) {
     codeRef.value.innerText = `${codeDome.toString()}`;
   } else {
-    codeRef.value.innerText = "";
+    codeRef.value.innerText = '';
   }
 };
 </script>

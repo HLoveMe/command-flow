@@ -34,9 +34,8 @@ import {
   BooleanObject,
   DateObject,
   DataObject,
-} from '../../../dist/web/index';
+} from 'command-flow';
 import { ref } from 'vue';
-import { ControlFlow } from '../../../core';
 const logInfo = ref<Array<{ desc: string; success: boolean }>>([]);
 const disabled = ref<boolean>(false);
 
@@ -47,12 +46,13 @@ const clearLog = () => {
  * 
     ReduceRight = "reduceRight",
  */
+[].find
 const utils = {
   concat: {
     concat: 'array concat',
     expect: '1111-2222-3333-44444',
     run: () => {
-      const array = new ArrayObject();
+      const array = new ArrayObject<any>();
       array.push('1111');
       array.push('2222');
       array.push('3333');
@@ -93,7 +93,7 @@ const utils = {
     concat: 'array findIndex',
     expect: 1,
     run: () => {
-      const array = new ArrayObject();
+      const array = new ArrayObject<string>();
       array.push('1111');
       array.push('2222');
       array.push('3333');
@@ -104,13 +104,12 @@ const utils = {
     concat: 'array lastIndexOf',
     expect: 4,
     run: () => {
-      const array = new ArrayObject();
+      const array = new ArrayObject<string>();
       array.push('2222');
       array.push('1111');
       array.push('2222');
       array.push('3333');
       array.push('2222');
-
       return array.lastIndexOf('2222').valueOf();
     },
   },
@@ -202,7 +201,7 @@ const utils = {
     concat: 'array includes',
     expect: true,
     run: () => {
-      const array = new ArrayObject([1, 0, 3, 0, 7]);
+      const array = new ArrayObject<number>(...[1, 0, 3, 0, 7]);
       return array.includes(0, 2).valueOf();
     },
   },
@@ -210,7 +209,7 @@ const utils = {
     concat: 'array indexOf',
     expect: 3,
     run: () => {
-      const array = new ArrayObject([1, 0, 3, 0, 7]);
+      const array = new ArrayObject(...[1, 0, 3, 0, 7]);
       return array.indexOf(0, 2).valueOf();
     },
   },

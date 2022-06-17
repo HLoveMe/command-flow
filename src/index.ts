@@ -8,6 +8,8 @@ import {
   BooleanObject,
   DateObject,
   DataObject,
+  NullObject,
+  MixinsObject
 } from "./Object/Able/ObjectAble";
 import { Value, ContextImpl, BaseType, WorkType } from "./Types";
 import { ControlFlow } from "./Object/Control";
@@ -40,6 +42,8 @@ export {
   BooleanObject,
   DateObject,
   DataObject,
+  NullObject,
+  MixinsObject,
   ContextImpl,
   Context,
   Value,

@@ -4,6 +4,7 @@ import { ContextRunOption } from './Configs';
 import { PlatformBridgeAble } from './Bridge/ConfigTypes';
 
 export namespace Value {
+  export type NULL = null | undefined;
   export declare interface ValueAble<V> {
     _value: V;
     valueOf(): V;
@@ -49,9 +50,9 @@ export namespace Value {
   }
 
   export declare interface BooleanAble
-    extends ValueAble<Boolean>,
-      ObjectAble<Boolean> {
-    valueOf(): Boolean;
+    extends ValueAble<boolean>,
+      ObjectAble<boolean> {
+    valueOf(): boolean;
   }
 
   export declare interface DateAble extends ValueAble<Date>, ObjectAble<Date> {
@@ -63,20 +64,30 @@ export namespace Value {
       ObjectAble<ArrayBuffer> {
     data(): ArrayBuffer;
   }
+
+  export declare interface NullAble extends ValueAble<NULL>, ObjectAble<NULL> {
+    valueOf(): null | undefined;
+    isTruly(): boolean;
+    isNull(): boolean;
+    isUndefined(): boolean;
+  }
+  export type MixinsType = ObjectAble<any> | NULL;
+  export declare interface Mixins<V extends MixinsType = MixinsType>
+    extends ValueAble<V> {}
 }
 
 export type BaseType =
   | Value.ObjectAble<any> // ObjectTarget
   | Value.ArrayAble<any> // ArrayTarget
-  | Value.MapAble<any, any> // MapTarget
+  | Value.MapAble<string | symbol, any> // MapTarget
   | Value.SetAble<any> // SetTarget
   | Value.StringAble // StringTarget
   | Value.NumberAble // NumberTarget
   | Value.BooleanAble // BooleanTarget
   | Value.DateAble //  DateTarget
   | Value.DataAble // DataTarget
-  | undefined
-  | null;
+  | Value.NullAble // NullTarget
+  | Value.Mixins<Value.ObjectAble<any>>; // MixinsTarget
 
 export type ChannelValue<T extends BaseType = BaseType> = {
   value: T;

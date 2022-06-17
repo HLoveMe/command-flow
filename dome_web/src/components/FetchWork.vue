@@ -21,7 +21,7 @@
         v-for="item in logInfo.keys()"
         :key="item"
         :id="item"
-        :items="logInfo.get(item)"
+        :items="logInfo.get(item) || []"
       ></RunGroup>
       <RunResult
         v-if="logInfo.size >= 1"
@@ -41,27 +41,27 @@ import {
   Base64DecodeWork,
   Base64EnCodeWork,
   FetchWork,
-} from "../../dist/web/index";
-import { ref } from "vue";
-import RunGroup from "./RunGroup.vue";
-import RunResult from "./RunResult.vue";
-import { wrapperValue } from "../../core";
+  wrapperValue,
+} from 'command-flow';
+import { ref } from 'vue';
+import RunGroup from './RunGroup.vue';
+import RunResult from './RunResult.vue';
 interface WorkStatus {
   content?: any;
   work?: any | any[];
   desc?: any;
   value?: any;
   date?: Date;
-  error:Error;
+  error: Error;
 }
 const result = ref<boolean>(false);
-const codeRef = ref<HTMLDivElement>();
+const codeRef = ref<HTMLDivElement>({} as any);
 const logInfo = ref<Map<string, Array<any>>>(new Map());
 const disabled = ref<boolean>(false);
 const getContext = () => {
   const context = new Context();
   context.addWorkLog({
-    next: (log: WorkStatus) => {
+    next: (log:WorkStatus |any) => {
       const {
         desc,
         value: { _value },
@@ -70,7 +70,7 @@ const getContext = () => {
       } = log;
       const id = _value.id;
       const channeLValue = _value.value._value;
-      const workName = work.map(($1) => $1.name).join("-");
+      const workName = work.map(($1: any) => $1.name).join('-');
       const currentRun = logInfo.value.get(id) || [];
       logInfo.value.set(id, currentRun);
       currentRun.push({
@@ -94,7 +94,7 @@ async function codeDome() {
   const context = new Context();
   context.addWork(new FetchWork());
   await context.prepareWorks();
-  context.dispatch("http://localhost:3000");
+  context.dispatch('http://localhost:3000');
 }
 const reRun = () => {
   logInfo.value.clear();
@@ -105,13 +105,13 @@ const startBegin = async () => {
   context.addWork(new FetchWork());
   await context.prepareWorks();
   context.dispatch({
-    method: "get",
+    method: 'get',
     timeout: 10000,
     data: null,
     headers: {
-      "Content-Type": "text/plain",
+      'Content-Type': 'text/plain',
     },
-    url: "http://localhost:3000/",
+    url: 'http://localhost:3000/',
   });
 };
 const showCode = () => {
@@ -119,7 +119,7 @@ const showCode = () => {
   if (codeRef.value.innerText.length === 0) {
     codeRef.value.innerText = `${codeDome.toString()}`;
   } else {
-    codeRef.value.innerText = "";
+    codeRef.value.innerText = '';
   }
 };
 </script>

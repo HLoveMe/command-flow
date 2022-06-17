@@ -1,8 +1,16 @@
 import { Observable, PartialObserver, Subject, Subscription } from 'rxjs';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-
+type TypeNumber =
+  | 0 // Automatic type number
+  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+  | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
+  | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30
+  | 31 | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 | 40
+  ;
+type ErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H';
 declare module 'command-flow' {
   export namespace Value {
+    export type NULL = null | undefined;
     export interface ValueAble<V> {
       _value: V;
       valueOf(): V;
@@ -13,7 +21,7 @@ declare module 'command-flow' {
     }
     export interface ArrayAble<T>
       extends ValueAble<Array<T>>,
-        ObjectAble<Array<T>> {
+      ObjectAble<Array<T>> {
       len(): number;
       first(): T;
       last(): T;
@@ -23,7 +31,7 @@ declare module 'command-flow' {
 
     export interface MapAble<T, U>
       extends ValueAble<Map<T, U>>,
-        ObjectAble<Map<T, U>> {
+      ObjectAble<Map<T, U>> {
       len(): number;
       valueOf(): Map<T, U>;
     }
@@ -43,7 +51,7 @@ declare module 'command-flow' {
 
     export interface BooleanAble
       extends ValueAble<Boolean>,
-        ObjectAble<Boolean> {
+      ObjectAble<Boolean> {
       valueOf(): Boolean;
     }
 
@@ -53,23 +61,35 @@ declare module 'command-flow' {
 
     export interface DataAble
       extends ValueAble<ArrayBuffer>,
-        ObjectAble<ArrayBuffer> {
+      ObjectAble<ArrayBuffer> {
       data(): ArrayBuffer;
     }
+
+    export interface NullAble
+      extends ValueAble<NULL>,
+      ObjectAble<NULL> {
+      valueOf(): null | undefined;
+      isTruly(): boolean;
+      isNull(): boolean;
+      isUndefined(): boolean;
+    }
+    export type MixinsType = ObjectAble<any> | NULL;
+    export interface Mixins<V extends MixinsType = MixinsType>
+      extends ValueAble<V> { }
   }
 
   export type BaseType =
     | Value.ObjectAble<any> // ObjectTarget
     | Value.ArrayAble<any> // ArrayTarget
-    | Value.MapAble<any, any> // MapTarget
+    | Value.MapAble<string | symbol, any> // MapTarget
     | Value.SetAble<any> // SetTarget
     | Value.StringAble // StringTarget
     | Value.NumberAble // NumberTarget
     | Value.BooleanAble // BooleanTarget
     | Value.DateAble //  DateTarget
     | Value.DataAble // DataTarget
-    | undefined
-    | null;
+    | Value.NullAble // NullTarget
+    | Value.Mixins<Value.ObjectAble<any>>; // MixinsTarget
 
   export type ChannelValue<T extends BaseType = BaseType> = {
     value: T;
@@ -141,9 +161,9 @@ declare module 'command-flow' {
     }
     export interface Work
       extends WorkOperation,
-        WorkContext,
-        WorkChain,
-        WorkConfig {
+      WorkContext,
+      WorkChain,
+      WorkConfig {
       name: string;
       id: number;
       uuid: WorkUUID;
@@ -259,9 +279,9 @@ declare module 'command-flow' {
         image: DataString;
         error?: Error;
       }
-      export interface TakePhotoOption {}
+      export interface TakePhotoOption { }
 
-      export interface VideoOption {}
+      export interface VideoOption { }
       export interface VideoResponse {
         videoUrl?: string;
         error?: Error;
@@ -271,13 +291,13 @@ declare module 'command-flow' {
         latitude?: number;
         accuracy?: number;
       }
-      export interface PositionOption {}
-      export interface AudioResponse {}
+      export interface PositionOption { }
+      export interface AudioResponse { }
 
-      export interface VibratorOption {}
-      export interface BluetoothDevice {}
-      export interface SpeechOption {}
-      export interface SpeechResponse {}
+      export interface VibratorOption { }
+      export interface BluetoothDevice { }
+      export interface SpeechOption { }
+      export interface SpeechResponse { }
 
       export interface Permission {
         // 权限处理
@@ -386,7 +406,7 @@ declare module 'command-flow' {
       LoadFileWork: Bridge.FileOption;
       FetchWork: Bridge.RequestParamsInit;
     }
-    export interface Environment {}
+    export interface Environment { }
     export interface ContextRunOption {
       development: boolean;
       environment?: Environment;
@@ -579,8 +599,7 @@ declare module 'command-flow' {
   }
   export class Instruction
     extends Subject<ChannelObject>
-    implements WorkType.Work, Environment.EnvironmentAble
-  {
+    implements WorkType.Work, Environment.EnvironmentAble {
     observers: any[];
     isAble(): Boolean;
     name: string;
@@ -603,34 +622,34 @@ declare module 'command-flow' {
     pools: Subscription[];
     config: WorkType.ConfigInfo;
   }
-  export class InstructionMTM extends Instruction {}
-  export class InstructionOTM extends Instruction {}
-  export class InstructionOTO extends Instruction {}
+  export class InstructionMTM extends Instruction { }
+  export class InstructionOTM extends Instruction { }
+  export class InstructionOTO extends Instruction { }
   export class TimeoutWork extends InstructionOTO {
-    constructor(interval: number);
+    constructor(interval?: number);
   }
   export class IntervalWork extends InstructionOTM {
-    constructor(interval: number, max?: number, notifier?: Observable<any>);
+    constructor(interval?: number, max?: number, notifier?: Observable<any>);
   }
   export class DelayIntervalWork extends InstructionOTM {
     constructor(
-      delay: number,
+      delay?: number,
       interval?: number,
       max?: number,
       notifier?: Observable<any>
     );
   }
-  export class Base64EnCodeWork extends InstructionMTM {}
-  export class Base64DecodeWork extends InstructionMTM {}
+  export class Base64EnCodeWork extends InstructionMTM { }
+  export class Base64DecodeWork extends InstructionMTM { }
   export class LoadFileWork extends InstructionOTO {
     constructor(config?: Bridge.FileOption);
   }
-  export class OpenURLWork extends InstructionOTO {}
-  export class QRCodeWork extends InstructionOTO {}
+  export class OpenURLWork extends InstructionOTO { }
+  export class QRCodeWork extends InstructionOTO { }
   export class RunCommandWork extends InstructionOTO {
-    constructor(template: string);
+    constructor(template?: string);
   }
-  export class FetchWork extends InstructionOTO {}
+  export class FetchWork extends InstructionOTO { }
 
   export class ObjectTarget<T> implements Value.ObjectAble<T> {
     json(): Value.StringAble;
@@ -638,10 +657,13 @@ declare module 'command-flow' {
     _value: T;
     valueOf(): T;
   }
+
   export class ArrayObject<T>
     extends ObjectTarget<Array<T>>
-    implements Value.ArrayAble<T>, ControlFlow.CollectionArray
-  {
+    implements Value.ArrayAble<T>, ControlFlow.CollectionArray {
+    constructor(...args: T[]);
+    constructor(count: number);
+    constructor(value: T);
     len(): number;
     first(): T;
     last(): T;
@@ -655,25 +677,25 @@ declare module 'command-flow' {
     collectionArray(key: ControlFlow.ArrayEnum, ...args: any[]): BaseType;
     // array function
 
-    concat(...items: (T | ArrayObject<T>)[]): BaseType;
+    concat(...items: (T | ArrayObject<T>)[]): ArrayObject<T>;
 
-    copyWithin(target: number, start: number, end?: number): BaseType;
+    copyWithin(target: number, start: number, end?: number): ArrayObject<T>;
 
-    fill(value: number, start?: number, end?: number): BaseType;
+    fill<U extends T>(value: U, start?: number, end?: number): this;
 
     find(
-      predicate: (value: number, index: number, obj: Uint8Array) => boolean,
+      predicate: (value: T, index: number, obj: Uint8Array) => boolean,
       thisArg?: any
-    ): BaseType;
+    ): Value.Mixins<Value.ObjectAble<T>>;
 
     findIndex(
-      predicate: (value: number, index: number, obj: Uint8Array) => boolean,
+      predicate: (value: T, index: number, obj: Uint8Array) => boolean,
       thisArg?: any
-    ): BaseType;
+    ): NumberObject;
 
-    lastIndexOf(searchElement: number, fromIndex?: number): BaseType;
+    lastIndexOf(searchElement: T, fromIndex?: number): NumberObject;
 
-    pop(): BaseType;
+    pop(): Value.ObjectAble<T>;
 
     push(...items: T[]): BaseType;
 
@@ -681,19 +703,19 @@ declare module 'command-flow' {
 
     shift(): BaseType;
 
-    unshift(...items: T[]): BaseType;
+    unshift(...items: T[]): NumberObject;
 
-    slice(start?: number, end?: number): BaseType;
+    slice(start?: number, end?: number): ArrayObject<T>;
 
-    sort(compareFn?: (a: number, b: number) => number): BaseType;
+    sort(compareFn?: (a: number, b: number) => number): ArrayObject<T>;
 
-    splice(start: number, deleteCount?: number, ...items: any[]): BaseType;
+    splice(start: number, deleteCount?: number, ...items: any[]): ArrayObject<T>;
 
-    includes(searchElement: T, fromIndex?: number): BaseType;
+    includes(searchElement: T, fromIndex?: number): BooleanObject;
 
-    indexOf(searchElement: T, fromIndex?: number): BaseType;
+    indexOf(searchElement: T, fromIndex?: number): NumberObject;
 
-    join(separator?: string): BaseType;
+    join(separator?: string): StringObject;
 
     entries(): ObjectTarget<IterableIterator<[T, T]>>;
 
@@ -754,10 +776,9 @@ declare module 'command-flow' {
   export class MapObject<T, U>
     extends ObjectTarget<Map<T, U>>
     implements
-      Value.MapAble<T, U>,
-      ControlFlow.CollectionMap,
-      ControlFlow.MapAbsoluteAble
-  {
+    Value.MapAble<T, U>,
+    ControlFlow.CollectionMap,
+    ControlFlow.MapAbsoluteAble {
     len(): number;
     valueOf(): Map<T, U>;
     _value: Map<T, U>;
@@ -789,8 +810,7 @@ declare module 'command-flow' {
   }
   export class SetObject<T>
     extends ObjectTarget<Set<T>>
-    implements Value.SetAble<T>, ControlFlow.CollectionSet
-  {
+    implements Value.SetAble<T>, ControlFlow.CollectionSet {
     len(): number;
     valueOf(): Set<T>;
     _value: Set<T>;
@@ -825,9 +845,9 @@ declare module 'command-flow' {
   export class NumberObject
     extends ObjectTarget<number>
     implements
-      Value.NumberAble,
-      ControlFlow.Compare<Value.NumberAble>,
-      ControlFlow.Calc<Value.NumberAble>
+    Value.NumberAble,
+    ControlFlow.Compare<Value.NumberAble>,
+    ControlFlow.Calc<Value.NumberAble>
   {
     valueOf(): number;
     _value: number;
@@ -852,8 +872,7 @@ declare module 'command-flow' {
   }
   export class StringObject
     extends ObjectTarget<string>
-    implements Value.StringAble
-  {
+    implements Value.StringAble {
     valueOf(): string;
     _value: string;
     json(): Value.StringAble;
@@ -861,8 +880,7 @@ declare module 'command-flow' {
   }
   export class BooleanObject
     extends ObjectTarget<Boolean>
-    implements Value.BooleanAble
-  {
+    implements Value.BooleanAble {
     valueOf(): Boolean;
     _value: Boolean;
     json(): Value.StringAble;
@@ -879,14 +897,23 @@ declare module 'command-flow' {
 
   export class DataObject
     extends ObjectTarget<ArrayBuffer>
-    implements Value.DataAble
-  {
+    implements Value.DataAble {
     data(): ArrayBuffer;
     _value: ArrayBuffer;
     valueOf(): ArrayBuffer;
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<ArrayBuffer>): Value.ObjectAble<ArrayBuffer>;
   }
+
+  export class NullObject
+    extends ObjectTarget<Value.NULL>
+    implements Value.NullAble { }
+
+  export class MixinsObject<
+    T extends Value.ObjectAble<any> = Value.ObjectAble<any>
+    >
+    extends ObjectTarget<T>
+    implements Value.Mixins { }
 
   export function unpackValue(value: ChannelObject): string;
 

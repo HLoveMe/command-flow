@@ -41,27 +41,27 @@ import {
   DelayIntervalWork,
   InstructionOTO,
   unpackValue,
-} from "../../dist/web/index";
-import { ref } from "vue";
-import RunGroup from "./RunGroup.vue";
-import RunResult from "./RunResult.vue";
-import { from, Observable } from "rxjs";
+} from 'command-flow';
+import { ref } from 'vue';
+import RunGroup from './RunGroup.vue';
+import RunResult from './RunResult.vue';
+import { from, Observable } from 'rxjs';
 interface WorkStatus {
   content?: any;
   work?: any | any[];
   desc?: any;
   value?: any;
   date?: Date;
-  error:Error;
+  error: Error;
 }
 const result = ref<boolean[]>([false]);
-const codeRef = ref<HTMLDivElement>();
+const codeRef = ref<HTMLDivElement>({} as any);
 const logInfo = ref<Map<string, Array<any>>>(new Map());
 const disabled = ref<boolean>(false);
 const getContext = () => {
   const context = new Context();
   context.addWorkLog({
-    next: (log: WorkStatus) => {
+    next: (log: any | WorkStatus) => {
       const {
         desc,
         value: { _value },
@@ -70,7 +70,7 @@ const getContext = () => {
       } = log;
       const id = _value.id;
       const channeLValue = _value.value._value;
-      const workName = work.map(($1) => $1.name).join("-");
+      const workName = work.map(($1: any) => $1.name).join('-');
       const currentRun = logInfo.value.get(id) || [];
       logInfo.value.set(id, currentRun);
       currentRun.push({
@@ -78,7 +78,7 @@ const getContext = () => {
         workName,
         desc,
         value: channeLValue,
-        error
+        error,
       });
     },
     error: () => {
@@ -88,7 +88,7 @@ const getContext = () => {
   return context;
 };
 class ShowTimerWork extends InstructionOTO {
-  name = "ShowTimerWork";
+  name = 'ShowTimerWork';
   index: number = 0; // 索引
 
   count: number = 0; // 期待值
@@ -98,7 +98,7 @@ class ShowTimerWork extends InstructionOTO {
     this.count = num;
     this.index = index;
   }
-  prepare(before, next) {
+  prepare(before:any, next:any) {
     super.prepare(before, next);
     this.config = { development: false };
     return Promise.resolve();
@@ -115,7 +115,7 @@ class ShowTimerWork extends InstructionOTO {
     });
   }
 }
-const contexts = [];
+const contexts:any[] = [];
 const clearLog = () => {
   logInfo.value.clear();
 };
@@ -182,7 +182,7 @@ const showCode = () => {
   if (codeRef.value.innerText.length === 0) {
     codeRef.value.innerText = `${codeDome.toString()}`;
   } else {
-    codeRef.value.innerText = "";
+    codeRef.value.innerText = '';
   }
 };
 </script>

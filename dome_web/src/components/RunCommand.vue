@@ -38,11 +38,11 @@ import {
   RunCommandWork,
   InstructionOTO,
   unpackValue,
-} from "../../dist/web/index";
-import { ref } from "vue";
-import RunGroup from "./RunGroup.vue";
-import RunResult from "./RunResult.vue";
-import { Observable } from "rxjs";
+} from 'command-flow';
+import { ref } from 'vue';
+import RunGroup from './RunGroup.vue';
+import RunResult from './RunResult.vue';
+import { Observable } from 'rxjs';
 interface WorkStatus {
   content?: any;
   work?: any | any[];
@@ -51,7 +51,7 @@ interface WorkStatus {
   date?: Date;
 }
 const result = ref<boolean>(false);
-const codeRef = ref<HTMLDivElement>();
+const codeRef = ref<HTMLDivElement>({} as any);
 const logInfo = ref<Map<string, Array<any>>>(new Map());
 const disabled = ref<boolean>(false);
 const getContext = () => {
@@ -65,7 +65,7 @@ const getContext = () => {
       } = log;
       const id = _value.id;
       const channeLValue = _value.value._value;
-      const workName = work.map(($1) => $1.name).join("-");
+      const workName = work.map(($1: any) => $1.name).join('-');
       const currentRun = logInfo.value.get(id) || [];
       logInfo.value.set(id, currentRun);
       currentRun.push({
@@ -82,12 +82,12 @@ const getContext = () => {
   return context;
 };
 class RunResultShow extends InstructionOTO {
-  name = "RunResultShow";
+  name = 'RunResultShow';
 
   run(input: any): Observable<any> {
     return new Observable((subscriber) => {
       const value = unpackValue(input);
-      result.value = value == "10101";
+      result.value = value == '10101';
       subscriber.complete();
       return {
         unsubscribe: () => subscriber.unsubscribe(),
@@ -102,7 +102,7 @@ async function codeDome() {
   const context = new Context();
   context.addWork(new RunCommandWork());
   await context.prepareWorks();
-  context.dispatch("1 + 10000");
+  context.dispatch('1 + 10000');
 }
 const reRun = () => {
   logInfo.value.clear();
@@ -110,17 +110,17 @@ const reRun = () => {
 };
 const startBegin = async () => {
   const context = getContext();
-  context.addWork(new RunCommandWork("$I$ + 100"));
+  context.addWork(new RunCommandWork('$I$ + 100'));
   context.addWork(new RunResultShow());
   await context.prepareWorks();
-  context.dispatch("1 + 10000");
+  context.dispatch('1 + 10000');
 };
 const showCode = () => {
   console.log(codeDome.toString());
   if (codeRef.value.innerText.length === 0) {
     codeRef.value.innerText = `${codeDome.toString()}`;
   } else {
-    codeRef.value.innerText = "";
+    codeRef.value.innerText = '';
   }
 };
 </script>

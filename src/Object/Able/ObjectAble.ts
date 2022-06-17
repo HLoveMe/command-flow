@@ -8,6 +8,8 @@ import { StringObject } from "./Targets/StringObject";
 import { BooleanObject } from "./Targets/BooleanObject";
 import { DateObject } from "./Targets/DateObject";
 import { DataObject } from "./Targets/DataObject";
+import { NullObject } from './Targets/NullObject'
+import { MixinsObject } from './Targets/Mixins'
 
 export {
   ObjectTarget,
@@ -19,4 +21,6 @@ export {
   BooleanObject,
   DateObject,
   DataObject,
+  MixinsObject,
+  NullObject
 };

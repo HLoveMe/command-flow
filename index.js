@@ -5,4 +5,3 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   module.exports = require('./dist/esm-browser/index.dev.js');
 }
-//TODO:不要tsc
