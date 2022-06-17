@@ -1,15 +1,16 @@
 {
   "name": "command-flow",
-  "version": "1.0.1-beta.04",
+  "version": "1.0.1-beta.05",
   "main": "index.js",
   "module":"./index.mjs",
   "scripts": {
-    "tsc": "node ./build-pre.js 0 && tsc -p tsconfig.web.json && node ./build-pre.js 1 && tsc -p tsconfig.node.json",
-    "build_dev_web": "npm run tsc && webpack --config webpack.config.dev.js",
-    "build_prod_web": "npm run tsc &&  webpack --config webpack.config.prod.js",
-    "build_web": "npm run tsc && webpack --config webpack.config.dev.js &&  webpack --config webpack.config.prod.js",
-    "build_node": "npm run tsc &&  webpack --config webpack.config.node.js",
-    "build":"npm run tsc && npm run build_web && npm run build_node",
+    "pre_web": "node ./build-pre.js 0 && tsc -p tsconfig.web.json ",
+    "pre_node": "node ./build-pre.js 1 && tsc -p tsconfig.node.json",
+    "build_dev_web": "npm run pre_web && webpack --config webpack.config.dev.js",
+    "build_prod_web": "npm run pre_web &&  webpack --config webpack.config.prod.js",
+    "build_web": "npm run build_dev_web && npm run build_prod_web",
+    "build_node": "npm run pre_node &&  webpack --config webpack.config.node.js",
+    "build":"npm run build_prod_web && npm run build_node",
     "web_serve": "vite"
   },
   "repository": {
