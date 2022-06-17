@@ -13,7 +13,7 @@ declare module 'command-flow' {
     }
     export interface ArrayAble<T>
       extends ValueAble<Array<T>>,
-        ObjectAble<Array<T>> {
+      ObjectAble<Array<T>> {
       len(): number;
       first(): T;
       last(): T;
@@ -23,7 +23,7 @@ declare module 'command-flow' {
 
     export interface MapAble<T, U>
       extends ValueAble<Map<T, U>>,
-        ObjectAble<Map<T, U>> {
+      ObjectAble<Map<T, U>> {
       len(): number;
       valueOf(): Map<T, U>;
     }
@@ -43,7 +43,7 @@ declare module 'command-flow' {
 
     export interface BooleanAble
       extends ValueAble<Boolean>,
-        ObjectAble<Boolean> {
+      ObjectAble<Boolean> {
       valueOf(): Boolean;
     }
 
@@ -53,7 +53,7 @@ declare module 'command-flow' {
 
     export interface DataAble
       extends ValueAble<ArrayBuffer>,
-        ObjectAble<ArrayBuffer> {
+      ObjectAble<ArrayBuffer> {
       data(): ArrayBuffer;
     }
   }
@@ -89,7 +89,7 @@ declare module 'command-flow' {
 
     export type WorkConstant = Map<WorkConstantKey, BaseType>;
 
-    export type WorkFunction = (input: BaseType) => Observable<BaseType>;
+    export type WorkFunction = (input: ChannelObject) => Observable<ChannelObject>;
 
     export enum WorkRunStatus {
       INIT, //初始状态
@@ -139,17 +139,17 @@ declare module 'command-flow' {
     }
     export interface Work
       extends WorkOperation,
-        WorkContext,
-        WorkChain,
-        WorkConfig {
+      WorkContext,
+      WorkChain,
+      WorkConfig {
       name: string;
       id: number;
       uuid: WorkUUID;
       // run: WorkFunction;
-      run?(input: BaseType, option?: any): Observable<BaseType>;
-      web_run?(input: BaseType, option?: any): Observable<BaseType>;
-      node_run?(input: BaseType, option?: any): Observable<BaseType>;
-      electron_run?(input: BaseType, option?: any): Observable<BaseType>;
+      run?(input: ChannelObject, option?: any): Observable<ChannelObject>;
+      web_run?(input: ChannelObject, option?: any): Observable<ChannelObject>;
+      node_run?(input: ChannelObject, option?: any): Observable<ChannelObject>;
+      electron_run?(input: ChannelObject, option?: any): Observable<ChannelObject>;
       prepare(before?: Work, next?: Work): Promise<void>;
       // 关闭Work
       stopWork(): Observable<Boolean>;
@@ -254,9 +254,9 @@ declare module 'command-flow' {
         image: DataString;
         error?: Error;
       }
-      export interface TakePhotoOption {}
+      export interface TakePhotoOption { }
 
-      export interface VideoOption {}
+      export interface VideoOption { }
       export interface VideoResponse {
         videoUrl?: string;
         error?: Error;
@@ -266,13 +266,13 @@ declare module 'command-flow' {
         latitude?: number;
         accuracy?: number;
       }
-      export interface PositionOption {}
-      export interface AudioResponse {}
+      export interface PositionOption { }
+      export interface AudioResponse { }
 
-      export interface VibratorOption {}
-      export interface BluetoothDevice {}
-      export interface SpeechOption {}
-      export interface SpeechResponse {}
+      export interface VibratorOption { }
+      export interface BluetoothDevice { }
+      export interface SpeechOption { }
+      export interface SpeechResponse { }
 
       export interface Permission {
         // 权限处理
@@ -365,6 +365,11 @@ declare module 'command-flow' {
       ): Observable<Value.ObjectAble<ResponseContent>>;
     }
   }
+  export namespace Environment {
+    export interface EnvironmentAble {
+      isAble(): Boolean;
+    }
+  }
 
   export namespace Config {
     type WorkName = string;
@@ -376,7 +381,7 @@ declare module 'command-flow' {
       LoadFileWork: Bridge.FileOption;
       FetchWork: Bridge.RequestParamsInit;
     }
-    export interface Environment {}
+    export interface Environment { }
     export interface ContextRunOption {
       development: boolean;
       environment?: Environment;
@@ -511,7 +516,7 @@ declare module 'command-flow' {
       [T in CalcEnum]: CalcFunction;
     };
     export interface Calc<U extends Value.NumberAble> extends CalcAble {
-      calc(target: U): U;
+      calc(type: ControlFlow.CalcEnum, target: U): U;
     }
 
     // Array
@@ -547,13 +552,49 @@ declare module 'command-flow' {
       collectionMap(key: MapEnum, ...args: any[]): BaseType;
     }
   }
-  export abstract class Context implements ContextImpl {}
+  export class Context implements ContextImpl {
+    status: WorkType.WorkRunStatus;
+    platform: Bridge.PlatformBridgeAble;
+    runOptions: Config.ContextRunOption;
+    runConstant: Map<string, WorkType.WorkConstant>;
+    works: WorkType.Work[];
+    msgChannel: Subject<WorkType.WorkStatus<any>>;
+    pools: Subscription[];
+    addWork(work: WorkType.Work): void;
+    addWorks(...works: WorkType.Work[]): void;
+    addWorkLog(tap: PartialObserver<WorkType.WorkStatus<ChannelObject<BaseType>>>): Subscription;
+    prepareWorks(): Promise<void>;
+    dispatch(input?: BaseType): void;
+    addVariable(from: WorkType.Work, name: string, value: BaseType): void;
+    sendLog(status: WorkType.WorkStatus<BaseType>): void;
+    clear(): void;
+    stopWorkChain(): Promise<boolean>;
+  }
   export class Instruction
     extends Subject<ChannelObject>
-    implements WorkType.Work, EnvironmentAble {}
-  export class InstructionMTM extends Instruction {}
-  export class InstructionOTM extends Instruction {}
-  export class InstructionOTO extends Instruction {}
+    implements WorkType.Work, Environment.EnvironmentAble {
+    observers: any[];
+    isAble(): Boolean;
+    name: string;
+    id: number;
+    uuid: string;
+    prepare(before?: WorkType.Work | undefined, next?: WorkType.Work | undefined): Promise<void>;
+    stopWork(): Observable<Boolean>;
+    clear(): void;
+    addVariable(name: string, value: BaseType): void;
+    logMsg(msg: string, inputValue: ChannelObject<BaseType>): void;
+    nextValue(input: BaseType): BaseType;
+    completeOneLoop(input: BaseType, toValue: BaseType, success: Boolean): void;
+    beforeWork?: WorkType.Work | undefined;
+    nextWork?: WorkType.Work | undefined;
+    context?: ContextImpl | undefined;
+    runSubscriptions: Map<string, WorkType.WorkUnitImpl>;
+    pools: Subscription[];
+    config: WorkType.ConfigInfo;
+  }
+  export class InstructionMTM extends Instruction { }
+  export class InstructionOTM extends Instruction { }
+  export class InstructionOTO extends Instruction { }
   export class TimeoutWork extends InstructionOTO {
     constructor(interval: number);
   }
@@ -568,53 +609,233 @@ declare module 'command-flow' {
       notifier?: Observable<any>
     );
   }
-  export class Base64EnCodeWork extends InstructionMTM {}
-  export class Base64DecodeWork extends InstructionMTM {}
+  export class Base64EnCodeWork extends InstructionMTM { }
+  export class Base64DecodeWork extends InstructionMTM { }
   export class LoadFileWork extends InstructionOTO {
     constructor(config?: Bridge.FileOption);
   }
-  export class OpenURLWork extends InstructionOTO {}
-  export class QRCodeWork extends InstructionOTO {}
+  export class OpenURLWork extends InstructionOTO { }
+  export class QRCodeWork extends InstructionOTO { }
   export class RunCommandWork extends InstructionOTO {
     constructor(template: string);
   }
-  export class FetchWork extends InstructionOTO {}
+  export class FetchWork extends InstructionOTO { }
 
-  export class ObjectTarget<T> implements Value.ObjectAble<T> {}
+  export class ObjectTarget<T> implements Value.ObjectAble<T> {
+    json(): Value.StringAble;
+    merge(target: Value.ObjectAble<T>): Value.ObjectAble<T>;
+    _value: T;
+    valueOf(): T;
+  }
   export class ArrayObject<T>
     extends ObjectTarget<Array<T>>
-    implements Value.ArrayAble<T>, ControlFlow.CollectionArray {}
+    implements Value.ArrayAble<T>, ControlFlow.CollectionArray {
+    len(): number;
+    first(): T;
+    last(): T;
+    valueOfIndex(index: number): T;
+    valueOf(): T[];
+    _value: T[];
+    json(): Value.StringAble;
+    merge(target: Value.ObjectAble<T[]>): Value.ObjectAble<T[]>;
+    collectionArray(key: ControlFlow.ArrayEnum, ...args: any[]): BaseType;
+
+
+    collectionArray(key: ControlFlow.ArrayEnum, ...args: any[]): BaseType;;
+    // array function
+
+    concat(...items: (T | ArrayObject<T>)[]): BaseType;;
+
+    copyWithin(target: number, start: number, end?: number): BaseType;
+
+    fill(value: number, start?: number, end?: number): BaseType;;
+
+    find(predicate: (value: number, index: number, obj: Uint8Array) => boolean, thisArg?: any): BaseType;
+
+
+    findIndex(predicate: (value: number, index: number, obj: Uint8Array) => boolean, thisArg?: any): BaseType;
+
+    lastIndexOf(searchElement: number, fromIndex?: number): BaseType;;
+
+    pop(): BaseType;
+
+    push(...items: T[]): BaseType;
+
+    reverse(): BaseType;
+
+    shift(): BaseType;
+
+    unshift(...items: T[]): BaseType;
+
+    slice(start?: number, end?: number): BaseType;
+
+    sort(compareFn?: (a: number, b: number) => number): BaseType;
+
+    splice(start: number, deleteCount?: number, ...items: any[]): BaseType;
+
+    includes(searchElement: T, fromIndex?: number): BaseType;
+
+    indexOf(searchElement: T, fromIndex?: number): BaseType;
+
+    join(separator?: string): BaseType;
+
+
+    entries(): ObjectTarget<IterableIterator<[T, T]>>;;
+
+    values(): ObjectTarget<IterableIterator<T>>;;
+
+    keys(): ObjectTarget<IterableIterator<T>>;;
+
+
+    forEach(callbackfn: (value: T, index: number, array: readonly T[]) => void, thisArg?: any): BaseType;
+
+    filter<S extends T>(predicate: (value: T, index: number, array: readonly T[]) => value is S, thisArg?: any): BaseType;
+
+
+    map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): BaseType;
+
+    every<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): BaseType;
+
+    some(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): BaseType;
+
+
+    reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): BaseType;
+
+    reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): BaseType;
+
+    toLocaleString(): BaseType;
+
+    get length():NumberObject;
+  }
 
   export class MapObject<T, U>
     extends ObjectTarget<Map<T, U>>
     implements
-      Value.MapAble<T, U>,
-      ControlFlow.CollectionMap,
-      ControlFlow.MapAbsoluteAble {}
+    Value.MapAble<T, U>,
+    ControlFlow.CollectionMap,
+    ControlFlow.MapAbsoluteAble {
+    len(): number;
+    valueOf(): Map<T, U>;
+    _value: Map<T, U>;
+    json(): Value.StringAble;
+    merge(target: Value.ObjectAble<Map<T, U>>): Value.ObjectAble<Map<T, U>>;
+    collectionMap(key: ControlFlow.MapEnum, ...args: any[]): BaseType;
+
+
+    collectionMap(key: ControlFlow.MapEnum, ...args: any[]): BaseType;
+
+    get(key: string): BaseType;
+
+    set(key: string, value: BaseType): BaseType;
+
+    has(key: string): BaseType;
+
+    delete(key: string): BaseType;
+
+    clear(): BaseType;
+
+    entries(): BaseType;
+
+    forEach(callback: ControlFlow.MapFunction, thisArg?: any): BaseType;
+
+    values(): BaseType;
+
+    keys(): BaseType;
+
+    get size(): NumberObject;
+  }
   export class SetObject<T>
     extends ObjectTarget<Set<T>>
-    implements Value.SetAble<T>, ControlFlow.CollectionSet {}
+    implements Value.SetAble<T>, ControlFlow.CollectionSet {
+    len(): number;
+    valueOf(): Set<T>;
+    _value: Set<T>;
+    json(): Value.StringAble;
+    merge(target: Value.ObjectAble<Set<T>>): Value.ObjectAble<Set<T>>;
+    collectionSet(key: ControlFlow.SetEnum, ...args: any[]): BaseType;
+
+    collectionSet(key: ControlFlow.SetEnum, ...args: any[]): BaseType;;
+
+    has(value: T): BaseType;
+
+    add(value: T): BaseType;
+
+    delete(value: T): BaseType;
+
+    clear(): BaseType;
+
+    forEach(callbackfn: (value: T, value2: T, set: Set<T>) => void, thisArg?: any): BaseType;;
+
+    entries(): ObjectTarget<IterableIterator<[T, T]>>;;
+
+    values(): ObjectTarget<IterableIterator<T>>;;
+
+    keys(): ObjectTarget<IterableIterator<T>>;;
+
+    get size(): NumberObject
+  }
 
   export class NumberObject
     extends ObjectTarget<number>
     implements
-      Value.NumberAble,
-      ControlFlow.Compare<Value.NumberAble>,
-      ControlFlow.Calc<Value.NumberAble> {}
+    Value.NumberAble,
+    ControlFlow.Compare<Value.NumberAble>,
+    ControlFlow.Calc<Value.NumberAble> {
+    valueOf(): number;
+    _value: number;
+    json(): Value.StringAble;
+    merge(target: Value.ObjectAble<number>): Value.ObjectAble<number>;
+
+    compare(type: ControlFlow.CompareEnum, target: NumberObject): Value.BooleanAble;
+    more(target: Value.ValueAble<any>): Value.BooleanAble;
+    equal(target: Value.ValueAble<any>): Value.BooleanAble;
+    less(target: Value.ValueAble<any>): Value.BooleanAble;
+    moreEqual(target: Value.ValueAble<any>): Value.BooleanAble;
+    lessEqual(target: Value.ValueAble<any>): Value.BooleanAble;
+
+
+    calc(type: ControlFlow.CalcEnum, target: Value.NumberAble): NumberObject;
+    plus(target: Value.NumberAble): NumberObject;
+    reduce(target: Value.NumberAble): NumberObject;
+    multi(target: Value.NumberAble): NumberObject;
+    divide(target: Value.NumberAble): NumberObject;
+  }
   export class StringObject
     extends ObjectTarget<string>
-    implements Value.StringAble {}
+    implements Value.StringAble {
+    valueOf(): string;
+    _value: string;
+    json(): Value.StringAble;
+    merge(target: Value.ObjectAble<string>): Value.ObjectAble<string>;
+  }
   export class BooleanObject
     extends ObjectTarget<Boolean>
-    implements Value.BooleanAble {}
+    implements Value.BooleanAble {
+    valueOf(): Boolean;
+    _value: Boolean;
+    json(): Value.StringAble;
+    merge(target: Value.ObjectAble<Boolean>): Value.ObjectAble<Boolean>;
+  }
 
   export class DateObject
     extends ObjectTarget<Date>
-    implements Value.DateAble {}
+    implements Value.DateAble {
+    timestamp(): number;
+    _value: Date;
+    valueOf(): Date;
+    json(): Value.StringAble;
+    merge(target: Value.ObjectAble<Date>): Value.ObjectAble<Date>;
+  }
 
   export class DataObject
     extends ObjectTarget<ArrayBuffer>
-    implements Value.DataAble {}
+    implements Value.DataAble {
+    data(): ArrayBuffer;
+    _value: ArrayBuffer;
+    valueOf(): ArrayBuffer;
+    json(): Value.StringAble;
+    merge(target: Value.ObjectAble<ArrayBuffer>): Value.ObjectAble<ArrayBuffer>;
+  }
 
   export function unpackValue(value: ChannelObject): string;
 

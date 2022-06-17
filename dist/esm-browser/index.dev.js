@@ -1304,6 +1304,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var NumberObject_1;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NumberObject = void 0;
+const Control_1 = __webpack_require__(/*! ../../Control */ "./src/Object/Control.ts");
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 const BooleanObject_1 = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Targets/BooleanObject.ts");
@@ -1317,6 +1318,9 @@ let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget_1.Ob
     }
     merge(target) {
         return new NumberObject_1(this._value + target._value);
+    }
+    compare(type, target) {
+        return new BooleanObject_1.BooleanObject(false);
     }
     // Compare
     // compare: ControlFlow.CompareExec;
@@ -1335,8 +1339,9 @@ let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget_1.Ob
     lessEqual(target) {
         return new BooleanObject_1.BooleanObject(this._value <= target._value);
     }
-    // Calc
-    // calc: ControlFlow.CalcFunction;
+    calc(type, target) {
+        return new NumberObject_1(0);
+    }
     plus(target) {
         return new NumberObject_1(this._value + target._value);
     }
@@ -1358,6 +1363,18 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Number)
 ], NumberObject.prototype, "valueOf", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, NumberObject]),
+    __metadata("design:returntype", Object)
+], NumberObject.prototype, "compare", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, NumberObject]),
+    __metadata("design:returntype", NumberObject)
+], NumberObject.prototype, "calc", null);
 __decorate([
     (0, util_1.DefaultValue)(Object.prototype.toString.call(new Number())),
     __metadata("design:type", String)
@@ -1408,7 +1425,7 @@ class ObjectTarget {
             return new ObjectTarget(result);
         }
         catch (error) {
-            return new ObjectTarget(null);
+            return new ObjectTarget({});
         }
     }
     json() {
@@ -2223,6 +2240,53 @@ exports.wrapperValue = wrapperValue;
 
 /***/ }),
 
+/***/ "./src/Util/tools.ts":
+/*!***************************!*\
+  !*** ./src/Util/tools.ts ***!
+  \***************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+/*
+ * @Author: zihao.zhu@united-imaging.com
+ * @Date: 2022-06-08 19:31:16
+ * @Last Modified by: zihao.zhu
+ * @Last Modified time: 2022-06-08 19:35:43
+ * @desc : undefined
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.noop = void 0;
+const isURL = (url) => {
+    var strRegex = '^((https|http|ftp)://)?' //(https或http或ftp):// 可有可无
+        + '(([\\w_!~*\'()\\.&=+$%-]+: )?[\\w_!~*\'()\\.&=+$%-]+@)?' //ftp的user@  可有可无
+        + '(([0-9]{1,3}\\.){3}[0-9]{1,3}' // IP形式的URL- 3位数字.3位数字.3位数字.3位数字
+        + '|' // 允许IP和DOMAIN（域名） 
+        + '(localhost)|' //匹配localhost
+        + '([\\w_!~*\'()-]+\\.)*' // 域名- 至少一个[英文或数字_!~*\'()-]加上.
+        + '\\w+\\.' // 一级域名 -英文或数字  加上.
+        + '[a-zA-Z]{1,6})' // 顶级域名- 1-6位英文 
+        + '(:[0-9]{1,5})?' // 端口- :80 ,1-5位数字
+        + '((/?)|' // url无参数结尾 - 斜杆或这没有
+        + '(/[\\w_!~*\'()\\.;?:@&=+$,%#-]+)+/?)$'; //请求参数结尾- 英文或数字和[]内的各种字符
+    var re = new RegExp(strRegex, 'i'); //i不区分大小写
+    //将url做uri转码后再匹配，解除请求参数中的中文和空字符影响
+    if (re.test(encodeURI(url))) {
+        return (true);
+    }
+    else {
+        return (false);
+    }
+};
+const isWindowFilePath = (url) => {
+    return url.startsWith("file://");
+};
+function noop() { }
+exports.noop = noop;
+
+
+/***/ }),
+
 /***/ "./src/Works/ExtendsWorks/Base64Work.ts":
 /*!**********************************************!*\
   !*** ./src/Works/ExtendsWorks/Base64Work.ts ***!
@@ -2811,6 +2875,7 @@ const uuid_1 = __webpack_require__(/*! uuid */ "uuid");
 const WorkUnit_1 = __webpack_require__(/*! ./WorkUnit */ "./src/Works/WorkUnit.ts");
 const ObjectAble_1 = __webpack_require__(/*! ../Object/Able/ObjectAble */ "./src/Object/Able/ObjectAble.ts");
 const channel_value_util_1 = __webpack_require__(/*! ../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
+const tools_1 = __webpack_require__(/*! ../Util/tools */ "./src/Util/tools.ts");
 /**
  * 一次输入--->一次输出 InstructionOTO
  * 一次输入--->多次输出 InstructionOTM
@@ -2831,7 +2896,7 @@ class Instruction extends rxjs_1.Subject {
     prepare(before, next) {
         this.beforeWork = before;
         this.nextWork = next;
-        this.config = this.context.runOptions;
+        this.config = this.context?.runOptions || {};
         this._connectChannel();
         return Promise.resolve();
     }
@@ -2871,18 +2936,17 @@ class Instruction extends rxjs_1.Subject {
         const that = this;
         const nextOption = (this.config?.workConfig || {})[this.name] || {};
         const execFunc = (0, Equipment_1.PlatformSelect)({
-            web: () => (that.web_run ?? that.run).bind(that)(value, nextOption),
-            node: () => (that.node_run ?? that.run).bind(that)(value, nextOption),
-            electron: () => (that.electron_run ?? that.run).bind(that)(value, nextOption),
-            other: () => (that.run).bind(that)(value, nextOption)
+            web: () => (that.web_run ?? (that.run || tools_1.noop)).bind(that)(value, nextOption),
+            node: () => (that.node_run ?? (that.run || tools_1.noop)).bind(that)(value, nextOption),
+            electron: () => (that.electron_run ?? (that.run || tools_1.noop)).bind(that)(value, nextOption),
+            other: () => ((that.run || tools_1.noop)).bind(that)(value, nextOption)
         });
         sendLog("[Work][Func:run]->入口", value);
-        if (!execFunc === true)
-            return sendLog("[Work][Func:run]->没有实现run", value);
-        ;
         const uuid = (0, uuid_1.v4)();
         const runSub = execFunc(value)
-            .pipe((0, operators_1.tap)((_value) => sendLog("[Work][Func:run]->结果", _value)), (0, operators_1.observeOn)(rxjs_1.asyncScheduler))
+            .pipe((0, operators_1.tap)(function (_value) {
+            sendLog("[Work][Func:run]->结果", _value);
+        }), (0, operators_1.observeOn)(rxjs_1.asyncScheduler))
             .subscribe({
             complete: () => {
                 const unit = that.runSubscriptions.get(uuid);

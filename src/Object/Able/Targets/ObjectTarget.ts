@@ -25,7 +25,7 @@ export class ObjectTarget<T>
       const result = Object.assign(this._value, target._value);
       return new ObjectTarget(result);
     } catch (error) {
-      return new ObjectTarget(null);
+      return new ObjectTarget({} as any);
     }
   }
   json(): Value.StringAble {

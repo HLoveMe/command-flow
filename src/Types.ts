@@ -37,15 +37,15 @@ export namespace Value {
   }
 
   export declare interface NumberAble
-    extends ValueAble<Number>,
-    ObjectAble<Number> {
-    valueOf(): Number;
+    extends ValueAble<number>,
+    ObjectAble<number> {
+    valueOf(): number;
   }
 
   export declare interface StringAble
-    extends ValueAble<String>,
-    ObjectAble<String> {
-    valueOf(): String;
+    extends ValueAble<string>,
+    ObjectAble<string> {
+    valueOf(): string;
   }
 
   export declare interface BooleanAble
@@ -90,7 +90,7 @@ export namespace WorkType {
 
   export type WorkConstant = Map<WorkConstantKey, BaseType>;
 
-  export type WorkFunction = (input: BaseType) => Observable<BaseType>;
+  export type WorkFunction = (input: ChannelObject) => Observable<ChannelObject>;
 
   export enum WorkRunStatus {
     INIT,//初始状态
@@ -147,10 +147,10 @@ export namespace WorkType {
     id: number;
     uuid: WorkUUID;
     // run: WorkFunction;
-    run?(input: BaseType, option?: any): Observable<BaseType>;
-    web_run?(input: BaseType, option?: any): Observable<BaseType>;
-    node_run?(input: BaseType, option?: any): Observable<BaseType>;
-    electron_run?(input: BaseType, option?: any): Observable<BaseType>;
+    run?(input: ChannelObject, option?: any): Observable<ChannelObject>;
+    web_run?(input: ChannelObject, option?: any): Observable<ChannelObject>;
+    node_run?(input: ChannelObject, option?: any): Observable<ChannelObject>;
+    electron_run?(input: ChannelObject, option?: any): Observable<ChannelObject>;
     prepare(before?: Work, next?: Work): Promise<void>;
     // 关闭Work
     stopWork(): Observable<Boolean>;

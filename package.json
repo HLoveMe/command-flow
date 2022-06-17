@@ -10,7 +10,7 @@
     "build_prod_web": "npm run pre_web &&  webpack --config webpack.config.prod.js",
     "build_web": "npm run build_dev_web && npm run build_prod_web",
     "build_node": "npm run pre_node &&  webpack --config webpack.config.node.js",
-    "build":"npm run build_prod_web && npm run build_node",
+    "build":"npm run build_prod_web && npm run build_dev_web && npm run build_node",
     "web_serve": "vite"
   },
   "repository": {

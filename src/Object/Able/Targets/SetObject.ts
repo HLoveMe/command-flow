@@ -52,11 +52,11 @@ export class SetObject<T>
   forEach(callbackfn: (value: T, value2: T, set: Set<T>) => void, thisArg?: any): BaseType { return null };
 
   @onlyDeclaration
-  entries(): ObjectTarget<IterableIterator<[T, T]>> { return null };
+  entries(): ObjectTarget<IterableIterator<[T, T]>> { return null as any };
   @onlyDeclaration
-  values(): ObjectTarget<IterableIterator<T>> { return null };
+  values(): ObjectTarget<IterableIterator<T>> { return null as any };
   @onlyDeclaration
-  keys(): ObjectTarget<IterableIterator<T>> { return null };
+  keys(): ObjectTarget<IterableIterator<T>> { return null as any };
 
   get size(): NumberObject {
     return decide(this._value.size) as NumberObject;

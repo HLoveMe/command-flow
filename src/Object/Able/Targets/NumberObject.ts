@@ -1,5 +1,5 @@
 import { ControlFlow } from "../../Control";
-import { attribute, CalcUnit, CompareUnit, DefaultValue } from "../../util";
+import { attribute, CalcUnit, CompareUnit, DefaultValue ,onlyDeclaration} from "../../util";
 import { Value } from "../../../Types";
 import { ObjectTarget } from "./ObjectTarget";
 import { BooleanObject } from "./BooleanObject";
@@ -15,8 +15,6 @@ export class NumberObject
 {
   static attributes: Set<string> = new Set();
   static empty: NumberObject = new NumberObject(0);
-  compare: ControlFlow.CompareExec;
-  calc: ControlFlow.CalcFunction;
   @DefaultValue(Object.prototype.toString.call(new Number()))
   static type: string;
   _value: number;
@@ -33,6 +31,10 @@ export class NumberObject
     return new NumberObject(this._value + target._value);
   }
 
+  @onlyDeclaration
+  compare(type: ControlFlow.CompareEnum, target: NumberObject): Value.BooleanAble{
+    return new BooleanObject(false)
+  }
   // Compare
   // compare: ControlFlow.CompareExec;
   more(target: Value.ValueAble<any>): Value.BooleanAble {
@@ -50,18 +52,22 @@ export class NumberObject
   lessEqual(target: Value.ValueAble<any>): Value.BooleanAble {
     return new BooleanObject(this._value <= target._value);
   }
-  // Calc
-  // calc: ControlFlow.CalcFunction;
-  plus(target: NumberObject): NumberObject {
+
+  @onlyDeclaration
+  calc(type:ControlFlow.CalcEnum,target: NumberObject): NumberObject {
+    return new NumberObject(0);
+  }
+
+  plus(target: Value.NumberAble): NumberObject {
     return new NumberObject(this._value + target._value);
   }
-  reduce(target: NumberObject): NumberObject {
+  reduce(target: Value.NumberAble): NumberObject {
     return new NumberObject(this._value - target._value);
   }
-  multi(target: NumberObject): NumberObject {
+  multi(target: Value.NumberAble): NumberObject {
     return new NumberObject(this._value * target._value);
   }
-  divide(target: NumberObject): NumberObject {
+  divide(target: Value.NumberAble): NumberObject {
     return new NumberObject(
       target._value === 0 ? Infinity : this._value / target._value
     );

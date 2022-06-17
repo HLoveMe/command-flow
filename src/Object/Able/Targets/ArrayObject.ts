@@ -86,11 +86,11 @@ export class ArrayObject<T>
   join(separator?: string): BaseType { return null }
 
   @onlyDeclaration
-  entries(): ObjectTarget<IterableIterator<[T, T]>> { return null };
+  entries(): ObjectTarget<IterableIterator<[T, T]>> { return null as any };
   @onlyDeclaration
-  values(): ObjectTarget<IterableIterator<T>> { return null };
+  values(): ObjectTarget<IterableIterator<T>> { return null as any };
   @onlyDeclaration
-  keys(): ObjectTarget<IterableIterator<T>> { return null };
+  keys(): ObjectTarget<IterableIterator<T>> { return null as any };
 
   @onlyDeclaration
   forEach(callbackfn: (value: T, index: number, array: readonly T[]) => void, thisArg?: any): BaseType { return null }

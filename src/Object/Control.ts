@@ -106,7 +106,7 @@ export namespace ControlFlow {
     [T in CalcEnum]: CalcFunction;
   };
   export interface Calc<U extends Value.NumberAble> extends CalcAble {
-    calc(target: U): U;
+    calc(type: ControlFlow.CalcEnum, target: U): U;
   }
 
   // Array

@@ -18,6 +18,7 @@ import { WorkUnit } from "./WorkUnit";
 import { EnvironmentAble } from "../Util/EvalEquipment";
 import { StringObject } from "../Object/Able/ObjectAble";
 import { wrapperValue } from "../Util/channel-value-util";
+import { noop } from "../Util/tools";
 
 /**
  * 一次输入--->一次输出 InstructionOTO
@@ -34,7 +35,7 @@ export class Instruction
   uuid: WorkType.WorkUUID;
   beforeWork?: WorkType.Work;
   nextWork?: WorkType.Work;
-  context?: ContextImpl;
+  context: ContextImpl;
   runSubscriptions: Map<string, WorkUnit> = new Map();
   pools: Subscription[] = [];// 订阅自己的
   // 运行配置 config:OPTION todo
@@ -47,7 +48,7 @@ export class Instruction
   prepare(before?: WorkType.Work, next?: WorkType.Work): Promise<void> {
     this.beforeWork = before;
     this.nextWork = next;
-    this.config = this.context.runOptions;
+    this.config = this.context?.runOptions || {} as ContextRunOption;
     this._connectChannel();
     return Promise.resolve();
   }
@@ -92,28 +93,29 @@ export class Instruction
     const nextOption = (this.config?.workConfig || {})[this.name] || {};
     const execFunc: WorkType.WorkFunction = PlatformSelect({
       web: () =>
-        ((that as WorkType.Work).web_run ?? (that as WorkType.Work).run).bind(
+        ((that as WorkType.Work).web_run ?? ((that as WorkType.Work).run || noop)).bind(
           that
         )(value, nextOption),
       node: () =>
-        ((that as WorkType.Work).node_run ?? (that as WorkType.Work).run).bind(
+        ((that as WorkType.Work).node_run ?? ((that as WorkType.Work).run || noop)).bind(
           that
         )(value, nextOption),
       electron: () =>
-        ((that as WorkType.Work).electron_run ?? (that as WorkType.Work).run).bind(
+        ((that as WorkType.Work).electron_run ?? ((that as WorkType.Work).run || noop)).bind(
           that
         )(value, nextOption),
       other: () =>
-        ((that as WorkType.Work).run).bind(
+        (((that as WorkType.Work).run || noop)).bind(
           that
         )(value, nextOption)
     });
     sendLog("[Work][Func:run]->入口", value);
-    if (!execFunc === true) return sendLog("[Work][Func:run]->没有实现run", value);;
     const uuid = UUID();
     const runSub: Subscription = execFunc(value)
       .pipe(
-        tap((_value: ChannelObject) => sendLog("[Work][Func:run]->结果", _value)),
+        tap(function(_value:ChannelObject){
+          sendLog("[Work][Func:run]->结果", _value)
+        }),
         observeOn(asyncScheduler)
       )
       .subscribe({
