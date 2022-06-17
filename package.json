@@ -38,7 +38,7 @@
       "node": {
         "module": "./dist/cjs/index.js"
       },
-      "default": "./dist/esm-browser/index.js",
+      "default": "./index.js",
       "types": "index.d.ts"
     }
   },
