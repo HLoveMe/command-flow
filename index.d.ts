@@ -676,9 +676,9 @@ declare module 'command-flow' {
     collectionArray(key: ControlFlow.ArrayEnum, ...args: any[]): BaseType | void;
     // array function
 
-    concat(...items: (T | ArrayObject<T>)[]): Value.ArrayAble<T>;
+    concat(...items: (T | ArrayObject<T>)[]): ArrayObject<T>;
 
-    copyWithin(target: number, start: number, end?: number): Value.ArrayAble<T>;
+    copyWithin(target: number, start: number, end?: number): ArrayObject<T>;
 
     fill<U extends T>(value: U, start?: number, end?: number): this;
 
@@ -690,31 +690,31 @@ declare module 'command-flow' {
     findIndex(
       predicate: (value: T, index: number, obj: Uint8Array) => boolean,
       thisArg?: any
-    ): Value.NumberAble;
+    ): NumberObject;
 
-    lastIndexOf(searchElement: T, fromIndex?: number): Value.NumberAble;
+    lastIndexOf(searchElement: T, fromIndex?: number):NumberObject;
 
-    pop(): Value.ObjectAble<T>;
+    pop():ObjectTarget<T>;
 
-    push(...items: T[]): Value.NumberAble;
+    push(...items: T[]): NumberObject;
 
-    reverse(): Value.ArrayAble<T>;
+    reverse(): ArrayObject<T>;
 
     shift(): Value.Mixins;
 
-    unshift(...items: T[]): Value.NumberAble;
+    unshift(...items: T[]): NumberObject;
 
-    slice(start?: number, end?: number): Value.ArrayAble<T>;
+    slice(start?: number, end?: number): ArrayObject<T>;
 
     sort(compareFn?: (a: T, b: T) => number): this;
-    sort(start?: number, end?: number): Value.ArrayAble<T>;
+    sort(start?: number, end?: number): ArrayObject<T>;
 
-    splice(start: number, deleteCount: number, ...items: any[]): Value.ArrayAble<T>;
+    splice(start: number, deleteCount: number, ...items: any[]): ArrayObject<T>;
     splice(start: number, deleteCount?: number): ArrayObject<T>;
 
     includes(searchElement: T, fromIndex?: number): BooleanObject;
 
-    indexOf(searchElement: T, fromIndex?: number): Value.NumberAble;
+    indexOf(searchElement: T, fromIndex?: number): NumberObject;
 
     join(separator?: string): StringObject;
 
@@ -732,24 +732,24 @@ declare module 'command-flow' {
     filter<S extends T>(
       predicate: (value: T, index: number, array:  T[]) => value is S,
       thisArg?: any
-    ): Value.ArrayAble<S>;
+    ): ArrayObject<S>;
 
-    filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): Value.ArrayAble<T>;
+    filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): ArrayObject<T>;
 
     map<U>(
       callbackfn: (value: T, index: number, array: T[]) => U,
       thisArg?: any
-    ): Value.ArrayAble<U>;
+    ): ArrayObject<U>;
 
     every(
       predicate: (value: T, index: number, array: T[]) => unknown,
       thisArg?: any
-    ): Value.BooleanAble;
+    ): BooleanObject;
 
     some(
       predicate: (value: T, index: number, array: T[]) => unknown,
       thisArg?: any
-    ): Value.BooleanAble;
+    ): BooleanObject;
 
     reduce(
       callbackfn: (
@@ -759,7 +759,7 @@ declare module 'command-flow' {
         array: T[]
       ) => T,
       initialValue?: T
-    ): Value.ObjectAble<T>;
+    ): ArrayObject<T>;
 
     reduceRight(
       callbackfn: (
@@ -769,12 +769,12 @@ declare module 'command-flow' {
         array: T[]
       ) => T,
       initialValue?: T
-    ): Value.ObjectAble<T>;
+    ): ArrayObject<T>;
 
-    reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): Value.ObjectAble<U>;
+    reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): ArrayObject<U>;
 
 
-    toLocaleString(): BaseType;
+    toLocaleString(): StringObject;
 
     get length(): NumberObject;
   }
