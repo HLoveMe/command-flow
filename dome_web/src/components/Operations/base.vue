@@ -29,7 +29,7 @@ import {
   BooleanObject,
   DateObject,
   DataObject,
-} from "../../../dist/web/index";
+} from "command-flow";
 import { ref } from "vue";
 const logInfo = ref<Array<{ desc: string; success: boolean }>>([]);
 const disabled = ref<boolean>(false);
@@ -42,7 +42,7 @@ const utils = {
 };
 const startBegin = async () => {
   Object.keys(utils).forEach((key) => {
-    const item = utils[key];
+    const item = (utils as any)[key];
     const result = item.run();
     logInfo.value.push({
       desc: `[ ${item.desc} ]: 结果：${result}，期待：${item.expect} `,

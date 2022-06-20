@@ -1,13 +1,14 @@
-import { ControlFlow } from "../../Control";
-import { attribute, DefaultValue, MapUint, onlyDeclaration } from "../../util";
-import { BaseType, Value } from "../../../Types";
-import { ObjectTarget } from "./ObjectTarget";
-import { decide } from "../../valueUtil";
-import { NumberObject } from "./NumberObject";
+import { ControlFlow } from '../../Control';
+import { attribute, DefaultValue, MapUint, onlyDeclaration } from '../../util';
+import { BaseType, Value } from '../../../Types';
+import { ObjectTarget } from './ObjectTarget';
+import { decide } from '../../valueUtil';
+import { NumberObject } from './NumberObject';
 @MapUint
 export class MapObject<T, U>
   extends ObjectTarget<Map<T, U>>
-  implements Value.MapAble<T, U>, ControlFlow.CollectionMap, ControlFlow.MapAbsoluteAble {
+  implements Value.MapAble<T, U>, ControlFlow.CollectionMap<T, U>
+{
   static attributes: Set<string> = new Set();
   static empty: MapObject<any, any> = new MapObject(new Map());
 
@@ -32,27 +33,50 @@ export class MapObject<T, U>
     return new MapObject(newMap);
   }
   @onlyDeclaration
-  collectionMap(key: ControlFlow.MapEnum, ...args: any[]): BaseType { return null }
+  collectionMap(key: ControlFlow.MapEnum, ...args: any[]): U | void {
+    return null as any;
+  }
   @onlyDeclaration
-  get(key: string): BaseType { return null }
+  get(key: string): U | void {
+    return null;
+  }
   @onlyDeclaration
-  set(key: string, value: BaseType): BaseType { return null }
+  set(key: string, value: BaseType): void {
+    return null;
+  }
   @onlyDeclaration
-  has(key: string): BaseType { return null }
+  has(key: string): Value.BooleanAble {
+    return null;
+  }
   @onlyDeclaration
-  delete(key: string): BaseType { return null }
+  delete(key: string): Value.BooleanAble {
+    return null;
+  }
   @onlyDeclaration
-  clear(): BaseType { return null }
+  clear(): void {
+    return null;
+  }
   @onlyDeclaration
-  entries(): BaseType { return null }
+  entries(): Value.ObjectAble<IterableIterator<[T, U]>> {
+    return null;
+  }
   @onlyDeclaration
-  forEach(callback: ControlFlow.MapFunction, thisArg?: any): BaseType { return null }
+  forEach(
+    callback: (value: U, key: T, map: Map<T, U>) => void,
+    thisArg?: any
+  ): void {
+    return null;
+  }
   @onlyDeclaration
-  values(): BaseType { return null }
+  values(): Value.ObjectAble<IterableIterator<U>> {
+    return null;
+  }
   @onlyDeclaration
-  keys(): BaseType { return null }
+  keys(): Value.ObjectAble<IterableIterator<T>> {
+    return null;
+  }
 
-  get size(): NumberObject {
+  get size(): Value.NumberAble {
     return decide(this._value.size) as NumberObject;
   }
 }

@@ -172,7 +172,7 @@ const utils = {
     concat: 'array slice',
     expect: '4444-2222',
     run: () => {
-      const array = new ArrayObject();
+      const array = new ArrayObject<string>();
       array.push('2222');
       array.unshift('3333', '4444');
       array.push('5555');
@@ -183,7 +183,7 @@ const utils = {
     concat: 'array sort',
     expect: '1-2-3-7',
     run: () => {
-      const array = new ArrayObject([3, 1, 7, 2]);
+      const array = new ArrayObject<number>(...[3, 1, 7, 2]);
       const result = array.sort(($1, $2) => $1 - $2);
       return [...result.valueOf()].join('-');
     },
@@ -209,10 +209,6 @@ const utils = {
     concat: 'array indexOf',
     expect: 3,
     run: () => {
-      // 验证
-const b =new AarrayObject(...[1, 0, 3, 0, 7]);
-const a =new ArarayObject([1, 0, 3, 0, 7]);
-
       const array = new ArrayObject(...[1, 0, 3, 0, 7]);
       return array.indexOf(0, 2).valueOf();
     },
@@ -253,8 +249,8 @@ const a =new ArarayObject([1, 0, 3, 0, 7]);
     concat: 'array forEach',
     expect: '0-0-0-0',
     run: () => {
-      const array = new ArrayObject(4);
-      const result = new ArrayObject([]);
+      const array = new ArrayObject<number>(4);
+      const result = new ArrayObject<number>(...[]);
       array.fill(0);
       array.forEach(($1) => {
         result.push($1);
@@ -266,7 +262,7 @@ const a =new ArarayObject([1, 0, 3, 0, 7]);
     concat: 'array filter',
     expect: '1',
     run: () => {
-      const array = new ArrayObject([1, 2, 3, 4]);
+      const array = new ArrayObject(...[1, 2, 3, 4]);
       return array
         .filter(($1) => $1 === 1)
         .join('-')
@@ -289,7 +285,7 @@ const a =new ArarayObject([1, 0, 3, 0, 7]);
     concat: 'array every',
     expect: true,
     run: () => {
-      const array = new ArrayObject([4, 7, 9, 11]);
+      const array = new ArrayObject<number>(...[4, 7, 9, 11]);
       const result = array.every(($1) => {
         return $1 >= 4;
       });
@@ -300,7 +296,7 @@ const a =new ArarayObject([1, 0, 3, 0, 7]);
     concat: 'array some',
     expect: false,
     run: () => {
-      const array = new ArrayObject([4, 7, 9, 11]);
+      const array = new ArrayObject<number>(...[4, 7, 9, 11]);
       const result = array.some(($1) => {
         return $1 > 12;
       });
@@ -311,7 +307,7 @@ const a =new ArarayObject([1, 0, 3, 0, 7]);
     concat: 'array reduce',
     expect: 15,
     run: () => {
-      const array = new ArrayObject([1, 2, 3, 4]);
+      const array = new ArrayObject<number>(...[1, 2, 3, 4]);
       const result = array.reduce(($1, $2) => {
         return $1 + $2;
       }, 5);
@@ -322,7 +318,7 @@ const a =new ArarayObject([1, 0, 3, 0, 7]);
     concat: 'array reduceRight',
     expect: 15,
     run: () => {
-      const array = new ArrayObject([1, 2, 3, 4]);
+      const array = new ArrayObject<number>(...[1, 2, 3, 4]);
       const result = array.reduceRight(($1, $2) => {
         return $1 + $2;
       }, 5);
@@ -332,7 +328,7 @@ const a =new ArarayObject([1, 0, 3, 0, 7]);
 };
 const startBegin = async () => {
   Object.keys(utils).forEach((key) => {
-    const item = utils[key];
+    const item = (utils as any)[key];
     const result = item.run();
     logInfo.value.push({
       desc: `[ ${item.concat} ]: 结果：${result}，期待：${item.expect} `,

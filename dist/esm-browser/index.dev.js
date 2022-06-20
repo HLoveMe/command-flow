@@ -1251,16 +1251,36 @@ let MapObject = MapObject_1 = class MapObject extends ObjectTarget_1.ObjectTarge
         target._value.forEach(($1, key) => newMap.set(key, $1));
         return new MapObject_1(newMap);
     }
-    collectionMap(key, ...args) { return null; }
-    get(key) { return null; }
-    set(key, value) { return null; }
-    has(key) { return null; }
-    delete(key) { return null; }
-    clear() { return null; }
-    entries() { return null; }
-    forEach(callback, thisArg) { return null; }
-    values() { return null; }
-    keys() { return null; }
+    collectionMap(key, ...args) {
+        return null;
+    }
+    get(key) {
+        return null;
+    }
+    set(key, value) {
+        return null;
+    }
+    has(key) {
+        return null;
+    }
+    delete(key) {
+        return null;
+    }
+    clear() {
+        return null;
+    }
+    entries() {
+        return null;
+    }
+    forEach(callback, thisArg) {
+        return null;
+    }
+    values() {
+        return null;
+    }
+    keys() {
+        return null;
+    }
     get size() {
         return (0, valueUtil_1.decide)(this._value.size);
     }
@@ -1289,7 +1309,7 @@ __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", void 0)
 ], MapObject.prototype, "set", null);
 __decorate([
     util_1.onlyDeclaration,
@@ -1307,7 +1327,7 @@ __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", void 0)
 ], MapObject.prototype, "clear", null);
 __decorate([
     util_1.onlyDeclaration,
@@ -1319,7 +1339,7 @@ __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Function, Object]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", void 0)
 ], MapObject.prototype, "forEach", null);
 __decorate([
     util_1.onlyDeclaration,
@@ -1904,13 +1924,14 @@ function CompareUnit(host) {
             host.prototype[key] = () => new ObjectAble_1.BooleanObject(false);
         }
     });
-    if (host.prototype.compare?.declaration === exports.onlyDeclarationTag || !!host.prototype.compare === false)
-        (host.prototype.compare = function (type, target) {
+    if (host.prototype.compare?.declaration === exports.onlyDeclarationTag ||
+        !!host.prototype.compare === false)
+        host.prototype.compare = function (type, target) {
             const execFunc = host.prototype[type]?.bind(this);
-            if (execFunc && typeof execFunc === "function")
+            if (execFunc && typeof execFunc === 'function')
                 return execFunc.call(this, target);
             return false;
-        });
+        };
 }
 exports.CompareUnit = CompareUnit;
 function CalcUnit(host) {
@@ -1921,13 +1942,14 @@ function CalcUnit(host) {
             host.prototype[key] = () => new ObjectAble_1.NumberObject(0);
         }
     });
-    if (host.prototype.calc?.declaration === exports.onlyDeclarationTag || !!host.prototype.calc === false)
-        (host.prototype.calc = function (type, target) {
+    if (host.prototype.calc?.declaration === exports.onlyDeclarationTag ||
+        !!host.prototype.calc === false)
+        host.prototype.calc = function (type, target) {
             const execFunc = host.prototype[type]?.bind(this);
-            if (execFunc && typeof execFunc === "function")
+            if (execFunc && typeof execFunc === 'function')
                 return execFunc.call(this, target);
             return false;
-        });
+        };
 }
 exports.CalcUnit = CalcUnit;
 function ArrayUint(host) {
@@ -1939,7 +1961,7 @@ function ArrayUint(host) {
                 const value = this.valueOf();
                 const execFunc = value[key];
                 let result;
-                if (typeof execFunc === "function") {
+                if (typeof execFunc === 'function') {
                     result = execFunc.bind(value)(...args);
                 }
                 else
@@ -1948,13 +1970,14 @@ function ArrayUint(host) {
             };
         }
     });
-    if (host.prototype.collectionArray?.declaration === exports.onlyDeclarationTag || !!host.prototype.collectionArray === false)
-        (host.prototype.collectionArray = function (type, ...args) {
+    if (host.prototype.collectionArray?.declaration === exports.onlyDeclarationTag ||
+        !!host.prototype.collectionArray === false)
+        host.prototype.collectionArray = function (type, ...args) {
             const execFunc = host.prototype[type]?.bind(this);
-            if (execFunc && typeof execFunc === "function")
+            if (execFunc && typeof execFunc === 'function')
                 return execFunc(...args);
             return false;
-        });
+        };
 }
 exports.ArrayUint = ArrayUint;
 function SetUint(host) {
@@ -1966,7 +1989,7 @@ function SetUint(host) {
                 const value = this.valueOf();
                 const execFunc = value[key];
                 let result;
-                if (typeof execFunc === "function") {
+                if (typeof execFunc === 'function') {
                     result = execFunc.bind(value)(...args);
                 }
                 else
@@ -1975,13 +1998,14 @@ function SetUint(host) {
             };
         }
     });
-    if (host.prototype.collectionSet?.declaration === exports.onlyDeclarationTag || !!host.prototype.collectionSet === false)
-        (host.prototype.collectionSet = function (type, ...args) {
+    if (host.prototype.collectionSet?.declaration === exports.onlyDeclarationTag ||
+        !!host.prototype.collectionSet === false)
+        host.prototype.collectionSet = function (type, ...args) {
             const execFunc = host.prototype[type]?.bind(this);
-            if (execFunc && typeof execFunc === "function")
+            if (execFunc && typeof execFunc === 'function')
                 return execFunc(...args);
             return false;
-        });
+        };
 }
 exports.SetUint = SetUint;
 function MapUint(host) {
@@ -1993,7 +2017,7 @@ function MapUint(host) {
                 const value = this.valueOf();
                 const execFunc = value[key];
                 let result;
-                if (typeof execFunc === "function") {
+                if (typeof execFunc === 'function') {
                     result = execFunc.bind(value)(...args);
                 }
                 else
@@ -2002,13 +2026,14 @@ function MapUint(host) {
             };
         }
     });
-    if (host.prototype.collectionMap?.declaration === exports.onlyDeclarationTag || !!host.prototype.collectionMap === false)
-        (host.prototype.collectionMap = function (type, ...args) {
+    if (host.prototype.collectionMap?.declaration === exports.onlyDeclarationTag ||
+        !!host.prototype.collectionMap === false)
+        host.prototype.collectionMap = function (type, ...args) {
             const execFunc = host.prototype[type]?.bind(this);
-            if (execFunc && typeof execFunc === "function")
+            if (execFunc && typeof execFunc === 'function')
                 return execFunc(...args);
             return false;
-        });
+        };
 }
 exports.MapUint = MapUint;
 

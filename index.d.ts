@@ -662,7 +662,8 @@ declare module 'command-flow' {
   export class ArrayObject<T>
     extends ObjectTarget<Array<T>>
     implements Value.ArrayAble<T>, ControlFlow.CollectionArray {
-    constructor(...args: T[]);
+    
+    constructor(...args: any[]);
     constructor(count: number);
     constructor(value: T);
     len(): number;
@@ -785,6 +786,7 @@ declare module 'command-flow' {
     Value.MapAble<T, U>,
     ControlFlow.CollectionMap,
     ControlFlow.MapAbsoluteAble {
+    constructor(arg?: Map<T,U>);
     len(): number;
     valueOf(): Map<T, U>;
     _value: Map<T, U>;
@@ -855,6 +857,7 @@ declare module 'command-flow' {
     ControlFlow.Compare<Value.NumberAble>,
     ControlFlow.Calc<Value.NumberAble>
   {
+    constructor(value: number);
     valueOf(): number;
     _value: number;
     json(): Value.StringAble;

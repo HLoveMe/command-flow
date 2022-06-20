@@ -1,83 +1,83 @@
 // import { BooleanAble, NumberAble, ValueAble } from "./Able/Ables";
 
-import { BaseType } from "..";
-import { Value } from "../Types";
+import { BaseType } from '..';
+import { Value } from '../Types';
 export namespace ControlFlow {
   // 比较属性 compare
   export enum CompareEnum {
-    More = "more", //>
-    Equal = "equal", //==
-    Less = "less", //<
-    MoreEqual = "moreEqual", //>=
-    LessEqual = "lessEqual", //<=
+    More = 'more', //>
+    Equal = 'equal', //==
+    Less = 'less', //<
+    MoreEqual = 'moreEqual', //>=
+    LessEqual = 'lessEqual', //<=
   }
   // 计算属性
   export enum CalcEnum {
-    Plus = "plus", //+
-    Reduce = "reduce", // -
-    Multi = "multi", // *
-    Divide = "divide", // /
+    Plus = 'plus', //+
+    Reduce = 'reduce', // -
+    Multi = 'multi', // *
+    Divide = 'divide', // /
   }
   //集合属性
   export enum CollectionEnum {
-    Contain = "contain", //是否包含
-    Add = "add", //增加
-    ValueFor = "valueFor", // 取值
-    Keys = "keys", // 所有keys
-    Values = "values", // 所有values
+    Contain = 'contain', //是否包含
+    Add = 'add', //增加
+    ValueFor = 'valueFor', // 取值
+    Keys = 'keys', // 所有keys
+    Values = 'values', // 所有values
   }
   //Object.keys(Object.getOwnPropertyDescriptors(Array.prototype)).map($1=>`${$1}: ControlFlow.ArrayFunction`).join('\n')
   export enum ArrayEnum {
-    Concat = "concat",
-    CopyWithin = "copyWithin",
-    Fill = "fill",
-    Find = "find",
-    FindIndex = "findIndex",
-    LastIndexOf = "lastIndexOf",
-    Pop = "pop",
-    Push = "push",
-    Reverse = "reverse",
-    Shift = "shift",
-    Unshift = "unshift",
-    Slice = "slice",
-    Sort = "sort",
-    Splice = "splice",
-    Includes = "includes",
-    IndexOf = "indexOf",
-    Join = "join",
-    Keys = "keys",
-    Entries = "entries",
-    Values = "values",
-    ForEach = "forEach",
-    Filter = "filter",
-    Map = "map",
-    Every = "every",
-    Some = "some",
-    Reduce = "reduce",
-    ReduceRight = "reduceRight",
+    Concat = 'concat',
+    CopyWithin = 'copyWithin',
+    Fill = 'fill',
+    Find = 'find',
+    FindIndex = 'findIndex',
+    LastIndexOf = 'lastIndexOf',
+    Pop = 'pop',
+    Push = 'push',
+    Reverse = 'reverse',
+    Shift = 'shift',
+    Unshift = 'unshift',
+    Slice = 'slice',
+    Sort = 'sort',
+    Splice = 'splice',
+    Includes = 'includes',
+    IndexOf = 'indexOf',
+    Join = 'join',
+    Keys = 'keys',
+    Entries = 'entries',
+    Values = 'values',
+    ForEach = 'forEach',
+    Filter = 'filter',
+    Map = 'map',
+    Every = 'every',
+    Some = 'some',
+    Reduce = 'reduce',
+    ReduceRight = 'reduceRight',
   }
 
   export enum SetEnum {
-    Has = "has",
-    Add = "add",
-    Delete = "delete",
-    Clear = "clear",
-    Entries = "entries",
-    ForEach = "forEach",
-    Values = "values",
-    Keys = "keys",
+    Has = 'has',
+    Add = 'add',
+    Delete = 'delete',
+    Clear = 'clear',
+    Entries = 'entries',
+    ForEach = 'forEach',
+    Values = 'values',
+    Keys = 'keys',
   }
 
   export enum MapEnum {
-    Get = "get",
-    Set = "set",
-    Has = "has",
-    Delete = "delete",
-    Clear = "clear",
-    Entries = "entries",
-    ForEach = "forEach",
-    Keys = "keys",
-    Values = "values",
+    Get = 'get',
+    Set = 'set',
+    Has = 'has',
+    Delete = 'delete',
+    Clear = 'clear',
+    Entries = 'entries',
+    ForEach = 'forEach',
+    Keys = 'keys',
+    Values = 'values',
   }
 
   // 比较 接口
@@ -114,7 +114,7 @@ export namespace ControlFlow {
     key: ArrayEnum,
     ...args: any[]
   ) => BaseType;
-  export declare type ArrayFunction = (...args) => BaseType;
+  export declare type ArrayFunction = (...args) => BaseType | void;
   declare type ArrayAbsoluteAble = {
     [T in ArrayEnum]: ArrayFunction;
   };
@@ -126,7 +126,7 @@ export namespace ControlFlow {
   export declare type CollectionSetExec = (
     key: SetEnum,
     ...args: any[]
-  ) => BaseType;
+  ) => BaseType | void;
   export declare type SetFunction = ArrayFunction;
   declare type SetAbsoluteAble = {
     [T in SetEnum]: SetFunction;
@@ -139,12 +139,14 @@ export namespace ControlFlow {
   export declare type CollectionMapExec = (
     key: MapEnum,
     ...args: any[]
-  ) => BaseType;
-  export declare type MapFunction = ArrayFunction;
-  export declare type MapAbsoluteAble = {
-    [T in MapEnum]: MapFunction;
+  ) => BaseType | void;
+  export declare type MapFunction<U> = (
+    ...args: any[]
+  ) => CollectionMap<any, U> | U | any;
+  export declare type MapAbsoluteAble<U> = {
+    [T in MapEnum]: MapFunction<U>;
   };
-  export interface CollectionMap extends MapAbsoluteAble {
-    collectionMap(key: MapEnum, ...args: any[]): BaseType;
+  export interface CollectionMap<T, U> extends MapAbsoluteAble<U> {
+    collectionMap(key: MapEnum, ...args: any[]): U | void;
   }
 }

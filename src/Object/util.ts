@@ -1,7 +1,7 @@
-import { BooleanObject, NumberObject } from "./Able/ObjectAble";
-import { Value } from "../Types";
-import { ControlFlow } from "./Control";
-import { decide } from "./valueUtil";
+import { BooleanObject, NumberObject } from './Able/ObjectAble';
+import { Value } from '../Types';
+import { ControlFlow } from './Control';
+import { decide } from './valueUtil';
 
 export const onlyDeclarationTag: string = 'onlyDeclaration';
 
@@ -31,7 +31,11 @@ export function DefaultValue(value: string) {
 /**
  * 声明 方式无效 仅仅作为标记
  */
-export function onlyDeclaration(target: any, name: string, dec: PropertyDescriptor) {
+export function onlyDeclaration(
+  target: any,
+  name: string,
+  dec: PropertyDescriptor
+) {
   dec.value.declaration = onlyDeclarationTag;
 }
 
@@ -43,18 +47,21 @@ export function CompareUnit(host: any) {
       host.prototype[key] = () => new BooleanObject(false);
     }
   });
-  if (host.prototype.compare?.declaration === onlyDeclarationTag || !!host.prototype.compare === false)
-    (host.prototype.compare = function (
+  if (
+    host.prototype.compare?.declaration === onlyDeclarationTag ||
+    !!host.prototype.compare === false
+  )
+    host.prototype.compare = function (
       type: ControlFlow.CompareEnum,
       target: Value.ValueAble<any>
     ) {
       const execFunc = host.prototype[type]?.bind(
         this
       ) as ControlFlow.CompareFunction;
-      if (execFunc && typeof execFunc === "function")
+      if (execFunc && typeof execFunc === 'function')
         return execFunc.call(this, target);
       return false;
-    });
+    };
 }
 
 export function CalcUnit(host: any) {
@@ -65,18 +72,21 @@ export function CalcUnit(host: any) {
       host.prototype[key] = () => new NumberObject(0);
     }
   });
-  if (host.prototype.calc?.declaration === onlyDeclarationTag || !!host.prototype.calc === false)
-    (host.prototype.calc = function (
+  if (
+    host.prototype.calc?.declaration === onlyDeclarationTag ||
+    !!host.prototype.calc === false
+  )
+    host.prototype.calc = function (
       type: ControlFlow.CalcEnum,
       target: Value.ValueAble<any>
     ) {
       const execFunc = host.prototype[type]?.bind(
         this
       ) as ControlFlow.CalcFunction;
-      if (execFunc && typeof execFunc === "function")
+      if (execFunc && typeof execFunc === 'function')
         return execFunc.call(this, target);
       return false;
-    });
+    };
 }
 
 export function ArrayUint(host: any) {
@@ -88,24 +98,27 @@ export function ArrayUint(host: any) {
         const value = (this as Value.ArrayAble<any>).valueOf();
         const execFunc = value[key];
         let result;
-        if (typeof execFunc === "function") {
+        if (typeof execFunc === 'function') {
           result = execFunc.bind(value)(...args);
         } else result = value;
         return decide(result);
       };
     }
   });
-  if (host.prototype.collectionArray?.declaration === onlyDeclarationTag || !!host.prototype.collectionArray === false)
-    (host.prototype.collectionArray = function (
+  if (
+    host.prototype.collectionArray?.declaration === onlyDeclarationTag ||
+    !!host.prototype.collectionArray === false
+  )
+    host.prototype.collectionArray = function (
       type: ControlFlow.ArrayEnum,
       ...args: any[]
     ) {
       const execFunc = host.prototype[type]?.bind(
         this
       ) as ControlFlow.ArrayFunction;
-      if (execFunc && typeof execFunc === "function") return execFunc(...args);
+      if (execFunc && typeof execFunc === 'function') return execFunc(...args);
       return false;
-    });
+    };
 }
 
 export function SetUint(host: any) {
@@ -117,24 +130,27 @@ export function SetUint(host: any) {
         const value = (this as Value.SetAble<any>).valueOf();
         const execFunc = value[key];
         let result: any;
-        if (typeof execFunc === "function") {
+        if (typeof execFunc === 'function') {
           result = execFunc.bind(value)(...args);
         } else result = value;
         return decide(result);
       };
     }
   });
-  if (host.prototype.collectionSet?.declaration === onlyDeclarationTag || !!host.prototype.collectionSet === false)
-    (host.prototype.collectionSet = function (
+  if (
+    host.prototype.collectionSet?.declaration === onlyDeclarationTag ||
+    !!host.prototype.collectionSet === false
+  )
+    host.prototype.collectionSet = function (
       type: ControlFlow.SetEnum,
       ...args: any[]
     ) {
       const execFunc = host.prototype[type]?.bind(
         this
       ) as ControlFlow.SetFunction;
-      if (execFunc && typeof execFunc === "function") return execFunc(...args);
+      if (execFunc && typeof execFunc === 'function') return execFunc(...args);
       return false;
-    });
+    };
 }
 
 export function MapUint(host: any) {
@@ -146,22 +162,25 @@ export function MapUint(host: any) {
         const value = (this as Value.MapAble<any, any>).valueOf();
         const execFunc = value[key];
         let result;
-        if (typeof execFunc === "function") {
+        if (typeof execFunc === 'function') {
           result = execFunc.bind(value)(...args);
         } else result = value;
         return decide(result);
       };
     }
   });
-  if (host.prototype.collectionMap?.declaration === onlyDeclarationTag || !!host.prototype.collectionMap === false)
-    (host.prototype.collectionMap = function (
+  if (
+    host.prototype.collectionMap?.declaration === onlyDeclarationTag ||
+    !!host.prototype.collectionMap === false
+  )
+    host.prototype.collectionMap = function (
       type: ControlFlow.MapEnum,
       ...args: any[]
     ) {
       const execFunc = host.prototype[type]?.bind(
         this
-      ) as ControlFlow.MapFunction;
-      if (execFunc && typeof execFunc === "function") return execFunc(...args);
+      ) as ControlFlow.MapFunction<any>;
+      if (execFunc && typeof execFunc === 'function') return execFunc(...args);
       return false;
-    });
+    };
 }

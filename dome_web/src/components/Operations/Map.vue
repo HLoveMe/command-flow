@@ -34,9 +34,9 @@ import {
   BooleanObject,
   DateObject,
   DataObject,
-} from "../../../dist/web/index";
+  ControlFlow,
+} from "command-flow";
 import { ref } from "vue";
-import { ControlFlow } from "../../../core";
 const logInfo = ref<Array<{ desc: string; success: boolean }>>([]);
 const disabled = ref<boolean>(false);
 
@@ -48,7 +48,7 @@ const utils = {
     desc: "map 获取值 get",
     expect: 200,
     run: () => {
-      const map = new MapObject(new Map());
+      const map = new MapObject<string,any>(new Map());
       map.set("a", 1);
       map.set("b", 200);
       map.set("c", 1300);

@@ -7,10 +7,10 @@
   </div>
 </template>
 <script setup lang="ts">
+import Array from './Array.vue'
 import Number from './Number.vue'
 import Map from './Map.vue'
-import Array from './Array.vue'
-import Set from './Set.vue'
+// import Set from './Set.vue'
 </script>
 <style>
 </style>
