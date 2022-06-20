@@ -209,6 +209,10 @@ const utils = {
     concat: 'array indexOf',
     expect: 3,
     run: () => {
+      // 验证
+const b =new AarrayObject(...[1, 0, 3, 0, 7]);
+const a =new ArarayObject([1, 0, 3, 0, 7]);
+
       const array = new ArrayObject(...[1, 0, 3, 0, 7]);
       return array.indexOf(0, 2).valueOf();
     },

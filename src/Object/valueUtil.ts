@@ -16,8 +16,8 @@ const init = () => {
       '[object ArrayBuffer]': Value.DataObject,
       '[object Uint8Array]': Value.DataObject,
       '[object Promise]': Value.ObjectTarget,
-      '[object Null]': Value.NullObject,
-      '[object Undefined]': Value.NullObject,
+      '[object Null]': Value.OptionalObject,
+      '[object Undefined]': Value.OptionalObject,
     };
   }
   return ObjectMap;
@@ -45,5 +45,5 @@ export const decide = function (
   if (Target) {
     return new Target(value ?? {});
   }
-  return new Value.MixinsObject(value);
+  return new Value.ObjectTarget(value);
 };

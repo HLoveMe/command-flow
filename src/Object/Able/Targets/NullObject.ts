@@ -2,7 +2,7 @@ import { attribute, DefaultValue } from '../../util';
 import { Value } from '../../../Types';
 import { ObjectTarget } from './ObjectTarget';
 
-export class NullObject
+export class OptionalObject
   extends ObjectTarget<Value.NULL>
   implements Value.NullAble {
   static attributes: Set<string> = new Set();
@@ -18,7 +18,7 @@ export class NullObject
   }
 
   merge(target: Value.ObjectAble<Value.NULL>): Value.ObjectAble<Value.NULL> {
-    return new NullObject(null);
+    return new OptionalObject(null);
   }
 
   isTruly(): boolean {

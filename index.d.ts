@@ -73,9 +73,10 @@ declare module 'command-flow' {
       isNull(): boolean;
       isUndefined(): boolean;
     }
-    export type MixinsType = ObjectAble<any> | NULL;
-    export interface Mixins<V extends MixinsType = MixinsType>
-      extends ValueAble<V> { }
+    export interface Mixins<
+      V extends Value.ObjectAble<any> = Value.ObjectAble<any>,
+      U extends any = NULL
+      > extends ValueAble<V | U> { }
   }
 
   export type BaseType =
@@ -549,12 +550,12 @@ declare module 'command-flow' {
       key: ArrayEnum,
       ...args: any[]
     ) => BaseType;
-    export type ArrayFunction = (...args) => BaseType;
+    export type ArrayFunction = (...args) => BaseType | void;
     type ArrayAbsoluteAble = {
       [T in ArrayEnum]: ArrayFunction;
     };
     export interface CollectionArray extends ArrayAbsoluteAble {
-      collectionArray(key: ArrayEnum, ...args: any[]): BaseType;
+      collectionArray(key: ArrayEnum, ...args: any[]): BaseType | void;
     }
 
     // Set
@@ -672,14 +673,12 @@ declare module 'command-flow' {
     _value: T[];
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<T[]>): Value.ObjectAble<T[]>;
-    collectionArray(key: ControlFlow.ArrayEnum, ...args: any[]): BaseType;
-
-    collectionArray(key: ControlFlow.ArrayEnum, ...args: any[]): BaseType;
+    collectionArray(key: ControlFlow.ArrayEnum, ...args: any[]): BaseType | void;
     // array function
 
-    concat(...items: (T | ArrayObject<T>)[]): ArrayObject<T>;
+    concat(...items: (T | ArrayObject<T>)[]): Value.ArrayAble<T>;
 
-    copyWithin(target: number, start: number, end?: number): ArrayObject<T>;
+    copyWithin(target: number, start: number, end?: number): Value.ArrayAble<T>;
 
     fill<U extends T>(value: U, start?: number, end?: number): this;
 
@@ -691,62 +690,66 @@ declare module 'command-flow' {
     findIndex(
       predicate: (value: T, index: number, obj: Uint8Array) => boolean,
       thisArg?: any
-    ): NumberObject;
+    ): Value.NumberAble;
 
-    lastIndexOf(searchElement: T, fromIndex?: number): NumberObject;
+    lastIndexOf(searchElement: T, fromIndex?: number): Value.NumberAble;
 
     pop(): Value.ObjectAble<T>;
 
-    push(...items: T[]): BaseType;
+    push(...items: T[]): Value.NumberAble;
 
-    reverse(): BaseType;
+    reverse(): Value.ArrayAble<T>;
 
-    shift(): BaseType;
+    shift(): Value.Mixins;
 
-    unshift(...items: T[]): NumberObject;
+    unshift(...items: T[]): Value.NumberAble;
 
-    slice(start?: number, end?: number): ArrayObject<T>;
+    slice(start?: number, end?: number): Value.ArrayAble<T>;
 
-    sort(compareFn?: (a: number, b: number) => number): ArrayObject<T>;
+    sort(compareFn?: (a: T, b: T) => number): this;
+    sort(start?: number, end?: number): Value.ArrayAble<T>;
 
-    splice(start: number, deleteCount?: number, ...items: any[]): ArrayObject<T>;
+    splice(start: number, deleteCount: number, ...items: any[]): Value.ArrayAble<T>;
+    splice(start: number, deleteCount?: number): ArrayObject<T>;
 
     includes(searchElement: T, fromIndex?: number): BooleanObject;
 
-    indexOf(searchElement: T, fromIndex?: number): NumberObject;
+    indexOf(searchElement: T, fromIndex?: number): Value.NumberAble;
 
     join(separator?: string): StringObject;
 
-    entries(): ObjectTarget<IterableIterator<[T, T]>>;
+    entries(): Value.ObjectAble<IterableIterator<[T, T]>>;
 
-    values(): ObjectTarget<IterableIterator<T>>;
+    values(): Value.ObjectAble<IterableIterator<T>>;
 
-    keys(): ObjectTarget<IterableIterator<T>>;
+    keys(): Value.ObjectAble<IterableIterator<number>>;
 
     forEach(
-      callbackfn: (value: T, index: number, array: readonly T[]) => void,
+      callbackfn: (value: T, index: number, array: T[]) => void,
       thisArg?: any
-    ): BaseType;
+    ): void;
 
     filter<S extends T>(
-      predicate: (value: T, index: number, array: readonly T[]) => value is S,
+      predicate: (value: T, index: number, array:  T[]) => value is S,
       thisArg?: any
-    ): BaseType;
+    ): Value.ArrayAble<S>;
+
+    filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): Value.ArrayAble<T>;
 
     map<U>(
       callbackfn: (value: T, index: number, array: T[]) => U,
       thisArg?: any
-    ): BaseType;
+    ): Value.ArrayAble<U>;
 
-    every<S extends T>(
-      predicate: (value: T, index: number, array: T[]) => value is S,
+    every(
+      predicate: (value: T, index: number, array: T[]) => unknown,
       thisArg?: any
-    ): BaseType;
+    ): Value.BooleanAble;
 
     some(
       predicate: (value: T, index: number, array: T[]) => unknown,
       thisArg?: any
-    ): BaseType;
+    ): Value.BooleanAble;
 
     reduce(
       callbackfn: (
@@ -756,7 +759,7 @@ declare module 'command-flow' {
         array: T[]
       ) => T,
       initialValue?: T
-    ): BaseType;
+    ): Value.ObjectAble<T>;
 
     reduceRight(
       callbackfn: (
@@ -766,7 +769,10 @@ declare module 'command-flow' {
         array: T[]
       ) => T,
       initialValue?: T
-    ): BaseType;
+    ): Value.ObjectAble<T>;
+
+    reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): Value.ObjectAble<U>;
+
 
     toLocaleString(): BaseType;
 
@@ -905,15 +911,13 @@ declare module 'command-flow' {
     merge(target: Value.ObjectAble<ArrayBuffer>): Value.ObjectAble<ArrayBuffer>;
   }
 
-  export class NullObject
+  export class OptionalObject
     extends ObjectTarget<Value.NULL>
-    implements Value.NullAble { }
-
-  export class MixinsObject<
-    T extends Value.ObjectAble<any> = Value.ObjectAble<any>
-    >
-    extends ObjectTarget<T>
-    implements Value.Mixins { }
+    implements Value.NullAble {
+    isTruly(): boolean;
+    isNull(): boolean;
+    isUndefined(): boolean;
+  }
 
   export function unpackValue(value: ChannelObject): string;
 

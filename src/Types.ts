@@ -71,9 +71,10 @@ export namespace Value {
     isNull(): boolean;
     isUndefined(): boolean;
   }
-  export type MixinsType = ObjectAble<any> | NULL;
-  export declare interface Mixins<V extends MixinsType = MixinsType>
-    extends ValueAble<V> {}
+  export interface Mixins<
+    V extends Value.ObjectAble<any> = Value.ObjectAble<any>,
+    U extends any = NULL
+  > extends ValueAble<V | U> {}
 }
 
 export type BaseType =

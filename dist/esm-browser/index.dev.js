@@ -672,7 +672,7 @@ exports.Context = Context;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
+exports.OptionalObject = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
 const ObjectTarget_1 = __webpack_require__(/*! ./Targets/ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 Object.defineProperty(exports, "ObjectTarget", ({ enumerable: true, get: function () { return ObjectTarget_1.ObjectTarget; } }));
 const ArrayObject_1 = __webpack_require__(/*! ./Targets/ArrayObject */ "./src/Object/Able/Targets/ArrayObject.ts");
@@ -691,6 +691,8 @@ const DateObject_1 = __webpack_require__(/*! ./Targets/DateObject */ "./src/Obje
 Object.defineProperty(exports, "DateObject", ({ enumerable: true, get: function () { return DateObject_1.DateObject; } }));
 const DataObject_1 = __webpack_require__(/*! ./Targets/DataObject */ "./src/Object/Able/Targets/DataObject.ts");
 Object.defineProperty(exports, "DataObject", ({ enumerable: true, get: function () { return DataObject_1.DataObject; } }));
+const NullObject_1 = __webpack_require__(/*! ./Targets/NullObject */ "./src/Object/Able/Targets/NullObject.ts");
+Object.defineProperty(exports, "OptionalObject", ({ enumerable: true, get: function () { return NullObject_1.OptionalObject; } }));
 
 
 /***/ }),
@@ -723,8 +725,16 @@ const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
 let ArrayObject = ArrayObject_1 = class ArrayObject extends ObjectTarget_1.ObjectTarget {
-    constructor(value) {
-        var init = typeof value === 'number' ? new Array(value) : (Array.isArray(value) ? value : []);
+    constructor(...values) {
+        const first = values[0];
+        const firstIsArray = first instanceof Array;
+        var init = null;
+        if (firstIsArray && values.length === 1) {
+            init = first;
+        }
+        else {
+            init = new Array(...values);
+        }
         super(init);
         this._value = init;
     }
@@ -746,43 +756,94 @@ let ArrayObject = ArrayObject_1 = class ArrayObject extends ObjectTarget_1.Objec
     merge(target) {
         return new ArrayObject_1([...this._value, ...target._value]);
     }
-    collectionArray(key, ...args) { return null; }
-    ;
+    collectionArray(key, ...args) {
+        return null;
+    }
     // array function
-    concat(...items) { return null; }
-    ;
-    copyWithin(target, start, end) { return null; }
-    fill(value, start, end) { return null; }
-    ;
-    find(predicate, thisArg) { return null; }
-    findIndex(predicate, thisArg) { return null; }
-    lastIndexOf(searchElement, fromIndex) { return null; }
-    ;
-    pop() { return null; }
-    push(...items) { return null; }
-    reverse() { return null; }
-    shift() { return null; }
-    unshift(...items) { return null; }
-    slice(start, end) { return null; }
-    sort(compareFn) { return null; }
-    splice(start, deleteCount, ...items) { return null; }
-    includes(searchElement, fromIndex) { return null; }
-    indexOf(searchElement, fromIndex) { return null; }
-    join(separator) { return null; }
-    entries() { return null; }
-    ;
-    values() { return null; }
-    ;
-    keys() { return null; }
-    ;
-    forEach(callbackfn, thisArg) { return null; }
-    filter(predicate, thisArg) { return null; }
-    map(callbackfn, thisArg) { return null; }
-    every(predicate, thisArg) { return null; }
-    some(predicate, thisArg) { return null; }
-    reduce(callbackfn, initialValue) { return null; }
-    reduceRight(callbackfn, initialValue) { return null; }
-    toLocaleString() { return null; }
+    concat(...items) {
+        return null;
+    }
+    copyWithin(target, start, end) {
+        return null;
+    }
+    fill(value, start, end) {
+        return null;
+    }
+    find(predicate, thisArg) {
+        return null;
+    }
+    findIndex(predicate, thisArg) {
+        return null;
+    }
+    lastIndexOf(searchElement, fromIndex) {
+        return null;
+    }
+    pop() {
+        return null;
+    }
+    push(...items) {
+        return null;
+    }
+    reverse() {
+        return null;
+    }
+    shift() {
+        return null;
+    }
+    unshift(...items) {
+        return null;
+    }
+    slice(start, end) {
+        return null;
+    }
+    sort(compareFn) {
+        return null;
+    }
+    splice(start, deleteCount, ...items) {
+        return null;
+    }
+    includes(searchElement, fromIndex) {
+        return null;
+    }
+    indexOf(searchElement, fromIndex) {
+        return null;
+    }
+    join(separator) {
+        return null;
+    }
+    entries() {
+        return null;
+    }
+    values() {
+        return null;
+    }
+    keys() {
+        return null;
+    }
+    forEach(callbackfn, thisArg) {
+        return null;
+    }
+    filter(predicate, thisArg) {
+        return null;
+    }
+    map(callbackfn, thisArg) {
+        return null;
+    }
+    every(predicate, thisArg) {
+        return null;
+    }
+    some(predicate, thisArg) {
+        return null;
+    }
+    reduce(callbackfn, initialValue) {
+        return null;
+    }
+    reduceRight(callbackfn, initialValue) {
+        return null;
+    }
+    toLocaleString() {
+        return null;
+    }
     get length() {
         return (0, valueUtil_1.decide)(this._value.length);
     }
@@ -809,7 +870,7 @@ __decorate([
 ], ArrayObject.prototype, "last", null);
 __decorate([
     (0, util_1.attribute)(),
-    __param(0, (0, util_1.Params)("index")),
+    __param(0, (0, util_1.Params)('index')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Object)
@@ -1028,7 +1089,7 @@ class BooleanObject extends ObjectTarget_1.ObjectTarget {
         this._value = value;
     }
     valueOf() {
-        return !!(this._value);
+        return !!this._value;
     }
 }
 BooleanObject.attributes = new Set();
@@ -1281,6 +1342,64 @@ MapObject = MapObject_1 = __decorate([
     __metadata("design:paramtypes", [Map])
 ], MapObject);
 exports.MapObject = MapObject;
+
+
+/***/ }),
+
+/***/ "./src/Object/Able/Targets/NullObject.ts":
+/*!***********************************************!*\
+  !*** ./src/Object/Able/Targets/NullObject.ts ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.OptionalObject = void 0;
+const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
+const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
+class OptionalObject extends ObjectTarget_1.ObjectTarget {
+    constructor(value = null) {
+        super(value);
+        this._value = value;
+    }
+    valueOf() {
+        return this._value;
+    }
+    merge(target) {
+        return new OptionalObject(null);
+    }
+    isTruly() {
+        return !!this._value;
+    }
+    isNull() {
+        return this._value === null;
+    }
+    isUndefined() {
+        return this._value === undefined;
+    }
+}
+OptionalObject.attributes = new Set();
+__decorate([
+    (0, util_1.attribute)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], OptionalObject.prototype, "valueOf", null);
+__decorate([
+    (0, util_1.DefaultValue)(Object.prototype.toString.call(new Date())),
+    __metadata("design:type", String)
+], OptionalObject, "type", void 0);
+exports.OptionalObject = OptionalObject;
 
 
 /***/ }),
@@ -1906,25 +2025,24 @@ exports.MapUint = MapUint;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.decide = exports.isAbleType = void 0;
-const __1 = __webpack_require__(/*! .. */ "./src/index.ts");
 const Value = __webpack_require__(/*! ./Able/ObjectAble */ "./src/Object/Able/ObjectAble.ts");
 let ObjectMap = null;
 const init = () => {
     if (ObjectMap === null) {
         ObjectMap = {
-            "[object Object]": Value.ObjectTarget,
-            "[object Map]": Value.MapObject,
-            "[object Set]": Value.SetObject,
-            "[object Array]": Value.ArrayObject,
-            "[object Boolean]": Value.BooleanObject,
-            "[object Date]": Value.DateObject,
-            "[object Number]": Value.NumberObject,
-            "[object String]": Value.StringObject,
-            "[object ArrayBuffer]": Value.DataObject,
-            "[object Uint8Array]": Value.DataObject,
-            "[object Promise]": Value.ObjectTarget,
-            '[object Null]': Value.ObjectTarget,
-            '[object Undefined]': Value.ObjectTarget,
+            '[object Object]': Value.ObjectTarget,
+            '[object Map]': Value.MapObject,
+            '[object Set]': Value.SetObject,
+            '[object Array]': Value.ArrayObject,
+            '[object Boolean]': Value.BooleanObject,
+            '[object Date]': Value.DateObject,
+            '[object Number]': Value.NumberObject,
+            '[object String]': Value.StringObject,
+            '[object ArrayBuffer]': Value.DataObject,
+            '[object Uint8Array]': Value.DataObject,
+            '[object Promise]': Value.ObjectTarget,
+            '[object Null]': Value.OptionalObject,
+            '[object Undefined]': Value.OptionalObject,
         };
     }
     return ObjectMap;
@@ -1950,7 +2068,7 @@ const decide = function (value, force = false) {
     if (Target) {
         return new Target(value ?? {});
     }
-    return new __1.ObjectTarget(value ?? {});
+    return new Value.ObjectTarget(value);
 };
 exports.decide = decide;
 
@@ -3131,7 +3249,7 @@ exports.WorkUnit = WorkUnit;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.decide = exports.isAbleType = exports.wrapperValue = exports.unpackValue = exports.FetchWork = exports.DelayIntervalWork = exports.TimeoutWork = exports.IntervalWork = exports.RunCommandWork = exports.QRCodeWork = exports.OpenURLWork = exports.LoadFileWork = exports.Base64EnCodeWork = exports.Base64DecodeWork = exports.InstructionOTO = exports.InstructionOTM = exports.InstructionMTM = exports.ControlFlow = exports.WorkType = exports.Context = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
+exports.decide = exports.isAbleType = exports.wrapperValue = exports.unpackValue = exports.FetchWork = exports.DelayIntervalWork = exports.TimeoutWork = exports.IntervalWork = exports.RunCommandWork = exports.QRCodeWork = exports.OpenURLWork = exports.LoadFileWork = exports.Base64EnCodeWork = exports.Base64DecodeWork = exports.InstructionOTO = exports.InstructionOTM = exports.InstructionMTM = exports.ControlFlow = exports.WorkType = exports.Context = exports.OptionalObject = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
 const ObjectAble_1 = __webpack_require__(/*! ./Object/Able/ObjectAble */ "./src/Object/Able/ObjectAble.ts");
 Object.defineProperty(exports, "ObjectTarget", ({ enumerable: true, get: function () { return ObjectAble_1.ObjectTarget; } }));
 Object.defineProperty(exports, "ArrayObject", ({ enumerable: true, get: function () { return ObjectAble_1.ArrayObject; } }));
@@ -3142,6 +3260,7 @@ Object.defineProperty(exports, "StringObject", ({ enumerable: true, get: functio
 Object.defineProperty(exports, "BooleanObject", ({ enumerable: true, get: function () { return ObjectAble_1.BooleanObject; } }));
 Object.defineProperty(exports, "DateObject", ({ enumerable: true, get: function () { return ObjectAble_1.DateObject; } }));
 Object.defineProperty(exports, "DataObject", ({ enumerable: true, get: function () { return ObjectAble_1.DataObject; } }));
+Object.defineProperty(exports, "OptionalObject", ({ enumerable: true, get: function () { return ObjectAble_1.OptionalObject; } }));
 const Types_1 = __webpack_require__(/*! ./Types */ "./src/Types.ts");
 Object.defineProperty(exports, "WorkType", ({ enumerable: true, get: function () { return Types_1.WorkType; } }));
 const Control_1 = __webpack_require__(/*! ./Object/Control */ "./src/Object/Control.ts");
