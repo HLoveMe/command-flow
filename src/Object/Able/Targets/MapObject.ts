@@ -11,9 +11,8 @@ export class MapObject<T, U>
 {
   static attributes: Set<string> = new Set();
   static empty: MapObject<any, any> = new MapObject(new Map());
-
+  declare _value: Map<T, U>;
   @DefaultValue(Object.prototype.toString.call(new Map())) static type: string;
-  _value: Map<T, U>;
   constructor(value: Map<T, U> = new Map()) {
     super(value);
     this._value = new Map(value);
@@ -38,42 +37,42 @@ export class MapObject<T, U>
   }
   @onlyDeclaration
   get(key: string): U | void {
-    return null;
+    return null as any;
   }
   @onlyDeclaration
   set(key: string, value: BaseType): void {
-    return null;
+    return null as any;
   }
   @onlyDeclaration
   has(key: string): Value.BooleanAble {
-    return null;
+    return null as any;
   }
   @onlyDeclaration
   delete(key: string): Value.BooleanAble {
-    return null;
+    return null as any;
   }
   @onlyDeclaration
   clear(): void {
-    return null;
+    return null as any;
   }
   @onlyDeclaration
   entries(): Value.ObjectAble<IterableIterator<[T, U]>> {
-    return null;
+    return null as any;
   }
   @onlyDeclaration
   forEach(
     callback: (value: U, key: T, map: Map<T, U>) => void,
     thisArg?: any
   ): void {
-    return null;
+    return null as any;
   }
   @onlyDeclaration
   values(): Value.ObjectAble<IterableIterator<U>> {
-    return null;
+    return null as any;
   }
   @onlyDeclaration
   keys(): Value.ObjectAble<IterableIterator<T>> {
-    return null;
+    return null as any;
   }
 
   get size(): Value.NumberAble {

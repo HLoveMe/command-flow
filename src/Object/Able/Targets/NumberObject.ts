@@ -17,7 +17,7 @@ export class NumberObject
   static empty: NumberObject = new NumberObject(0);
   @DefaultValue(Object.prototype.toString.call(new Number()))
   static type: string;
-  _value: number;
+  declare _value: number;
   constructor(value: number = 1) {
     super(value);
     this._value = value;

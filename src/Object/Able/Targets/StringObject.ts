@@ -9,7 +9,7 @@ export class StringObject
 
   @DefaultValue(Object.prototype.toString.call(new String()))
   static type: string;
-  _value: string;
+  declare _value: string;
   constructor(value: string = '') {
     super(value);
     this._value = value;

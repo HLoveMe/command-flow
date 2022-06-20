@@ -28,7 +28,6 @@ import { noop } from "../Util/tools";
 export class Instruction
   extends Subject<ChannelObject>
   implements WorkType.Work, EnvironmentAble {
-  observers: any[];
   name: string = "Instruction";
   static _id: number = 0;
   id: number = Instruction._id++;

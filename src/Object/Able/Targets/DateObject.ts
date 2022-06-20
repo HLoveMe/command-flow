@@ -10,7 +10,7 @@ export class DateObject
   static empty: DateObject = new DateObject(new Date());
 
   @DefaultValue(Object.prototype.toString.call(new Date())) static type: string;
-  _value: Date;
+  declare _value: Date;
   constructor(value: Date = new Date()) {
     super(value);
     this._value = value;

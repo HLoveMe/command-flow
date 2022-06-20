@@ -7,7 +7,7 @@ export class OptionalObject
   implements Value.NullAble {
   static attributes: Set<string> = new Set();
   @DefaultValue(Object.prototype.toString.call(new Date())) static type: string;
-  _value: Value.NULL;
+  declare _value: Value.NULL;
   constructor(value: Value.NULL = null) {
     super(value);
     this._value = value;

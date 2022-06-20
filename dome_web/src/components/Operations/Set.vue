@@ -24,9 +24,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { SetObject } from '../../../dist/web/index';
+import { SetObject ,ControlFlow} from 'command-flow';
 import { ref } from 'vue';
-import { ControlFlow } from '../../../core';
 const logInfo = ref<Array<{ desc: string; success: boolean }>>([]);
 const disabled = ref<boolean>(false);
 

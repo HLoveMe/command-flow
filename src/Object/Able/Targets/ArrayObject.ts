@@ -21,7 +21,7 @@ export class ArrayObject<T>
   static empty: ArrayObject<Object> = new ArrayObject([]);
 
   @DefaultValue(Object.prototype.toString.call([])) static type: string;
-  _value: Array<T>;
+  declare _value: Array<T>;
 
   constructor(...values: Array<Array<T> | number>) {
     const first = values[0];

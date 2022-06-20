@@ -498,25 +498,25 @@ const BeginWork_1 = __webpack_require__(/*! ./Works/ExtendsWorks/BeginWork */ ".
 const valueUtil_1 = __webpack_require__(/*! ./Object/valueUtil */ "./src/Object/valueUtil.ts");
 const operators_1 = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
 class Context {
+    status = Types_1.WorkType.WorkRunStatus.INIT;
+    platform = Index_1.default;
+    /**
+     * 运行配置文件 todo
+     */
+    runOptions;
+    /**
+     * 上下文变量
+     */
+    runConstant = new Map();
+    /**
+     * 所有work
+     */
+    works = [];
+    /**
+     * 消息传输通道
+     */
+    msgChannel = new rxjs_1.Subject();
     constructor(runOptions) {
-        this.status = Types_1.WorkType.WorkRunStatus.INIT;
-        this.platform = Index_1.default;
-        /**
-         * 上下文变量
-         */
-        this.runConstant = new Map();
-        /**
-         * 所有work
-         */
-        this.works = [];
-        /**
-         * 消息传输通道
-         */
-        this.msgChannel = new rxjs_1.Subject();
-        /**
-         * 需要销毁的Subscription
-         */
-        this.pools = [];
         this.runOptions = (runOptions || Configs_1.DefaultRunConfig);
         const sub = this.msgChannel.subscribe({
             next: (value) => this.workMessage(value),
@@ -525,6 +525,10 @@ class Context {
         this.pools.push(sub);
         this.addWork(new BeginWork_1.BeginWork());
     }
+    /**
+     * 需要销毁的Subscription
+     */
+    pools = [];
     /**
      * 增加上下文变量
      * @param from
@@ -725,6 +729,9 @@ const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
 let ArrayObject = ArrayObject_1 = class ArrayObject extends ObjectTarget_1.ObjectTarget {
+    static attributes = new Set();
+    static empty = new ArrayObject_1([]);
+    static type;
     constructor(...values) {
         const first = values[0];
         const firstIsArray = first instanceof Array;
@@ -848,8 +855,6 @@ let ArrayObject = ArrayObject_1 = class ArrayObject extends ObjectTarget_1.Objec
         return (0, valueUtil_1.decide)(this._value.length);
     }
 };
-ArrayObject.attributes = new Set();
-ArrayObject.empty = new ArrayObject_1([]);
 __decorate([
     (0, util_1.attribute)(),
     __metadata("design:type", Function),
@@ -1084,6 +1089,9 @@ exports.BooleanObject = void 0;
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 class BooleanObject extends ObjectTarget_1.ObjectTarget {
+    static attributes = new Set();
+    static empty = new BooleanObject(false);
+    static type;
     constructor(value = false) {
         super(value);
         this._value = value;
@@ -1092,8 +1100,6 @@ class BooleanObject extends ObjectTarget_1.ObjectTarget {
         return !!this._value;
     }
 }
-BooleanObject.attributes = new Set();
-BooleanObject.empty = new BooleanObject(false);
 __decorate([
     (0, util_1.attribute)(),
     __metadata("design:type", Function),
@@ -1131,6 +1137,8 @@ exports.DataObject = void 0;
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 class DataObject extends ObjectTarget_1.ObjectTarget {
+    static attributes = new Set();
+    static empty = new DataObject(new ArrayBuffer(0));
     constructor(value = new ArrayBuffer(0)) {
         super(value);
         this._value = value;
@@ -1142,8 +1150,6 @@ class DataObject extends ObjectTarget_1.ObjectTarget {
         return this._value;
     }
 }
-DataObject.attributes = new Set();
-DataObject.empty = new DataObject(new ArrayBuffer(0));
 __decorate([
     (0, util_1.attribute)(),
     __metadata("design:type", Function),
@@ -1177,6 +1183,9 @@ exports.DateObject = void 0;
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 class DateObject extends ObjectTarget_1.ObjectTarget {
+    static attributes = new Set();
+    static empty = new DateObject(new Date());
+    static type;
     constructor(value = new Date()) {
         super(value);
         this._value = value;
@@ -1188,8 +1197,6 @@ class DateObject extends ObjectTarget_1.ObjectTarget {
         return new Date(this._value);
     }
 }
-DateObject.attributes = new Set();
-DateObject.empty = new DateObject(new Date());
 __decorate([
     (0, util_1.attribute)(),
     __metadata("design:type", Function),
@@ -1236,6 +1243,9 @@ const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
 let MapObject = MapObject_1 = class MapObject extends ObjectTarget_1.ObjectTarget {
+    static attributes = new Set();
+    static empty = new MapObject_1(new Map());
+    static type;
     constructor(value = new Map()) {
         super(value);
         this._value = new Map(value);
@@ -1285,8 +1295,6 @@ let MapObject = MapObject_1 = class MapObject extends ObjectTarget_1.ObjectTarge
         return (0, valueUtil_1.decide)(this._value.size);
     }
 };
-MapObject.attributes = new Set();
-MapObject.empty = new MapObject_1(new Map());
 __decorate([
     (0, util_1.attribute)(),
     __metadata("design:type", Function),
@@ -1388,6 +1396,8 @@ exports.OptionalObject = void 0;
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 class OptionalObject extends ObjectTarget_1.ObjectTarget {
+    static attributes = new Set();
+    static type;
     constructor(value = null) {
         super(value);
         this._value = value;
@@ -1408,7 +1418,6 @@ class OptionalObject extends ObjectTarget_1.ObjectTarget {
         return this._value === undefined;
     }
 }
-OptionalObject.attributes = new Set();
 __decorate([
     (0, util_1.attribute)(),
     __metadata("design:type", Function),
@@ -1449,6 +1458,9 @@ const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 const BooleanObject_1 = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Targets/BooleanObject.ts");
 let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget_1.ObjectTarget {
+    static attributes = new Set();
+    static empty = new NumberObject_1(0);
+    static type;
     constructor(value = 1) {
         super(value);
         this._value = value;
@@ -1495,8 +1507,6 @@ let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget_1.Ob
         return new NumberObject_1(target._value === 0 ? Infinity : this._value / target._value);
     }
 };
-NumberObject.attributes = new Set();
-NumberObject.empty = new NumberObject_1(0);
 __decorate([
     (0, util_1.attribute)(),
     __metadata("design:type", Function),
@@ -1550,11 +1560,15 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ObjectTarget = void 0;
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 class ObjectTarget {
-    constructor(value = {}) {
-        this._value = value;
-    }
     get [Symbol.toStringTag]() {
         return 'flow-object';
+    }
+    static attributes = new Set();
+    static empty = new ObjectTarget({});
+    static type;
+    _value;
+    constructor(value = {}) {
+        this._value = value;
     }
     valueOf() {
         return this._value;
@@ -1578,8 +1592,6 @@ class ObjectTarget {
         }
     }
 }
-ObjectTarget.attributes = new Set();
-ObjectTarget.empty = new ObjectTarget({});
 __decorate([
     (0, util_1.DefaultValue)(Object.prototype.toString.call({})),
     __metadata("design:type", String)
@@ -1614,8 +1626,15 @@ const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
 let SetObject = SetObject_1 = class SetObject extends ObjectTarget_1.ObjectTarget {
+    static attributes = new Set();
+    static empty = new SetObject_1(new Set());
+    static type;
     constructor(value) {
-        const init = !!value ? (Array.isArray(value) ? new Set(value) : value) : new Set();
+        const init = !!value
+            ? Array.isArray(value)
+                ? new Set(value)
+                : value
+            : new Set();
         super(init);
         this._value = init;
     }
@@ -1632,26 +1651,37 @@ let SetObject = SetObject_1 = class SetObject extends ObjectTarget_1.ObjectTarge
         new Set().keys;
         return new SetObject_1(newSet);
     }
-    collectionSet(key, ...args) { return null; }
-    ;
-    has(value) { return null; }
-    add(value) { return null; }
-    delete(value) { return null; }
-    clear() { return null; }
-    forEach(callbackfn, thisArg) { return null; }
-    ;
-    entries() { return null; }
-    ;
-    values() { return null; }
-    ;
-    keys() { return null; }
-    ;
+    collectionSet(key, ...args) {
+        return null;
+    }
+    has(value) {
+        return null;
+    }
+    add(value) {
+        return this;
+    }
+    delete(value) {
+        return null;
+    }
+    clear() {
+        return null;
+    }
+    forEach(callbackfn, thisArg) {
+        return null;
+    }
+    entries() {
+        return null;
+    }
+    values() {
+        return null;
+    }
+    keys() {
+        return null;
+    }
     get size() {
         return (0, valueUtil_1.decide)(this._value.size);
     }
 };
-SetObject.attributes = new Set();
-SetObject.empty = new SetObject_1(new Set());
 __decorate([
     (0, util_1.attribute)(),
     __metadata("design:type", Function),
@@ -1686,31 +1716,31 @@ __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", void 0)
 ], SetObject.prototype, "clear", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Function, Object]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", void 0)
 ], SetObject.prototype, "forEach", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", ObjectTarget_1.ObjectTarget)
+    __metadata("design:returntype", Object)
 ], SetObject.prototype, "entries", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", ObjectTarget_1.ObjectTarget)
+    __metadata("design:returntype", Object)
 ], SetObject.prototype, "values", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", ObjectTarget_1.ObjectTarget)
+    __metadata("design:returntype", Object)
 ], SetObject.prototype, "keys", null);
 __decorate([
     (0, util_1.DefaultValue)(Object.prototype.toString.call(new Set())),
@@ -1747,6 +1777,9 @@ exports.StringObject = void 0;
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 class StringObject extends ObjectTarget_1.ObjectTarget {
+    static attributes = new Set();
+    static empty = new StringObject("");
+    static type;
     constructor(value = '') {
         super(value);
         this._value = value;
@@ -1755,8 +1788,6 @@ class StringObject extends ObjectTarget_1.ObjectTarget {
         return this._value;
     }
 }
-StringObject.attributes = new Set();
-StringObject.empty = new StringObject("");
 __decorate([
     (0, util_1.attribute)(),
     __metadata("design:type", Function),
@@ -1899,9 +1930,9 @@ function Params(params) {
 }
 exports.Params = Params;
 class ObjectManager {
+    static types = new Set();
 }
 exports.ObjectManager = ObjectManager;
-ObjectManager.types = new Set();
 function DefaultValue(value) {
     return function (target, propertyName) {
         target[propertyName] = value;
@@ -2448,10 +2479,7 @@ const Equipment_1 = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/
 const channel_value_util_1 = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
 //编码
 class Base64EnCodeWork extends Instruction_1.InstructionMTM {
-    constructor() {
-        super(...arguments);
-        this.name = "Base64EnCodeWork";
-    }
+    name = "Base64EnCodeWork";
     run(input) {
         return new rxjs_1.Observable((subscriber) => {
             let target;
@@ -2474,10 +2502,7 @@ class Base64EnCodeWork extends Instruction_1.InstructionMTM {
 exports.Base64EnCodeWork = Base64EnCodeWork;
 //解码
 class Base64DecodeWork extends Instruction_1.InstructionMTM {
-    constructor() {
-        super(...arguments);
-        this.name = "Base64DecodeWork";
-    }
+    name = "Base64DecodeWork";
     run(input) {
         return new rxjs_1.Observable((subscriber) => {
             let target;
@@ -2518,9 +2543,14 @@ const Equipment_1 = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/
 const ObjectAble_1 = __webpack_require__(/*! ../../Object/Able/ObjectAble */ "./src/Object/Able/ObjectAble.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../Object/valueUtil */ "./src/Object/valueUtil.ts");
 class BeginWork extends Instruction_1.InstructionOTO {
+    static OPTION;
+    name = "BeginWork";
+    static _id = 0;
+    // 输入 头部work
+    // inputSubject: Subject<BaseType> = new Subject<BaseType>();
+    inputSubscription;
     constructor() {
         super();
-        this.name = "BeginWork";
         this.uuid = (0, uuid_1.v4)();
     }
     // // 处理上一个的传入
@@ -2561,7 +2591,6 @@ class BeginWork extends Instruction_1.InstructionOTO {
     }
 }
 exports.BeginWork = BeginWork;
-BeginWork._id = 0;
 
 
 /***/ }),
@@ -2581,10 +2610,7 @@ const Equipment_1 = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/
 const __1 = __webpack_require__(/*! ../.. */ "./src/index.ts");
 const operators_1 = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
 class FetchWork extends Instruction_1.InstructionOTO {
-    constructor() {
-        super(...arguments);
-        this.name = "FetchWork";
-    }
+    name = "FetchWork";
     _getInitOption(input, baseOption) {
         const initParams = input.valueOf();
         const { url, method, timeout, data } = initParams;
@@ -2663,10 +2689,10 @@ const ConfigTypes_1 = __webpack_require__(/*! ../../Bridge/ConfigTypes */ "./src
 const operators_1 = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
 const channel_value_util_1 = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
 class LoadFileWork extends Instruction_1.InstructionOTO {
+    name = "LoadFileWork";
+    currentConfig = { type: ConfigTypes_1.FileType.All };
     constructor(config) {
         super();
-        this.name = "LoadFileWork";
-        this.currentConfig = { type: ConfigTypes_1.FileType.All };
         this.currentConfig = config || { type: ConfigTypes_1.FileType.All };
     }
     run(input, option) {
@@ -2733,10 +2759,7 @@ const channel_value_util_1 = __webpack_require__(/*! ../../Util/channel-value-ut
  * web:只能代开网页
  */
 class OpenURLWork extends Instruction_1.InstructionOTO {
-    constructor() {
-        super(...arguments);
-        this.name = "OpenURLWork";
-    }
+    name = "OpenURLWork";
     run(input, option) {
         const that = this;
         return new rxjs_1.Observable((subscriber) => {
@@ -2785,10 +2808,7 @@ const channel_value_util_1 = __webpack_require__(/*! ../../Util/channel-value-ut
  * output => StringObject
  */
 class QRCodeWork extends Instruction_1.InstructionOTO {
-    constructor() {
-        super(...arguments);
-        this.name = "QRCodeWork";
-    }
+    name = "QRCodeWork";
     run(input, option) {
         const that = this;
         return new rxjs_1.Observable((subscriber) => {
@@ -2857,12 +2877,12 @@ function handleEvalCommand(template, input, option) {
  *  = "#shell#echo hello world"
  */
 class RunCommandWork extends Instruction_1.InstructionOTO {
+    template = '';
     constructor(template = '$I$') {
         super();
-        this.template = '';
-        this.name = "RunCommandWork";
         this.template = template;
     }
+    name = "RunCommandWork";
     run(command, option) {
         const that = this;
         return new rxjs_1.Observable((subscriber) => {
@@ -2912,9 +2932,12 @@ const channel_value_util_1 = __webpack_require__(/*! ../../Util/channel-value-ut
 const Instruction_1 = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
 // 一直发
 class IntervalWork extends Instruction_1.InstructionOTM {
+    name = "IntervalWork";
+    intervalTime;
+    maxCount;
+    notifier;
     constructor(interval, max = Infinity, notifier) {
         super();
-        this.name = "IntervalWork";
         this.intervalTime = interval || 1000;
         this.maxCount = max;
         this.notifier = notifier || rxjs_1.NEVER;
@@ -2940,9 +2963,10 @@ class IntervalWork extends Instruction_1.InstructionOTM {
 exports.IntervalWork = IntervalWork;
 // 定时发
 class TimeoutWork extends Instruction_1.InstructionOTO {
+    name = "TimeoutWork";
+    intervalTime;
     constructor(interval) {
         super();
-        this.name = "TimeoutWork";
         this.intervalTime = interval || 1000;
     }
     run(input) {
@@ -2969,9 +2993,13 @@ class TimeoutWork extends Instruction_1.InstructionOTO {
 exports.TimeoutWork = TimeoutWork;
 // 延迟 然后一直发
 class DelayIntervalWork extends Instruction_1.InstructionOTM {
+    name = 'DelayIntervalWork';
+    intervalTime;
+    maxCount;
+    delayTime;
+    notifier;
     constructor(delay = 0, interval = 1000, max = Infinity, notifier) {
         super();
-        this.name = 'DelayIntervalWork';
         this.intervalTime = interval || 1000;
         this.maxCount = max;
         this.delayTime = delay || 0;
@@ -3026,14 +3054,19 @@ const tools_1 = __webpack_require__(/*! ../Util/tools */ "./src/Util/tools.ts");
  * n次输入---->m次输出 InstructionMTM
  */
 class Instruction extends rxjs_1.Subject {
+    name = "Instruction";
+    static _id = 0;
+    id = Instruction._id++;
+    uuid;
+    beforeWork;
+    nextWork;
+    context;
+    runSubscriptions = new Map();
+    pools = []; // 订阅自己的
+    // 运行配置 config:OPTION todo
+    config = { development: true };
     constructor() {
         super();
-        this.name = "Instruction";
-        this.id = Instruction._id++;
-        this.runSubscriptions = new Map();
-        this.pools = []; // 订阅自己的
-        // 运行配置 config:OPTION todo
-        this.config = { development: true };
         this.uuid = (0, uuid_1.v4)();
     }
     // 连接上下通道
@@ -3180,7 +3213,6 @@ class Instruction extends rxjs_1.Subject {
     }
 }
 exports.Instruction = Instruction;
-Instruction._id = 0;
 class InstructionOTO extends Instruction {
     nextValue(input) {
         return input;
@@ -3198,10 +3230,9 @@ class InstructionOTO extends Instruction {
 }
 exports.InstructionOTO = InstructionOTO;
 class InstructionOTM extends Instruction {
-    constructor() {
-        super(...arguments);
-        this.name = "MultipleInstruction";
-    }
+    // 声明可以进行配置的属性 todo
+    static OPTION;
+    name = "MultipleInstruction";
     nextValue(input) { return input; }
     completeOneLoop(input, next, success) { }
     run(input) {
@@ -3218,10 +3249,9 @@ class InstructionOTM extends Instruction {
 }
 exports.InstructionOTM = InstructionOTM;
 class InstructionMTM extends Instruction {
-    constructor() {
-        super(...arguments);
-        this.name = "MultipleInstruction";
-    }
+    // 声明可以进行配置的属性 todo
+    static OPTION;
+    name = "MultipleInstruction";
     nextValue(input) { return input; }
     completeOneLoop(input, next, success) { }
     run(input) {
@@ -3253,6 +3283,10 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.WorkUnit = void 0;
 const uuid_1 = __webpack_require__(/*! uuid */ "uuid");
 class WorkUnit {
+    context;
+    work;
+    uuid;
+    sub;
     constructor(context, work, sub, uuid) {
         this.context = context;
         this.work = work;

@@ -10,7 +10,7 @@
 import Array from './Array.vue'
 import Number from './Number.vue'
 import Map from './Map.vue'
-// import Set from './Set.vue'
+import Set from './Set.vue'
 </script>
 <style>
 </style>

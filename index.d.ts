@@ -569,13 +569,18 @@ declare module 'command-flow' {
     }
 
     // Map
-    export type CollectionMapExec = (key: MapEnum, ...args: any[]) => BaseType;
-    export type MapFunction = ArrayFunction;
-    export type MapAbsoluteAble = {
-      [T in MapEnum]: MapFunction;
+    export type CollectionMapExec = (
+      key: MapEnum,
+      ...args: any[]
+    ) => BaseType | void;
+    export type MapFunction<U> = (
+      ...args: any[]
+    ) => CollectionMap<any, U> | U | Value.NULL | any;
+    export type MapAbsoluteAble<U> = {
+      [T in MapEnum]: MapFunction<U>;
     };
-    export interface CollectionMap extends MapAbsoluteAble {
-      collectionMap(key: MapEnum, ...args: any[]): BaseType;
+    export interface CollectionMap<T, U> extends MapAbsoluteAble<U> {
+      collectionMap(key: MapEnum, ...args: any[]): U | Value.NULL;
     }
   }
   export class Context implements ContextImpl {
@@ -662,7 +667,7 @@ declare module 'command-flow' {
   export class ArrayObject<T>
     extends ObjectTarget<Array<T>>
     implements Value.ArrayAble<T>, ControlFlow.CollectionArray {
-    
+
     constructor(...args: any[]);
     constructor(count: number);
     constructor(value: T);
@@ -693,9 +698,9 @@ declare module 'command-flow' {
       thisArg?: any
     ): NumberObject;
 
-    lastIndexOf(searchElement: T, fromIndex?: number):NumberObject;
+    lastIndexOf(searchElement: T, fromIndex?: number): NumberObject;
 
-    pop():ObjectTarget<T>;
+    pop(): ObjectTarget<T>;
 
     push(...items: T[]): NumberObject;
 
@@ -731,7 +736,7 @@ declare module 'command-flow' {
     ): void;
 
     filter<S extends T>(
-      predicate: (value: T, index: number, array:  T[]) => value is S,
+      predicate: (value: T, index: number, array: T[]) => value is S,
       thisArg?: any
     ): ArrayObject<S>;
 
@@ -784,68 +789,64 @@ declare module 'command-flow' {
     extends ObjectTarget<Map<T, U>>
     implements
     Value.MapAble<T, U>,
-    ControlFlow.CollectionMap,
-    ControlFlow.MapAbsoluteAble {
-    constructor(arg?: Map<T,U>);
+    ControlFlow.CollectionMap<T, U> {
+    constructor(arg?: Map<T, U>);
     len(): number;
     valueOf(): Map<T, U>;
     _value: Map<T, U>;
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<Map<T, U>>): Value.ObjectAble<Map<T, U>>;
-    collectionMap(key: ControlFlow.MapEnum, ...args: any[]): BaseType;
+    collectionMap(key: ControlFlow.MapEnum, ...args: any[]): any;
 
-    collectionMap(key: ControlFlow.MapEnum, ...args: any[]): BaseType;
+    get(key: string): U | Value.NULL;
 
-    get(key: string): BaseType;
+    set(key: string, value: BaseType): Value.NULL;
 
-    set(key: string, value: BaseType): BaseType;
+    has(key: string): BooleanObject;
 
-    has(key: string): BaseType;
+    delete(key: string): BooleanObject;
 
-    delete(key: string): BaseType;
+    clear(): void;
 
-    clear(): BaseType;
+    entries(): ObjectTarget<IterableIterator<[T, U]>>;
 
-    entries(): BaseType;
+    forEach(callback: (value: U, key: T, map: Map<T, U>) => void, thisArg?: any): void;
 
-    forEach(callback: ControlFlow.MapFunction, thisArg?: any): BaseType;
+    values(): ObjectTarget<IterableIterator<U>>;
 
-    values(): BaseType;
+    keys(): ObjectTarget<IterableIterator<T>>;
 
-    keys(): BaseType;
-
-    get size(): NumberObject;
+    get size(): Value.NumberAble;
   }
   export class SetObject<T>
     extends ObjectTarget<Set<T>>
     implements Value.SetAble<T>, ControlFlow.CollectionSet {
+    constructor(value?: Set<T> | Array<T>);
     len(): number;
     valueOf(): Set<T>;
     _value: Set<T>;
     json(): Value.StringAble;
-    merge(target: Value.ObjectAble<Set<T>>): Value.ObjectAble<Set<T>>;
-    collectionSet(key: ControlFlow.SetEnum, ...args: any[]): BaseType;
+    merge(target: Value.ObjectAble<Set<T>>): ObjectTarget<Set<T>>;
+    collectionSet(key: ControlFlow.SetEnum, ...args: any[]): any;
 
-    collectionSet(key: ControlFlow.SetEnum, ...args: any[]): BaseType;
+    has(value: T): BooleanObject;
 
-    has(value: T): BaseType;
+    add(value: T): this;
 
-    add(value: T): BaseType;
+    delete(value: T): BooleanObject;
 
-    delete(value: T): BaseType;
-
-    clear(): BaseType;
+    clear(): void;
 
     forEach(
       callbackfn: (value: T, value2: T, set: Set<T>) => void,
       thisArg?: any
-    ): BaseType;
+    ): void;
 
-    entries(): ObjectTarget<IterableIterator<[T, T]>>;
+    entries(): ObjectTarget<IterableIterator<[T, T]>>
 
-    values(): ObjectTarget<IterableIterator<T>>;
+    values(): ObjectTarget<IterableIterator<T>>
 
-    keys(): ObjectTarget<IterableIterator<T>>;
+    keys(): ObjectTarget<IterableIterator<T>>
 
     get size(): NumberObject;
   }

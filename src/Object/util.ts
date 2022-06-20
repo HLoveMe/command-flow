@@ -147,7 +147,7 @@ export function SetUint(host: any) {
     ) {
       const execFunc = host.prototype[type]?.bind(
         this
-      ) as ControlFlow.SetFunction;
+      ) as ControlFlow.SetFunction<any>;
       if (execFunc && typeof execFunc === 'function') return execFunc(...args);
       return false;
     };

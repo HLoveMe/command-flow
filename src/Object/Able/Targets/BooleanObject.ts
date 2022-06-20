@@ -12,7 +12,7 @@ export class BooleanObject
 
   @DefaultValue(Object.prototype.toString.call(new Boolean(1)))
   static type: string;
-  _value: boolean;
+  declare _value: boolean;
   constructor(value: boolean = false) {
     super(value);
     this._value = value;

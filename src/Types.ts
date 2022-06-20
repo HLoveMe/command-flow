@@ -5,15 +5,15 @@ import { PlatformBridgeAble } from './Bridge/ConfigTypes';
 
 export namespace Value {
   export type NULL = null | undefined;
-  export declare interface ValueAble<V> {
+  export interface ValueAble<V> {
     _value: V;
     valueOf(): V;
   }
-  export declare interface ObjectAble<V> extends ValueAble<V> {
+  export interface ObjectAble<V> extends ValueAble<V> {
     json(): Value.StringAble;
     merge(target: ObjectAble<V>): ObjectAble<V>;
   }
-  export declare interface ArrayAble<T>
+  export interface ArrayAble<T>
     extends ValueAble<Array<T>>,
       ObjectAble<Array<T>> {
     len(): number;
@@ -23,49 +23,41 @@ export namespace Value {
     valueOf(): Array<T>;
   }
 
-  export declare interface MapAble<T, U>
+  export interface MapAble<T, U>
     extends ValueAble<Map<T, U>>,
       ObjectAble<Map<T, U>> {
     len(): number;
     valueOf(): Map<T, U>;
   }
 
-  export declare interface SetAble<T>
-    extends ValueAble<Set<T>>,
-      ObjectAble<Set<T>> {
+  export interface SetAble<T> extends ValueAble<Set<T>>, ObjectAble<Set<T>> {
     len(): number;
     valueOf(): Set<T>;
   }
 
-  export declare interface NumberAble
-    extends ValueAble<number>,
-      ObjectAble<number> {
+  export interface NumberAble extends ValueAble<number>, ObjectAble<number> {
     valueOf(): number;
   }
 
-  export declare interface StringAble
-    extends ValueAble<string>,
-      ObjectAble<string> {
+  export interface StringAble extends ValueAble<string>, ObjectAble<string> {
     valueOf(): string;
   }
 
-  export declare interface BooleanAble
-    extends ValueAble<boolean>,
-      ObjectAble<boolean> {
+  export interface BooleanAble extends ValueAble<boolean>, ObjectAble<boolean> {
     valueOf(): boolean;
   }
 
-  export declare interface DateAble extends ValueAble<Date>, ObjectAble<Date> {
+  export interface DateAble extends ValueAble<Date>, ObjectAble<Date> {
     timestamp(): number;
   }
 
-  export declare interface DataAble
+  export interface DataAble
     extends ValueAble<ArrayBuffer>,
       ObjectAble<ArrayBuffer> {
     data(): ArrayBuffer;
   }
 
-  export declare interface NullAble extends ValueAble<NULL>, ObjectAble<NULL> {
+  export interface NullAble extends ValueAble<NULL>, ObjectAble<NULL> {
     valueOf(): null | undefined;
     isTruly(): boolean;
     isNull(): boolean;

@@ -127,12 +127,17 @@ export namespace ControlFlow {
     key: SetEnum,
     ...args: any[]
   ) => BaseType | void;
-  export declare type SetFunction = ArrayFunction;
-  declare type SetAbsoluteAble = {
-    [T in SetEnum]: SetFunction;
+  export declare type SetFunction<U> = (
+    ...args: any[]
+  ) => BaseType | U | Value.NULL | any;
+  declare type SetAbsoluteAble<U> = {
+    [T in SetEnum]: SetFunction<U>;
   };
-  export interface CollectionSet extends SetAbsoluteAble {
-    collectionSet(key: SetEnum, ...args: any[]): BaseType;
+  export interface CollectionSet<U> extends SetAbsoluteAble<U> {
+    collectionSet(
+      key: SetEnum,
+      ...args: any[]
+    ): BaseType | U | Value.NULL | any;
   }
 
   // Map

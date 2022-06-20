@@ -8,7 +8,7 @@ export class DataObject
   implements Value.DataAble {
   static attributes: Set<string> = new Set();
   static empty: DataObject = new DataObject(new ArrayBuffer(0));
-  _value: ArrayBuffer;
+  declare _value: ArrayBuffer;
 
   constructor(value: ArrayBuffer = new ArrayBuffer(0)) {
     super(value);
