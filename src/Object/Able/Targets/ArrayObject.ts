@@ -8,14 +8,15 @@ import {
 } from '../../util';
 import { Value } from '../../../index';
 import { ObjectTarget } from './ObjectTarget';
-import { BaseType } from '../../../Types';
 import { NumberObject } from './NumberObject';
+import { StringObject } from './StringObject';
+import { BooleanObject } from './BooleanObject';
 import { decide } from '../../valueUtil';
 
 @ArrayUint
 export class ArrayObject<T>
   extends ObjectTarget<Array<T>>
-  implements Value.ArrayAble<T>, ControlFlow.CollectionArray
+  implements Value.ArrayAble<T>, ControlFlow.CollectionArray<T>
 {
   static attributes: Set<string> = new Set();
   static empty: ArrayObject<Object> = new ArrayObject([]);
@@ -61,84 +62,84 @@ export class ArrayObject<T>
   }
 
   @onlyDeclaration
-  collectionArray(key: ControlFlow.ArrayEnum, ...args: any[]): BaseType {
-    return null;
+  collectionArray(key: ControlFlow.ArrayEnum, ...args: any[]): any {
+    return null as any;
   }
   // array function
   @onlyDeclaration
-  concat(...items: (T | ArrayObject<T>)[]): BaseType {
-    return null;
+  concat(...items: (T | ArrayObject<T>)[]): ArrayObject<T> {
+    return null as any;
   }
   @onlyDeclaration
-  copyWithin(target: number, start: number, end?: number): BaseType {
-    return null;
+  copyWithin(target: number, start: number, end?: number): ArrayObject<T> {
+    return null as any;
   }
   @onlyDeclaration
-  fill(value: number, start?: number, end?: number): BaseType {
-    return null;
+  fill(value: number, start?: number, end?: number): this {
+    return null as any;
   }
   @onlyDeclaration
   find(
     predicate: (value: number, index: number, obj: Uint8Array) => boolean,
     thisArg?: any
-  ): BaseType {
-    return null;
+  ): Value.Mixins<Value.ObjectAble<T>> {
+    return null as any;
   }
 
   @onlyDeclaration
   findIndex(
     predicate: (value: number, index: number, obj: Uint8Array) => boolean,
     thisArg?: any
-  ): BaseType {
-    return null;
+  ): NumberObject {
+    return null as any;
   }
   @onlyDeclaration
-  lastIndexOf(searchElement: number, fromIndex?: number): BaseType {
-    return null;
+  lastIndexOf(searchElement: number, fromIndex?: number): NumberObject {
+    return null as any;
   }
   @onlyDeclaration
-  pop(): BaseType {
-    return null;
+  pop(): ObjectTarget<T> {
+    return null as any;
   }
   @onlyDeclaration
-  push(...items: T[]): BaseType {
-    return null;
+  push(...items: T[]): NumberObject {
+    return null as any;
   }
   @onlyDeclaration
-  reverse(): BaseType {
-    return null;
+  reverse(): ArrayObject<T> {
+    return null as any;
   }
   @onlyDeclaration
-  shift(): BaseType {
-    return null;
+  shift(): Value.Mixins {
+    return null as any;
   }
   @onlyDeclaration
-  unshift(...items: T[]): BaseType {
-    return null;
+  unshift(...items: T[]): NumberObject {
+    return null as any;
   }
   @onlyDeclaration
-  slice(start?: number, end?: number): BaseType {
-    return null;
+  slice(start?: number, end?: number): ArrayObject<T> {
+    return null as any;
   }
   @onlyDeclaration
-  sort(compareFn?: (a: number, b: number) => number): BaseType {
-    return null;
+  sort(compareFn?: (a: number, b: number) => number): this {
+    return null as any;
   }
   @onlyDeclaration
-  splice(start: number, deleteCount?: number, ...items: any[]): BaseType {
-    return null;
+  splice(start: number, deleteCount?: number, ...items: any[]): ArrayObject<T> {
+    return null as any;
   }
   @onlyDeclaration
-  includes(searchElement: T, fromIndex?: number): BaseType {
-    return null;
+  includes(searchElement: T, fromIndex?: number): BooleanObject {
+    return null as any;
   }
   @onlyDeclaration
-  indexOf(searchElement: T, fromIndex?: number): BaseType {
-    return null;
+  indexOf(searchElement: T, fromIndex?: number): NumberObject {
+    return null as any;
   }
   @onlyDeclaration
-  join(separator?: string): BaseType {
-    return null;
+  join(separator?: string): StringObject {
+    return null as any;
   }
 
   @onlyDeclaration
@@ -158,37 +159,37 @@ export class ArrayObject<T>
   forEach(
     callbackfn: (value: T, index: number, array: readonly T[]) => void,
     thisArg?: any
-  ): BaseType {
-    return null;
+  ): void {
+    return null as any;
   }
   @onlyDeclaration
   filter<S extends T>(
     predicate: (value: T, index: number, array: readonly T[]) => value is S,
     thisArg?: any
-  ): BaseType {
-    return null;
+  ): ArrayObject<T> {
+    return null as any;
   }
 
   @onlyDeclaration
   map<U>(
     callbackfn: (value: T, index: number, array: T[]) => U,
     thisArg?: any
-  ): BaseType {
-    return null;
+  ): ArrayObject<U> {
+    return null as any;
   }
   @onlyDeclaration
   every<S extends T>(
     predicate: (value: T, index: number, array: T[]) => value is S,
     thisArg?: any
-  ): BaseType {
-    return null;
+  ): BooleanObject {
+    return null as any;
   }
   @onlyDeclaration
   some(
     predicate: (value: T, index: number, array: T[]) => unknown,
     thisArg?: any
-  ): BaseType {
-    return null;
+  ): BooleanObject {
+    return null as any;
   }
 
   @onlyDeclaration
@@ -200,8 +201,8 @@ export class ArrayObject<T>
       array: T[]
     ) => T,
     initialValue?: T
-  ): BaseType {
-    return null;
+  ): ArrayObject<T> {
+    return null as any;
   }
   @onlyDeclaration
   reduceRight(
@@ -212,12 +213,8 @@ export class ArrayObject<T>
       array: T[]
     ) => T,
     initialValue?: T
-  ): BaseType {
-    return null;
-  }
-  @onlyDeclaration
-  toLocaleString(): BaseType {
-    return null;
+  ): ArrayObject<T> {
+    return null as any;
   }
 
   get length(): NumberObject {
