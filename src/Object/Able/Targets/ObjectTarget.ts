@@ -1,5 +1,5 @@
 
-import { DefaultValue } from "../../util";
+// import { DefaultValue } from "../../util";
 import { Value } from "../../../Types";
 export class ObjectTarget<T>
   implements Value.ObjectAble<T>
@@ -7,12 +7,7 @@ export class ObjectTarget<T>
   get [Symbol.toStringTag]() {
     return 'flow-object';
   }
-
-  static attributes: Set<string> = new Set();
-  static empty: ObjectTarget<Object> = new ObjectTarget({});
-
-  @DefaultValue(Object.prototype.toString.call({})) static type: string;
-  _value: T;
+  declare _value: T;
   constructor(value: T = {} as any) {
     this._value = value;
   }

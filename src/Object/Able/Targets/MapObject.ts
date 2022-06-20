@@ -1,5 +1,5 @@
 import { ControlFlow } from '../../Control';
-import { attribute, DefaultValue, MapUint, onlyDeclaration } from '../../util';
+import {  MapUint, onlyDeclaration } from '../../util';
 import { BaseType, Value } from '../../../Types';
 import { ObjectTarget } from './ObjectTarget';
 import { decide } from '../../valueUtil';
@@ -9,16 +9,13 @@ export class MapObject<T, U>
   extends ObjectTarget<Map<T, U>>
   implements Value.MapAble<T, U>, ControlFlow.CollectionMap<T, U>
 {
-  static attributes: Set<string> = new Set();
-  static empty: MapObject<any, any> = new MapObject(new Map());
   declare _value: Map<T, U>;
-  @DefaultValue(Object.prototype.toString.call(new Map())) static type: string;
   constructor(value: Map<T, U> = new Map()) {
     super(value);
     this._value = new Map(value);
   }
 
-  @attribute()
+  // @attribute()
   len(): number {
     return this._value.size;
   }

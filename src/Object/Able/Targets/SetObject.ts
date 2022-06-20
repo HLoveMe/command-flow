@@ -1,5 +1,5 @@
 import { ControlFlow } from '../../Control';
-import { attribute, DefaultValue, onlyDeclaration, SetUint } from '../../util';
+import { onlyDeclaration, SetUint } from '../../util';
 import { Value } from '../../../Types';
 import { ObjectTarget } from './ObjectTarget';
 import { BaseType } from '../../..';
@@ -11,10 +11,6 @@ export class SetObject<T>
   extends ObjectTarget<Set<T>>
   implements Value.SetAble<T>, ControlFlow.CollectionSet<T>
 {
-  static attributes: Set<string> = new Set();
-  static empty: SetObject<any> = new SetObject(new Set());
-
-  @DefaultValue(Object.prototype.toString.call(new Set())) static type: string;
   constructor(value?: Set<T> | Array<T>) {
     const init = !!value
       ? Array.isArray(value)
@@ -24,7 +20,7 @@ export class SetObject<T>
     super(init);
     this._value = init;
   }
-  @attribute()
+  // @attribute()
   len(): number {
     return this._value.size;
   }

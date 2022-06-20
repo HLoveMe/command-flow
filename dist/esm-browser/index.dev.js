@@ -718,9 +718,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var ArrayObject_1;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ArrayObject = void 0;
@@ -732,9 +729,6 @@ const StringObject_1 = __webpack_require__(/*! ./StringObject */ "./src/Object/A
 const BooleanObject_1 = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Targets/BooleanObject.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
 let ArrayObject = ArrayObject_1 = class ArrayObject extends ObjectTarget_1.ObjectTarget {
-    static attributes = new Set();
-    static empty = new ArrayObject_1([]);
-    static type;
     constructor(...values) {
         const first = values[0];
         const firstIsArray = first instanceof Array;
@@ -757,6 +751,7 @@ let ArrayObject = ArrayObject_1 = class ArrayObject extends ObjectTarget_1.Objec
     last() {
         return this[this._value.length - 1];
     }
+    // @attribute()@Params('index')
     valueOfIndex(index) {
         return this[index];
     }
@@ -855,31 +850,6 @@ let ArrayObject = ArrayObject_1 = class ArrayObject extends ObjectTarget_1.Objec
         return (0, valueUtil_1.decide)(this._value.length);
     }
 };
-__decorate([
-    (0, util_1.attribute)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Number)
-], ArrayObject.prototype, "len", null);
-__decorate([
-    (0, util_1.attribute)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
-], ArrayObject.prototype, "first", null);
-__decorate([
-    (0, util_1.attribute)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
-], ArrayObject.prototype, "last", null);
-__decorate([
-    (0, util_1.attribute)(),
-    __param(0, (0, util_1.Params)('index')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Object)
-], ArrayObject.prototype, "valueOfIndex", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
@@ -1048,10 +1018,6 @@ __decorate([
     __metadata("design:paramtypes", [Function, Object]),
     __metadata("design:returntype", ArrayObject)
 ], ArrayObject.prototype, "reduceRight", null);
-__decorate([
-    (0, util_1.DefaultValue)(Object.prototype.toString.call([])),
-    __metadata("design:type", String)
-], ArrayObject, "type", void 0);
 ArrayObject = ArrayObject_1 = __decorate([
     util_1.ArrayUint,
     __metadata("design:paramtypes", [Object])
@@ -1065,26 +1031,14 @@ exports.ArrayObject = ArrayObject;
 /*!**************************************************!*\
   !*** ./src/Object/Able/Targets/BooleanObject.ts ***!
   \**************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.BooleanObject = void 0;
-const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 class BooleanObject extends ObjectTarget_1.ObjectTarget {
-    static attributes = new Set();
-    static empty = new BooleanObject(false);
     static type;
     constructor(value = false) {
         super(value);
@@ -1094,16 +1048,6 @@ class BooleanObject extends ObjectTarget_1.ObjectTarget {
         return !!this._value;
     }
 }
-__decorate([
-    (0, util_1.attribute)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Boolean)
-], BooleanObject.prototype, "valueOf", null);
-__decorate([
-    (0, util_1.DefaultValue)(Object.prototype.toString.call(new Boolean(1))),
-    __metadata("design:type", String)
-], BooleanObject, "type", void 0);
 exports.BooleanObject = BooleanObject;
 
 
@@ -1113,26 +1057,14 @@ exports.BooleanObject = BooleanObject;
 /*!***********************************************!*\
   !*** ./src/Object/Able/Targets/DataObject.ts ***!
   \***********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DataObject = void 0;
-const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 class DataObject extends ObjectTarget_1.ObjectTarget {
-    static attributes = new Set();
-    static empty = new DataObject(new ArrayBuffer(0));
     constructor(value = new ArrayBuffer(0)) {
         super(value);
         this._value = value;
@@ -1140,16 +1072,11 @@ class DataObject extends ObjectTarget_1.ObjectTarget {
     data() {
         return this.valueOf();
     }
+    // @attribute()
     valueOf() {
         return this._value;
     }
 }
-__decorate([
-    (0, util_1.attribute)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", ArrayBuffer)
-], DataObject.prototype, "valueOf", null);
 exports.DataObject = DataObject;
 
 
@@ -1159,54 +1086,27 @@ exports.DataObject = DataObject;
 /*!***********************************************!*\
   !*** ./src/Object/Able/Targets/DateObject.ts ***!
   \***********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DateObject = void 0;
-const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 class DateObject extends ObjectTarget_1.ObjectTarget {
-    static attributes = new Set();
-    static empty = new DateObject(new Date());
-    static type;
     constructor(value = new Date()) {
         super(value);
         this._value = value;
     }
+    // @attribute()
     timestamp() {
         return this.valueOf().getTime();
     }
+    // @attribute()
     valueOf() {
         return new Date(this._value);
     }
 }
-__decorate([
-    (0, util_1.attribute)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Number)
-], DateObject.prototype, "timestamp", null);
-__decorate([
-    (0, util_1.attribute)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Date)
-], DateObject.prototype, "valueOf", null);
-__decorate([
-    (0, util_1.DefaultValue)(Object.prototype.toString.call(new Date())),
-    __metadata("design:type", String)
-], DateObject, "type", void 0);
 exports.DateObject = DateObject;
 
 
@@ -1237,13 +1137,11 @@ const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
 let MapObject = MapObject_1 = class MapObject extends ObjectTarget_1.ObjectTarget {
-    static attributes = new Set();
-    static empty = new MapObject_1(new Map());
-    static type;
     constructor(value = new Map()) {
         super(value);
         this._value = new Map(value);
     }
+    // @attribute()
     len() {
         return this._value.size;
     }
@@ -1289,12 +1187,6 @@ let MapObject = MapObject_1 = class MapObject extends ObjectTarget_1.ObjectTarge
         return (0, valueUtil_1.decide)(this._value.size);
     }
 };
-__decorate([
-    (0, util_1.attribute)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Number)
-], MapObject.prototype, "len", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
@@ -1355,10 +1247,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Object)
 ], MapObject.prototype, "keys", null);
-__decorate([
-    (0, util_1.DefaultValue)(Object.prototype.toString.call(new Map())),
-    __metadata("design:type", String)
-], MapObject, "type", void 0);
 MapObject = MapObject_1 = __decorate([
     util_1.MapUint,
     __metadata("design:paramtypes", [Map])
@@ -1372,30 +1260,19 @@ exports.MapObject = MapObject;
 /*!***********************************************!*\
   !*** ./src/Object/Able/Targets/NullObject.ts ***!
   \***********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.OptionalObject = void 0;
-const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 class OptionalObject extends ObjectTarget_1.ObjectTarget {
-    static attributes = new Set();
-    static type;
     constructor(value = null) {
         super(value);
         this._value = value;
     }
+    // @attribute()
     valueOf() {
         return this._value;
     }
@@ -1412,16 +1289,6 @@ class OptionalObject extends ObjectTarget_1.ObjectTarget {
         return this._value === undefined;
     }
 }
-__decorate([
-    (0, util_1.attribute)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], OptionalObject.prototype, "valueOf", null);
-__decorate([
-    (0, util_1.DefaultValue)(Object.prototype.toString.call(new Date())),
-    __metadata("design:type", String)
-], OptionalObject, "type", void 0);
 exports.OptionalObject = OptionalObject;
 
 
@@ -1452,13 +1319,12 @@ const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 const BooleanObject_1 = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Targets/BooleanObject.ts");
 let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget_1.ObjectTarget {
-    static attributes = new Set();
-    static empty = new NumberObject_1(0);
     static type;
     constructor(value = 1) {
         super(value);
         this._value = value;
     }
+    // @attribute()
     valueOf() {
         return this._value;
     }
@@ -1502,12 +1368,6 @@ let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget_1.Ob
     }
 };
 __decorate([
-    (0, util_1.attribute)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Number)
-], NumberObject.prototype, "valueOf", null);
-__decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, NumberObject]),
@@ -1519,10 +1379,6 @@ __decorate([
     __metadata("design:paramtypes", [String, NumberObject]),
     __metadata("design:returntype", NumberObject)
 ], NumberObject.prototype, "calc", null);
-__decorate([
-    (0, util_1.DefaultValue)(Object.prototype.toString.call(new Number())),
-    __metadata("design:type", String)
-], NumberObject, "type", void 0);
 NumberObject = NumberObject_1 = __decorate([
     util_1.CalcUnit,
     util_1.CompareUnit,
@@ -1537,30 +1393,16 @@ exports.NumberObject = NumberObject;
 /*!*************************************************!*\
   !*** ./src/Object/Able/Targets/ObjectTarget.ts ***!
   \*************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ObjectTarget = void 0;
-const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 class ObjectTarget {
     get [Symbol.toStringTag]() {
         return 'flow-object';
     }
-    static attributes = new Set();
-    static empty = new ObjectTarget({});
-    static type;
-    _value;
     constructor(value = {}) {
         this._value = value;
     }
@@ -1586,10 +1428,6 @@ class ObjectTarget {
         }
     }
 }
-__decorate([
-    (0, util_1.DefaultValue)(Object.prototype.toString.call({})),
-    __metadata("design:type", String)
-], ObjectTarget, "type", void 0);
 exports.ObjectTarget = ObjectTarget;
 
 
@@ -1620,9 +1458,6 @@ const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
 let SetObject = SetObject_1 = class SetObject extends ObjectTarget_1.ObjectTarget {
-    static attributes = new Set();
-    static empty = new SetObject_1(new Set());
-    static type;
     constructor(value) {
         const init = !!value
             ? Array.isArray(value)
@@ -1632,6 +1467,7 @@ let SetObject = SetObject_1 = class SetObject extends ObjectTarget_1.ObjectTarge
         super(init);
         this._value = init;
     }
+    // @attribute()
     len() {
         return this._value.size;
     }
@@ -1676,12 +1512,6 @@ let SetObject = SetObject_1 = class SetObject extends ObjectTarget_1.ObjectTarge
         return (0, valueUtil_1.decide)(this._value.size);
     }
 };
-__decorate([
-    (0, util_1.attribute)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Number)
-], SetObject.prototype, "len", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
@@ -1736,10 +1566,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Object)
 ], SetObject.prototype, "keys", null);
-__decorate([
-    (0, util_1.DefaultValue)(Object.prototype.toString.call(new Set())),
-    __metadata("design:type", String)
-], SetObject, "type", void 0);
 SetObject = SetObject_1 = __decorate([
     util_1.SetUint,
     __metadata("design:paramtypes", [Object])
@@ -1753,45 +1579,24 @@ exports.SetObject = SetObject;
 /*!*************************************************!*\
   !*** ./src/Object/Able/Targets/StringObject.ts ***!
   \*************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.StringObject = void 0;
-const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 class StringObject extends ObjectTarget_1.ObjectTarget {
-    static attributes = new Set();
-    static empty = new StringObject("");
     static type;
     constructor(value = '') {
         super(value);
         this._value = value;
     }
+    // @attribute()
     valueOf() {
         return this._value;
     }
 }
-__decorate([
-    (0, util_1.attribute)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
-], StringObject.prototype, "valueOf", null);
-__decorate([
-    (0, util_1.DefaultValue)(Object.prototype.toString.call(new String())),
-    __metadata("design:type", String)
-], StringObject, "type", void 0);
 exports.StringObject = StringObject;
 
 
@@ -1904,36 +1709,32 @@ var ControlFlow;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.DefaultValue = exports.ObjectManager = exports.Params = exports.attribute = exports.onlyDeclarationTag = void 0;
+exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.onlyDeclarationTag = void 0;
 const ObjectAble_1 = __webpack_require__(/*! ./Able/ObjectAble */ "./src/Object/Able/ObjectAble.ts");
 const Control_1 = __webpack_require__(/*! ./Control */ "./src/Object/Control.ts");
 const valueUtil_1 = __webpack_require__(/*! ./valueUtil */ "./src/Object/valueUtil.ts");
 exports.onlyDeclarationTag = 'onlyDeclaration';
-function attribute() {
-    return function ($1, $2, descriptor) {
-        $1.constructor.attributes.add($2);
-    };
-}
-exports.attribute = attribute;
-function Params(params) {
-    return function (target, methodName, paramsIndex) {
-        !target.$Meta && (target.$Meta = {});
-        !target.$Meta[methodName] && (target.$Meta[methodName] = {});
-        target.$Meta[methodName][paramsIndex] = params;
-    };
-}
-exports.Params = Params;
-class ObjectManager {
-    static types = new Set();
-}
-exports.ObjectManager = ObjectManager;
-function DefaultValue(value) {
-    return function (target, propertyName) {
-        target[propertyName] = value;
-        ObjectManager.types.add(value);
-    };
-}
-exports.DefaultValue = DefaultValue;
+// export function attribute() {
+//   return function ($1: any, $2: string, descriptor: PropertyDescriptor) {
+//     ($1.constructor.attributes as Set<string>).add($2);
+//   };
+// }
+// export function Params(params: any) {
+//   return function (target: any, methodName: any, paramsIndex: any) {
+//     !target.$Meta && (target.$Meta = {});
+//     !target.$Meta[methodName] && (target.$Meta[methodName] = {});
+//     target.$Meta[methodName][paramsIndex] = params;
+//   };
+// }
+// export class ObjectManager {
+//   static types: Set<string> = new Set();
+// }
+// export function DefaultValue(value: string) {
+//   return function (target: any, propertyName: string) {
+//     target[propertyName] = value;
+//     ObjectManager.types.add(value);
+//   };
+// }
 /**
  * 声明 方式无效 仅仅作为标记
  */

@@ -1,10 +1,7 @@
 import { ControlFlow } from '../../Control';
 import {
   ArrayUint,
-  attribute,
-  DefaultValue,
   onlyDeclaration,
-  Params,
 } from '../../util';
 import { Value } from '../../../index';
 import { ObjectTarget } from './ObjectTarget';
@@ -18,12 +15,7 @@ export class ArrayObject<T>
   extends ObjectTarget<Array<T>>
   implements Value.ArrayAble<T>, ControlFlow.CollectionArray<T>
 {
-  static attributes: Set<string> = new Set();
-  static empty: ArrayObject<Object> = new ArrayObject([]);
-
-  @DefaultValue(Object.prototype.toString.call([])) static type: string;
   declare _value: Array<T>;
-
   constructor(...values: Array<Array<T> | number>) {
     const first = values[0];
     const firstIsArray = first instanceof Array;
@@ -37,20 +29,18 @@ export class ArrayObject<T>
     this._value = init;
   }
 
-  @attribute()
   len(): number {
     return this._value.length;
   }
-  @attribute()
   first(): T {
     return this[0];
   }
-  @attribute()
+
   last(): T {
     return this[this._value.length - 1];
   }
-  @attribute()
-  valueOfIndex(@Params('index') index: number): T {
+  // @attribute()@Params('index')
+  valueOfIndex( index: number): T {
     return this[index];
   }
   valueOf(): Array<T> {

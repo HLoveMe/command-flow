@@ -1,5 +1,5 @@
 import { ControlFlow } from "../../Control";
-import { attribute, CalcUnit, CompareUnit, DefaultValue ,onlyDeclaration} from "../../util";
+import { CalcUnit, CompareUnit ,onlyDeclaration} from "../../util";
 import { Value } from "../../../Types";
 import { ObjectTarget } from "./ObjectTarget";
 import { BooleanObject } from "./BooleanObject";
@@ -13,16 +13,13 @@ export class NumberObject
   ControlFlow.Compare<Value.NumberAble>,
   ControlFlow.Calc<Value.NumberAble>
 {
-  static attributes: Set<string> = new Set();
-  static empty: NumberObject = new NumberObject(0);
-  @DefaultValue(Object.prototype.toString.call(new Number()))
   static type: string;
   declare _value: number;
   constructor(value: number = 1) {
     super(value);
     this._value = value;
   }
-  @attribute()
+  // @attribute()
   valueOf(): number {
     return this._value;
   }
