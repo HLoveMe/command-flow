@@ -973,7 +973,7 @@ declare module 'command-flow' {
     json(): StringObject;
     merge(target: StringObject): StringObject;
 
-    
+
     execString(key: ControlFlow.StringEnum, ...args: any[]): any;
 
     get length(): NumberObject;
@@ -1016,7 +1016,7 @@ declare module 'command-flow' {
 
     match(regexp: RegExp): StringObject;
 
-    matchAll(regexp: RegExp): StringObject;
+    matchAll(regexp: RegExp): ObjectTarget<IterableIterator<RegExpMatchArray>>;
 
     normalize(form?: string): StringObject;
     normalize(form: "NFC" | "NFD" | "NFKC" | "NFKD"): StringObject;
@@ -1027,10 +1027,9 @@ declare module 'command-flow' {
 
     repeat(count: number): StringObject;
 
-    replace(
-      searchValue: string | RegExp,
-      replaceValue: string | ((substring: string, ...args: any[]) => string)
-    ): StringObject;
+    replace(searchValue: { [Symbol.replace](string: string, replaceValue: string): string; }, replaceValue: string): StringObject;
+    replace(searchValue: { [Symbol.replace](string: string, replacer: (substring: string, ...args: any[]) => string): string; }, replacer: (substring: string, ...args: any[]) => string): StringObject;
+
 
     replaceAll(
       searchValue: string | RegExp,
