@@ -1086,14 +1086,27 @@ exports.DataObject = DataObject;
 /*!***********************************************!*\
   !*** ./src/Object/Able/Targets/DateObject.ts ***!
   \***********************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DateObject = void 0;
+const Control_1 = __webpack_require__(/*! ../../Control */ "./src/Object/Control.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
-class DateObject extends ObjectTarget_1.ObjectTarget {
+const StringObject_1 = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Targets/StringObject.ts");
+const NumberObject_1 = __webpack_require__(/*! ./NumberObject */ "./src/Object/Able/Targets/NumberObject.ts");
+const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
+let DateObject = class DateObject extends ObjectTarget_1.ObjectTarget {
     constructor(value = new Date()) {
         super(value);
         this._value = value;
@@ -1106,7 +1119,389 @@ class DateObject extends ObjectTarget_1.ObjectTarget {
     valueOf() {
         return new Date(this._value);
     }
-}
+    execDate(key, ...args) {
+        throw new Error('Method not implemented.');
+    }
+    toDateString() {
+        return null;
+    }
+    toTimeString() {
+        return null;
+    }
+    toLocaleString() {
+        return null;
+    }
+    toLocaleDateString() {
+        return null;
+    }
+    toLocaleTimeString() {
+        return null;
+    }
+    getTime() {
+        return null;
+    }
+    getFullYear() {
+        return null;
+    }
+    getUTCFullYear() {
+        return null;
+    }
+    getMonth() {
+        return null;
+    }
+    getUTCMonth() {
+        return null;
+    }
+    getDate() {
+        return null;
+    }
+    getUTCDate() {
+        return null;
+    }
+    getDay() {
+        return null;
+    }
+    getUTCDay() {
+        return null;
+    }
+    getHours() {
+        return null;
+    }
+    getUTCHours() {
+        return null;
+    }
+    getMinutes() {
+        return null;
+    }
+    getUTCMinutes() {
+        return null;
+    }
+    getSeconds() {
+        return null;
+    }
+    getUTCSeconds() {
+        return null;
+    }
+    getMilliseconds() {
+        return null;
+    }
+    getUTCMilliseconds() {
+        return null;
+    }
+    getTimezoneOffset() {
+        return null;
+    }
+    setTime(time) {
+        return null;
+    }
+    setMilliseconds(ms) {
+        return null;
+    }
+    setUTCMilliseconds(ms) {
+        return null;
+    }
+    setSeconds(sec, ms) {
+        return null;
+    }
+    setUTCSeconds(sec, ms) {
+        return null;
+    }
+    setMinutes(min, sec, ms) {
+        return null;
+    }
+    setUTCMinutes(min, sec, ms) {
+        return null;
+    }
+    setHours(hours, min, sec, ms) {
+        return null;
+    }
+    setUTCHours(hours, min, sec, ms) {
+        return null;
+    }
+    setDate(date) {
+        return null;
+    }
+    setUTCDate(date) {
+        return null;
+    }
+    setMonth(month, date) {
+        return null;
+    }
+    setUTCMonth(month, date) {
+        return null;
+    }
+    setFullYear(year, month, date) {
+        return null;
+    }
+    setUTCFullYear(year, month, date) {
+        return null;
+    }
+    toUTCString() {
+        return null;
+    }
+    toISOString() {
+        return null;
+    }
+    toJSON(key) {
+        return null;
+    }
+};
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], DateObject.prototype, "execDate", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", StringObject_1.StringObject)
+], DateObject.prototype, "toDateString", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", StringObject_1.StringObject)
+], DateObject.prototype, "toTimeString", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", StringObject_1.StringObject)
+], DateObject.prototype, "toLocaleString", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", StringObject_1.StringObject)
+], DateObject.prototype, "toLocaleDateString", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", StringObject_1.StringObject)
+], DateObject.prototype, "toLocaleTimeString", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getTime", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getFullYear", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getUTCFullYear", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getMonth", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getUTCMonth", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getDate", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getUTCDate", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getDay", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getUTCDay", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getHours", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getUTCHours", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getMinutes", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getUTCMinutes", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getSeconds", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getUTCSeconds", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getMilliseconds", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getUTCMilliseconds", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "getTimezoneOffset", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setTime", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setMilliseconds", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setUTCMilliseconds", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setSeconds", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setUTCSeconds", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number, Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setMinutes", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number, Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setUTCMinutes", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number, Number, Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setHours", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number, Number, Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setUTCHours", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setDate", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setUTCDate", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setMonth", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setUTCMonth", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number, Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setFullYear", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number, Number]),
+    __metadata("design:returntype", NumberObject_1.NumberObject)
+], DateObject.prototype, "setUTCFullYear", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", StringObject_1.StringObject)
+], DateObject.prototype, "toUTCString", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", StringObject_1.StringObject)
+], DateObject.prototype, "toISOString", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", StringObject_1.StringObject)
+], DateObject.prototype, "toJSON", null);
+DateObject = __decorate([
+    util_1.DateUint,
+    __metadata("design:paramtypes", [Date])
+], DateObject);
 exports.DateObject = DateObject;
 
 
@@ -2177,7 +2572,7 @@ var ControlFlow;
       newStr = str.slice(0,1).toUpperCase() +str.slice(1);
       return newStr;
     }
-    c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "$$"+titleCase($1)})
+    c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "+titleCase($1)})
    */
     let SetEnum;
     (function (SetEnum) {
@@ -2253,6 +2648,50 @@ var ControlFlow;
         StringEnum["ValueOf"] = "valueOf";
         StringEnum["At"] = "at";
     })(StringEnum = ControlFlow.StringEnum || (ControlFlow.StringEnum = {}));
+    let DateEnum;
+    (function (DateEnum) {
+        DateEnum["ToDateString"] = "toDateString";
+        DateEnum["ToTimeString"] = "toTimeString";
+        DateEnum["ToISOString"] = "toISOString";
+        DateEnum["ToUTCString"] = "toUTCString";
+        DateEnum["GetDate"] = "getDate";
+        DateEnum["SetDate"] = "setDate";
+        DateEnum["GetDay"] = "getDay";
+        DateEnum["GetFullYear"] = "getFullYear";
+        DateEnum["SetFullYear"] = "setFullYear";
+        DateEnum["GetHours"] = "getHours";
+        DateEnum["SetHours"] = "setHours";
+        DateEnum["GetMilliseconds"] = "getMilliseconds";
+        DateEnum["SetMilliseconds"] = "setMilliseconds";
+        DateEnum["GetMinutes"] = "getMinutes";
+        DateEnum["SetMinutes"] = "setMinutes";
+        DateEnum["GetMonth"] = "getMonth";
+        DateEnum["SetMonth"] = "setMonth";
+        DateEnum["GetSeconds"] = "getSeconds";
+        DateEnum["SetSeconds"] = "setSeconds";
+        DateEnum["GetTime"] = "getTime";
+        DateEnum["SetTime"] = "setTime";
+        DateEnum["GetTimezoneOffset"] = "getTimezoneOffset";
+        DateEnum["GetUTCDate"] = "getUTCDate";
+        DateEnum["SetUTCDate"] = "setUTCDate";
+        DateEnum["GetUTCDay"] = "getUTCDay";
+        DateEnum["GetUTCFullYear"] = "getUTCFullYear";
+        DateEnum["SetUTCFullYear"] = "setUTCFullYear";
+        DateEnum["GetUTCHours"] = "getUTCHours";
+        DateEnum["SetUTCHours"] = "setUTCHours";
+        DateEnum["GetUTCMilliseconds"] = "getUTCMilliseconds";
+        DateEnum["SetUTCMilliseconds"] = "setUTCMilliseconds";
+        DateEnum["GetUTCMinutes"] = "getUTCMinutes";
+        DateEnum["SetUTCMinutes"] = "setUTCMinutes";
+        DateEnum["GetUTCMonth"] = "getUTCMonth";
+        DateEnum["SetUTCMonth"] = "setUTCMonth";
+        DateEnum["GetUTCSeconds"] = "getUTCSeconds";
+        DateEnum["SetUTCSeconds"] = "setUTCSeconds";
+        DateEnum["ToJSON"] = "toJSON";
+        DateEnum["ToLocaleString"] = "toLocaleString";
+        DateEnum["ToLocaleDateString"] = "toLocaleDateString";
+        DateEnum["ToLocaleTimeString"] = "toLocaleTimeString";
+    })(DateEnum = ControlFlow.DateEnum || (ControlFlow.DateEnum = {}));
 })(ControlFlow = exports.ControlFlow || (exports.ControlFlow = {}));
 
 
@@ -2267,7 +2706,7 @@ var ControlFlow;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.NumberUint = exports.StringUint = exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.onlyDeclarationTag = void 0;
+exports.DateUint = exports.NumberUint = exports.StringUint = exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.onlyDeclarationTag = void 0;
 const ObjectAble_1 = __webpack_require__(/*! ./Able/ObjectAble */ "./src/Object/Able/ObjectAble.ts");
 const Control_1 = __webpack_require__(/*! ./Control */ "./src/Object/Control.ts");
 const valueUtil_1 = __webpack_require__(/*! ./valueUtil */ "./src/Object/valueUtil.ts");
@@ -2476,6 +2915,34 @@ function NumberUint(host) {
         };
 }
 exports.NumberUint = NumberUint;
+function DateUint(host) {
+    Object.keys(Control_1.ControlFlow.DateEnum).forEach((item) => {
+        const key = Control_1.ControlFlow.DateEnum[item];
+        const comFunction = host.prototype[key];
+        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
+            host.prototype[key] = function (...args) {
+                const value = this.valueOf();
+                const execFunc = value[key];
+                let result;
+                if (typeof execFunc === 'function') {
+                    result = execFunc.bind(value)(...args);
+                }
+                else
+                    result = value;
+                return (0, valueUtil_1.decide)(result);
+            };
+        }
+    });
+    if (host.prototype.execDate?.declaration === exports.onlyDeclarationTag ||
+        !!host.prototype.execDate === false)
+        host.prototype.execDate = function (type, ...args) {
+            const execFunc = host.prototype[type]?.bind(this);
+            if (execFunc && typeof execFunc === 'function')
+                return execFunc(...args);
+            return false;
+        };
+}
+exports.DateUint = DateUint;
 
 
 /***/ }),

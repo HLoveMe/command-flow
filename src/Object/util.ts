@@ -225,7 +225,7 @@ export function NumberUint(host: any) {
     const comFunction = host.prototype[key];
     if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
       host.prototype[key] = function (...args: any[]) {
-        const value = (this as Value.StringAble).valueOf();
+        const value = (this as Value.NumberAble).valueOf();
         const execFunc = value[key];
         let result;
         if (typeof execFunc === 'function') {
@@ -247,6 +247,40 @@ export function NumberUint(host: any) {
       const execFunc = host.prototype[type]?.bind(
         this
       ) as ControlFlow.NumberExec;
+      if (execFunc && typeof execFunc === 'function') return execFunc(...args);
+      return false;
+    };
+}
+
+
+export function DateUint(host: any) {
+  Object.keys(ControlFlow.DateEnum).forEach((item) => {
+    const key = ControlFlow.DateEnum[item];
+    const comFunction = host.prototype[key];
+    if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
+      host.prototype[key] = function (...args: any[]) {
+        const value = (this as Value.DataAble).valueOf();
+        const execFunc = value[key];
+        let result;
+        if (typeof execFunc === 'function') {
+          result = (execFunc as Function).bind(value)(...args);
+        } else result = value;
+        return decide(result);
+      };
+    }
+  });
+
+  if (
+    host.prototype.execDate?.declaration === onlyDeclarationTag ||
+    !!host.prototype.execDate === false
+  )
+    host.prototype.execDate = function (
+      type: ControlFlow.DateEnum,
+      ...args: any[]
+    ) {
+      const execFunc = host.prototype[type]?.bind(
+        this
+      ) as ControlFlow.DateExec;
       if (execFunc && typeof execFunc === 'function') return execFunc(...args);
       return false;
     };

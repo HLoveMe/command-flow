@@ -2,11 +2,46 @@ import { Observable, PartialObserver, Subject, Subscription } from 'rxjs';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 type TypeNumber =
   | 0 // Automatic type number
-  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
-  | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
-  | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30
-  | 31 | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 | 40
-  ;
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17
+  | 18
+  | 19
+  | 20
+  | 21
+  | 22
+  | 23
+  | 24
+  | 25
+  | 26
+  | 27
+  | 28
+  | 29
+  | 30
+  | 31
+  | 32
+  | 33
+  | 34
+  | 35
+  | 36
+  | 37
+  | 38
+  | 39
+  | 40;
 type ErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H';
 declare module 'command-flow' {
   export namespace Value {
@@ -21,7 +56,7 @@ declare module 'command-flow' {
     }
     export interface ArrayAble<T>
       extends ValueAble<Array<T>>,
-      ObjectAble<Array<T>> {
+        ObjectAble<Array<T>> {
       len(): number;
       first(): T;
       last(): T;
@@ -31,7 +66,7 @@ declare module 'command-flow' {
 
     export interface MapAble<T, U>
       extends ValueAble<Map<T, U>>,
-      ObjectAble<Map<T, U>> {
+        ObjectAble<Map<T, U>> {
       len(): number;
       valueOf(): Map<T, U>;
     }
@@ -51,7 +86,7 @@ declare module 'command-flow' {
 
     export interface BooleanAble
       extends ValueAble<Boolean>,
-      ObjectAble<Boolean> {
+        ObjectAble<Boolean> {
       valueOf(): Boolean;
     }
 
@@ -61,13 +96,11 @@ declare module 'command-flow' {
 
     export interface DataAble
       extends ValueAble<ArrayBuffer>,
-      ObjectAble<ArrayBuffer> {
+        ObjectAble<ArrayBuffer> {
       data(): ArrayBuffer;
     }
 
-    export interface NullAble
-      extends ValueAble<NULL>,
-      ObjectAble<NULL> {
+    export interface NullAble extends ValueAble<NULL>, ObjectAble<NULL> {
       valueOf(): null | undefined;
       isTruly(): boolean;
       isNull(): boolean;
@@ -76,7 +109,7 @@ declare module 'command-flow' {
     export interface Mixins<
       V extends Value.ObjectAble<any> = Value.ObjectAble<any>,
       U extends any = NULL
-      > extends ValueAble<V | U> { }
+    > extends ValueAble<V | U> {}
   }
 
   export type BaseType =
@@ -162,9 +195,9 @@ declare module 'command-flow' {
     }
     export interface Work
       extends WorkOperation,
-      WorkContext,
-      WorkChain,
-      WorkConfig {
+        WorkContext,
+        WorkChain,
+        WorkConfig {
       name: string;
       id: number;
       uuid: WorkUUID;
@@ -280,9 +313,9 @@ declare module 'command-flow' {
         image: DataString;
         error?: Error;
       }
-      export interface TakePhotoOption { }
+      export interface TakePhotoOption {}
 
-      export interface VideoOption { }
+      export interface VideoOption {}
       export interface VideoResponse {
         videoUrl?: string;
         error?: Error;
@@ -292,13 +325,13 @@ declare module 'command-flow' {
         latitude?: number;
         accuracy?: number;
       }
-      export interface PositionOption { }
-      export interface AudioResponse { }
+      export interface PositionOption {}
+      export interface AudioResponse {}
 
-      export interface VibratorOption { }
-      export interface BluetoothDevice { }
-      export interface SpeechOption { }
-      export interface SpeechResponse { }
+      export interface VibratorOption {}
+      export interface BluetoothDevice {}
+      export interface SpeechOption {}
+      export interface SpeechResponse {}
 
       export interface Permission {
         // 权限处理
@@ -407,7 +440,7 @@ declare module 'command-flow' {
       LoadFileWork: Bridge.FileOption;
       FetchWork: Bridge.RequestParamsInit;
     }
-    export interface Environment { }
+    export interface Environment {}
     export interface ContextRunOption {
       development: boolean;
       environment?: Environment;
@@ -458,9 +491,9 @@ declare module 'command-flow' {
 
     // Number
     export enum NumberEnum {
-      ToExponential$ = "toExponential",
-      ToFixed$ = "toFixed",
-      ToPrecision = 'toPrecision'
+      ToExponential$ = 'toExponential',
+      ToFixed$ = 'toFixed',
+      ToPrecision = 'toPrecision',
     }
 
     //集合属性
@@ -576,6 +609,50 @@ declare module 'command-flow' {
       At = 'at',
     }
 
+    export enum DateEnum {
+      ToDateString = 'toDateString',
+      ToTimeString = 'toTimeString',
+      ToISOString = 'toISOString',
+      ToUTCString = 'toUTCString',
+      GetDate = 'getDate',
+      SetDate = 'setDate',
+      GetDay = 'getDay',
+      GetFullYear = 'getFullYear',
+      SetFullYear = 'setFullYear',
+      GetHours = 'getHours',
+      SetHours = 'setHours',
+      GetMilliseconds = 'getMilliseconds',
+      SetMilliseconds = 'setMilliseconds',
+      GetMinutes = 'getMinutes',
+      SetMinutes = 'setMinutes',
+      GetMonth = 'getMonth',
+      SetMonth = 'setMonth',
+      GetSeconds = 'getSeconds',
+      SetSeconds = 'setSeconds',
+      GetTime = 'getTime',
+      SetTime = 'setTime',
+      GetTimezoneOffset = 'getTimezoneOffset',
+      GetUTCDate = 'getUTCDate',
+      SetUTCDate = 'setUTCDate',
+      GetUTCDay = 'getUTCDay',
+      GetUTCFullYear = 'getUTCFullYear',
+      SetUTCFullYear = 'setUTCFullYear',
+      GetUTCHours = 'getUTCHours',
+      SetUTCHours = 'setUTCHours',
+      GetUTCMilliseconds = 'getUTCMilliseconds',
+      SetUTCMilliseconds = 'setUTCMilliseconds',
+      GetUTCMinutes = 'getUTCMinutes',
+      SetUTCMinutes = 'setUTCMinutes',
+      GetUTCMonth = 'getUTCMonth',
+      SetUTCMonth = 'setUTCMonth',
+      GetUTCSeconds = 'getUTCSeconds',
+      SetUTCSeconds = 'setUTCSeconds',
+      ToJSON = 'toJSON',
+      ToLocaleString = 'toLocaleString',
+      ToLocaleDateString = 'toLocaleDateString',
+      ToLocaleTimeString = 'toLocaleTimeString',
+    }
+
     // 比较 接口
     export type CompareExec = (
       type: CompareEnum,
@@ -660,6 +737,16 @@ declare module 'command-flow' {
     export interface ObjectNumber extends NumberFunction {
       execNumber(key: NumberEnum, ...args: any[]): any;
     }
+
+    // Date
+
+    export declare type DateExec = NumberExec;
+    export declare type DateFunction = {
+      [T in DateEnum]: DateExec;
+    };
+    export interface ObjectDate extends DateFunction {
+      execDate(key: NumberEnum, ...args: any[]): any;
+    }
   }
   export class Context implements ContextImpl {
     status: WorkType.WorkRunStatus;
@@ -681,8 +768,7 @@ declare module 'command-flow' {
     clear(): void;
     stopWorkChain(): Promise<boolean>;
   }
-  export class Instruction
-    extends Subject<ChannelObject>
+  export class Instruction extends Subject<ChannelObject>
     implements WorkType.Work, Environment.EnvironmentAble {
     observers: any[];
     isAble(): Boolean;
@@ -706,9 +792,9 @@ declare module 'command-flow' {
     pools: Subscription[];
     config: WorkType.ConfigInfo;
   }
-  export class InstructionMTM extends Instruction { }
-  export class InstructionOTM extends Instruction { }
-  export class InstructionOTO extends Instruction { }
+  export class InstructionMTM extends Instruction {}
+  export class InstructionOTM extends Instruction {}
+  export class InstructionOTO extends Instruction {}
   export class TimeoutWork extends InstructionOTO {
     constructor(interval?: number);
   }
@@ -723,17 +809,17 @@ declare module 'command-flow' {
       notifier?: Observable<any>
     );
   }
-  export class Base64EnCodeWork extends InstructionMTM { }
-  export class Base64DecodeWork extends InstructionMTM { }
+  export class Base64EnCodeWork extends InstructionMTM {}
+  export class Base64DecodeWork extends InstructionMTM {}
   export class LoadFileWork extends InstructionOTO {
     constructor(config?: Bridge.FileOption);
   }
-  export class OpenURLWork extends InstructionOTO { }
-  export class QRCodeWork extends InstructionOTO { }
+  export class OpenURLWork extends InstructionOTO {}
+  export class QRCodeWork extends InstructionOTO {}
   export class RunCommandWork extends InstructionOTO {
     constructor(template?: string);
   }
-  export class FetchWork extends InstructionOTO { }
+  export class FetchWork extends InstructionOTO {}
 
   export class ObjectTarget<T> implements Value.ObjectAble<T> {
     json(): Value.StringAble;
@@ -742,10 +828,8 @@ declare module 'command-flow' {
     valueOf(): T;
   }
 
-  export class ArrayObject<T>
-    extends ObjectTarget<Array<T>>
+  export class ArrayObject<T> extends ObjectTarget<Array<T>>
     implements Value.ArrayAble<T>, ControlFlow.CollectionArray {
-
     constructor(...args: any[]);
     constructor(count: number);
     constructor(value: T);
@@ -757,7 +841,10 @@ declare module 'command-flow' {
     _value: T[];
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<T[]>): Value.ObjectAble<T[]>;
-    collectionArray(key: ControlFlow.ArrayEnum, ...args: any[]): BaseType | void;
+    collectionArray(
+      key: ControlFlow.ArrayEnum,
+      ...args: any[]
+    ): BaseType | void;
     // array function
 
     concat(...items: (T | ArrayObject<T>)[]): ArrayObject<T>;
@@ -818,7 +905,10 @@ declare module 'command-flow' {
       thisArg?: any
     ): ArrayObject<S>;
 
-    filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): ArrayObject<T>;
+    filter(
+      predicate: (value: T, index: number, array: T[]) => unknown,
+      thisArg?: any
+    ): ArrayObject<T>;
 
     map<U>(
       callbackfn: (value: T, index: number, array: T[]) => U,
@@ -855,19 +945,23 @@ declare module 'command-flow' {
       initialValue?: T
     ): ArrayObject<T>;
 
-    reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): ArrayObject<U>;
-
+    reduceRight<U>(
+      callbackfn: (
+        previousValue: U,
+        currentValue: T,
+        currentIndex: number,
+        array: T[]
+      ) => U,
+      initialValue: U
+    ): ArrayObject<U>;
 
     toLocaleString(): StringObject;
 
     get length(): NumberObject;
   }
 
-  export class MapObject<T, U>
-    extends ObjectTarget<Map<T, U>>
-    implements
-    Value.MapAble<T, U>,
-    ControlFlow.CollectionMap<T, U> {
+  export class MapObject<T, U> extends ObjectTarget<Map<T, U>>
+    implements Value.MapAble<T, U>, ControlFlow.CollectionMap<T, U> {
     constructor(arg?: Map<T, U>);
     len(): number;
     valueOf(): Map<T, U>;
@@ -888,7 +982,10 @@ declare module 'command-flow' {
 
     entries(): ObjectTarget<IterableIterator<[T, U]>>;
 
-    forEach(callback: (value: U, key: T, map: Map<T, U>) => void, thisArg?: any): void;
+    forEach(
+      callback: (value: U, key: T, map: Map<T, U>) => void,
+      thisArg?: any
+    ): void;
 
     values(): ObjectTarget<IterableIterator<U>>;
 
@@ -896,8 +993,7 @@ declare module 'command-flow' {
 
     get size(): Value.NumberAble;
   }
-  export class SetObject<T>
-    extends ObjectTarget<Set<T>>
+  export class SetObject<T> extends ObjectTarget<Set<T>>
     implements Value.SetAble<T>, ControlFlow.CollectionSet {
     constructor(value?: Set<T> | Array<T>);
     len(): number;
@@ -920,32 +1016,29 @@ declare module 'command-flow' {
       thisArg?: any
     ): void;
 
-    entries(): ObjectTarget<IterableIterator<[T, T]>>
+    entries(): ObjectTarget<IterableIterator<[T, T]>>;
 
-    values(): ObjectTarget<IterableIterator<T>>
+    values(): ObjectTarget<IterableIterator<T>>;
 
-    keys(): ObjectTarget<IterableIterator<T>>
+    keys(): ObjectTarget<IterableIterator<T>>;
 
     get size(): NumberObject;
   }
 
-  export class NumberObject
-    extends ObjectTarget<number>
+  export class NumberObject extends ObjectTarget<number>
     implements
-    Value.NumberAble,
-    ControlFlow.Compare<Value.NumberAble>,
-    ControlFlow.Calc<Value.NumberAble>,
-    ControlFlow.ObjectNumber, ControlFlow.NumberFunction {
+      Value.NumberAble,
+      ControlFlow.Compare<Value.NumberAble>,
+      ControlFlow.Calc<Value.NumberAble>,
+      ControlFlow.ObjectNumber,
+      ControlFlow.NumberFunction {
     constructor(value: number);
     valueOf(): number;
     _value: number;
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<number>): Value.ObjectAble<number>;
 
-    compare(
-      type: ControlFlow.CompareEnum,
-      target: NumberObject
-    ): BooleanObject;
+    compare(type: ControlFlow.CompareEnum, target: NumberObject): BooleanObject;
     more(target: Value.ValueAble<any>): BooleanObject;
     equal(target: Value.ValueAble<any>): BooleanObject;
     less(target: Value.ValueAble<any>): BooleanObject;
@@ -958,21 +1051,21 @@ declare module 'command-flow' {
     multi(target: Value.NumberAble): NumberObject;
     divide(target: Value.NumberAble): NumberObject;
 
-
     execNumber(key: ControlFlow.NumberEnum, ...args: any[]): any;
     toExponential(fractionDigits?: number): StringObject;
     toFixed(fractionDigits?: number): StringObject;
     toPrecision(precision?: number): StringObject;
   }
-  export class StringObject
-    extends ObjectTarget<string>
-    implements Value.StringAble, ControlFlow.ObjectString, ControlFlow.StringFunction {
+  export class StringObject extends ObjectTarget<string>
+    implements
+      Value.StringAble,
+      ControlFlow.ObjectString,
+      ControlFlow.StringFunction {
     constructor(value?: string);
     valueOf(): string;
     _value: string;
     json(): StringObject;
     merge(target: StringObject): StringObject;
-
 
     execString(key: ControlFlow.StringEnum, ...args: any[]): any;
 
@@ -1019,7 +1112,7 @@ declare module 'command-flow' {
     matchAll(regexp: RegExp): ObjectTarget<IterableIterator<RegExpMatchArray>>;
 
     normalize(form?: string): StringObject;
-    normalize(form: "NFC" | "NFD" | "NFKC" | "NFKD"): StringObject;
+    normalize(form: 'NFC' | 'NFD' | 'NFKC' | 'NFKD'): StringObject;
 
     padEnd(targetLength: number, padString?: string): StringObject;
 
@@ -1027,9 +1120,21 @@ declare module 'command-flow' {
 
     repeat(count: number): StringObject;
 
-    replace(searchValue: { [Symbol.replace](string: string, replaceValue: string): string; }, replaceValue: string): StringObject;
-    replace(searchValue: { [Symbol.replace](string: string, replacer: (substring: string, ...args: any[]) => string): string; }, replacer: (substring: string, ...args: any[]) => string): StringObject;
-
+    replace(
+      searchValue: {
+        [Symbol.replace](string: string, replaceValue: string): string;
+      },
+      replaceValue: string
+    ): StringObject;
+    replace(
+      searchValue: {
+        [Symbol.replace](
+          string: string,
+          replacer: (substring: string, ...args: any[]) => string
+        ): string;
+      },
+      replacer: (substring: string, ...args: any[]) => string
+    ): StringObject;
 
     replaceAll(
       searchValue: string | RegExp,
@@ -1078,8 +1183,7 @@ declare module 'command-flow' {
 
     at(index: number): StringObject;
   }
-  export class BooleanObject
-    extends ObjectTarget<Boolean>
+  export class BooleanObject extends ObjectTarget<Boolean>
     implements Value.BooleanAble {
     valueOf(): Boolean;
     _value: Boolean;
@@ -1087,16 +1191,113 @@ declare module 'command-flow' {
     merge(target: Value.ObjectAble<Boolean>): Value.ObjectAble<Boolean>;
   }
 
-  export class DateObject extends ObjectTarget<Date> implements Value.DateAble {
+  export class DateObject extends ObjectTarget<Date>
+    implements
+      Value.DateAble,
+      ControlFlow.DateFunction,
+      ControlFlow.ObjectDate {
     timestamp(): number;
     _value: Date;
     valueOf(): Date;
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<Date>): Value.ObjectAble<Date>;
+
+    execDate(key: ControlFlow.NumberEnum, ...args: any[]): any;
+
+    toDateString(): StringObject;
+
+    toTimeString(): StringObject;
+
+    toLocaleString(): StringObject;
+
+    toLocaleDateString(): StringObject;
+
+    toLocaleTimeString(): StringObject;
+
+    getTime(): NumberObject;
+
+    getFullYear(): NumberObject;
+
+    getUTCFullYear(): NumberObject;
+
+    getMonth(): NumberObject;
+
+    getUTCMonth(): NumberObject;
+
+    getDate(): NumberObject;
+
+    getUTCDate(): NumberObject;
+
+    getDay(): NumberObject;
+
+    getUTCDay(): NumberObject;
+
+    getHours(): NumberObject;
+
+    getUTCHours(): NumberObject;
+
+    getMinutes(): NumberObject;
+
+    getUTCMinutes(): NumberObject;
+
+    getSeconds(): NumberObject;
+
+    getUTCSeconds(): NumberObject;
+
+    getMilliseconds(): NumberObject;
+
+    getUTCMilliseconds(): NumberObject;
+
+    getTimezoneOffset(): NumberObject;
+
+    setTime(time: number): NumberObject;
+
+    setMilliseconds(ms: number): NumberObject;
+
+    setUTCMilliseconds(ms: number): NumberObject;
+
+    setSeconds(sec: number, ms?: number): NumberObject;
+
+    setUTCSeconds(sec: number, ms?: number): NumberObject;
+
+    setMinutes(min: number, sec?: number, ms?: number): NumberObject;
+
+    setUTCMinutes(min: number, sec?: number, ms?: number): NumberObject;
+
+    setHours(
+      hours: number,
+      min?: number,
+      sec?: number,
+      ms?: number
+    ): NumberObject;
+
+    setUTCHours(
+      hours: number,
+      min?: number,
+      sec?: number,
+      ms?: number
+    ): NumberObject;
+
+    setDate(date: number): NumberObject;
+
+    setUTCDate(date: number): NumberObject;
+
+    setMonth(month: number, date?: number): NumberObject;
+
+    setUTCMonth(month: number, date?: number): NumberObject;
+
+    setFullYear(year: number, month?: number, date?: number): NumberObject;
+
+    setUTCFullYear(year: number, month?: number, date?: number): NumberObject;
+
+    toUTCString(): StringObject;
+
+    toISOString(): StringObject;
+
+    toJSON(key?: any): StringObject;
   }
 
-  export class DataObject
-    extends ObjectTarget<ArrayBuffer>
+  export class DataObject extends ObjectTarget<ArrayBuffer>
     implements Value.DataAble {
     data(): ArrayBuffer;
     _value: ArrayBuffer;
@@ -1105,8 +1306,7 @@ declare module 'command-flow' {
     merge(target: Value.ObjectAble<ArrayBuffer>): Value.ObjectAble<ArrayBuffer>;
   }
 
-  export class OptionalObject
-    extends ObjectTarget<Value.NULL>
+  export class OptionalObject extends ObjectTarget<Value.NULL>
     implements Value.NullAble {
     isTruly(): boolean;
     isNull(): boolean;

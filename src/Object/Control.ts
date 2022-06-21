@@ -21,9 +21,9 @@ export namespace ControlFlow {
 
   // Number
   export enum NumberEnum {
-    ToExponential$ = "toExponential",
-    ToFixed$ = "toFixed",
-    ToPrecision = 'toPrecision'
+    ToExponential$ = 'toExponential',
+    ToFixed$ = 'toFixed',
+    ToPrecision = 'toPrecision',
   }
 
   //集合属性
@@ -71,7 +71,7 @@ export namespace ControlFlow {
     newStr = str.slice(0,1).toUpperCase() +str.slice(1);
     return newStr;
   }
-  c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "$$"+titleCase($1)})
+  c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "+titleCase($1)})
  */
   export enum SetEnum {
     Has = 'has',
@@ -145,6 +145,50 @@ export namespace ControlFlow {
     ToUpperCase = 'toUpperCase',
     ValueOf = 'valueOf',
     At = 'at',
+  }
+
+  export enum DateEnum {
+    ToDateString = 'toDateString',
+    ToTimeString = 'toTimeString',
+    ToISOString = 'toISOString',
+    ToUTCString = 'toUTCString',
+    GetDate = 'getDate',
+    SetDate = 'setDate',
+    GetDay = 'getDay',
+    GetFullYear = 'getFullYear',
+    SetFullYear = 'setFullYear',
+    GetHours = 'getHours',
+    SetHours = 'setHours',
+    GetMilliseconds = 'getMilliseconds',
+    SetMilliseconds = 'setMilliseconds',
+    GetMinutes = 'getMinutes',
+    SetMinutes = 'setMinutes',
+    GetMonth = 'getMonth',
+    SetMonth = 'setMonth',
+    GetSeconds = 'getSeconds',
+    SetSeconds = 'setSeconds',
+    GetTime = 'getTime',
+    SetTime = 'setTime',
+    GetTimezoneOffset = 'getTimezoneOffset',
+    GetUTCDate = 'getUTCDate',
+    SetUTCDate = 'setUTCDate',
+    GetUTCDay = 'getUTCDay',
+    GetUTCFullYear = 'getUTCFullYear',
+    SetUTCFullYear = 'setUTCFullYear',
+    GetUTCHours = 'getUTCHours',
+    SetUTCHours = 'setUTCHours',
+    GetUTCMilliseconds = 'getUTCMilliseconds',
+    SetUTCMilliseconds = 'setUTCMilliseconds',
+    GetUTCMinutes = 'getUTCMinutes',
+    SetUTCMinutes = 'setUTCMinutes',
+    GetUTCMonth = 'getUTCMonth',
+    SetUTCMonth = 'setUTCMonth',
+    GetUTCSeconds = 'getUTCSeconds',
+    SetUTCSeconds = 'setUTCSeconds',
+    ToJSON = 'toJSON',
+    ToLocaleString = 'toLocaleString',
+    ToLocaleDateString = 'toLocaleDateString',
+    ToLocaleTimeString = 'toLocaleTimeString',
   }
 
   // 比较 接口
@@ -244,5 +288,15 @@ export namespace ControlFlow {
   };
   export interface ObjectNumber extends NumberFunction {
     execNumber(key: NumberEnum, ...args: any[]): any;
+  }
+
+  // Date
+
+  export declare type DateExec = NumberExec;
+  export declare type DateFunction = {
+    [T in DateEnum]: DateExec;
+  }
+  export interface ObjectDate extends DateFunction {
+    execDate(key: NumberEnum, ...args: any[]): any;
   }
 }
