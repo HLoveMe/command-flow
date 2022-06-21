@@ -6,8 +6,8 @@ import { ChannelObject, ChannelValue } from "../Types";
  * @param value 
  * @returns 
  */
-export const unpackValue = (value: ChannelObject): string => {
-  if (!!value === false) return "";
+export function unpackValue<T extends any = string>(value: ChannelObject): T {
+  if (!!value === false) return "" as unknown as T;
   return (value._value as ChannelValue).value.valueOf()
 }
 

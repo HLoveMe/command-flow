@@ -1313,7 +1313,7 @@ declare module 'command-flow' {
     isUndefined(): boolean;
   }
 
-  export function unpackValue(value: ChannelObject): string;
+  export function unpackValue<T extends any = string>(value: ChannelObject): T;
 
   export function wrapperValue<T extends BaseType = BaseType>(
     input: ChannelObject,

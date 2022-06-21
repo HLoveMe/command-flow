@@ -4,12 +4,12 @@ import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
 import { isJS } from "../../Util/Equipment";
 import { CommandStatus } from "../../Bridge/ConfigTypes";
-import { ChannelObject, ContextImpl } from "../../Types";
+import { ChannelObject, ContextImpl, BaseType } from "../../Types";
 import { BooleanObject } from '../../Object/Able/ObjectAble';
 import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 import { RunCommandWorkConfig } from "../../Configs";
 
-
+type CommandParams = { [key: string]: string }
 /**
  * "1 + $I$ "
  * @param template 
