@@ -1,10 +1,11 @@
 import { ControlFlow } from '../../Control';
-import {  MapUint, onlyDeclaration } from '../../util';
+import { MapUint, onlyDeclaration, Unit } from '../../util';
 import { BaseType, Value } from '../../../Types';
 import { ObjectTarget } from './ObjectTarget';
 import { decide } from '../../valueUtil';
 import { NumberObject } from './NumberObject';
-@MapUint
+// @MapUint
+@Unit(ControlFlow.MapEnum, 'collectionMap')
 export class MapObject<T, U>
   extends ObjectTarget<Map<T, U>>
   implements Value.MapAble<T, U>, ControlFlow.CollectionMap<T, U>

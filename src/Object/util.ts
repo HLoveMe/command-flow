@@ -285,3 +285,38 @@ export function DateUint(host: any) {
       return false;
     };
 }
+
+export function Unit(target: Object, execName: string) {
+  return function (host: any) {
+    Object.keys(target).forEach((item) => {
+      const key = target[item];
+      const comFunction = host.prototype[key];
+      if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
+        host.prototype[key] = function (...args: any[]) {
+          const value = (this as any).valueOf();
+          const execFunc = value[key];
+          let result;
+          if (typeof execFunc === 'function') {
+            result = (execFunc as Function).bind(value)(...args);
+          } else result = value;
+          return decide(result);
+        };
+      }
+    });
+
+    if (
+      host.prototype[execName]?.declaration === onlyDeclarationTag ||
+      !!host.prototype[execName] === false
+    )
+      host.prototype[execName] = function (
+        type: string,
+        ...args: any[]
+      ) {
+        const execFunc = host.prototype[type]?.bind(
+          this
+        ) as (...args: any[]) => void;
+        if (execFunc && typeof execFunc === 'function') return execFunc(...args);
+        return false;
+      };
+  }
+}

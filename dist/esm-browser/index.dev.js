@@ -1531,6 +1531,7 @@ const Control_1 = __webpack_require__(/*! ../../Control */ "./src/Object/Control
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
+// @MapUint
 let MapObject = MapObject_1 = class MapObject extends ObjectTarget_1.ObjectTarget {
     constructor(value = new Map()) {
         super(value);
@@ -1643,7 +1644,7 @@ __decorate([
     __metadata("design:returntype", Object)
 ], MapObject.prototype, "keys", null);
 MapObject = MapObject_1 = __decorate([
-    util_1.MapUint,
+    (0, util_1.Unit)(Control_1.ControlFlow.MapEnum, 'collectionMap'),
     __metadata("design:paramtypes", [Map])
 ], MapObject);
 exports.MapObject = MapObject;
@@ -2706,7 +2707,7 @@ var ControlFlow;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.DateUint = exports.NumberUint = exports.StringUint = exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.onlyDeclarationTag = void 0;
+exports.Unit = exports.DateUint = exports.NumberUint = exports.StringUint = exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.onlyDeclarationTag = void 0;
 const ObjectAble_1 = __webpack_require__(/*! ./Able/ObjectAble */ "./src/Object/Able/ObjectAble.ts");
 const Control_1 = __webpack_require__(/*! ./Control */ "./src/Object/Control.ts");
 const valueUtil_1 = __webpack_require__(/*! ./valueUtil */ "./src/Object/valueUtil.ts");
@@ -2943,6 +2944,36 @@ function DateUint(host) {
         };
 }
 exports.DateUint = DateUint;
+function Unit(target, execName) {
+    return function (host) {
+        Object.keys(target).forEach((item) => {
+            const key = target[item];
+            const comFunction = host.prototype[key];
+            if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
+                host.prototype[key] = function (...args) {
+                    const value = this.valueOf();
+                    const execFunc = value[key];
+                    let result;
+                    if (typeof execFunc === 'function') {
+                        result = execFunc.bind(value)(...args);
+                    }
+                    else
+                        result = value;
+                    return (0, valueUtil_1.decide)(result);
+                };
+            }
+        });
+        if (host.prototype[execName]?.declaration === exports.onlyDeclarationTag ||
+            !!host.prototype[execName] === false)
+            host.prototype[execName] = function (type, ...args) {
+                const execFunc = host.prototype[type]?.bind(this);
+                if (execFunc && typeof execFunc === 'function')
+                    return execFunc(...args);
+                return false;
+            };
+    };
+}
+exports.Unit = Unit;
 
 
 /***/ }),
