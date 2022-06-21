@@ -114,6 +114,26 @@ const utils = {
       return new NumberObject(100).divide(new NumberObject(2)).valueOf();
     },
   },
+  toFixed: {
+    desc: '199.16 toFixed'  ,
+    expect: "199.2",
+    run: () => {
+      return new NumberObject(199.16).toFixed(1).valueOf();
+    },
+  },
+  toExponential: {
+    desc: '(199.16).toExponential(1)'  ,
+    expect: "2.0e+2",
+    run: () => {
+      return new NumberObject(199.16).toExponential(1).valueOf();
+    },
+  },toPrecision: {
+    desc: '(199.16).toPrecision(1)'  ,
+    expect: "2e+2",
+    run: () => {
+      return new NumberObject(199.16).toPrecision(1).valueOf();
+    },
+  },
 };
 const startBegin = async () => {
   clearLog();

@@ -455,6 +455,14 @@ declare module 'command-flow' {
       Multi = 'multi', // *
       Divide = 'divide', // /
     }
+
+    // Number
+    export enum NumberEnum {
+      ToExponential$ = "toExponential",
+      ToFixed$ = "toFixed",
+      ToPrecision = 'toPrecision'
+    }
+
     //集合属性
     export enum CollectionEnum {
       Contain = 'contain', //是否包含
@@ -642,6 +650,16 @@ declare module 'command-flow' {
     };
     export interface ObjectString extends StringFunction {
       execString(key: StringEnum, ...args: any[]): any;
+    }
+
+    // Number
+
+    export type NumberExec = (...args: any[]) => any;
+    export type NumberFunction = {
+      [T in NumberEnum]: NumberExec;
+    };
+    export interface ObjectNumber extends NumberFunction {
+      execNumber(key: NumberEnum, ...args: any[]): any;
     }
   }
   export class Context implements ContextImpl {
@@ -917,8 +935,8 @@ declare module 'command-flow' {
     implements
     Value.NumberAble,
     ControlFlow.Compare<Value.NumberAble>,
-    ControlFlow.Calc<Value.NumberAble>
-  {
+    ControlFlow.Calc<Value.NumberAble>,
+    ControlFlow.ObjectNumber, ControlFlow.NumberFunction {
     constructor(value: number);
     valueOf(): number;
     _value: number;
@@ -940,6 +958,12 @@ declare module 'command-flow' {
     reduce(target: Value.NumberAble): NumberObject;
     multi(target: Value.NumberAble): NumberObject;
     divide(target: Value.NumberAble): NumberObject;
+
+
+    execNumber(key: ControlFlow.NumberEnum, ...args: any[]): any;
+    toExponential(fractionDigits?: number): StringObject;
+    toFixed(fractionDigits?: number): StringObject;
+    toPrecision(precision?: number): StringObject;
   }
   export class StringObject
     extends ObjectTarget<string>
