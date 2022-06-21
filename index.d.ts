@@ -517,6 +517,58 @@ declare module 'command-flow' {
       Values = 'values',
     }
 
+    export enum StringEnum {
+      Length = 'length',
+      Anchor = 'anchor',
+      Big = 'big',
+      Blink = 'blink',
+      Bold = 'bold',
+      CharAt = 'charAt',
+      CharCodeAt = 'charCodeAt',
+      CodePointAt = 'codePointAt',
+      Concat = 'concat',
+      EndsWith = 'endsWith',
+      Fontcolor = 'fontcolor',
+      Fontsize = 'fontsize',
+      Fixed = 'fixed',
+      Includes = 'includes',
+      IndexOf = 'indexOf',
+      Italics = 'italics',
+      LastIndexOf = 'lastIndexOf',
+      Link = 'link',
+      LocaleCompare = 'localeCompare',
+      Match = 'match',
+      MatchAll = 'matchAll',
+      Normalize = 'normalize',
+      PadEnd = 'padEnd',
+      PadStart = 'padStart',
+      Repeat = 'repeat',
+      Replace = 'replace',
+      ReplaceAll = 'replaceAll',
+      Search = 'search',
+      Slice = 'slice',
+      Small = 'small',
+      Split = 'split',
+      Strike = 'strike',
+      Sub = 'sub',
+      Substr = 'substr',
+      Substring = 'substring',
+      Sup = 'sup',
+      StartsWith = 'startsWith',
+      ToString = 'toString',
+      Trim = 'trim',
+      TrimStart = 'trimStart',
+      TrimLeft = 'trimLeft',
+      TrimEnd = 'trimEnd',
+      TrimRight = 'trimRight',
+      ToLocaleLowerCase = 'toLocaleLowerCase',
+      ToLocaleUpperCase = 'toLocaleUpperCase',
+      ToLowerCase = 'toLowerCase',
+      ToUpperCase = 'toUpperCase',
+      ValueOf = 'valueOf',
+      At = 'at',
+    }
+
     // 比较 接口
     export type CompareExec = (
       type: CompareEnum,
@@ -581,6 +633,15 @@ declare module 'command-flow' {
     };
     export interface CollectionMap<T, U> extends MapAbsoluteAble<U> {
       collectionMap(key: MapEnum, ...args: any[]): U | Value.NULL;
+    }
+
+    // String
+    export type StringExec = (...args: any[]) => any;
+    export type StringFunction = {
+      [T in StringEnum]: StringExec;
+    };
+    export interface ObjectString extends StringFunction {
+      execString(key: StringEnum, ...args: any[]): any;
     }
   }
   export class Context implements ContextImpl {
@@ -867,12 +928,12 @@ declare module 'command-flow' {
     compare(
       type: ControlFlow.CompareEnum,
       target: NumberObject
-    ): Value.BooleanAble;
-    more(target: Value.ValueAble<any>): Value.BooleanAble;
-    equal(target: Value.ValueAble<any>): Value.BooleanAble;
-    less(target: Value.ValueAble<any>): Value.BooleanAble;
-    moreEqual(target: Value.ValueAble<any>): Value.BooleanAble;
-    lessEqual(target: Value.ValueAble<any>): Value.BooleanAble;
+    ): BooleanObject;
+    more(target: Value.ValueAble<any>): BooleanObject;
+    equal(target: Value.ValueAble<any>): BooleanObject;
+    less(target: Value.ValueAble<any>): BooleanObject;
+    moreEqual(target: Value.ValueAble<any>): BooleanObject;
+    lessEqual(target: Value.ValueAble<any>): BooleanObject;
 
     calc(type: ControlFlow.CalcEnum, target: Value.NumberAble): NumberObject;
     plus(target: Value.NumberAble): NumberObject;
@@ -882,11 +943,114 @@ declare module 'command-flow' {
   }
   export class StringObject
     extends ObjectTarget<string>
-    implements Value.StringAble {
+    implements Value.StringAble, ControlFlow.ObjectString, ControlFlow.StringFunction {
+    execString(key: ControlFlow.StringEnum, ...args: any[]): any;
     valueOf(): string;
     _value: string;
-    json(): Value.StringAble;
-    merge(target: Value.ObjectAble<string>): Value.ObjectAble<string>;
+    json(): StringObject;
+    merge(target: StringObject): StringObject;
+
+    length(): NumberObject;
+
+    anchor(name: string): StringObject;
+
+    big(): StringObject;
+
+    blink(): StringObject;
+
+    bold(): StringObject;
+
+    charAt(pos: number): StringObject;
+
+    charCodeAt(index: number): NumberObject;
+
+    codePointAt(pos: number): Value.Mixins<NumberObject>;
+
+    concat(...args: string[]): StringObject;
+
+    endsWith(searchString: string, endPosition?: number): BooleanObject;
+
+    fixed(): StringObject;
+
+    fontcolor(color: string): StringObject;
+
+    fontsize(size: number): StringObject;
+
+    includes(searchString: string, position?: number): BooleanObject;
+
+    indexOf(searchString: string, position?: number): NumberObject;
+
+    italics(): StringObject;
+
+    lastIndexOf(searchString: string, position?: number): NumberObject;
+
+    link(url: string): StringObject;
+
+    localeCompare(that: string): NumberObject;
+
+    match(regexp: RegExp): StringObject;
+
+    matchAll(regexp: RegExp): StringObject;
+
+    normalize(form: string): StringObject;
+
+    padEnd(targetLength: number, padString?: string): StringObject;
+
+    padStart(targetLength: number, padString?: string): StringObject;
+
+    repeat(count: number): StringObject;
+
+    replace(
+      searchValue: string | RegExp,
+      replaceValue: string | ((substring: string, ...args: any[]) => string)
+    ): StringObject;
+
+    replaceAll(
+      searchValue: string | RegExp,
+      replaceValue: string | ((substring: string, ...args: any[]) => string)
+    ): StringObject;
+
+    search(regexp: RegExp): NumberObject;
+
+    slice(start: number, end?: number): StringObject;
+
+    small(): StringObject;
+
+    split(separator?: string | RegExp, limit?: number): StringObject;
+
+    strike(): StringObject;
+
+    sub(): StringObject;
+
+    substr(start: number, length?: number): StringObject;
+
+    substring(start: number, end?: number): StringObject;
+
+    toLocaleLowerCase(): StringObject;
+
+    toLocaleUpperCase(): StringObject;
+
+    toLowerCase(): StringObject;
+
+    toUpperCase(): StringObject;
+
+    trim(): StringObject;
+
+    trimLeft(): StringObject;
+
+    trimRight(): StringObject;
+
+    toString(): StringObject;
+
+    sup(): StringObject;
+
+    startsWith(searchString: string, position?: number): BooleanObject;
+
+    trimStart(): StringObject;
+
+    trimEnd(): StringObject;
+
+    at(index: number): StringObject;
   }
   export class BooleanObject
     extends ObjectTarget<Boolean>

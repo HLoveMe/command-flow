@@ -1318,6 +1318,7 @@ const Control_1 = __webpack_require__(/*! ../../Control */ "./src/Object/Control
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 const BooleanObject_1 = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Targets/BooleanObject.ts");
+const StringObject_1 = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Targets/StringObject.ts");
 let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget_1.ObjectTarget {
     static type;
     constructor(value = 1) {
@@ -1366,6 +1367,20 @@ let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget_1.Ob
     divide(target) {
         return new NumberObject_1(target._value === 0 ? Infinity : this._value / target._value);
     }
+    //
+    execNumber(key, ...args) {
+        (new Number()).toPrecision;
+        return {};
+    }
+    toExponential(fractionDigits) {
+        return null;
+    }
+    toFixed(fractionDigits) {
+        return null;
+    }
+    toPrecision(precision) {
+        return null;
+    }
 };
 __decorate([
     util_1.onlyDeclaration,
@@ -1379,9 +1394,34 @@ __decorate([
     __metadata("design:paramtypes", [String, NumberObject]),
     __metadata("design:returntype", NumberObject)
 ], NumberObject.prototype, "calc", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Object)
+], NumberObject.prototype, "execNumber", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", StringObject_1.StringObject)
+], NumberObject.prototype, "toExponential", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", StringObject_1.StringObject)
+], NumberObject.prototype, "toFixed", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", StringObject_1.StringObject)
+], NumberObject.prototype, "toPrecision", null);
 NumberObject = NumberObject_1 = __decorate([
     util_1.CalcUnit,
     util_1.CompareUnit,
+    util_1.NumberUint,
     __metadata("design:paramtypes", [Number])
 ], NumberObject);
 exports.NumberObject = NumberObject;
@@ -2083,6 +2123,13 @@ var ControlFlow;
         CalcEnum["Multi"] = "multi";
         CalcEnum["Divide"] = "divide";
     })(CalcEnum = ControlFlow.CalcEnum || (ControlFlow.CalcEnum = {}));
+    // Number
+    let NumberEnum;
+    (function (NumberEnum) {
+        NumberEnum["ToExponential$"] = "toExponential";
+        NumberEnum["ToFixed$"] = "toFixed";
+        NumberEnum["ToPrecision"] = "toPrecision";
+    })(NumberEnum = ControlFlow.NumberEnum || (ControlFlow.NumberEnum = {}));
     //集合属性
     let CollectionEnum;
     (function (CollectionEnum) {
@@ -2092,7 +2139,6 @@ var ControlFlow;
         CollectionEnum["Keys"] = "keys";
         CollectionEnum["Values"] = "values";
     })(CollectionEnum = ControlFlow.CollectionEnum || (ControlFlow.CollectionEnum = {}));
-    //Object.keys(Object.getOwnPropertyDescriptors(Array.prototype)).map($1=>`${$1}: ControlFlow.ArrayFunction`).join('\n')
     let ArrayEnum;
     (function (ArrayEnum) {
         ArrayEnum["Concat"] = "concat";
@@ -2130,7 +2176,7 @@ var ControlFlow;
       newStr = str.slice(0,1).toUpperCase() +str.slice(1);
       return newStr;
     }
-    c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "+titleCase($1)})
+    c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "$$"+titleCase($1)})
    */
     let SetEnum;
     (function (SetEnum) {
@@ -2221,7 +2267,7 @@ var ControlFlow;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.StringUint = exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.onlyDeclarationTag = void 0;
+exports.NumberUint = exports.StringUint = exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.onlyDeclarationTag = void 0;
 const ObjectAble_1 = __webpack_require__(/*! ./Able/ObjectAble */ "./src/Object/Able/ObjectAble.ts");
 const Control_1 = __webpack_require__(/*! ./Control */ "./src/Object/Control.ts");
 const valueUtil_1 = __webpack_require__(/*! ./valueUtil */ "./src/Object/valueUtil.ts");
@@ -2402,6 +2448,34 @@ function StringUint(host) {
         };
 }
 exports.StringUint = StringUint;
+function NumberUint(host) {
+    Object.keys(Control_1.ControlFlow.NumberEnum).forEach((item) => {
+        const key = Control_1.ControlFlow.NumberEnum[item];
+        const comFunction = host.prototype[key];
+        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
+            host.prototype[key] = function (...args) {
+                const value = this.valueOf();
+                const execFunc = value[key];
+                let result;
+                if (typeof execFunc === 'function') {
+                    result = execFunc.bind(value)(...args);
+                }
+                else
+                    result = value;
+                return (0, valueUtil_1.decide)(result);
+            };
+        }
+    });
+    if (host.prototype.execNumber?.declaration === exports.onlyDeclarationTag ||
+        !!host.prototype.execNumber === false)
+        host.prototype.execNumber = function (type, ...args) {
+            const execFunc = host.prototype[type]?.bind(this);
+            if (execFunc && typeof execFunc === 'function')
+                return execFunc(...args);
+            return false;
+        };
+}
+exports.NumberUint = NumberUint;
 
 
 /***/ }),

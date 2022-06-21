@@ -18,6 +18,14 @@ export namespace ControlFlow {
     Multi = 'multi', // *
     Divide = 'divide', // /
   }
+
+  // Number
+  export enum NumberEnum {
+    ToExponential$ = "toExponential",
+    ToFixed$ = "toFixed",
+    ToPrecision = 'toPrecision'
+  }
+
   //集合属性
   export enum CollectionEnum {
     Contain = 'contain', //是否包含
@@ -26,7 +34,7 @@ export namespace ControlFlow {
     Keys = 'keys', // 所有keys
     Values = 'values', // 所有values
   }
-  //Object.keys(Object.getOwnPropertyDescriptors(Array.prototype)).map($1=>`${$1}: ControlFlow.ArrayFunction`).join('\n')
+
   export enum ArrayEnum {
     Concat = 'concat',
     CopyWithin = 'copyWithin',
@@ -63,7 +71,7 @@ export namespace ControlFlow {
     newStr = str.slice(0,1).toUpperCase() +str.slice(1);
     return newStr;
   }
-  c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "+titleCase($1)})
+  c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "$$"+titleCase($1)})
  */
   export enum SetEnum {
     Has = 'has',
@@ -219,7 +227,7 @@ export namespace ControlFlow {
   export interface CollectionMap<T, U> extends MapAbsoluteAble<U> {
     collectionMap(key: MapEnum, ...args: any[]): U | void;
   }
-  
+
   // String
   export declare type StringExec = (...args: any[]) => any;
   export declare type StringFunction = {
@@ -227,5 +235,15 @@ export namespace ControlFlow {
   };
   export interface ObjectString extends StringFunction {
     execString(key: StringEnum, ...args: any[]): any;
+  }
+
+  // Number
+
+  export declare type NumberExec = (...args: any[]) => any;
+  export declare type NumberFunction = {
+    [T in NumberEnum]: NumberExec;
+  };
+  export interface ObjectNumber extends NumberFunction {
+    execNumber(key: NumberEnum, ...args: any[]): any;
   }
 }

@@ -201,7 +201,7 @@ export function StringUint(host: any) {
       };
     }
   });
-  
+
   if (
     host.prototype.execString?.declaration === onlyDeclarationTag ||
     !!host.prototype.execString === false
@@ -213,6 +213,40 @@ export function StringUint(host: any) {
       const execFunc = host.prototype[type]?.bind(
         this
       ) as ControlFlow.StringExec;
+      if (execFunc && typeof execFunc === 'function') return execFunc(...args);
+      return false;
+    };
+}
+
+
+export function NumberUint(host: any) {
+  Object.keys(ControlFlow.NumberEnum).forEach((item) => {
+    const key = ControlFlow.NumberEnum[item];
+    const comFunction = host.prototype[key];
+    if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
+      host.prototype[key] = function (...args: any[]) {
+        const value = (this as Value.StringAble).valueOf();
+        const execFunc = value[key];
+        let result;
+        if (typeof execFunc === 'function') {
+          result = (execFunc as Function).bind(value)(...args);
+        } else result = value;
+        return decide(result);
+      };
+    }
+  });
+
+  if (
+    host.prototype.execNumber?.declaration === onlyDeclarationTag ||
+    !!host.prototype.execNumber === false
+  )
+    host.prototype.execNumber = function (
+      type: ControlFlow.NumberEnum,
+      ...args: any[]
+    ) {
+      const execFunc = host.prototype[type]?.bind(
+        this
+      ) as ControlFlow.NumberExec;
       if (execFunc && typeof execFunc === 'function') return execFunc(...args);
       return false;
     };
