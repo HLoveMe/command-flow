@@ -56,7 +56,7 @@ declare module 'command-flow' {
     }
     export interface ArrayAble<T>
       extends ValueAble<Array<T>>,
-        ObjectAble<Array<T>> {
+      ObjectAble<Array<T>> {
       len(): number;
       first(): T;
       last(): T;
@@ -66,7 +66,7 @@ declare module 'command-flow' {
 
     export interface MapAble<T, U>
       extends ValueAble<Map<T, U>>,
-        ObjectAble<Map<T, U>> {
+      ObjectAble<Map<T, U>> {
       len(): number;
       valueOf(): Map<T, U>;
     }
@@ -86,7 +86,7 @@ declare module 'command-flow' {
 
     export interface BooleanAble
       extends ValueAble<Boolean>,
-        ObjectAble<Boolean> {
+      ObjectAble<Boolean> {
       valueOf(): Boolean;
     }
 
@@ -96,7 +96,7 @@ declare module 'command-flow' {
 
     export interface DataAble
       extends ValueAble<ArrayBuffer>,
-        ObjectAble<ArrayBuffer> {
+      ObjectAble<ArrayBuffer> {
       data(): ArrayBuffer;
     }
 
@@ -109,7 +109,7 @@ declare module 'command-flow' {
     export interface Mixins<
       V extends Value.ObjectAble<any> = Value.ObjectAble<any>,
       U extends any = NULL
-    > extends ValueAble<V | U> {}
+      > extends ValueAble<V | U> { }
   }
 
   export type BaseType =
@@ -195,9 +195,9 @@ declare module 'command-flow' {
     }
     export interface Work
       extends WorkOperation,
-        WorkContext,
-        WorkChain,
-        WorkConfig {
+      WorkContext,
+      WorkChain,
+      WorkConfig {
       name: string;
       id: number;
       uuid: WorkUUID;
@@ -313,9 +313,9 @@ declare module 'command-flow' {
         image: DataString;
         error?: Error;
       }
-      export interface TakePhotoOption {}
+      export interface TakePhotoOption { }
 
-      export interface VideoOption {}
+      export interface VideoOption { }
       export interface VideoResponse {
         videoUrl?: string;
         error?: Error;
@@ -325,13 +325,13 @@ declare module 'command-flow' {
         latitude?: number;
         accuracy?: number;
       }
-      export interface PositionOption {}
-      export interface AudioResponse {}
+      export interface PositionOption { }
+      export interface AudioResponse { }
 
-      export interface VibratorOption {}
-      export interface BluetoothDevice {}
-      export interface SpeechOption {}
-      export interface SpeechResponse {}
+      export interface VibratorOption { }
+      export interface BluetoothDevice { }
+      export interface SpeechOption { }
+      export interface SpeechResponse { }
 
       export interface Permission {
         // 权限处理
@@ -440,7 +440,7 @@ declare module 'command-flow' {
       LoadFileWork: Bridge.FileOption;
       FetchWork: Bridge.RequestParamsInit;
     }
-    export interface Environment {}
+    export interface Environment { }
     export interface ContextRunOption {
       development: boolean;
       environment?: Environment;
@@ -740,12 +740,12 @@ declare module 'command-flow' {
 
     // Date
 
-    export declare type DateExec = NumberExec;
-    export declare type DateFunction = {
+    export type DateExec = NumberExec;
+    export type DateFunction = {
       [T in DateEnum]: DateExec;
     };
     export interface ObjectDate extends DateFunction {
-      execDate(key: NumberEnum, ...args: any[]): any;
+      execDate(key: DateEnum, ...args: any[]): any;
     }
   }
   export class Context implements ContextImpl {
@@ -792,9 +792,9 @@ declare module 'command-flow' {
     pools: Subscription[];
     config: WorkType.ConfigInfo;
   }
-  export class InstructionMTM extends Instruction {}
-  export class InstructionOTM extends Instruction {}
-  export class InstructionOTO extends Instruction {}
+  export class InstructionMTM extends Instruction { }
+  export class InstructionOTM extends Instruction { }
+  export class InstructionOTO extends Instruction { }
   export class TimeoutWork extends InstructionOTO {
     constructor(interval?: number);
   }
@@ -809,17 +809,17 @@ declare module 'command-flow' {
       notifier?: Observable<any>
     );
   }
-  export class Base64EnCodeWork extends InstructionMTM {}
-  export class Base64DecodeWork extends InstructionMTM {}
+  export class Base64EnCodeWork extends InstructionMTM { }
+  export class Base64DecodeWork extends InstructionMTM { }
   export class LoadFileWork extends InstructionOTO {
     constructor(config?: Bridge.FileOption);
   }
-  export class OpenURLWork extends InstructionOTO {}
-  export class QRCodeWork extends InstructionOTO {}
+  export class OpenURLWork extends InstructionOTO { }
+  export class QRCodeWork extends InstructionOTO { }
   export class RunCommandWork extends InstructionOTO {
     constructor(template?: string);
   }
-  export class FetchWork extends InstructionOTO {}
+  export class FetchWork extends InstructionOTO { }
 
   export class ObjectTarget<T> implements Value.ObjectAble<T> {
     json(): Value.StringAble;
@@ -1027,11 +1027,11 @@ declare module 'command-flow' {
 
   export class NumberObject extends ObjectTarget<number>
     implements
-      Value.NumberAble,
-      ControlFlow.Compare<Value.NumberAble>,
-      ControlFlow.Calc<Value.NumberAble>,
-      ControlFlow.ObjectNumber,
-      ControlFlow.NumberFunction {
+    Value.NumberAble,
+    ControlFlow.Compare<Value.NumberAble>,
+    ControlFlow.Calc<Value.NumberAble>,
+    ControlFlow.ObjectNumber,
+    ControlFlow.NumberFunction {
     constructor(value: number);
     valueOf(): number;
     _value: number;
@@ -1058,9 +1058,9 @@ declare module 'command-flow' {
   }
   export class StringObject extends ObjectTarget<string>
     implements
-      Value.StringAble,
-      ControlFlow.ObjectString,
-      ControlFlow.StringFunction {
+    Value.StringAble,
+    ControlFlow.ObjectString,
+    ControlFlow.StringFunction {
     constructor(value?: string);
     valueOf(): string;
     _value: string;
@@ -1193,16 +1193,16 @@ declare module 'command-flow' {
 
   export class DateObject extends ObjectTarget<Date>
     implements
-      Value.DateAble,
-      ControlFlow.DateFunction,
-      ControlFlow.ObjectDate {
+    Value.DateAble,
+    ControlFlow.DateFunction,
+    ControlFlow.ObjectDate {
     timestamp(): number;
     _value: Date;
     valueOf(): Date;
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<Date>): Value.ObjectAble<Date>;
 
-    execDate(key: ControlFlow.NumberEnum, ...args: any[]): any;
+    execDate(key: ControlFlow.DateEnum, ...args: any[]): any;
 
     toDateString(): StringObject;
 

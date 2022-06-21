@@ -1,5 +1,5 @@
 import { ControlFlow } from "../../Control";
-import { CalcUnit, CompareUnit, NumberUint, onlyDeclaration } from "../../util";
+import { CalcUnit, CompareUnit, Unit, onlyDeclaration } from "../../util";
 import { Value } from "../../../Types";
 import { ObjectTarget } from "./ObjectTarget";
 import { BooleanObject } from "./BooleanObject";
@@ -7,7 +7,7 @@ import { StringObject } from "./StringObject";
 
 @CalcUnit
 @CompareUnit
-@NumberUint
+@Unit(ControlFlow.NumberEnum, 'execNumber')
 export class NumberObject
   extends ObjectTarget<number>
   implements

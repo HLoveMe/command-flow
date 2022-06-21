@@ -297,6 +297,6 @@ export namespace ControlFlow {
     [T in DateEnum]: DateExec;
   }
   export interface ObjectDate extends DateFunction {
-    execDate(key: NumberEnum, ...args: any[]): any;
+    execDate(key: DateEnum, ...args: any[]): any;
   }
 }

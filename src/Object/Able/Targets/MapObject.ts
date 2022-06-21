@@ -1,5 +1,5 @@
 import { ControlFlow } from '../../Control';
-import { MapUint, onlyDeclaration, Unit } from '../../util';
+import { onlyDeclaration, Unit } from '../../util';
 import { BaseType, Value } from '../../../Types';
 import { ObjectTarget } from './ObjectTarget';
 import { decide } from '../../valueUtil';

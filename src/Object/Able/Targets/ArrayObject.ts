@@ -1,7 +1,6 @@
 import { ControlFlow } from '../../Control';
 import {
-  ArrayUint,
-  onlyDeclaration,
+  onlyDeclaration, Unit
 } from '../../util';
 import { Value } from '../../../index';
 import { ObjectTarget } from './ObjectTarget';
@@ -10,7 +9,7 @@ import { StringObject } from './StringObject';
 import { BooleanObject } from './BooleanObject';
 import { decide } from '../../valueUtil';
 
-@ArrayUint
+@Unit(ControlFlow.ArrayEnum, 'collectionArray')
 export class ArrayObject<T>
   extends ObjectTarget<Array<T>>
   implements Value.ArrayAble<T>, ControlFlow.CollectionArray<T>
@@ -40,7 +39,7 @@ export class ArrayObject<T>
     return this[this._value.length - 1];
   }
   // @attribute()@Params('index')
-  valueOfIndex( index: number): T {
+  valueOfIndex(index: number): T {
     return this[index];
   }
   valueOf(): Array<T> {

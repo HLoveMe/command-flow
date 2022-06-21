@@ -1019,7 +1019,7 @@ __decorate([
     __metadata("design:returntype", ArrayObject)
 ], ArrayObject.prototype, "reduceRight", null);
 ArrayObject = ArrayObject_1 = __decorate([
-    util_1.ArrayUint,
+    (0, util_1.Unit)(Control_1.ControlFlow.ArrayEnum, 'collectionArray'),
     __metadata("design:paramtypes", [Object])
 ], ArrayObject);
 exports.ArrayObject = ArrayObject;
@@ -1499,7 +1499,7 @@ __decorate([
     __metadata("design:returntype", StringObject_1.StringObject)
 ], DateObject.prototype, "toJSON", null);
 DateObject = __decorate([
-    util_1.DateUint,
+    (0, util_1.Unit)(Control_1.ControlFlow.DateEnum, 'execDate'),
     __metadata("design:paramtypes", [Date])
 ], DateObject);
 exports.DateObject = DateObject;
@@ -1817,7 +1817,7 @@ __decorate([
 NumberObject = NumberObject_1 = __decorate([
     util_1.CalcUnit,
     util_1.CompareUnit,
-    util_1.NumberUint,
+    (0, util_1.Unit)(Control_1.ControlFlow.NumberEnum, 'execNumber'),
     __metadata("design:paramtypes", [Number])
 ], NumberObject);
 exports.NumberObject = NumberObject;
@@ -2003,7 +2003,7 @@ __decorate([
     __metadata("design:returntype", Object)
 ], SetObject.prototype, "keys", null);
 SetObject = SetObject_1 = __decorate([
-    util_1.SetUint,
+    (0, util_1.Unit)(Control_1.ControlFlow.SetEnum, 'collectionSet'),
     __metadata("design:paramtypes", [Object])
 ], SetObject);
 exports.SetObject = SetObject;
@@ -2482,7 +2482,7 @@ __decorate([
     __metadata("design:returntype", Object)
 ], StringObject.prototype, "at", null);
 StringObject = __decorate([
-    util_1.StringUint,
+    (0, util_1.Unit)(Control_1.ControlFlow.StringEnum, 'execString'),
     __metadata("design:paramtypes", [String])
 ], StringObject);
 exports.StringObject = StringObject;
@@ -2707,7 +2707,7 @@ var ControlFlow;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Unit = exports.DateUint = exports.NumberUint = exports.StringUint = exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.onlyDeclarationTag = void 0;
+exports.Unit = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.onlyDeclarationTag = void 0;
 const ObjectAble_1 = __webpack_require__(/*! ./Able/ObjectAble */ "./src/Object/Able/ObjectAble.ts");
 const Control_1 = __webpack_require__(/*! ./Control */ "./src/Object/Control.ts");
 const valueUtil_1 = __webpack_require__(/*! ./valueUtil */ "./src/Object/valueUtil.ts");
@@ -2776,174 +2776,6 @@ function CalcUnit(host) {
         };
 }
 exports.CalcUnit = CalcUnit;
-function ArrayUint(host) {
-    Object.keys(Control_1.ControlFlow.ArrayEnum).forEach((item) => {
-        const key = Control_1.ControlFlow.ArrayEnum[item];
-        const comFunction = host.prototype[key];
-        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
-            host.prototype[key] = function (...args) {
-                const value = this.valueOf();
-                const execFunc = value[key];
-                let result;
-                if (typeof execFunc === 'function') {
-                    result = execFunc.bind(value)(...args);
-                }
-                else
-                    result = value;
-                return (0, valueUtil_1.decide)(result);
-            };
-        }
-    });
-    if (host.prototype.collectionArray?.declaration === exports.onlyDeclarationTag ||
-        !!host.prototype.collectionArray === false)
-        host.prototype.collectionArray = function (type, ...args) {
-            const execFunc = host.prototype[type]?.bind(this);
-            if (execFunc && typeof execFunc === 'function')
-                return execFunc(...args);
-            return false;
-        };
-}
-exports.ArrayUint = ArrayUint;
-function SetUint(host) {
-    Object.keys(Control_1.ControlFlow.SetEnum).forEach((item) => {
-        const key = Control_1.ControlFlow.SetEnum[item];
-        const comFunction = host.prototype[key];
-        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
-            host.prototype[key] = function (...args) {
-                const value = this.valueOf();
-                const execFunc = value[key];
-                let result;
-                if (typeof execFunc === 'function') {
-                    result = execFunc.bind(value)(...args);
-                }
-                else
-                    result = value;
-                return (0, valueUtil_1.decide)(result);
-            };
-        }
-    });
-    if (host.prototype.collectionSet?.declaration === exports.onlyDeclarationTag ||
-        !!host.prototype.collectionSet === false)
-        host.prototype.collectionSet = function (type, ...args) {
-            const execFunc = host.prototype[type]?.bind(this);
-            if (execFunc && typeof execFunc === 'function')
-                return execFunc(...args);
-            return false;
-        };
-}
-exports.SetUint = SetUint;
-function MapUint(host) {
-    Object.keys(Control_1.ControlFlow.MapEnum).forEach((item) => {
-        const key = Control_1.ControlFlow.MapEnum[item];
-        const comFunction = host.prototype[key];
-        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
-            host.prototype[key] = function (...args) {
-                const value = this.valueOf();
-                const execFunc = value[key];
-                let result;
-                if (typeof execFunc === 'function') {
-                    result = execFunc.bind(value)(...args);
-                }
-                else
-                    result = value;
-                return (0, valueUtil_1.decide)(result);
-            };
-        }
-    });
-    if (host.prototype.collectionMap?.declaration === exports.onlyDeclarationTag ||
-        !!host.prototype.collectionMap === false)
-        host.prototype.collectionMap = function (type, ...args) {
-            const execFunc = host.prototype[type]?.bind(this);
-            if (execFunc && typeof execFunc === 'function')
-                return execFunc(...args);
-            return false;
-        };
-}
-exports.MapUint = MapUint;
-function StringUint(host) {
-    Object.keys(Control_1.ControlFlow.StringEnum).forEach((item) => {
-        const key = Control_1.ControlFlow.StringEnum[item];
-        const comFunction = host.prototype[key];
-        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
-            host.prototype[key] = function (...args) {
-                const value = this.valueOf();
-                const execFunc = value[key];
-                let result;
-                if (typeof execFunc === 'function') {
-                    result = execFunc.bind(value)(...args);
-                }
-                else
-                    result = value;
-                return (0, valueUtil_1.decide)(result);
-            };
-        }
-    });
-    if (host.prototype.execString?.declaration === exports.onlyDeclarationTag ||
-        !!host.prototype.execString === false)
-        host.prototype.execString = function (type, ...args) {
-            const execFunc = host.prototype[type]?.bind(this);
-            if (execFunc && typeof execFunc === 'function')
-                return execFunc(...args);
-            return false;
-        };
-}
-exports.StringUint = StringUint;
-function NumberUint(host) {
-    Object.keys(Control_1.ControlFlow.NumberEnum).forEach((item) => {
-        const key = Control_1.ControlFlow.NumberEnum[item];
-        const comFunction = host.prototype[key];
-        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
-            host.prototype[key] = function (...args) {
-                const value = this.valueOf();
-                const execFunc = value[key];
-                let result;
-                if (typeof execFunc === 'function') {
-                    result = execFunc.bind(value)(...args);
-                }
-                else
-                    result = value;
-                return (0, valueUtil_1.decide)(result);
-            };
-        }
-    });
-    if (host.prototype.execNumber?.declaration === exports.onlyDeclarationTag ||
-        !!host.prototype.execNumber === false)
-        host.prototype.execNumber = function (type, ...args) {
-            const execFunc = host.prototype[type]?.bind(this);
-            if (execFunc && typeof execFunc === 'function')
-                return execFunc(...args);
-            return false;
-        };
-}
-exports.NumberUint = NumberUint;
-function DateUint(host) {
-    Object.keys(Control_1.ControlFlow.DateEnum).forEach((item) => {
-        const key = Control_1.ControlFlow.DateEnum[item];
-        const comFunction = host.prototype[key];
-        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
-            host.prototype[key] = function (...args) {
-                const value = this.valueOf();
-                const execFunc = value[key];
-                let result;
-                if (typeof execFunc === 'function') {
-                    result = execFunc.bind(value)(...args);
-                }
-                else
-                    result = value;
-                return (0, valueUtil_1.decide)(result);
-            };
-        }
-    });
-    if (host.prototype.execDate?.declaration === exports.onlyDeclarationTag ||
-        !!host.prototype.execDate === false)
-        host.prototype.execDate = function (type, ...args) {
-            const execFunc = host.prototype[type]?.bind(this);
-            if (execFunc && typeof execFunc === 'function')
-                return execFunc(...args);
-            return false;
-        };
-}
-exports.DateUint = DateUint;
 function Unit(target, execName) {
     return function (host) {
         Object.keys(target).forEach((item) => {

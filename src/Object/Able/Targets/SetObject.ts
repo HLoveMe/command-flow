@@ -1,11 +1,11 @@
 import { ControlFlow } from '../../Control';
-import { onlyDeclaration, SetUint } from '../../util';
+import { onlyDeclaration, Unit } from '../../util';
 import { Value } from '../../../Types';
 import { ObjectTarget } from './ObjectTarget';
 import { NumberObject } from './NumberObject';
 import { decide } from '../../valueUtil';
 
-@SetUint
+@Unit(ControlFlow.SetEnum, 'collectionSet')
 export class SetObject<T>
   extends ObjectTarget<Set<T>>
   implements Value.SetAble<T>, ControlFlow.CollectionSet<T>
