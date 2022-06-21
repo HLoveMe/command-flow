@@ -48,7 +48,6 @@ const utils = {
     expect: 5,
     run: () => {
       const target = new StringObject('Abcd朱');
-      debugger
       return target.length.valueOf();
     },
   },
@@ -78,23 +77,70 @@ const utils = {
   },
   concat: {
     desc: ' "Abcd朱".concat("x","y")',
-    expect: "Abcd朱xy",
+    expect: 'Abcd朱xy',
     run: () => {
       const target = new StringObject('Abcd朱');
-      return target.concat(...['x','y']).valueOf();
+      return target.concat(...['x', 'y']).valueOf();
     },
   },
-  //   EndsWith = 'endsWith',
-  //   Fontcolor = 'fontcolor',
-  //   Fontsize = 'fontsize',
-  //   Fixed = 'fixed',
-  //   Includes = 'includes',
-  //   IndexOf = 'indexOf',
-  //   Italics = 'italics',
-  //   LastIndexOf = 'lastIndexOf',
-  //   Link = 'link',
-  //   LocaleCompare = 'localeCompare',
-  //   Match = 'match',
+  endsWith: {
+    desc: ' "Abcd.json".endsWith("json")',
+    expect: true,
+    run: () => {
+      const target = new StringObject('Abcd.json');
+      return target.endsWith('json').valueOf();
+    },
+  },
+  includes: {
+    desc: ' "Abcd.json".includes("Abcd",3)',
+    expect: false,
+    run: () => {
+      const target = new StringObject('Abcd.json');
+      return target.includes('Abcd',3).valueOf();
+    },
+  },
+  indexOf: {
+    desc: ' "Abcd.json".indexOf("Abcd",3)',
+    expect: -1,
+    run: () => {
+      const target = new StringObject('Abcd.json');
+      return target.indexOf('Abcd',3).valueOf();
+    },
+  },
+  lastIndexOf: {
+    desc: ' "Abcd-Abcd".lastIndexOf("Abcd",3)',
+    expect: 0,
+    run: () => {
+      const target = new StringObject('Abcd.json');
+      return target.lastIndexOf('Abcd',3).valueOf();
+    },
+  },
+  localeCompare: {
+    desc: ' "Abcd.json".localeCompare("Abcd.json")',
+    expect: 0,
+    run: () => {
+      // const target = new StringObject('Abcd.json');
+      // return target.localeCompare('Abcd.json').valueOf();
+    },
+  },
+  match: {
+    desc: ' "Abcd-absa-Abcd.json".match(/Abcd/g)',
+    expect: "Abcd,Abcd",
+    run: () => {
+      const target = new StringObject('Abcd-absa-Abcd.json');
+      debugger
+      return target.match(/Abcd/g).valueOf().toString();
+    },
+  },
+  normalize: {
+    desc: ' "Abcd.json".normalize()',
+    expect: 'Abcd.json',
+    run: () => {
+      const target = new StringObject('Abcd.json');
+      return target.normalize().valueOf();
+    },
+  },
+
   //   MatchAll = 'matchAll',
   //   Normalize = 'normalize',
   //   PadEnd = 'padEnd',

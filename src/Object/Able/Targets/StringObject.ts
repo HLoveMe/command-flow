@@ -110,7 +110,7 @@ export class StringObject
     return null as any;
   } 
   @onlyDeclaration
-  normalize(form: string): Value.StringAble {
+  normalize(form?: string): Value.StringAble {
     return null as any;
   } 
   @onlyDeclaration

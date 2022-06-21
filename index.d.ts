@@ -1018,7 +1018,8 @@ declare module 'command-flow' {
 
     matchAll(regexp: RegExp): StringObject;
 
-    normalize(form: string): StringObject;
+    normalize(form?: string): StringObject;
+    normalize(form: "NFC" | "NFD" | "NFKC" | "NFKD"): StringObject;
 
     padEnd(targetLength: number, padString?: string): StringObject;
 
