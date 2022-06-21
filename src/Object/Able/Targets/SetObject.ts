@@ -2,7 +2,6 @@ import { ControlFlow } from '../../Control';
 import { onlyDeclaration, SetUint } from '../../util';
 import { Value } from '../../../Types';
 import { ObjectTarget } from './ObjectTarget';
-import { BaseType } from '../../..';
 import { NumberObject } from './NumberObject';
 import { decide } from '../../valueUtil';
 

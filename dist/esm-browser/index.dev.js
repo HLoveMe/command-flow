@@ -1579,14 +1579,25 @@ exports.SetObject = SetObject;
 /*!*************************************************!*\
   !*** ./src/Object/Able/Targets/StringObject.ts ***!
   \*************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.StringObject = void 0;
+const Control_1 = __webpack_require__(/*! ../../Control */ "./src/Object/Control.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
-class StringObject extends ObjectTarget_1.ObjectTarget {
+const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
+let StringObject = class StringObject extends ObjectTarget_1.ObjectTarget {
     static type;
     constructor(value = '') {
         super(value);
@@ -1596,7 +1607,447 @@ class StringObject extends ObjectTarget_1.ObjectTarget {
     valueOf() {
         return this._value;
     }
-}
+    execString(key, ...args) {
+        // throw new Error('Method not implemented.');
+        return null;
+    }
+    length() {
+        return 1;
+    }
+    anchor(name) {
+        return null;
+    }
+    big() {
+        return null;
+    }
+    blink() {
+        return null;
+    }
+    bold() {
+        return null;
+    }
+    charAt(pos) {
+        return null;
+    }
+    charCodeAt(index) {
+        return null;
+    }
+    codePointAt(pos) {
+        return null;
+    }
+    concat(...args) {
+        return null;
+    }
+    endsWith(searchString, endPosition) {
+        return null;
+    }
+    fixed() {
+        return null;
+    }
+    fontcolor(color) {
+        return null;
+    }
+    fontsize(size) {
+        return null;
+    }
+    includes(searchString, position) {
+        return null;
+    }
+    indexOf(searchString, position) {
+        return null;
+    }
+    italics() {
+        return null;
+    }
+    lastIndexOf(searchString, position) {
+        return null;
+    }
+    link(url) {
+        return null;
+    }
+    localeCompare(that) {
+        return null;
+    }
+    match(regexp) {
+        return null;
+    }
+    matchAll(regexp) {
+        return null;
+    }
+    normalize(form) {
+        return null;
+    }
+    padEnd(targetLength, padString) {
+        return null;
+    }
+    padStart(targetLength, padString) {
+        return null;
+    }
+    repeat(count) {
+        return null;
+    }
+    replace(searchValue, replaceValue) {
+        return null;
+    }
+    replaceAll(searchValue, replaceValue) {
+        return null;
+    }
+    search(regexp) {
+        return null;
+    }
+    slice(start, end) {
+        return null;
+    }
+    small() {
+        return null;
+    }
+    split(separator, limit) {
+        return null;
+    }
+    strike() {
+        return null;
+    }
+    sub() {
+        return null;
+    }
+    substr(start, length) {
+        return null;
+    }
+    substring(start, end) {
+        return null;
+    }
+    toLocaleLowerCase() {
+        return null;
+    }
+    toLocaleUpperCase() {
+        return null;
+    }
+    toLowerCase() {
+        return null;
+    }
+    toUpperCase() {
+        return null;
+    }
+    trim() {
+        return null;
+    }
+    trimLeft() {
+        return null;
+    }
+    trimRight() {
+        return null;
+    }
+    toString() {
+        return null;
+    }
+    sup() {
+        return null;
+    }
+    startsWith(searchString, position) {
+        return null;
+    }
+    trimStart() {
+        return null;
+    }
+    trimEnd() {
+        return null;
+    }
+    at(index) {
+        return null;
+    }
+};
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], StringObject.prototype, "execString", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "length", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "big", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "blink", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "bold", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "charAt", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "charCodeAt", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "codePointAt", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "concat", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "endsWith", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "fixed", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "fontcolor", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "fontsize", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "includes", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "indexOf", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "italics", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "lastIndexOf", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "link", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "localeCompare", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [RegExp]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "match", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [RegExp]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "matchAll", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "normalize", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, String]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "padEnd", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, String]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "padStart", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "repeat", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "replace", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "replaceAll", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [RegExp]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "search", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "slice", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "small", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "split", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "strike", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "sub", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "substr", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "substring", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "toLocaleLowerCase", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "toLocaleUpperCase", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "toLowerCase", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "toUpperCase", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "trim", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "trimLeft", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "trimRight", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "toString", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "sup", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "startsWith", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "trimStart", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "trimEnd", null);
+__decorate([
+    util_1.onlyDeclaration,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Object)
+], StringObject.prototype, "at", null);
+StringObject = __decorate([
+    util_1.StringUint,
+    __metadata("design:paramtypes", [String])
+], StringObject);
 exports.StringObject = StringObject;
 
 
@@ -1672,6 +2123,15 @@ var ControlFlow;
         ArrayEnum["Reduce"] = "reduce";
         ArrayEnum["ReduceRight"] = "reduceRight";
     })(ArrayEnum = ControlFlow.ArrayEnum || (ControlFlow.ArrayEnum = {}));
+    /**
+     a = Object.keys(Object.getOwnPropertyDescriptors(String.prototype)).map($1=>`${$1}: ${$1}`).join('\n')
+     b = a.split("\n")
+     function titleCase(str) {
+      newStr = str.slice(0,1).toUpperCase() +str.slice(1);
+      return newStr;
+    }
+    c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "+titleCase($1)})
+   */
     let SetEnum;
     (function (SetEnum) {
         SetEnum["Has"] = "has";
@@ -1695,6 +2155,58 @@ var ControlFlow;
         MapEnum["Keys"] = "keys";
         MapEnum["Values"] = "values";
     })(MapEnum = ControlFlow.MapEnum || (ControlFlow.MapEnum = {}));
+    let StringEnum;
+    (function (StringEnum) {
+        StringEnum["Length"] = "length";
+        StringEnum["Anchor"] = "anchor";
+        StringEnum["Big"] = "big";
+        StringEnum["Blink"] = "blink";
+        StringEnum["Bold"] = "bold";
+        StringEnum["CharAt"] = "charAt";
+        StringEnum["CharCodeAt"] = "charCodeAt";
+        StringEnum["CodePointAt"] = "codePointAt";
+        StringEnum["Concat"] = "concat";
+        StringEnum["EndsWith"] = "endsWith";
+        StringEnum["Fontcolor"] = "fontcolor";
+        StringEnum["Fontsize"] = "fontsize";
+        StringEnum["Fixed"] = "fixed";
+        StringEnum["Includes"] = "includes";
+        StringEnum["IndexOf"] = "indexOf";
+        StringEnum["Italics"] = "italics";
+        StringEnum["LastIndexOf"] = "lastIndexOf";
+        StringEnum["Link"] = "link";
+        StringEnum["LocaleCompare"] = "localeCompare";
+        StringEnum["Match"] = "match";
+        StringEnum["MatchAll"] = "matchAll";
+        StringEnum["Normalize"] = "normalize";
+        StringEnum["PadEnd"] = "padEnd";
+        StringEnum["PadStart"] = "padStart";
+        StringEnum["Repeat"] = "repeat";
+        StringEnum["Replace"] = "replace";
+        StringEnum["ReplaceAll"] = "replaceAll";
+        StringEnum["Search"] = "search";
+        StringEnum["Slice"] = "slice";
+        StringEnum["Small"] = "small";
+        StringEnum["Split"] = "split";
+        StringEnum["Strike"] = "strike";
+        StringEnum["Sub"] = "sub";
+        StringEnum["Substr"] = "substr";
+        StringEnum["Substring"] = "substring";
+        StringEnum["Sup"] = "sup";
+        StringEnum["StartsWith"] = "startsWith";
+        StringEnum["ToString"] = "toString";
+        StringEnum["Trim"] = "trim";
+        StringEnum["TrimStart"] = "trimStart";
+        StringEnum["TrimLeft"] = "trimLeft";
+        StringEnum["TrimEnd"] = "trimEnd";
+        StringEnum["TrimRight"] = "trimRight";
+        StringEnum["ToLocaleLowerCase"] = "toLocaleLowerCase";
+        StringEnum["ToLocaleUpperCase"] = "toLocaleUpperCase";
+        StringEnum["ToLowerCase"] = "toLowerCase";
+        StringEnum["ToUpperCase"] = "toUpperCase";
+        StringEnum["ValueOf"] = "valueOf";
+        StringEnum["At"] = "at";
+    })(StringEnum = ControlFlow.StringEnum || (ControlFlow.StringEnum = {}));
 })(ControlFlow = exports.ControlFlow || (exports.ControlFlow = {}));
 
 
@@ -1709,7 +2221,7 @@ var ControlFlow;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.onlyDeclarationTag = void 0;
+exports.StringUint = exports.MapUint = exports.SetUint = exports.ArrayUint = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.onlyDeclarationTag = void 0;
 const ObjectAble_1 = __webpack_require__(/*! ./Able/ObjectAble */ "./src/Object/Able/ObjectAble.ts");
 const Control_1 = __webpack_require__(/*! ./Control */ "./src/Object/Control.ts");
 const valueUtil_1 = __webpack_require__(/*! ./valueUtil */ "./src/Object/valueUtil.ts");
@@ -1862,6 +2374,34 @@ function MapUint(host) {
         };
 }
 exports.MapUint = MapUint;
+function StringUint(host) {
+    Object.keys(Control_1.ControlFlow.StringEnum).forEach((item) => {
+        const key = Control_1.ControlFlow.StringEnum[item];
+        const comFunction = host.prototype[key];
+        if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
+            host.prototype[key] = function (...args) {
+                const value = this.valueOf();
+                const execFunc = value[key];
+                let result;
+                if (typeof execFunc === 'function') {
+                    result = execFunc.bind(value)(...args);
+                }
+                else
+                    result = value;
+                return (0, valueUtil_1.decide)(result);
+            };
+        }
+    });
+    if (host.prototype.execString?.declaration === exports.onlyDeclarationTag ||
+        !!host.prototype.execString === false)
+        host.prototype.execString = function (type, ...args) {
+            const execFunc = host.prototype[type]?.bind(this);
+            if (execFunc && typeof execFunc === 'function')
+                return execFunc(...args);
+            return false;
+        };
+}
+exports.StringUint = StringUint;
 
 
 /***/ }),

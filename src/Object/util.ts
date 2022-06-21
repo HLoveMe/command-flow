@@ -184,3 +184,36 @@ export function MapUint(host: any) {
       return false;
     };
 }
+
+export function StringUint(host: any) {
+  Object.keys(ControlFlow.StringEnum).forEach((item) => {
+    const key = ControlFlow.StringEnum[item];
+    const comFunction = host.prototype[key];
+    if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
+      host.prototype[key] = function (...args: any[]) {
+        const value = (this as Value.StringAble).valueOf();
+        const execFunc = value[key];
+        let result;
+        if (typeof execFunc === 'function') {
+          result = (execFunc as Function).bind(value)(...args);
+        } else result = value;
+        return decide(result);
+      };
+    }
+  });
+  
+  if (
+    host.prototype.execString?.declaration === onlyDeclarationTag ||
+    !!host.prototype.execString === false
+  )
+    host.prototype.execString = function (
+      type: ControlFlow.StringEnum,
+      ...args: any[]
+    ) {
+      const execFunc = host.prototype[type]?.bind(
+        this
+      ) as ControlFlow.StringExec;
+      if (execFunc && typeof execFunc === 'function') return execFunc(...args);
+      return false;
+    };
+}

@@ -56,7 +56,15 @@ export namespace ControlFlow {
     Reduce = 'reduce',
     ReduceRight = 'reduceRight',
   }
-
+  /**
+   a = Object.keys(Object.getOwnPropertyDescriptors(String.prototype)).map($1=>`${$1}: ${$1}`).join('\n')
+   b = a.split("\n")
+   function titleCase(str) {
+    newStr = str.slice(0,1).toUpperCase() +str.slice(1);
+    return newStr;
+  }
+  c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "+titleCase($1)})
+ */
   export enum SetEnum {
     Has = 'has',
     Add = 'add',
@@ -78,6 +86,58 @@ export namespace ControlFlow {
     ForEach = 'forEach',
     Keys = 'keys',
     Values = 'values',
+  }
+
+  export enum StringEnum {
+    Length = 'length',
+    Anchor = 'anchor',
+    Big = 'big',
+    Blink = 'blink',
+    Bold = 'bold',
+    CharAt = 'charAt',
+    CharCodeAt = 'charCodeAt',
+    CodePointAt = 'codePointAt',
+    Concat = 'concat',
+    EndsWith = 'endsWith',
+    Fontcolor = 'fontcolor',
+    Fontsize = 'fontsize',
+    Fixed = 'fixed',
+    Includes = 'includes',
+    IndexOf = 'indexOf',
+    Italics = 'italics',
+    LastIndexOf = 'lastIndexOf',
+    Link = 'link',
+    LocaleCompare = 'localeCompare',
+    Match = 'match',
+    MatchAll = 'matchAll',
+    Normalize = 'normalize',
+    PadEnd = 'padEnd',
+    PadStart = 'padStart',
+    Repeat = 'repeat',
+    Replace = 'replace',
+    ReplaceAll = 'replaceAll',
+    Search = 'search',
+    Slice = 'slice',
+    Small = 'small',
+    Split = 'split',
+    Strike = 'strike',
+    Sub = 'sub',
+    Substr = 'substr',
+    Substring = 'substring',
+    Sup = 'sup',
+    StartsWith = 'startsWith',
+    ToString = 'toString',
+    Trim = 'trim',
+    TrimStart = 'trimStart',
+    TrimLeft = 'trimLeft',
+    TrimEnd = 'trimEnd',
+    TrimRight = 'trimRight',
+    ToLocaleLowerCase = 'toLocaleLowerCase',
+    ToLocaleUpperCase = 'toLocaleUpperCase',
+    ToLowerCase = 'toLowerCase',
+    ToUpperCase = 'toUpperCase',
+    ValueOf = 'valueOf',
+    At = 'at',
   }
 
   // 比较 接口
@@ -158,5 +218,14 @@ export namespace ControlFlow {
   };
   export interface CollectionMap<T, U> extends MapAbsoluteAble<U> {
     collectionMap(key: MapEnum, ...args: any[]): U | void;
+  }
+  
+  // String
+  export declare type StringExec = (...args: any[]) => any;
+  export declare type StringFunction = {
+    [T in StringEnum]: StringExec;
+  };
+  export interface ObjectString extends StringFunction {
+    execString(key: StringEnum, ...args: any[]): any;
   }
 }

@@ -101,7 +101,7 @@ const utils = {
 };
 const startBegin = async () => {
   Object.keys(utils).forEach((key) => {
-    const item = utils[key];
+    const item = (utils as any)[key];
     const result = item.run();
     logInfo.value.push({
       desc: `[ ${item.desc} ]: 结果：${result}，期待：${item.expect} `,
