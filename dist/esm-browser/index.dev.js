@@ -1637,6 +1637,7 @@ exports.StringObject = void 0;
 const Control_1 = __webpack_require__(/*! ../../Control */ "./src/Object/Control.ts");
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
+const NumberObject_1 = __webpack_require__(/*! ./NumberObject */ "./src/Object/Able/Targets/NumberObject.ts");
 let StringObject = class StringObject extends ObjectTarget_1.ObjectTarget {
     static type;
     constructor(value = '') {
@@ -1651,8 +1652,8 @@ let StringObject = class StringObject extends ObjectTarget_1.ObjectTarget {
         // throw new Error('Method not implemented.');
         return null;
     }
-    length() {
-        return 1;
+    get length() {
+        return new NumberObject_1.NumberObject(this._value.length);
     }
     anchor(name) {
         return null;
@@ -1805,9 +1806,9 @@ __decorate([
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Object)
-], StringObject.prototype, "length", null);
+], StringObject.prototype, "anchor", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
@@ -2203,7 +2204,6 @@ var ControlFlow;
     })(MapEnum = ControlFlow.MapEnum || (ControlFlow.MapEnum = {}));
     let StringEnum;
     (function (StringEnum) {
-        StringEnum["Length"] = "length";
         StringEnum["Anchor"] = "anchor";
         StringEnum["Big"] = "big";
         StringEnum["Blink"] = "blink";

@@ -2,6 +2,7 @@ import { ControlFlow } from '../../Control';
 import { Value } from '../../../Types';
 import { ObjectTarget } from './ObjectTarget';
 import { onlyDeclaration, StringUint } from '../../util';
+import { NumberObject } from './NumberObject';
 
 
 @StringUint
@@ -24,11 +25,11 @@ export class StringObject
     // throw new Error('Method not implemented.');
     return null as any;
   }
-  @onlyDeclaration
-  length(): Value.NumberAble {
-    return 1 as any;
+  
+  get length(): Value.NumberAble {
+    return new NumberObject(this._value.length);
   }
-
+  @onlyDeclaration
   anchor(name: string): Value.StringAble {
     return null as any;
   } 

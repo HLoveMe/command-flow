@@ -97,7 +97,6 @@ export namespace ControlFlow {
   }
 
   export enum StringEnum {
-    Length = 'length',
     Anchor = 'anchor',
     Big = 'big',
     Blink = 'blink',

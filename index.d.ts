@@ -526,7 +526,6 @@ declare module 'command-flow' {
     }
 
     export enum StringEnum {
-      Length = 'length',
       Anchor = 'anchor',
       Big = 'big',
       Blink = 'blink',
@@ -968,13 +967,16 @@ declare module 'command-flow' {
   export class StringObject
     extends ObjectTarget<string>
     implements Value.StringAble, ControlFlow.ObjectString, ControlFlow.StringFunction {
-    execString(key: ControlFlow.StringEnum, ...args: any[]): any;
+    constructor(value?: string);
     valueOf(): string;
     _value: string;
     json(): StringObject;
     merge(target: StringObject): StringObject;
 
-    length(): NumberObject;
+    
+    execString(key: ControlFlow.StringEnum, ...args: any[]): any;
+
+    get length(): NumberObject;
 
     anchor(name: string): StringObject;
 
