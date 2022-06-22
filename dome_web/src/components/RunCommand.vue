@@ -25,9 +25,9 @@
       ></RunGroup>
       <RunResult
         v-if="logInfo.size >= 1"
-        :desc="'1+10000 + 100'"
-        :expect="'10101'"
-        :success="result"
+        :desc="'1+10000 + 100 And 666 + 777 + 888 + 999' "
+        :expect="'10101 | 3330'"
+        :success="result.every(($1) => $1 === true)"
       ></RunResult>
     </div>
   </div>
@@ -50,7 +50,11 @@ interface WorkStatus {
   value?: any;
   date?: Date;
 }
-const result = ref<boolean>(false);
+type CallBack = (
+  params: { [key: string]: string } | string,
+  runOption: any
+) => string;
+const result = ref<boolean[]>([]);
 const codeRef = ref<HTMLDivElement>({} as any);
 const logInfo = ref<Map<string, Array<any>>>(new Map());
 const disabled = ref<boolean>(false);
@@ -83,11 +87,18 @@ const getContext = () => {
 };
 class RunResultShow extends InstructionOTO {
   name = 'RunResultShow';
+  index: number = 0;
+  value: any;
+  constructor(index: number, v: any = 0) {
+    super();
+    this.index = index;
+    this.value = v;
+  }
 
   run(input: any): Observable<any> {
     return new Observable((subscriber) => {
       const value = unpackValue(input);
-      result.value = value == '10101';
+      result.value[this.index] = value == this.value;
       subscriber.complete();
       return {
         unsubscribe: () => subscriber.unsubscribe(),
@@ -109,15 +120,32 @@ const reRun = () => {
   logInfo.value.clear();
   startBegin();
 };
+/***
+ * '$I$ + 100'  + "1 + 10000" === '1 + 10000 + 100'
+ */
 const run1 = async () => {
   const context = getContext();
   context.addWork(new RunCommandWork('$I$ + 100'));
-  context.addWork(new RunResultShow());
+  context.addWork(new RunResultShow(0,10101));
   await context.prepareWorks();
   context.dispatch('1 + 10000');
 };
+/**
+ * 自定义模板
+ */
+const run2 = async () => {
+  const context = getContext();
+  const aa = (((params: any) => {
+    return `666 + ${params.a} + ${params.b} + 999`;
+  }) as any) as CallBack;
+  context.addWork(new RunCommandWork(aa));
+  context.addWork(new RunResultShow(1,3330));
+  await context.prepareWorks();
+  context.dispatch({ a: 777, b: 888 });
+};
 const startBegin = async () => {
   await run1();
+  await run2();
 };
 const showCode = () => {
   console.log(codeDome.toString());

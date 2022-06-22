@@ -98,7 +98,7 @@ class ShowTimerWork extends InstructionOTO {
     this.count = num;
     this.index = index;
   }
-  prepare(before:any, next:any) {
+  prepare(before: any, next: any) {
     super.prepare(before, next);
     this.config = { development: false };
     return Promise.resolve();
@@ -106,7 +106,7 @@ class ShowTimerWork extends InstructionOTO {
   run(input: any): Observable<any> {
     const that = this;
     return new Observable((subscriber) => {
-      const value = unpackValue(input);
+      const value = unpackValue<number>(input);
       result.value[that.index] = value + 1 === that.count;
       subscriber.complete();
       return {
@@ -115,7 +115,7 @@ class ShowTimerWork extends InstructionOTO {
     });
   }
 }
-const contexts:any[] = [];
+const contexts: any[] = [];
 const clearLog = () => {
   logInfo.value.clear();
 };
@@ -134,7 +134,7 @@ const startBegin = async () => {
   // 1s后运行一次
   async function timeout() {
     const context = getContext();
-    context.addWork(new TimeoutWork());
+    context.addWork(new TimeoutWork(undefined));
     context.addWork(new ShowTimerWork(1, 0));
     await context.prepareWorks();
     context.dispatch();
@@ -145,7 +145,7 @@ const startBegin = async () => {
     //5.5s后停止运行
     context.addWork(
       new IntervalWork(
-        null,
+        undefined,
         1000,
         from(
           new Promise((res) => {
@@ -161,7 +161,7 @@ const startBegin = async () => {
   }
   async function timer() {
     const context = getContext();
-    context.addWork(new DelayIntervalWork(null, null, 3));
+    context.addWork(new DelayIntervalWork(undefined, undefined, 3));
     context.addWork(new ShowTimerWork(3, 2));
     await context.prepareWorks();
     context.dispatch();
