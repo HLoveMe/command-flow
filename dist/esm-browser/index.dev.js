@@ -3606,16 +3606,14 @@ function handleEvalCommand(template, params, config, runOption) {
     if (typeof input === 'string') {
         const placeholder = config['*'];
         if (placeholder) {
-            const reg = new RegExp(placeholder, 'g');
-            runCommand = runCommand.replace(reg, input);
+            runCommand = runCommand.replaceAll(placeholder, input);
         }
     }
     else {
         Object.keys(config).forEach(key => {
             const placeholder = config[key];
             const value = input[key];
-            const reg = new RegExp(placeholder, 'g');
-            runCommand = runCommand.replace(reg, value);
+            runCommand = runCommand.replaceAll(placeholder, value);
         });
     }
     return runCommand;
@@ -3641,15 +3639,28 @@ class RunCommandWork extends Instruction_1.InstructionOTO {
     template = '';
     name = "RunCommandWork";
     paramsConfig = {};
-    constructor(template = '$I$', paramsConfig) {
+    callBack = null;
+    constructor(...args) {
         super();
-        this.template = template;
-        this.paramsConfig = paramsConfig || { "*": "$I$" };
+        if (typeof args[0] === 'string') {
+            const template = args[0] || '$I$';
+            const paramsConfig = args[1] || { "*": "$I$" };
+            this.template = template;
+            this.paramsConfig = paramsConfig;
+        }
+        else if (typeof args[0] === 'function') {
+            this.callBack = args[0];
+        }
     }
     run(command, option) {
         const that = this;
         return new rxjs_1.Observable((subscriber) => {
-            const target = handleEvalCommand(that.template, command, this.paramsConfig, option);
+            let target;
+            if (that.callBack && typeof that.callBack === 'function') {
+                target = this.callBack((0, channel_value_util_1.unpackValue)(command), option);
+            }
+            else
+                target = handleEvalCommand(that.template, command, this.paramsConfig, option);
             const sub = that.context.platform
                 .runCommand(target)
                 .subscribe({

@@ -10,6 +10,7 @@ import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 import { RunCommandWorkConfig } from "../../Configs";
 
 type CommandParams = { [key: string]: string }
+type HandleEvalCommand = (params: CommandParams | string, runOption: RunCommandWorkConfig) => string
 /**
  * "1 + $I$ "
  * @param template 
@@ -23,15 +24,13 @@ function handleEvalCommand(template: string, params: ChannelObject, config: Comm
   if (typeof input === 'string') {
     const placeholder = config['*'];
     if (placeholder) {
-      const reg = new RegExp(placeholder, 'g')
-      runCommand = runCommand.replace(reg, input)
+      runCommand = runCommand.replaceAll(placeholder, input)
     }
   } else {
     Object.keys(config).forEach(key => {
       const placeholder = config[key];
       const value = input[key]
-      const reg = new RegExp(placeholder, 'g')
-      runCommand = runCommand.replace(reg, value)
+      runCommand = runCommand.replaceAll(placeholder, value)
     })
   }
   return runCommand;
@@ -58,15 +57,27 @@ export default class RunCommandWork extends InstructionOTO {
   template: string = '';
   name: string = "RunCommandWork";
   paramsConfig: CommandParams = {};
-  constructor(template: string = '$I$', paramsConfig?: CommandParams) {
+  callBack: HandleEvalCommand = null;
+  constructor(...args: any[]) {
     super();
-    this.template = template;
-    this.paramsConfig = paramsConfig || { "*": "$I$" }
+    if (typeof args[0] === 'string') {
+      const template: string = args[0] || '$I$';
+      const paramsConfig: CommandParams = args[1] || { "*": "$I$" };
+      this.template = template;
+      this.paramsConfig = paramsConfig
+    } else if (typeof args[0] === 'function') {
+      this.callBack = args[0] as HandleEvalCommand;
+    }
   }
+
   run(command: ChannelObject, option?: RunCommandWorkConfig): Observable<ChannelObject<BooleanObject>> {
     const that = this;
     return new Observable((subscriber: Subscriber<ChannelObject<BooleanObject>>) => {
-      const target: string = handleEvalCommand(that.template, command, this.paramsConfig, option)
+      let target: string;
+      if (that.callBack && typeof that.callBack === 'function') {
+        target = this.callBack(unpackValue<CommandParams | string>(command), option)
+      } else
+        target = handleEvalCommand(that.template, command, this.paramsConfig, option)
       const sub = (that.context as ContextImpl).platform
         .runCommand(target)
         .subscribe({
