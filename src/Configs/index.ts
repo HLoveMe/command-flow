@@ -28,9 +28,7 @@ export const DefaultRunConfig = {
       Level: "H",
       SideLength: 100,
     } as QRcodeOption,
-    RunCommandWork: {
-      input: '$I$',
-    },
+    RunCommandWork: {},
     LoadFileWork: {
       type: FileType.All
     },

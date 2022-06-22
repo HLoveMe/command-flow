@@ -104,16 +104,20 @@ async function codeDome() {
   await context.prepareWorks();
   context.dispatch('1 + 10000');
 }
+
 const reRun = () => {
   logInfo.value.clear();
   startBegin();
 };
-const startBegin = async () => {
+const run1 = async () => {
   const context = getContext();
   context.addWork(new RunCommandWork('$I$ + 100'));
   context.addWork(new RunResultShow());
   await context.prepareWorks();
   context.dispatch('1 + 10000');
+};
+const startBegin = async () => {
+  await run1();
 };
 const showCode = () => {
   console.log(codeDome.toString());

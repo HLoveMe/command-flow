@@ -462,9 +462,7 @@ exports.DefaultRunConfig = {
             Level: "H",
             SideLength: 100,
         },
-        RunCommandWork: {
-            input: '$I$',
-        },
+        RunCommandWork: {},
         LoadFileWork: {
             type: ConfigTypes_1.FileType.All
         },
@@ -3130,11 +3128,11 @@ const valueUtil_1 = __webpack_require__(/*! ../Object/valueUtil */ "./src/Object
  * @param value
  * @returns
  */
-const unpackValue = (value) => {
+function unpackValue(value) {
     if (!!value === false)
         return "";
     return value._value.value.valueOf();
-};
+}
 exports.unpackValue = unpackValue;
 /**
  * 组合包装
@@ -3602,10 +3600,25 @@ const channel_value_util_1 = __webpack_require__(/*! ../../Util/channel-value-ut
  * @param option
  * @returns
  */
-function handleEvalCommand(template, input, option) {
-    const inputKey = option.input;
-    const command = template.replace(inputKey, input);
-    return command;
+function handleEvalCommand(template, params, config, runOption) {
+    const input = (0, channel_value_util_1.unpackValue)(params);
+    let runCommand = template;
+    if (typeof input === 'string') {
+        const placeholder = config['*'];
+        if (placeholder) {
+            const reg = new RegExp(placeholder, 'g');
+            runCommand = runCommand.replace(reg, input);
+        }
+    }
+    else {
+        Object.keys(config).forEach(key => {
+            const placeholder = config[key];
+            const value = input[key];
+            const reg = new RegExp(placeholder, 'g');
+            runCommand = runCommand.replace(reg, value);
+        });
+    }
+    return runCommand;
 }
 /**
  * 默认：
@@ -3614,18 +3627,29 @@ function handleEvalCommand(template, input, option) {
  * node:指定
  *  = "#javascript#console.log('hello world')"
  *  = "#shell#echo hello world"
+ *
+ *  lastWork-output-value:1000
+ *  new RunCommandWork('$I$ + 1') === new RunCommandWork('$I$ + 1',{'*':'$I$ '})
+ *  ===>run "1000 + 1"
+ *  ==================================
+ *
+ *  lastWork-output-value:{A:1000,B:2}
+ *  new RunCommandWork('$X$ + 20 * $Y$',{'A':'$X$,'B':'$Y$' '})
+ *  ===> "1000 + 20 * 2"
  */
 class RunCommandWork extends Instruction_1.InstructionOTO {
     template = '';
-    constructor(template = '$I$') {
+    name = "RunCommandWork";
+    paramsConfig = {};
+    constructor(template = '$I$', paramsConfig) {
         super();
         this.template = template;
+        this.paramsConfig = paramsConfig || { "*": "$I$" };
     }
-    name = "RunCommandWork";
     run(command, option) {
         const that = this;
         return new rxjs_1.Observable((subscriber) => {
-            const target = handleEvalCommand(that.template, (0, channel_value_util_1.unpackValue)(command), option);
+            const target = handleEvalCommand(that.template, command, this.paramsConfig, option);
             const sub = that.context.platform
                 .runCommand(target)
                 .subscribe({

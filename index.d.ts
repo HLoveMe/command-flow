@@ -817,7 +817,7 @@ declare module 'command-flow' {
   export class OpenURLWork extends InstructionOTO { }
   export class QRCodeWork extends InstructionOTO { }
   export class RunCommandWork extends InstructionOTO {
-    constructor(template?: string);
+    constructor(template?: string ,paramsConfig?:  { [key: string]: string });
   }
   export class FetchWork extends InstructionOTO { }
 
