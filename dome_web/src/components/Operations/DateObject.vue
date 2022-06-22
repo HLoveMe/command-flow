@@ -42,45 +42,44 @@ const disabled = ref<boolean>(false);
 const clearLog = () => {
   logInfo.value.length = 0;
 };
-const current:Date = new Date();
 const utils: any = {
   toDateString: {
     desc: ' date.toDateString()',
-    expect: current.toDateString(),
+    expect: new Date('2021-1-1').toDateString(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.toDateString().valueOf();
     },
   },
   toTimeString: {
     desc: ' date.toTimeString()',
-    expect: current.toTimeString(),
+    expect: new Date('2021-1-1').toTimeString(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.toTimeString().valueOf();
     },
   },
   toISOString: {
     desc: ' date.toISOString()',
-    expect: current.toISOString(),
+    expect: new Date('2021-1-1').toISOString(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.toISOString().valueOf();
     },
   },
   toUTCString: {
     desc: ' date.toUTCString()',
-    expect: current.toUTCString(),
+    expect: new Date('2021-1-1').toUTCString(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.toUTCString().valueOf();
     },
   },
   getDate: {
     desc: ' date.getDate()',
-    expect: current.getDate(),
+    expect: new Date('2021-1-1').getDate(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getDate().valueOf();
     },
   },
@@ -88,23 +87,23 @@ const utils: any = {
     desc: ' date.setDate(1)',
     expect: 11,
     run: () => {
-      const date = new DateObject(current);
-      return (new Date(date.setDate(11).valueOf())).getDate().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+      return new Date(date.setDate(11).valueOf()).getDate().valueOf();
     },
   },
   getDay: {
     desc: ' date.getDay()',
-    expect: current.getDay(),
+    expect: new Date('2021-1-1').getDay(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getDay().valueOf();
     },
   },
   getFullYear: {
     desc: ' date.getFullYear()',
-    expect: current.getFullYear(),
+    expect: new Date('2021-1-1').getFullYear(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getFullYear().valueOf();
     },
   },
@@ -112,15 +111,15 @@ const utils: any = {
     desc: ' date.setFullYear(1)',
     expect: 2031,
     run: () => {
-      const date = new DateObject(current);
-      return (new Date(date.setFullYear(2031).valueOf())).getFullYear().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+      return new Date(date.setFullYear(2031).valueOf()).getFullYear().valueOf();
     },
   },
   getHours: {
     desc: ' date.getHours()',
-    expect: current.getHours(),
+    expect: new Date('2021-1-1').getHours(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getHours().valueOf();
     },
   },
@@ -128,15 +127,15 @@ const utils: any = {
     desc: ' date.setHours(1)',
     expect: 15,
     run: () => {
-      const date = new DateObject(current);
-      return (new Date(date.setHours(15).valueOf())).getHours().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+      return new Date(date.setHours(15).valueOf()).getHours().valueOf();
     },
   },
   getMilliseconds: {
     desc: ' date.getMilliseconds()',
-    expect: current.getMilliseconds(),
+    expect: new Date('2021-1-1').getMilliseconds(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getMilliseconds().valueOf();
     },
   },
@@ -144,15 +143,17 @@ const utils: any = {
     desc: ' date.setMilliseconds(1)',
     expect: 35,
     run: () => {
-      const date = new DateObject(current);
-      return (new Date(date.setMilliseconds(35).valueOf())).getMilliseconds().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+      return new Date(date.setMilliseconds(35).valueOf())
+        .getMilliseconds()
+        .valueOf();
     },
   },
   getMinutes: {
     desc: ' date.getMinutes()',
-    expect: current.getMinutes(),
+    expect: new Date('2021-1-1').getMinutes(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getMinutes().valueOf();
     },
   },
@@ -160,15 +161,15 @@ const utils: any = {
     desc: ' date.setMinutes(1)',
     expect: 59,
     run: () => {
-      const date = new DateObject(current);
-      return (new Date(date.setMinutes(59).valueOf())).getMinutes().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+      return new Date(date.setMinutes(59).valueOf()).getMinutes().valueOf();
     },
   },
   getMonth: {
     desc: ' date.getMonth()',
-    expect: current.getMonth(),
+    expect: new Date('2021-1-1').getMonth(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getMonth().valueOf();
     },
   },
@@ -176,16 +177,16 @@ const utils: any = {
     desc: ' date.setMonth(1)',
     expect: 10,
     run: () => {
-      const date = new DateObject(current);
-      
-      return (new Date(date.setMonth(10).valueOf())).getMonth().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+
+      return new Date(date.setMonth(10).valueOf()).getMonth().valueOf();
     },
   },
   getSeconds: {
     desc: ' date.getSeconds()',
-    expect: current.getSeconds(),
+    expect: new Date('2021-1-1').getSeconds(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getSeconds().valueOf();
     },
   },
@@ -193,195 +194,190 @@ const utils: any = {
     desc: ' date.setSeconds(1)',
     expect: 25,
     run: () => {
-      const date = new DateObject(current);
-      
-      return (new Date(date.setSeconds(25).valueOf())).getSeconds().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+
+      return new Date(date.setSeconds(25).valueOf()).getSeconds().valueOf();
     },
   },
   getTime: {
     desc: ' date.getTime()',
-    expect: current.getTime(),
+    expect: new Date('2021-1-1').getTime(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getTime().valueOf();
     },
   },
   setTime: {
     desc: ' date.setTime(1)',
-    expect: 1,
+    expect: new Date().setTime(25),
     run: () => {
-      const date = new DateObject(current);
-      date.setTime(1);
-      return date.getTime().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+      return new Date(date.setTime(25).valueOf()).getTime().valueOf();
     },
   },
   getTimezoneOffset: {
     desc: ' date.getTimezoneOffset()',
-    expect: current.getTimezoneOffset(),
+    expect: new Date('2021-1-1').getTimezoneOffset(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getTimezoneOffset().valueOf();
     },
   },
   getUTCDate: {
     desc: ' date.getUTCDate()',
-    expect: current.getUTCDate(),
+    expect: new Date('2021-1-1').getUTCDate(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getUTCDate().valueOf();
     },
   },
   setUTCDate: {
     desc: ' date.setUTCDate(1)',
-    expect: 1,
+    expect: new Date('2021-1-1').setUTCDate(25),
     run: () => {
-      const date = new DateObject(current);
-      date.setUTCDate(1);
-      return date.getUTCDate().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+      return new Date(date.setUTCDate(25).valueOf()).valueOf();
     },
   },
   getUTCDay: {
     desc: ' date.getUTCDay()',
-    expect: current.getUTCDay(),
+    expect: new Date('2021-1-1').getUTCDay(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
+      debugger
       return date.getUTCDay().valueOf();
     },
   },
   getUTCFullYear: {
     desc: ' date.getUTCFullYear()',
-    expect: current.getUTCFullYear(),
+    expect: new Date('2021-1-1').getUTCFullYear(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getUTCFullYear().valueOf();
     },
   },
   setUTCFullYear: {
     desc: ' date.setUTCFullYear(1)',
-    expect: 1,
+    expect: new Date('2021-1-1').setUTCFullYear(25),
     run: () => {
-      const date = new DateObject(current);
-      date.setUTCFullYear(1);
-      return date.getUTCFullYear().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+      return date.setUTCFullYear(25).valueOf();
     },
   },
   getUTCHours: {
     desc: ' date.getUTCHours()',
-    expect: current.getUTCHours(),
+    expect: new Date('2021-1-1').getUTCHours(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getUTCHours().valueOf();
     },
   },
   setUTCHours: {
     desc: ' date.setUTCHours(1)',
-    expect: 1,
+    expect: new Date('2021-1-1').setUTCHours(11),
     run: () => {
-      const date = new DateObject(current);
-      date.setUTCHours(1);
-      return date.getUTCHours().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+      return (new Date(date.setUTCHours(11).valueOf())).valueOf();
     },
   },
   getUTCMilliseconds: {
     desc: ' date.getUTCMilliseconds()',
-    expect: current.getUTCMilliseconds(),
+    expect: new Date('2021-1-1').getUTCMilliseconds(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getUTCMilliseconds().valueOf();
     },
   },
   setUTCMilliseconds: {
     desc: ' date.setUTCMilliseconds(1)',
-    expect: 1,
+    expect: new Date('2021-1-1').setUTCMilliseconds(999),
     run: () => {
-      const date = new DateObject(current);
-      date.setUTCMilliseconds(1);
-      return date.getUTCMilliseconds().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+      ;
+      return (new Date(date.setUTCMilliseconds(999).valueOf())).valueOf();
     },
   },
   getUTCMinutes: {
     desc: ' date.getUTCMinutes()',
-    expect: current.getUTCMinutes(),
+    expect: new Date('2021-1-1').getUTCMinutes(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getUTCMinutes().valueOf();
     },
   },
   setUTCMinutes: {
     desc: ' date.setUTCMinutes(1)',
-    expect: 1,
+    expect: new Date('2021-1-1').setUTCMinutes(23),
     run: () => {
-      const date = new DateObject(current);
-      date.setUTCMinutes(1);
-      return date.getUTCMinutes().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+      
+      return (new Date(date.setUTCMinutes(23).valueOf())).valueOf();
     },
   },
   getUTCMonth: {
     desc: ' date.getUTCMonth()',
-    expect: current.getUTCMonth(),
+    expect: new Date('2021-1-1').getUTCMonth(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getUTCMonth().valueOf();
     },
   },
   setUTCMonth: {
     desc: ' date.setUTCMonth(1)',
-    expect: 1,
+    expect: new Date('2021-1-1').setUTCMonth(6),
     run: () => {
-      const date = new DateObject(current);
-      date.setUTCMonth(1);
-      return date.getUTCMonth().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+      return (new Date(date.setUTCMonth(6).valueOf())).valueOf();
     },
   },
   getUTCSeconds: {
     desc: ' date.getUTCSeconds()',
-    expect: current.getUTCSeconds(),
+    expect: new Date('2021-1-1').getUTCSeconds(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.getUTCSeconds().valueOf();
     },
   },
   setUTCSeconds: {
     desc: ' date.setUTCSeconds(1)',
-    expect: 1,
+    expect: new Date('2021-1-1').setUTCSeconds(42),
     run: () => {
-      const date = new DateObject(current);
-      date.setUTCSeconds(1);
-      return date.getUTCSeconds().valueOf();
+      const date = new DateObject(new Date('2021-1-1'));
+      return (new Date(date.setUTCSeconds(42).valueOf())).valueOf();
     },
   },
   toJSON: {
     desc: ' date.toJSON()',
-    expect: current.toJSON(),
+    expect: new Date('2021-1-1').toJSON(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.toJSON().valueOf();
     },
   },
   toLocaleDateString: {
     desc: ' date.toLocaleDateString()',
-    expect: current.toLocaleDateString(),
+    expect: new Date('2021-1-1').toLocaleDateString(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.toLocaleDateString().valueOf();
     },
   },
   toLocaleString: {
     desc: ' date.toLocaleString()',
-    expect: current.toLocaleString(),
+    expect: new Date('2021-1-1').toLocaleString(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.toLocaleString().valueOf();
     },
   },
   toLocaleTimeString: {
     desc: ' date.toLocaleTimeString()',
-    expect: current.toLocaleTimeString(),
+    expect: new Date('2021-1-1').toLocaleTimeString(),
     run: () => {
-      const date = new DateObject(current);
+      const date = new DateObject(new Date('2021-1-1'));
       return date.toLocaleTimeString().valueOf();
     },
-  }
+  },
 };
 const startBegin = async () => {
   Object.keys(utils).forEach((key) => {
@@ -389,7 +385,7 @@ const startBegin = async () => {
     const result = item.run();
     logInfo.value.push({
       desc: `[ ${item.desc} ]: 结果：${result}，期待：${item.expect} `,
-      success: result === item.expect,
+      success: result + '' == item.expect + '',
     });
   });
 };

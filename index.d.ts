@@ -1199,6 +1199,8 @@ declare module 'command-flow' {
     Value.DateAble,
     ControlFlow.DateFunction,
     ControlFlow.ObjectDate {
+    constructor(date: Date);
+    constructor();
     timestamp(): number;
     _value: Date;
     valueOf(): Date;
