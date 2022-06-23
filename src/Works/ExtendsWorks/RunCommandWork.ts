@@ -52,6 +52,12 @@ function handleEvalCommand(template: string, params: ChannelObject, config: Comm
  *  lastWork-output-value:{A:1000,B:2}
  *  new RunCommandWork('$X$ + 20 * $Y$',{'A':'$X$,'B':'$Y$' '})
  *  ===> "1000 + 20 * 2"
+ *  ===================================
+ * 
+ *  lastWork-output-value:{A:1000,B:2}
+ *  new RunCommandWork((params:{A:1000,B:2})=>{
+ *     return `${A} * 2 + ${B}`
+ *  })
  */
 export default class RunCommandWork extends InstructionOTO {
   template: string = '';

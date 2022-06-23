@@ -71,7 +71,7 @@ export namespace ControlFlow {
     newStr = str.slice(0,1).toUpperCase() +str.slice(1);
     return newStr;
   }
-  c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "+titleCase($1)})
+  c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "$$"+titleCase($1)})
  */
   export enum SetEnum {
     Has = 'has',

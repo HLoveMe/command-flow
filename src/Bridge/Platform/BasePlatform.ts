@@ -24,12 +24,12 @@ export class PlatformBridge extends HardwareBase implements PlatformBridgeAble {
     return new Observable((sub: Subscriber<StringObject>) => {
       let width = option?.SideLength ?? 200;
       let margin = 2;
-      const qrcode = QRCode(option?.type || 4, option?.Level || "H");
-      qrcode.addData((context ?? "") as string);
-      qrcode.make();
-      const moduleCount = qrcode.getModuleCount();
+      const qrCode = QRCode(option?.type || 4, option?.Level || "H");
+      qrCode.addData((context ?? "") as string);
+      qrCode.make();
+      const moduleCount = qrCode.getModuleCount();
       const cellSize = (width - margin * 2) / moduleCount;
-      const base64 = qrcode.createDataURL(cellSize, margin);
+      const base64 = qrCode.createDataURL(cellSize, margin);
       // const base64 = qrcode.createDataURL(cellSize, margin).replace('data:image/gif;base64', 'data:image/png;base64');
       sub.next(new StringObject(base64));
       sub.complete();

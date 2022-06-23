@@ -106,12 +106,12 @@ class PlatformBridge extends Hardware_1.HardwareBase {
         return new rxjs_1.Observable((sub) => {
             let width = option?.SideLength ?? 200;
             let margin = 2;
-            const qrcode = QRCode(option?.type || 4, option?.Level || "H");
-            qrcode.addData((context ?? ""));
-            qrcode.make();
-            const moduleCount = qrcode.getModuleCount();
+            const qrCode = QRCode(option?.type || 4, option?.Level || "H");
+            qrCode.addData((context ?? ""));
+            qrCode.make();
+            const moduleCount = qrCode.getModuleCount();
             const cellSize = (width - margin * 2) / moduleCount;
-            const base64 = qrcode.createDataURL(cellSize, margin);
+            const base64 = qrCode.createDataURL(cellSize, margin);
             // const base64 = qrcode.createDataURL(cellSize, margin).replace('data:image/gif;base64', 'data:image/png;base64');
             sub.next(new ObjectAble_1.StringObject(base64));
             sub.complete();
@@ -665,44 +665,10 @@ exports.Context = Context;
 
 /***/ }),
 
-/***/ "./src/Object/Able/ObjectAble.ts":
-/*!***************************************!*\
-  !*** ./src/Object/Able/ObjectAble.ts ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.OptionalObject = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
-const ObjectTarget_1 = __webpack_require__(/*! ./Targets/ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
-Object.defineProperty(exports, "ObjectTarget", ({ enumerable: true, get: function () { return ObjectTarget_1.ObjectTarget; } }));
-const ArrayObject_1 = __webpack_require__(/*! ./Targets/ArrayObject */ "./src/Object/Able/Targets/ArrayObject.ts");
-Object.defineProperty(exports, "ArrayObject", ({ enumerable: true, get: function () { return ArrayObject_1.ArrayObject; } }));
-const MapObject_1 = __webpack_require__(/*! ./Targets/MapObject */ "./src/Object/Able/Targets/MapObject.ts");
-Object.defineProperty(exports, "MapObject", ({ enumerable: true, get: function () { return MapObject_1.MapObject; } }));
-const SetObject_1 = __webpack_require__(/*! ./Targets/SetObject */ "./src/Object/Able/Targets/SetObject.ts");
-Object.defineProperty(exports, "SetObject", ({ enumerable: true, get: function () { return SetObject_1.SetObject; } }));
-const NumberObject_1 = __webpack_require__(/*! ./Targets/NumberObject */ "./src/Object/Able/Targets/NumberObject.ts");
-Object.defineProperty(exports, "NumberObject", ({ enumerable: true, get: function () { return NumberObject_1.NumberObject; } }));
-const StringObject_1 = __webpack_require__(/*! ./Targets/StringObject */ "./src/Object/Able/Targets/StringObject.ts");
-Object.defineProperty(exports, "StringObject", ({ enumerable: true, get: function () { return StringObject_1.StringObject; } }));
-const BooleanObject_1 = __webpack_require__(/*! ./Targets/BooleanObject */ "./src/Object/Able/Targets/BooleanObject.ts");
-Object.defineProperty(exports, "BooleanObject", ({ enumerable: true, get: function () { return BooleanObject_1.BooleanObject; } }));
-const DateObject_1 = __webpack_require__(/*! ./Targets/DateObject */ "./src/Object/Able/Targets/DateObject.ts");
-Object.defineProperty(exports, "DateObject", ({ enumerable: true, get: function () { return DateObject_1.DateObject; } }));
-const DataObject_1 = __webpack_require__(/*! ./Targets/DataObject */ "./src/Object/Able/Targets/DataObject.ts");
-Object.defineProperty(exports, "DataObject", ({ enumerable: true, get: function () { return DataObject_1.DataObject; } }));
-const NullObject_1 = __webpack_require__(/*! ./Targets/NullObject */ "./src/Object/Able/Targets/NullObject.ts");
-Object.defineProperty(exports, "OptionalObject", ({ enumerable: true, get: function () { return NullObject_1.OptionalObject; } }));
-
-
-/***/ }),
-
-/***/ "./src/Object/Able/Targets/ArrayObject.ts":
-/*!************************************************!*\
-  !*** ./src/Object/Able/Targets/ArrayObject.ts ***!
-  \************************************************/
+/***/ "./src/Object/Able/Base/ArrayObject.ts":
+/*!*********************************************!*\
+  !*** ./src/Object/Able/Base/ArrayObject.ts ***!
+  \*********************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -721,10 +687,10 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ArrayObject = void 0;
 const Control_1 = __webpack_require__(/*! ../../Control */ "./src/Object/Control.ts");
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
-const NumberObject_1 = __webpack_require__(/*! ./NumberObject */ "./src/Object/Able/Targets/NumberObject.ts");
-const StringObject_1 = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Targets/StringObject.ts");
-const BooleanObject_1 = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Targets/BooleanObject.ts");
+const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
+const NumberObject_1 = __webpack_require__(/*! ./NumberObject */ "./src/Object/Able/Base/NumberObject.ts");
+const StringObject_1 = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Base/StringObject.ts");
+const BooleanObject_1 = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Base/BooleanObject.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
 let ArrayObject = ArrayObject_1 = class ArrayObject extends ObjectTarget_1.ObjectTarget {
     constructor(...values) {
@@ -1025,17 +991,17 @@ exports.ArrayObject = ArrayObject;
 
 /***/ }),
 
-/***/ "./src/Object/Able/Targets/BooleanObject.ts":
-/*!**************************************************!*\
-  !*** ./src/Object/Able/Targets/BooleanObject.ts ***!
-  \**************************************************/
+/***/ "./src/Object/Able/Base/BooleanObject.ts":
+/*!***********************************************!*\
+  !*** ./src/Object/Able/Base/BooleanObject.ts ***!
+  \***********************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.BooleanObject = void 0;
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
+const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
 class BooleanObject extends ObjectTarget_1.ObjectTarget {
     static type;
     constructor(value = false) {
@@ -1051,17 +1017,17 @@ exports.BooleanObject = BooleanObject;
 
 /***/ }),
 
-/***/ "./src/Object/Able/Targets/DataObject.ts":
-/*!***********************************************!*\
-  !*** ./src/Object/Able/Targets/DataObject.ts ***!
-  \***********************************************/
+/***/ "./src/Object/Able/Base/DataObject.ts":
+/*!********************************************!*\
+  !*** ./src/Object/Able/Base/DataObject.ts ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DataObject = void 0;
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
+const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
 class DataObject extends ObjectTarget_1.ObjectTarget {
     constructor(value = new ArrayBuffer(0)) {
         super(value);
@@ -1080,10 +1046,10 @@ exports.DataObject = DataObject;
 
 /***/ }),
 
-/***/ "./src/Object/Able/Targets/DateObject.ts":
-/*!***********************************************!*\
-  !*** ./src/Object/Able/Targets/DateObject.ts ***!
-  \***********************************************/
+/***/ "./src/Object/Able/Base/DateObject.ts":
+/*!********************************************!*\
+  !*** ./src/Object/Able/Base/DateObject.ts ***!
+  \********************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -1100,9 +1066,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DateObject = void 0;
 const Control_1 = __webpack_require__(/*! ../../Control */ "./src/Object/Control.ts");
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
-const StringObject_1 = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Targets/StringObject.ts");
-const NumberObject_1 = __webpack_require__(/*! ./NumberObject */ "./src/Object/Able/Targets/NumberObject.ts");
+const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
+const StringObject_1 = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Base/StringObject.ts");
+const NumberObject_1 = __webpack_require__(/*! ./NumberObject */ "./src/Object/Able/Base/NumberObject.ts");
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 let DateObject = class DateObject extends ObjectTarget_1.ObjectTarget {
     constructor(value = new Date()) {
@@ -1505,10 +1471,10 @@ exports.DateObject = DateObject;
 
 /***/ }),
 
-/***/ "./src/Object/Able/Targets/MapObject.ts":
-/*!**********************************************!*\
-  !*** ./src/Object/Able/Targets/MapObject.ts ***!
-  \**********************************************/
+/***/ "./src/Object/Able/Base/MapObject.ts":
+/*!*******************************************!*\
+  !*** ./src/Object/Able/Base/MapObject.ts ***!
+  \*******************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -1527,7 +1493,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MapObject = void 0;
 const Control_1 = __webpack_require__(/*! ../../Control */ "./src/Object/Control.ts");
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
+const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
 // @MapUint
 let MapObject = MapObject_1 = class MapObject extends ObjectTarget_1.ObjectTarget {
@@ -1650,17 +1616,17 @@ exports.MapObject = MapObject;
 
 /***/ }),
 
-/***/ "./src/Object/Able/Targets/NullObject.ts":
-/*!***********************************************!*\
-  !*** ./src/Object/Able/Targets/NullObject.ts ***!
-  \***********************************************/
+/***/ "./src/Object/Able/Base/NullObject.ts":
+/*!********************************************!*\
+  !*** ./src/Object/Able/Base/NullObject.ts ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.OptionalObject = void 0;
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
+const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
 class OptionalObject extends ObjectTarget_1.ObjectTarget {
     constructor(value = null) {
         super(value);
@@ -1688,10 +1654,10 @@ exports.OptionalObject = OptionalObject;
 
 /***/ }),
 
-/***/ "./src/Object/Able/Targets/NumberObject.ts":
-/*!*************************************************!*\
-  !*** ./src/Object/Able/Targets/NumberObject.ts ***!
-  \*************************************************/
+/***/ "./src/Object/Able/Base/NumberObject.ts":
+/*!**********************************************!*\
+  !*** ./src/Object/Able/Base/NumberObject.ts ***!
+  \**********************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -1710,9 +1676,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NumberObject = void 0;
 const Control_1 = __webpack_require__(/*! ../../Control */ "./src/Object/Control.ts");
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
-const BooleanObject_1 = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Targets/BooleanObject.ts");
-const StringObject_1 = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Targets/StringObject.ts");
+const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
+const BooleanObject_1 = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Base/BooleanObject.ts");
+const StringObject_1 = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Base/StringObject.ts");
 let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget_1.ObjectTarget {
     static type;
     constructor(value = 1) {
@@ -1823,10 +1789,10 @@ exports.NumberObject = NumberObject;
 
 /***/ }),
 
-/***/ "./src/Object/Able/Targets/ObjectTarget.ts":
-/*!*************************************************!*\
-  !*** ./src/Object/Able/Targets/ObjectTarget.ts ***!
-  \*************************************************/
+/***/ "./src/Object/Able/Base/ObjectTarget.ts":
+/*!**********************************************!*\
+  !*** ./src/Object/Able/Base/ObjectTarget.ts ***!
+  \**********************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -1853,7 +1819,7 @@ class ObjectTarget {
         }
     }
     json() {
-        const { StringObject } = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Targets/StringObject.ts");
+        const { StringObject } = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Base/StringObject.ts");
         try {
             return new StringObject(JSON.stringify(this._value));
         }
@@ -1867,10 +1833,10 @@ exports.ObjectTarget = ObjectTarget;
 
 /***/ }),
 
-/***/ "./src/Object/Able/Targets/SetObject.ts":
-/*!**********************************************!*\
-  !*** ./src/Object/Able/Targets/SetObject.ts ***!
-  \**********************************************/
+/***/ "./src/Object/Able/Base/SetObject.ts":
+/*!*******************************************!*\
+  !*** ./src/Object/Able/Base/SetObject.ts ***!
+  \*******************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -1889,7 +1855,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SetObject = void 0;
 const Control_1 = __webpack_require__(/*! ../../Control */ "./src/Object/Control.ts");
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
+const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
 let SetObject = SetObject_1 = class SetObject extends ObjectTarget_1.ObjectTarget {
     constructor(value) {
@@ -2009,10 +1975,10 @@ exports.SetObject = SetObject;
 
 /***/ }),
 
-/***/ "./src/Object/Able/Targets/StringObject.ts":
-/*!*************************************************!*\
-  !*** ./src/Object/Able/Targets/StringObject.ts ***!
-  \*************************************************/
+/***/ "./src/Object/Able/Base/StringObject.ts":
+/*!**********************************************!*\
+  !*** ./src/Object/Able/Base/StringObject.ts ***!
+  \**********************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -2029,9 +1995,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.StringObject = void 0;
 const Control_1 = __webpack_require__(/*! ../../Control */ "./src/Object/Control.ts");
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Targets/ObjectTarget.ts");
+const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
-const NumberObject_1 = __webpack_require__(/*! ./NumberObject */ "./src/Object/Able/Targets/NumberObject.ts");
+const NumberObject_1 = __webpack_require__(/*! ./NumberObject */ "./src/Object/Able/Base/NumberObject.ts");
 let StringObject = class StringObject extends ObjectTarget_1.ObjectTarget {
     static type;
     constructor(value = '') {
@@ -2488,6 +2454,40 @@ exports.StringObject = StringObject;
 
 /***/ }),
 
+/***/ "./src/Object/Able/ObjectAble.ts":
+/*!***************************************!*\
+  !*** ./src/Object/Able/ObjectAble.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.OptionalObject = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
+const ObjectTarget_1 = __webpack_require__(/*! ./Base/ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
+Object.defineProperty(exports, "ObjectTarget", ({ enumerable: true, get: function () { return ObjectTarget_1.ObjectTarget; } }));
+const ArrayObject_1 = __webpack_require__(/*! ./Base/ArrayObject */ "./src/Object/Able/Base/ArrayObject.ts");
+Object.defineProperty(exports, "ArrayObject", ({ enumerable: true, get: function () { return ArrayObject_1.ArrayObject; } }));
+const MapObject_1 = __webpack_require__(/*! ./Base/MapObject */ "./src/Object/Able/Base/MapObject.ts");
+Object.defineProperty(exports, "MapObject", ({ enumerable: true, get: function () { return MapObject_1.MapObject; } }));
+const SetObject_1 = __webpack_require__(/*! ./Base/SetObject */ "./src/Object/Able/Base/SetObject.ts");
+Object.defineProperty(exports, "SetObject", ({ enumerable: true, get: function () { return SetObject_1.SetObject; } }));
+const NumberObject_1 = __webpack_require__(/*! ./Base/NumberObject */ "./src/Object/Able/Base/NumberObject.ts");
+Object.defineProperty(exports, "NumberObject", ({ enumerable: true, get: function () { return NumberObject_1.NumberObject; } }));
+const StringObject_1 = __webpack_require__(/*! ./Base/StringObject */ "./src/Object/Able/Base/StringObject.ts");
+Object.defineProperty(exports, "StringObject", ({ enumerable: true, get: function () { return StringObject_1.StringObject; } }));
+const BooleanObject_1 = __webpack_require__(/*! ./Base/BooleanObject */ "./src/Object/Able/Base/BooleanObject.ts");
+Object.defineProperty(exports, "BooleanObject", ({ enumerable: true, get: function () { return BooleanObject_1.BooleanObject; } }));
+const DateObject_1 = __webpack_require__(/*! ./Base/DateObject */ "./src/Object/Able/Base/DateObject.ts");
+Object.defineProperty(exports, "DateObject", ({ enumerable: true, get: function () { return DateObject_1.DateObject; } }));
+const DataObject_1 = __webpack_require__(/*! ./Base/DataObject */ "./src/Object/Able/Base/DataObject.ts");
+Object.defineProperty(exports, "DataObject", ({ enumerable: true, get: function () { return DataObject_1.DataObject; } }));
+const NullObject_1 = __webpack_require__(/*! ./Base/NullObject */ "./src/Object/Able/Base/NullObject.ts");
+Object.defineProperty(exports, "OptionalObject", ({ enumerable: true, get: function () { return NullObject_1.OptionalObject; } }));
+
+
+/***/ }),
+
 /***/ "./src/Object/Control.ts":
 /*!*******************************!*\
   !*** ./src/Object/Control.ts ***!
@@ -2571,7 +2571,7 @@ var ControlFlow;
       newStr = str.slice(0,1).toUpperCase() +str.slice(1);
       return newStr;
     }
-    c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "+titleCase($1)})
+    c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "$$"+titleCase($1)})
    */
     let SetEnum;
     (function (SetEnum) {
@@ -2818,24 +2818,24 @@ exports.Unit = Unit;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.decide = exports.isAbleType = void 0;
-const Value = __webpack_require__(/*! ./Able/ObjectAble */ "./src/Object/Able/ObjectAble.ts");
+const ObjectValue = __webpack_require__(/*! ./Able/ObjectAble */ "./src/Object/Able/ObjectAble.ts");
 let ObjectMap = null;
 const init = () => {
     if (ObjectMap === null) {
         ObjectMap = {
-            '[object Object]': Value.ObjectTarget,
-            '[object Map]': Value.MapObject,
-            '[object Set]': Value.SetObject,
-            '[object Array]': Value.ArrayObject,
-            '[object Boolean]': Value.BooleanObject,
-            '[object Date]': Value.DateObject,
-            '[object Number]': Value.NumberObject,
-            '[object String]': Value.StringObject,
-            '[object ArrayBuffer]': Value.DataObject,
-            '[object Uint8Array]': Value.DataObject,
-            '[object Promise]': Value.ObjectTarget,
-            '[object Null]': Value.OptionalObject,
-            '[object Undefined]': Value.OptionalObject,
+            '[object Object]': ObjectValue.ObjectTarget,
+            '[object Map]': ObjectValue.MapObject,
+            '[object Set]': ObjectValue.SetObject,
+            '[object Array]': ObjectValue.ArrayObject,
+            '[object Boolean]': ObjectValue.BooleanObject,
+            '[object Date]': ObjectValue.DateObject,
+            '[object Number]': ObjectValue.NumberObject,
+            '[object String]': ObjectValue.StringObject,
+            '[object ArrayBuffer]': ObjectValue.DataObject,
+            '[object Uint8Array]': ObjectValue.DataObject,
+            '[object Promise]': ObjectValue.ObjectTarget,
+            '[object Null]': ObjectValue.OptionalObject,
+            '[object Undefined]': ObjectValue.OptionalObject,
         };
     }
     return ObjectMap;
@@ -2852,7 +2852,7 @@ exports.isAbleType = isAbleType;
  * @param force 是否强制包装
  * @returns
  */
-const decide = function (value, force = false) {
+function decide(value, force = false) {
     init();
     if ((0, exports.isAbleType)(value) && force === false)
         return value;
@@ -2861,9 +2861,10 @@ const decide = function (value, force = false) {
     if (Target) {
         return new Target(value ?? {});
     }
-    return new Value.ObjectTarget(value);
-};
+    return new ObjectValue.ObjectTarget(value);
+}
 exports.decide = decide;
+;
 
 
 /***/ }),
@@ -3161,10 +3162,10 @@ exports.wrapperValue = wrapperValue;
 "use strict";
 
 /*
- * @Author: zihao.zhu@united-imaging.com
+ * @Author:
  * @Date: 2022-06-08 19:31:16
  * @Last Modified by: zihao.zhu
- * @Last Modified time: 2022-06-08 19:35:43
+ * @Last Modified time: 2022-06-22 17:42:51
  * @desc : undefined
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
@@ -3634,6 +3635,12 @@ function handleEvalCommand(template, params, config, runOption) {
  *  lastWork-output-value:{A:1000,B:2}
  *  new RunCommandWork('$X$ + 20 * $Y$',{'A':'$X$,'B':'$Y$' '})
  *  ===> "1000 + 20 * 2"
+ *  ===================================
+ *
+ *  lastWork-output-value:{A:1000,B:2}
+ *  new RunCommandWork((params:{A:1000,B:2})=>{
+ *     return `${A} * 2 + ${B}`
+ *  })
  */
 class RunCommandWork extends Instruction_1.InstructionOTO {
     template = '';

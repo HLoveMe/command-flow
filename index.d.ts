@@ -817,7 +817,7 @@ declare module 'command-flow' {
   export class OpenURLWork extends InstructionOTO { }
   export class QRCodeWork extends InstructionOTO { }
 
-  export type HandleEvalCommand = (params: { [key: string]: string } | string, runOption: RunCommandWorkConfig) => string
+  export type HandleEvalCommand = (params: { [key: string]: string } | string, runOption: Config.RunCommandWorkConfig) => string
   export class RunCommandWork extends InstructionOTO {
     constructor(template?: string, paramsConfig?: { [key: string]: string });
     constructor(buildCommand?: HandleEvalCommand);

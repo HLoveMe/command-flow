@@ -18,7 +18,7 @@ export function unpackValue<T extends any = string>(value: ChannelObject): T {
  * @returns 
  */
 export function wrapperValue<T extends BaseType = BaseType>(input: ChannelObject, value: T | any): ChannelObject<T> {
-  const nextValue = decide(value) as T;
+  const nextValue = decide<T>(value);
   return new ObjectTarget({
     ...(input._value),
     value: nextValue,
