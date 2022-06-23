@@ -44,74 +44,73 @@ type TypeNumber =
   | 40;
 type ErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H';
 declare module 'command-flow' {
-  export * from './src/Object/types'
-  // export namespace Value {
-  //   export type NULL = null | undefined;
-  //   export interface ValueAble<V> {
-  //     _value: V;
-  //     valueOf(): V;
-  //   }
-  //   export interface ObjectAble<V> extends ValueAble<V> {
-  //     json(): Value.StringAble;
-  //     merge(target: ObjectAble<V>): ObjectAble<V>;
-  //   }
-  //   export interface ArrayAble<T>
-  //     extends ValueAble<Array<T>>,
-  //     ObjectAble<Array<T>> {
-  //     len(): number;
-  //     first(): T;
-  //     last(): T;
-  //     valueOfIndex(index: number): T;
-  //     valueOf(): Array<T>;
-  //   }
+  export namespace Value {
+    export type NULL = null | undefined;
+    export interface ValueAble<V> {
+      _value: V;
+      valueOf(): V;
+    }
+    export interface ObjectAble<V> extends ValueAble<V> {
+      json(): Value.StringAble;
+      merge(target: ObjectAble<V>): ObjectAble<V>;
+    }
+    export interface ArrayAble<T>
+      extends ValueAble<Array<T>>,
+      ObjectAble<Array<T>> {
+      len(): number;
+      first(): T;
+      last(): T;
+      valueOfIndex(index: number): T;
+      valueOf(): Array<T>;
+    }
 
-  //   export interface MapAble<T, U>
-  //     extends ValueAble<Map<T, U>>,
-  //     ObjectAble<Map<T, U>> {
-  //     len(): number;
-  //     valueOf(): Map<T, U>;
-  //   }
+    export interface MapAble<T, U>
+      extends ValueAble<Map<T, U>>,
+      ObjectAble<Map<T, U>> {
+      len(): number;
+      valueOf(): Map<T, U>;
+    }
 
-  //   export interface SetAble<T> extends ValueAble<Set<T>>, ObjectAble<Set<T>> {
-  //     len(): number;
-  //     valueOf(): Set<T>;
-  //   }
+    export interface SetAble<T> extends ValueAble<Set<T>>, ObjectAble<Set<T>> {
+      len(): number;
+      valueOf(): Set<T>;
+    }
 
-  //   export interface NumberAble extends ValueAble<Number>, ObjectAble<Number> {
-  //     valueOf(): Number;
-  //   }
+    export interface NumberAble extends ValueAble<Number>, ObjectAble<Number> {
+      valueOf(): Number;
+    }
 
-  //   export interface StringAble extends ValueAble<String>, ObjectAble<String> {
-  //     valueOf(): String;
-  //   }
+    export interface StringAble extends ValueAble<String>, ObjectAble<String> {
+      valueOf(): String;
+    }
 
-  //   export interface BooleanAble
-  //     extends ValueAble<Boolean>,
-  //     ObjectAble<Boolean> {
-  //     valueOf(): Boolean;
-  //   }
+    export interface BooleanAble
+      extends ValueAble<Boolean>,
+      ObjectAble<Boolean> {
+      valueOf(): Boolean;
+    }
 
-  //   export interface DateAble extends ValueAble<Date>, ObjectAble<Date> {
-  //     timestamp(): number;
-  //   }
+    export interface DateAble extends ValueAble<Date>, ObjectAble<Date> {
+      timestamp(): number;
+    }
 
-  //   export interface DataAble
-  //     extends ValueAble<ArrayBuffer>,
-  //     ObjectAble<ArrayBuffer> {
-  //     data(): ArrayBuffer;
-  //   }
+    export interface DataAble
+      extends ValueAble<ArrayBuffer>,
+      ObjectAble<ArrayBuffer> {
+      data(): ArrayBuffer;
+    }
 
-  //   export interface NullAble extends ValueAble<NULL>, ObjectAble<NULL> {
-  //     valueOf(): null | undefined;
-  //     isTruly(): boolean;
-  //     isNull(): boolean;
-  //     isUndefined(): boolean;
-  //   }
-  //   export interface Mixins<
-  //     V extends Value.ObjectAble<any> = Value.ObjectAble<any>,
-  //     U extends any = NULL
-  //     > extends ValueAble<V | U> { }
-  // }
+    export interface NullAble extends ValueAble<NULL>, ObjectAble<NULL> {
+      valueOf(): null | undefined;
+      isTruly(): boolean;
+      isNull(): boolean;
+      isUndefined(): boolean;
+    }
+    export interface Mixins<
+      V extends Value.ObjectAble<any> = Value.ObjectAble<any>,
+      U extends any = NULL
+      > extends ValueAble<V | U> { }
+  }
 
   export type BaseType =
     | Value.ObjectAble<any> // ObjectTarget
@@ -1329,4 +1328,8 @@ declare module 'command-flow' {
   export function isAbleType(value: any): boolean;
 
   export function decide(value: any | BaseType, force?: boolean): BaseType;
+
+  export function createExtendsInstance<T>(target: Function, construct: any[], exclude: string[] = []): ValueExtends.ExtendsType<T>;
+  
+  export function createExtendsConstruct<T extends any>(target: T, exclude: string[] = []): Function;
 }

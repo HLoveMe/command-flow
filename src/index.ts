@@ -8,7 +8,9 @@ import {
   BooleanObject,
   DateObject,
   DataObject,
-  OptionalObject
+  OptionalObject,
+  createExtendsConstruct,
+  createExtendsInstance
 } from "./Object";
 import { ContextImpl, BaseType, WorkType } from "./Types";
 import { Value } from './Object'
@@ -64,7 +66,10 @@ export {
   FetchWork,
   unpackValue,
   wrapperValue,
-  isAbleType, decide
+  isAbleType,
+  decide,
+  createExtendsConstruct,
+  createExtendsInstance
 };
 
 // 1
