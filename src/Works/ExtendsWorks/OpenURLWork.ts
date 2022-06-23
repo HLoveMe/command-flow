@@ -3,7 +3,7 @@ import { ContextImpl } from "../../Types";
 import { ChannelObject } from "../../Types";
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
-import { BooleanObject } from "../../Object/Able/ObjectAble";
+import { BooleanObject } from "../../Object";
 import { isJS, } from "../../Util/Equipment";
 import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 

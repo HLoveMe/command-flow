@@ -1,5 +1,5 @@
 import { Observable, of } from "rxjs";
-import { BooleanObject, ObjectTarget } from "../../../Object/Able/ObjectAble";
+import { BooleanObject, ObjectTarget } from "../../../Object";
 import { Value } from "../../../Object";
 import {
   PathLike,

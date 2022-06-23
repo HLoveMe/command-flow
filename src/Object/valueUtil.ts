@@ -1,5 +1,5 @@
 import { BaseType } from '../Types';
-import * as ObjectValue from './Able/ObjectAble';
+import * as ObjectValue from './Able';
 
 let ObjectMap = null;
 const init = () => {

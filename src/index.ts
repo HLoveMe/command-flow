@@ -9,10 +9,10 @@ import {
   DateObject,
   DataObject,
   OptionalObject
-} from "./Object/Able/ObjectAble";
+} from "./Object";
 import { ContextImpl, BaseType, WorkType } from "./Types";
 import { Value } from './Object'
-import { ControlFlow } from "./Object/Control";
+import { ControlFlow } from "./Object/Able/Control";
 import { Context } from "./Context";
 import {
   InstructionMTM,

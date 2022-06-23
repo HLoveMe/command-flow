@@ -14,7 +14,7 @@ import {
   Subscription,
 } from 'rxjs';
 import { ContextRunOption, DefaultRunConfig } from './Configs';
-import { BooleanObject, ObjectTarget } from './Object/Able/ObjectAble';
+import { BooleanObject, ObjectTarget } from './Object';
 import Platform from './Bridge/Index';
 import { Value } from './Object';
 import { PlatformBridge } from './Bridge/Platform/BasePlatform';

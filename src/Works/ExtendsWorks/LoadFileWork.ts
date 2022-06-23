@@ -5,7 +5,7 @@ import { Observable, Subscriber } from "rxjs";
 import {
   DataObject,
   ObjectTarget,
-} from "../../Object/Able/ObjectAble";
+} from "../../Object";
 import { isElectron, isJS, isMobile, isNode, isPC, isWeb } from "../../Util/Equipment";
 import { FileLoadEvent, FileOption, FileType } from "../../Bridge/ConfigTypes";
 import { takeLast, tap } from "rxjs/operators";

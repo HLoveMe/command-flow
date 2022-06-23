@@ -1,5 +1,5 @@
 import { async, Observable, of, Subscriber } from "rxjs";
-import { BooleanObject, StringObject, ObjectTarget } from "../../Object/Able/ObjectAble";
+import { BooleanObject, StringObject, ObjectTarget } from "../../Object";
 import {
   CommandStatus,
   FileLoadEvent,

@@ -1,6 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { Observable } from "rxjs";
-import { BooleanObject, StringObject } from "../Object/Able/ObjectAble";
+import { BooleanObject, StringObject } from "../Object";
 import { Value } from "../Object";
 
 export interface RunTimeInfo {

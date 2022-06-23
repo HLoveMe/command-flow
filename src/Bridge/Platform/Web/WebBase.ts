@@ -2,7 +2,7 @@ import { Observable, of } from "rxjs";
 import {
   BooleanObject,
   ObjectTarget,
-} from "../../../Object/Able/ObjectAble";
+} from "../../../Object";
 import { Value } from "../../../Object";
 import {
   PathLike,

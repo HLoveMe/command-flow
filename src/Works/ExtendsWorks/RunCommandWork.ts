@@ -5,7 +5,7 @@ import { Observable, Subscriber } from "rxjs";
 import { isJS } from "../../Util/Equipment";
 import { CommandStatus } from "../../Bridge/ConfigTypes";
 import { ChannelObject, ContextImpl, BaseType } from "../../Types";
-import { BooleanObject } from '../../Object/Able/ObjectAble';
+import { BooleanObject } from '../../Object';
 import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 import { RunCommandWorkConfig } from "../../Configs";
 

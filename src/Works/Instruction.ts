@@ -17,7 +17,7 @@ import { observeOn, tap } from "rxjs/operators";
 import { v4 as UUID } from "uuid";
 import { WorkUnit } from "./WorkUnit";
 import { EnvironmentAble } from "../Util/EvalEquipment";
-import { StringObject } from "../Object/Able/ObjectAble";
+import { StringObject } from "../Object";
 import { wrapperValue } from "../Util/channel-value-util";
 import { noop } from "../Util/tools";
 

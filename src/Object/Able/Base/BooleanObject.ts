@@ -1,4 +1,4 @@
-import { ControlFlow } from '../../Control';
+import { ControlFlow } from '../Control';
 import { Value } from '../../../Object';
 import { ObjectTarget } from './ObjectTarget';
 

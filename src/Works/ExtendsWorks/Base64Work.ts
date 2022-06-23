@@ -3,7 +3,7 @@ import { ChannelObject, ChannelValue } from "../../Types";
 import { Base64 } from 'js-base64';
 import { InstructionMTM } from "../Instruction";
 import { Observable, of, Subscriber } from "rxjs";
-import { StringObject, ObjectTarget } from "../../Object/Able/ObjectAble";
+import { StringObject, ObjectTarget } from "../../Object";
 import { isJS } from "../../Util/Equipment";
 import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 

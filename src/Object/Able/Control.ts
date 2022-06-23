@@ -1,7 +1,7 @@
 // import { BooleanAble, NumberAble, ValueAble } from "./Able/Ables";
 
-import { BaseType } from '..';
-import { Value } from '../Object';
+import { BaseType } from '../..';
+import { Value } from '..';
 export namespace ControlFlow {
   // 比较属性 compare
   export enum CompareEnum {

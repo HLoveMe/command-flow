@@ -8,7 +8,7 @@ import { v4 as UUID } from "uuid";
 import { EnvironmentAble } from "../../Util/EvalEquipment";
 import { InstructionOTO } from "../Instruction";
 import { isJS } from "../../Util/Equipment";
-import { ObjectTarget } from "../../Object/Able/ObjectAble";
+import { ObjectTarget } from "../../Object";
 import { decide } from '../../Object/valueUtil'
 
 export class BeginWork

@@ -1,4 +1,4 @@
-import { ControlFlow } from "../../Control";
+import { ControlFlow } from "../Control";
 import { CalcUnit, CompareUnit, Unit, onlyDeclaration } from "../../util";
 import { Value } from "../../../Object";
 import { ObjectTarget } from "./ObjectTarget";

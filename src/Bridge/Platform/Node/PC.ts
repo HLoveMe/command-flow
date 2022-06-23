@@ -1,5 +1,5 @@
 import { from, fromEvent, Observable, of, Subscription } from 'rxjs';
-import { BooleanObject, ObjectTarget } from '../../../Object/Able/ObjectAble';
+import { BooleanObject, ObjectTarget } from '../../../Object';
 import {
   PathLike,
   FileLoadEvent,

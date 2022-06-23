@@ -1,4 +1,4 @@
-import { ControlFlow } from '../../Control';
+import { ControlFlow } from '../Control';
 import {
   onlyDeclaration, Unit
 } from '../../util';

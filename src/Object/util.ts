@@ -1,6 +1,6 @@
-import { BooleanObject, NumberObject } from './Able/ObjectAble';
+import { BooleanObject, NumberObject } from './Able';
 import { Value } from '../Object';
-import { ControlFlow } from './Control';
+import { ControlFlow } from './Able/Control';
 import { decide } from './valueUtil';
 
 export const onlyDeclarationTag: string = 'onlyDeclaration';
