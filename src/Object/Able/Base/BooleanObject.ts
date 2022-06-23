@@ -1,5 +1,5 @@
 import { ControlFlow } from '../../Control';
-import { Value } from '../../../Types';
+import { Value } from '../../../Object';
 import { ObjectTarget } from './ObjectTarget';
 
 export class BooleanObject

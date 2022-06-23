@@ -1,6 +1,7 @@
 import { ControlFlow } from '../../Control';
 import { onlyDeclaration, Unit } from '../../util';
-import { BaseType, Value } from '../../../Types';
+import { BaseType } from '../../../Types';
+import { Value } from '../../../Object'
 import { ObjectTarget } from './ObjectTarget';
 import { decide } from '../../valueUtil';
 import { NumberObject } from './NumberObject';

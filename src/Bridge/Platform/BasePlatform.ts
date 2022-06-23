@@ -12,7 +12,7 @@ import {
   Hardware,
 } from "../ConfigTypes";
 import * as QRCode from "qrcode-generator";
-import { Value } from "../../Types";
+import { Value } from "../../Object";
 import Axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { HardwareBase } from "./Hardware";
 

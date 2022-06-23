@@ -1,5 +1,5 @@
 // import { attribute, DefaultValue } from '../../util';
-import { Value } from '../../../Types';
+import { Value } from '../../../Object';
 import { ObjectTarget } from './ObjectTarget';
 
 export class OptionalObject

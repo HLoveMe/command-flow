@@ -1,73 +1,7 @@
 import { PartialObserver, Observable, Subject, Subscription } from 'rxjs';
-
+import { Value } from './Object'
 import { ContextRunOption } from './Configs';
 import { PlatformBridgeAble } from './Bridge/ConfigTypes';
-
-export namespace Value {
-  export type NULL = null | undefined;
-  export interface ValueAble<V> {
-    _value: V;
-    valueOf(): V;
-  }
-  export interface ObjectAble<V> extends ValueAble<V> {
-    json(): Value.StringAble;
-    merge(target: ObjectAble<V>): ObjectAble<V>;
-  }
-  export interface ArrayAble<T>
-    extends ValueAble<Array<T>>,
-      ObjectAble<Array<T>> {
-    len(): number;
-    first(): T;
-    last(): T;
-    valueOfIndex(index: number): T;
-    valueOf(): Array<T>;
-  }
-
-  export interface MapAble<T, U>
-    extends ValueAble<Map<T, U>>,
-      ObjectAble<Map<T, U>> {
-    len(): number;
-    valueOf(): Map<T, U>;
-  }
-
-  export interface SetAble<T> extends ValueAble<Set<T>>, ObjectAble<Set<T>> {
-    len(): number;
-    valueOf(): Set<T>;
-  }
-
-  export interface NumberAble extends ValueAble<number>, ObjectAble<number> {
-    valueOf(): number;
-  }
-
-  export interface StringAble extends ValueAble<string>, ObjectAble<string> {
-    valueOf(): string;
-  }
-
-  export interface BooleanAble extends ValueAble<boolean>, ObjectAble<boolean> {
-    valueOf(): boolean;
-  }
-
-  export interface DateAble extends ValueAble<Date>, ObjectAble<Date> {
-    timestamp(): number;
-  }
-
-  export interface DataAble
-    extends ValueAble<ArrayBuffer>,
-      ObjectAble<ArrayBuffer> {
-    data(): ArrayBuffer;
-  }
-
-  export interface NullAble extends ValueAble<NULL>, ObjectAble<NULL> {
-    valueOf(): null | undefined;
-    isTruly(): boolean;
-    isNull(): boolean;
-    isUndefined(): boolean;
-  }
-  export interface Mixins<
-    V extends Value.ObjectAble<any> = Value.ObjectAble<any>,
-    U extends any = NULL
-  > extends ValueAble<V | U> {}
-}
 
 export type BaseType =
   | Value.ObjectAble<any> // ObjectTarget
@@ -152,9 +86,9 @@ export namespace WorkType {
   }
   export declare interface Work
     extends WorkOperation,
-      WorkContext,
-      WorkChain,
-      WorkConfig {
+    WorkContext,
+    WorkChain,
+    WorkConfig {
     name: string;
     id: number;
     uuid: WorkUUID;

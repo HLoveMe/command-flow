@@ -1,4 +1,5 @@
-import { ContextImpl, Value, } from "../../Types";
+import { ContextImpl } from "../../Types";
+import { Value } from '../../Object'
 import { ChannelObject, ChannelValue } from "../../Types";
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";

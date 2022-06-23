@@ -2454,6 +2454,204 @@ exports.StringObject = StringObject;
 
 /***/ }),
 
+/***/ "./src/Object/Able/Extends/extend-util.ts":
+/*!************************************************!*\
+  !*** ./src/Object/Able/Extends/extend-util.ts ***!
+  \************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.createExtendsInstance = exports.createExtendsConstruct = void 0;
+const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
+const Value = __webpack_require__(/*! ../ObjectAble */ "./src/Object/Able/ObjectAble.ts");
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const ExtendsMap = new Map();
+function createExtendsConstruct(target, exclude = []) {
+    if (ExtendsMap.has(target))
+        return ExtendsMap.get(target);
+    const Enum = {};
+    const tempTarget = Reflect.construct(target, []);
+    exclude = [...exclude, 'constructor', 'valueOf'];
+    Object.keys(tempTarget).forEach($1 => {
+        if (!exclude.includes($1) && typeof $1 !== 'symbol') {
+            Enum[$1] = $1;
+        }
+    });
+    const result = /\[object (\w+)\]/g.exec(Object.prototype.toString.call(tempTarget));
+    if (!!result === false)
+        return Function;
+    let KV = class KV extends Value.ObjectTarget {
+    };
+    KV = __decorate([
+        (0, util_1.Unit)(Enum, `exec${result[1]}`)
+    ], KV);
+    ExtendsMap.set(target, KV);
+    return KV;
+}
+exports.createExtendsConstruct = createExtendsConstruct;
+/**
+  type DateType = ExtendsType<Date>
+  const DateDome = createExtendsConstruct(Date)
+  const aaa: DateType = Reflect.construct(DateDome, [new Date()])
+
+ * @param target  Date
+ * @param construct ['2021-06-23']
+ * @param exclude
+ * @returns
+ */
+function createExtendsInstance(target, construct, exclude = []) {
+    const DateDome = createExtendsConstruct(target);
+    return Reflect.construct(DateDome, construct);
+}
+exports.createExtendsInstance = createExtendsInstance;
+// type DateAble = CreateNewInterface<GetInterface<Date, 'getVarDate' | 'constructor' | 'valueOf', (...args: any[]) => any>>
+// class A extends Value.ObjectTarget<any> implements DateAble {
+//   [Symbol.toPrimitive](hint: string): Value.StringObject | Value.NumberObject {
+//     return decide(this._value[Symbol.toPrimitive](hint))
+//   }
+//   // [Symbol.toPrimitive](hint: string): string | number {
+//   //   return null as any;
+//   // }
+//   toString(): Value.StringObject {
+//     return null as any;
+//   }
+//   toDateString(): Value.StringObject {
+//     return null as any;
+//   }
+//   toTimeString(): Value.StringObject {
+//     return null as any;
+//   }
+//   toLocaleString(locales?: Intl.LocalesArgument, options?: Intl.DateTimeFormatOptions): Value.StringObject {
+//     return null as any
+//   }
+//   toLocaleDateString(locales?: Intl.LocalesArgument, options?: Intl.DateTimeFormatOptions): Value.StringObject {
+//     return null as any
+//   }
+//   toLocaleTimeString(locales?: Intl.LocalesArgument, options?: Intl.DateTimeFormatOptions): Value.StringObject {
+//     return null as any;
+//   }
+//   getTime(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getFullYear(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getUTCFullYear(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getMonth(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getUTCMonth(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getDate(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getUTCDate(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getDay(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getUTCDay(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getHours(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getUTCHours(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getMinutes(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getUTCMinutes(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getSeconds(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getUTCSeconds(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getMilliseconds(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getUTCMilliseconds(): Value.NumberObject {
+//     return null as any;
+//   }
+//   getTimezoneOffset(): Value.NumberObject {
+//     return null as any;
+//   }
+//   setTime(time: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setMilliseconds(ms: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setUTCMilliseconds(ms: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setSeconds(sec: number, ms?: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setUTCSeconds(sec: number, ms?: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setMinutes(min: number, sec?: number, ms?: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setUTCMinutes(min: number, sec?: number, ms?: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setHours(hours: number, min?: number, sec?: number, ms?: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setUTCHours(hours: number, min?: number, sec?: number, ms?: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setDate(date: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setUTCDate(date: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setMonth(month: number, date?: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setUTCMonth(month: number, date?: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setFullYear(year: number, month?: number, date?: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   setUTCFullYear(year: number, month?: number, date?: number): Value.NumberObject {
+//     return null as any;
+//   }
+//   toUTCString(): Value.StringObject {
+//     return null as any;
+//   }
+//   toISOString(): Value.StringObject {
+//     return null as any;
+//   }
+//   toJSON(key?: any): Value.StringObject {
+//     new Date().getVarDate
+//     return null as any;
+//   }
+// }
+
+
+/***/ }),
+
 /***/ "./src/Object/Able/ObjectAble.ts":
 /*!***************************************!*\
   !*** ./src/Object/Able/ObjectAble.ts ***!
@@ -2463,7 +2661,7 @@ exports.StringObject = StringObject;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.OptionalObject = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
+exports.createExtendsInstance = exports.createExtendsConstruct = exports.OptionalObject = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
 const ObjectTarget_1 = __webpack_require__(/*! ./Base/ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
 Object.defineProperty(exports, "ObjectTarget", ({ enumerable: true, get: function () { return ObjectTarget_1.ObjectTarget; } }));
 const ArrayObject_1 = __webpack_require__(/*! ./Base/ArrayObject */ "./src/Object/Able/Base/ArrayObject.ts");
@@ -2484,6 +2682,9 @@ const DataObject_1 = __webpack_require__(/*! ./Base/DataObject */ "./src/Object/
 Object.defineProperty(exports, "DataObject", ({ enumerable: true, get: function () { return DataObject_1.DataObject; } }));
 const NullObject_1 = __webpack_require__(/*! ./Base/NullObject */ "./src/Object/Able/Base/NullObject.ts");
 Object.defineProperty(exports, "OptionalObject", ({ enumerable: true, get: function () { return NullObject_1.OptionalObject; } }));
+const extend_util_1 = __webpack_require__(/*! ./Extends/extend-util */ "./src/Object/Able/Extends/extend-util.ts");
+Object.defineProperty(exports, "createExtendsConstruct", ({ enumerable: true, get: function () { return extend_util_1.createExtendsConstruct; } }));
+Object.defineProperty(exports, "createExtendsInstance", ({ enumerable: true, get: function () { return extend_util_1.createExtendsInstance; } }));
 
 
 /***/ }),

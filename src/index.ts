@@ -10,7 +10,8 @@ import {
   DataObject,
   OptionalObject
 } from "./Object/Able/ObjectAble";
-import { Value, ContextImpl, BaseType, WorkType } from "./Types";
+import { ContextImpl, BaseType, WorkType } from "./Types";
+import { Value } from './Object'
 import { ControlFlow } from "./Object/Control";
 import { Context } from "./Context";
 import {

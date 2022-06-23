@@ -1,5 +1,5 @@
 import { BooleanObject, NumberObject } from './Able/ObjectAble';
-import { Value } from '../Types';
+import { Value } from '../Object';
 import { ControlFlow } from './Control';
 import { decide } from './valueUtil';
 

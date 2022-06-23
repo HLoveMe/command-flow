@@ -1,4 +1,5 @@
-import { BaseType, ContextImpl, WorkType, Value, ChannelObject, ChannelValue } from "../Types";
+import { BaseType, ContextImpl, WorkType, ChannelObject, ChannelValue } from "../Types";
+import { Value } from '../Object'
 import {
   Subject,
   Subscription,
@@ -112,7 +113,7 @@ export class Instruction
     const uuid = UUID();
     const runSub: Subscription = execFunc(value)
       .pipe(
-        tap(function(_value:ChannelObject){
+        tap(function (_value: ChannelObject) {
           sendLog("[Work][Func:run]->结果", _value)
         }),
         observeOn(asyncScheduler)

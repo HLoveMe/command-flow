@@ -9,6 +9,7 @@ import { BooleanObject } from "./Base/BooleanObject";
 import { DateObject } from "./Base/DateObject";
 import { DataObject } from "./Base/DataObject";
 import { OptionalObject } from './Base/NullObject'
+import { createExtendsConstruct, createExtendsInstance } from './Extends/extend-util'
 // import { MixinsObject } from './Targets/Mixins'
 
 export {
@@ -22,5 +23,7 @@ export {
   DateObject,
   DataObject,
   // MixinsObject,
-  OptionalObject
+  OptionalObject,
+  createExtendsConstruct,
+  createExtendsInstance
 };

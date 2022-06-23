@@ -7,7 +7,7 @@ import {
   CommandStatus,
 } from '../../ConfigTypes';
 import * as fs from 'fs';
-import { Value } from '../../../Types';
+import { Value } from '../../../Object';
 import { PlatformBridge } from '../BasePlatform';
 const nodeOpen = require('open');
 import * as process from 'child_process';

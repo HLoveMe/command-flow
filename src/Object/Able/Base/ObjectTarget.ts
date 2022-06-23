@@ -1,6 +1,6 @@
 
 // import { DefaultValue } from "../../util";
-import { Value } from "../../../Types";
+import { Value } from "../../../Object";
 export class ObjectTarget<T>
   implements Value.ObjectAble<T>
 {

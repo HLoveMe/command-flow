@@ -16,7 +16,7 @@ import {
 import { ContextRunOption, DefaultRunConfig } from './Configs';
 import { BooleanObject, ObjectTarget } from './Object/Able/ObjectAble';
 import Platform from './Bridge/Index';
-import { Value } from './Types';
+import { Value } from './Object';
 import { PlatformBridge } from './Bridge/Platform/BasePlatform';
 import { BeginWork } from './Works/ExtendsWorks/BeginWork';
 import { decide } from './Object/valueUtil';

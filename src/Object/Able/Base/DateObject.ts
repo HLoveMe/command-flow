@@ -1,6 +1,6 @@
 import { ControlFlow } from '../../Control';
 // import { attribute, DefaultValue } from "../../util";
-import { Value } from '../../../Types';
+import { Value } from '../../../Object';
 import { ObjectTarget } from './ObjectTarget';
 import { StringObject } from './StringObject';
 import { NumberObject } from './NumberObject';
