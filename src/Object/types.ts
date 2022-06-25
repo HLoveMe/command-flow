@@ -67,28 +67,53 @@ export namespace Value {
 export namespace ValueExtends {
   type KeyExclude<T, E extends string | number | symbol> = keyof Omit<T, E>;
   type ValueInclude<T, E> = {
-    [K in keyof T]: T[K] extends E ? K : never
+    [K in keyof T]: T[K] extends E ? K : never;
   }[keyof T];
-  type ValidKey<T, K extends string | number | symbol, E> = Extract<KeyExclude<T, K>, ValueInclude<T, E>>;
+  type ValidKey<T, K extends string | number | symbol, E> = Extract<
+    KeyExclude<T, K>,
+    ValueInclude<T, E>
+  >;
   type GetReturnWrapper<T> = T extends null | undefined
     ? Value.NullAble
-    : T extends number ? Value.NumberAble
-    : T extends string ? Value.StringAble
-    : T extends boolean ? Value.BooleanAble
-    : T extends Array<infer U> ? Value.ArrayAble<U>
-    : T extends Map<infer K, infer U> ? Value.MapAble<K, U>
-    : T extends Set<infer U> ? Value.SetAble<U>
-    : T extends Date ? Value.DateAble
-    : T extends ArrayBuffer ? Value.DataAble
-    : Value.ObjectAble<T>
+    : T extends number
+    ? Value.NumberAble
+    : T extends string
+    ? Value.StringAble
+    : T extends boolean
+    ? Value.BooleanAble
+    : T extends Array<infer U>
+    ? Value.ArrayAble<U>
+    : T extends Map<infer K, infer U>
+    ? Value.MapAble<K, U>
+    : T extends Set<infer U>
+    ? Value.SetAble<U>
+    : T extends Date
+    ? Value.DateAble
+    : T extends ArrayBuffer
+    ? Value.DataAble
+    : Value.ObjectAble<T>;
 
-  type GetInterface<T, U extends string | number | symbol, E> = Pick<T, ValidKey<T, U, E>>
+  type GetInterface<T, U extends string | number | symbol, E> = Pick<
+    T,
+    ValidKey<T, U, E>
+  >;
 
-  type ResetFunctionType<T extends (...args: any[]) => any> = T extends (...args: infer P) => infer R ? (...args: P) => GetReturnWrapper<R> : T;
+  type ResetFunctionType<T extends (...args: any[]) => any> = T extends (
+    ...args: infer P
+  ) => infer R
+    ? (...args: P) => GetReturnWrapper<R>
+    : T;
 
   type CreateNewInterface<T> = {
-    [K in keyof T]: T[K] extends (...args: any[]) => any ? ResetFunctionType<T[K]> : T[K]
-  }
-
-  export type ExtendsType<T> = CreateNewInterface<GetInterface<T, 'constructor' | 'valueOf', (...args: any[]) => any>>;
+    [K in keyof T]: T[K] extends (...args: any[]) => any
+    ? ResetFunctionType<T[K]>
+    : T[K];
+  };
+  export type Constructor<C,TC> = {
+    new ();
+    new(value: C);
+  };
+  export type ExtendsType<T> = CreateNewInterface<
+    GetInterface<T, 'constructor' | 'valueOf', (...args: any[]) => any>
+  >;
 }

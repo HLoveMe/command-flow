@@ -56,7 +56,7 @@ declare module 'command-flow' {
     }
     export interface ArrayAble<T>
       extends ValueAble<Array<T>>,
-      ObjectAble<Array<T>> {
+        ObjectAble<Array<T>> {
       len(): number;
       first(): T;
       last(): T;
@@ -66,7 +66,7 @@ declare module 'command-flow' {
 
     export interface MapAble<T, U>
       extends ValueAble<Map<T, U>>,
-      ObjectAble<Map<T, U>> {
+        ObjectAble<Map<T, U>> {
       len(): number;
       valueOf(): Map<T, U>;
     }
@@ -86,7 +86,7 @@ declare module 'command-flow' {
 
     export interface BooleanAble
       extends ValueAble<Boolean>,
-      ObjectAble<Boolean> {
+        ObjectAble<Boolean> {
       valueOf(): Boolean;
     }
 
@@ -96,7 +96,7 @@ declare module 'command-flow' {
 
     export interface DataAble
       extends ValueAble<ArrayBuffer>,
-      ObjectAble<ArrayBuffer> {
+        ObjectAble<ArrayBuffer> {
       data(): ArrayBuffer;
     }
 
@@ -109,36 +109,62 @@ declare module 'command-flow' {
     export interface Mixins<
       V extends Value.ObjectAble<any> = Value.ObjectAble<any>,
       U extends any = NULL
-      > extends ValueAble<V | U> { }
+    > extends ValueAble<V | U> {}
   }
 
   export namespace ValueExtends {
     type KeyExclude<T, E extends string | number | symbol> = keyof Omit<T, E>;
     type ValueInclude<T, E> = {
-      [K in keyof T]: T[K] extends E ? K : never
+      [K in keyof T]: T[K] extends E ? K : never;
     }[keyof T];
-    type ValidKey<T, K extends string | number | symbol, E> = Extract<KeyExclude<T, K>, ValueInclude<T, E>>;
+    type ValidKey<T, K extends string | number | symbol, E> = Extract<
+      KeyExclude<T, K>,
+      ValueInclude<T, E>
+    >;
     type GetReturnWrapper<T> = T extends null | undefined
       ? Value.NullAble
-      : T extends number ? Value.NumberAble
-      : T extends string ? Value.StringAble
-      : T extends boolean ? Value.BooleanAble
-      : T extends Array<infer U> ? Value.ArrayAble<U>
-      : T extends Map<infer K, infer U> ? Value.MapAble<K, U>
-      : T extends Set<infer U> ? Value.SetAble<U>
-      : T extends Date ? Value.DateAble
-      : T extends ArrayBuffer ? Value.DataAble
-      : Value.ObjectAble<T>
-  
-    type GetInterface<T, U extends string | number | symbol, E> = Pick<T, ValidKey<T, U, E>>
-  
-    type ResetFunctionType<T extends (...args: any[]) => any> = T extends (...args: infer P) => infer R ? (...args: P) => GetReturnWrapper<R> : T;
-  
+      : T extends number
+      ? Value.NumberAble
+      : T extends string
+      ? Value.StringAble
+      : T extends boolean
+      ? Value.BooleanAble
+      : T extends Array<infer U>
+      ? Value.ArrayAble<U>
+      : T extends Map<infer K, infer U>
+      ? Value.MapAble<K, U>
+      : T extends Set<infer U>
+      ? Value.SetAble<U>
+      : T extends Date
+      ? Value.DateAble
+      : T extends ArrayBuffer
+      ? Value.DataAble
+      : Value.ObjectAble<T>;
+
+    type GetInterface<T, U extends string | number | symbol, E> = Pick<
+      T,
+      ValidKey<T, U, E>
+    >;
+
+    type ResetFunctionType<T extends (...args: any[]) => any> = T extends (
+      ...args: infer P
+    ) => infer R
+      ? (...args: P) => GetReturnWrapper<R>
+      : T;
+
     type CreateNewInterface<T> = {
-      [K in keyof T]: T[K] extends (...args: any[]) => any ? ResetFunctionType<T[K]> : T[K]
-    }
-  
-    export type ExtendsType<T> = CreateNewInterface<GetInterface<T, 'constructor' | 'valueOf', (...args: any[]) => any>>;
+      [K in keyof T]: T[K] extends (...args: any[]) => any
+        ? ResetFunctionType<T[K]>
+        : T[K];
+    };
+    export type Constructor<C, TC> = {
+      new ();
+      new (value: C);
+    };
+
+    export type ExtendsType<T> = CreateNewInterface<
+      GetInterface<T, 'constructor' | 'valueOf', (...args: any[]) => any>
+    >;
   }
 
   export type BaseType =
@@ -224,9 +250,9 @@ declare module 'command-flow' {
     }
     export interface Work
       extends WorkOperation,
-      WorkContext,
-      WorkChain,
-      WorkConfig {
+        WorkContext,
+        WorkChain,
+        WorkConfig {
       name: string;
       id: number;
       uuid: WorkUUID;
@@ -342,9 +368,9 @@ declare module 'command-flow' {
         image: DataString;
         error?: Error;
       }
-      export interface TakePhotoOption { }
+      export interface TakePhotoOption {}
 
-      export interface VideoOption { }
+      export interface VideoOption {}
       export interface VideoResponse {
         videoUrl?: string;
         error?: Error;
@@ -354,13 +380,13 @@ declare module 'command-flow' {
         latitude?: number;
         accuracy?: number;
       }
-      export interface PositionOption { }
-      export interface AudioResponse { }
+      export interface PositionOption {}
+      export interface AudioResponse {}
 
-      export interface VibratorOption { }
-      export interface BluetoothDevice { }
-      export interface SpeechOption { }
-      export interface SpeechResponse { }
+      export interface VibratorOption {}
+      export interface BluetoothDevice {}
+      export interface SpeechOption {}
+      export interface SpeechResponse {}
 
       export interface Permission {
         // 权限处理
@@ -469,7 +495,7 @@ declare module 'command-flow' {
       LoadFileWork: Bridge.FileOption;
       FetchWork: Bridge.RequestParamsInit;
     }
-    export interface Environment { }
+    export interface Environment {}
     export interface ContextRunOption {
       development: boolean;
       environment?: Environment;
@@ -797,8 +823,10 @@ declare module 'command-flow' {
     clear(): void;
     stopWorkChain(): Promise<boolean>;
   }
-  export class Instruction extends Subject<ChannelObject>
-    implements WorkType.Work, Environment.EnvironmentAble {
+  export class Instruction
+    extends Subject<ChannelObject>
+    implements WorkType.Work, Environment.EnvironmentAble
+  {
     observers: any[];
     isAble(): Boolean;
     name: string;
@@ -821,9 +849,9 @@ declare module 'command-flow' {
     pools: Subscription[];
     config: WorkType.ConfigInfo;
   }
-  export class InstructionMTM extends Instruction { }
-  export class InstructionOTM extends Instruction { }
-  export class InstructionOTO extends Instruction { }
+  export class InstructionMTM extends Instruction {}
+  export class InstructionOTM extends Instruction {}
+  export class InstructionOTO extends Instruction {}
   export class TimeoutWork extends InstructionOTO {
     constructor(interval?: number);
   }
@@ -838,20 +866,23 @@ declare module 'command-flow' {
       notifier?: Observable<any>
     );
   }
-  export class Base64EnCodeWork extends InstructionMTM { }
-  export class Base64DecodeWork extends InstructionMTM { }
+  export class Base64EnCodeWork extends InstructionMTM {}
+  export class Base64DecodeWork extends InstructionMTM {}
   export class LoadFileWork extends InstructionOTO {
     constructor(config?: Bridge.FileOption);
   }
-  export class OpenURLWork extends InstructionOTO { }
-  export class QRCodeWork extends InstructionOTO { }
+  export class OpenURLWork extends InstructionOTO {}
+  export class QRCodeWork extends InstructionOTO {}
 
-  export type HandleEvalCommand = (params: { [key: string]: string } | string, runOption: Config.RunCommandWorkConfig) => string
+  export type HandleEvalCommand = (
+    params: { [key: string]: string } | string,
+    runOption: Config.RunCommandWorkConfig
+  ) => string;
   export class RunCommandWork extends InstructionOTO {
     constructor(template?: string, paramsConfig?: { [key: string]: string });
     constructor(buildCommand?: HandleEvalCommand);
   }
-  export class FetchWork extends InstructionOTO { }
+  export class FetchWork extends InstructionOTO {}
 
   export class ObjectTarget<T> implements Value.ObjectAble<T> {
     json(): Value.StringAble;
@@ -860,8 +891,10 @@ declare module 'command-flow' {
     valueOf(): T;
   }
 
-  export class ArrayObject<T> extends ObjectTarget<Array<T>>
-    implements Value.ArrayAble<T>, ControlFlow.CollectionArray {
+  export class ArrayObject<T>
+    extends ObjectTarget<Array<T>>
+    implements Value.ArrayAble<T>, ControlFlow.CollectionArray
+  {
     constructor(...args: any[]);
     constructor(count: number);
     constructor(value: T);
@@ -992,8 +1025,10 @@ declare module 'command-flow' {
     get length(): NumberObject;
   }
 
-  export class MapObject<T, U> extends ObjectTarget<Map<T, U>>
-    implements Value.MapAble<T, U>, ControlFlow.CollectionMap<T, U> {
+  export class MapObject<T, U>
+    extends ObjectTarget<Map<T, U>>
+    implements Value.MapAble<T, U>, ControlFlow.CollectionMap<T, U>
+  {
     constructor(arg?: Map<T, U>);
     len(): number;
     valueOf(): Map<T, U>;
@@ -1025,8 +1060,10 @@ declare module 'command-flow' {
 
     get size(): Value.NumberAble;
   }
-  export class SetObject<T> extends ObjectTarget<Set<T>>
-    implements Value.SetAble<T>, ControlFlow.CollectionSet {
+  export class SetObject<T>
+    extends ObjectTarget<Set<T>>
+    implements Value.SetAble<T>, ControlFlow.CollectionSet
+  {
     constructor(value?: Set<T> | Array<T>);
     len(): number;
     valueOf(): Set<T>;
@@ -1057,13 +1094,15 @@ declare module 'command-flow' {
     get size(): NumberObject;
   }
 
-  export class NumberObject extends ObjectTarget<number>
+  export class NumberObject
+    extends ObjectTarget<number>
     implements
-    Value.NumberAble,
-    ControlFlow.Compare<Value.NumberAble>,
-    ControlFlow.Calc<Value.NumberAble>,
-    ControlFlow.ObjectNumber,
-    ControlFlow.NumberFunction {
+      Value.NumberAble,
+      ControlFlow.Compare<Value.NumberAble>,
+      ControlFlow.Calc<Value.NumberAble>,
+      ControlFlow.ObjectNumber,
+      ControlFlow.NumberFunction
+  {
     constructor(value: number);
     valueOf(): number;
     _value: number;
@@ -1088,11 +1127,13 @@ declare module 'command-flow' {
     toFixed(fractionDigits?: number): StringObject;
     toPrecision(precision?: number): StringObject;
   }
-  export class StringObject extends ObjectTarget<string>
+  export class StringObject
+    extends ObjectTarget<string>
     implements
-    Value.StringAble,
-    ControlFlow.ObjectString,
-    ControlFlow.StringFunction {
+      Value.StringAble,
+      ControlFlow.ObjectString,
+      ControlFlow.StringFunction
+  {
     constructor(value?: string);
     valueOf(): string;
     _value: string;
@@ -1215,19 +1256,20 @@ declare module 'command-flow' {
 
     at(index: number): StringObject;
   }
-  export class BooleanObject extends ObjectTarget<Boolean>
-    implements Value.BooleanAble {
+  export class BooleanObject
+    extends ObjectTarget<Boolean>
+    implements Value.BooleanAble
+  {
     valueOf(): Boolean;
     _value: Boolean;
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<Boolean>): Value.ObjectAble<Boolean>;
   }
 
-  export class DateObject extends ObjectTarget<Date>
-    implements
-    Value.DateAble,
-    ControlFlow.DateFunction,
-    ControlFlow.ObjectDate {
+  export class DateObject
+    extends ObjectTarget<Date>
+    implements Value.DateAble, ControlFlow.DateFunction, ControlFlow.ObjectDate
+  {
     constructor(date: Date);
     constructor();
     timestamp(): number;
@@ -1331,8 +1373,10 @@ declare module 'command-flow' {
     toJSON(key?: any): StringObject;
   }
 
-  export class DataObject extends ObjectTarget<ArrayBuffer>
-    implements Value.DataAble {
+  export class DataObject
+    extends ObjectTarget<ArrayBuffer>
+    implements Value.DataAble
+  {
     data(): ArrayBuffer;
     _value: ArrayBuffer;
     valueOf(): ArrayBuffer;
@@ -1340,8 +1384,10 @@ declare module 'command-flow' {
     merge(target: Value.ObjectAble<ArrayBuffer>): Value.ObjectAble<ArrayBuffer>;
   }
 
-  export class OptionalObject extends ObjectTarget<Value.NULL>
-    implements Value.NullAble {
+  export class OptionalObject
+    extends ObjectTarget<Value.NULL>
+    implements Value.NullAble
+  {
     isTruly(): boolean;
     isNull(): boolean;
     isUndefined(): boolean;
@@ -1358,7 +1404,14 @@ declare module 'command-flow' {
 
   export function decide(value: any | BaseType, force?: boolean): BaseType;
 
-  export function createExtendsInstance<T>(target: Function, construct: any[], exclude?: string[]): ValueExtends.ExtendsType<T>;
-  
-  export function createExtendsConstruct<T extends any>(target: T, exclude?: string[]): Function;
+  export function createExtendsInstance<T>(
+    target: Function,
+    construct: any[],
+    exclude: string[] = []
+  ): ValueExtends.ExtendsType<T>;
+
+  export function createExtendsConstruct<T, TC extends any = any>(
+    target: NewableFunction,
+    exclude: string[] = []
+  ): ValueExtends.Constructor<T, TC>;
 }
