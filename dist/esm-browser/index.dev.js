@@ -669,324 +669,219 @@ exports.Context = Context;
 /*!*********************************************!*\
   !*** ./src/Object/Able/Base/ArrayObject.ts ***!
   \*********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var ArrayObject_1;
+// import { ControlFlow } from '../Control';
+// import {
+//   onlyDeclaration, Unit
+// } from '../../util';
+// import { Value } from '../../../index';
+// import { ObjectTarget } from './ObjectTarget';
+// import { NumberObject } from './NumberObject';
+// import { StringObject } from './StringObject';
+// import { BooleanObject } from './BooleanObject';
+// import { decide } from '../../valueUtil';
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ArrayObject = void 0;
-const Control_1 = __webpack_require__(/*! ../Control */ "./src/Object/Able/Control.ts");
-const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
-const NumberObject_1 = __webpack_require__(/*! ./NumberObject */ "./src/Object/Able/Base/NumberObject.ts");
-const StringObject_1 = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Base/StringObject.ts");
-const BooleanObject_1 = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Base/BooleanObject.ts");
-const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
-let ArrayObject = ArrayObject_1 = class ArrayObject extends ObjectTarget_1.ObjectTarget {
-    constructor(...values) {
-        const first = values[0];
-        const firstIsArray = first instanceof Array;
-        var init = null;
-        if (firstIsArray && values.length === 1) {
-            init = first;
-        }
-        else {
-            init = new Array(...values);
-        }
-        super(init);
-        this._value = init;
-    }
-    len() {
-        return this._value.length;
-    }
-    first() {
-        return this[0];
-    }
-    last() {
-        return this[this._value.length - 1];
-    }
-    // @attribute()@Params('index')
-    valueOfIndex(index) {
-        return this[index];
-    }
-    valueOf() {
-        return this._value;
-    }
-    merge(target) {
-        return new ArrayObject_1([...this._value, ...target._value]);
-    }
-    execArray(key, ...args) {
-        return null;
-    }
-    // array function
-    concat(...items) {
-        return null;
-    }
-    copyWithin(target, start, end) {
-        return null;
-    }
-    fill(value, start, end) {
-        return null;
-    }
-    find(predicate, thisArg) {
-        return null;
-    }
-    findIndex(predicate, thisArg) {
-        return null;
-    }
-    lastIndexOf(searchElement, fromIndex) {
-        return null;
-    }
-    pop() {
-        return null;
-    }
-    push(...items) {
-        return null;
-    }
-    reverse() {
-        return null;
-    }
-    shift() {
-        return null;
-    }
-    unshift(...items) {
-        return null;
-    }
-    slice(start, end) {
-        return null;
-    }
-    sort(compareFn) {
-        return null;
-    }
-    splice(start, deleteCount, ...items) {
-        return null;
-    }
-    includes(searchElement, fromIndex) {
-        return null;
-    }
-    indexOf(searchElement, fromIndex) {
-        return null;
-    }
-    join(separator) {
-        return null;
-    }
-    entries() {
-        return null;
-    }
-    values() {
-        return null;
-    }
-    keys() {
-        return null;
-    }
-    forEach(callbackfn, thisArg) {
-        return null;
-    }
-    filter(predicate, thisArg) {
-        return null;
-    }
-    map(callbackfn, thisArg) {
-        return null;
-    }
-    every(predicate, thisArg) {
-        return null;
-    }
-    some(predicate, thisArg) {
-        return null;
-    }
-    reduce(callbackfn, initialValue) {
-        return null;
-    }
-    reduceRight(callbackfn, initialValue) {
-        return null;
-    }
-    get length() {
-        return (0, valueUtil_1.decide)(this._value.length);
-    }
-};
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Object)
-], ArrayObject.prototype, "execArray", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", ArrayObject)
-], ArrayObject.prototype, "concat", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number, Number]),
-    __metadata("design:returntype", ArrayObject)
-], ArrayObject.prototype, "copyWithin", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number, Number]),
-    __metadata("design:returntype", Object)
-], ArrayObject.prototype, "fill", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Function, Object]),
-    __metadata("design:returntype", Object)
-], ArrayObject.prototype, "find", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Function, Object]),
-    __metadata("design:returntype", NumberObject_1.NumberObject)
-], ArrayObject.prototype, "findIndex", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number]),
-    __metadata("design:returntype", NumberObject_1.NumberObject)
-], ArrayObject.prototype, "lastIndexOf", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", ObjectTarget_1.ObjectTarget)
-], ArrayObject.prototype, "pop", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", NumberObject_1.NumberObject)
-], ArrayObject.prototype, "push", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", ArrayObject)
-], ArrayObject.prototype, "reverse", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
-], ArrayObject.prototype, "shift", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", NumberObject_1.NumberObject)
-], ArrayObject.prototype, "unshift", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number]),
-    __metadata("design:returntype", ArrayObject)
-], ArrayObject.prototype, "slice", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Function]),
-    __metadata("design:returntype", Object)
-], ArrayObject.prototype, "sort", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number, Object]),
-    __metadata("design:returntype", ArrayObject)
-], ArrayObject.prototype, "splice", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Number]),
-    __metadata("design:returntype", BooleanObject_1.BooleanObject)
-], ArrayObject.prototype, "includes", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Number]),
-    __metadata("design:returntype", NumberObject_1.NumberObject)
-], ArrayObject.prototype, "indexOf", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", StringObject_1.StringObject)
-], ArrayObject.prototype, "join", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", ObjectTarget_1.ObjectTarget)
-], ArrayObject.prototype, "entries", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", ObjectTarget_1.ObjectTarget)
-], ArrayObject.prototype, "values", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", ObjectTarget_1.ObjectTarget)
-], ArrayObject.prototype, "keys", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Function, Object]),
-    __metadata("design:returntype", void 0)
-], ArrayObject.prototype, "forEach", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Function, Object]),
-    __metadata("design:returntype", ArrayObject)
-], ArrayObject.prototype, "filter", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Function, Object]),
-    __metadata("design:returntype", ArrayObject)
-], ArrayObject.prototype, "map", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Function, Object]),
-    __metadata("design:returntype", BooleanObject_1.BooleanObject)
-], ArrayObject.prototype, "every", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Function, Object]),
-    __metadata("design:returntype", BooleanObject_1.BooleanObject)
-], ArrayObject.prototype, "some", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Function, Object]),
-    __metadata("design:returntype", ArrayObject)
-], ArrayObject.prototype, "reduce", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Function, Object]),
-    __metadata("design:returntype", ArrayObject)
-], ArrayObject.prototype, "reduceRight", null);
-ArrayObject = ArrayObject_1 = __decorate([
-    (0, util_1.Unit)(Control_1.ControlFlow.ArrayEnum, 'execArray'),
-    __metadata("design:paramtypes", [Object])
-], ArrayObject);
+// @Unit(ControlFlow.ArrayEnum, 'execArray')
+// export class ArrayObject<T>
+//   extends ObjectTarget<Array<T>>
+//   implements Value.ArrayAble<T>, ControlFlow.CollectionArray<T>
+// {
+//   declare _value: Array<T>;
+//   constructor(...values: Array<Array<T> | number>) {
+//     const first = values[0];
+//     const firstIsArray = first instanceof Array;
+//     var init: any = null;
+//     if (firstIsArray && values.length === 1) {
+//       init = first;
+//     } else {
+//       init = new Array(...values);
+//     }
+//     super(init);
+//     this._value = init;
+//   }
+//   len(): number {
+//     return this._value.length;
+//   }
+//   first(): T {
+//     return this[0];
+//   }
+//   last(): T {
+//     return this[this._value.length - 1];
+//   }
+//   // @attribute()@Params('index')
+//   valueOfIndex(index: number): T {
+//     return this[index];
+//   }
+//   valueOf(): Array<T> {
+//     return this._value;
+//   }
+//   merge(target: ArrayObject<T>): ArrayObject<T> {
+//     return new ArrayObject([...this._value, ...target._value]);
+//   }
+//   @onlyDeclaration
+//   execArray(key: ControlFlow.ArrayEnum, ...args: any[]): any {
+//     return null as any;
+//   }
+//   // array function
+//   @onlyDeclaration
+//   concat(...items: (T | ArrayObject<T>)[]): ArrayObject<T> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   copyWithin(target: number, start: number, end?: number): ArrayObject<T> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   fill(value: number, start?: number, end?: number): this {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   find(
+//     predicate: (value: number, index: number, obj: Uint8Array) => boolean,
+//     thisArg?: any
+//   ): Value.Mixins<Value.ObjectAble<T>> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   findIndex(
+//     predicate: (value: number, index: number, obj: Uint8Array) => boolean,
+//     thisArg?: any
+//   ): NumberObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   lastIndexOf(searchElement: number, fromIndex?: number): NumberObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   pop(): ObjectTarget<T> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   push(...items: T[]): NumberObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   reverse(): ArrayObject<T> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   shift(): Value.Mixins {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   unshift(...items: T[]): NumberObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   slice(start?: number, end?: number): ArrayObject<T> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   sort(compareFn?: (a: number, b: number) => number): this {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   splice(start: number, deleteCount?: number, ...items: any[]): ArrayObject<T> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   includes(searchElement: T, fromIndex?: number): BooleanObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   indexOf(searchElement: T, fromIndex?: number): NumberObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   join(separator?: string): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   entries(): ObjectTarget<IterableIterator<[T, T]>> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   values(): ObjectTarget<IterableIterator<T>> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   keys(): ObjectTarget<IterableIterator<T>> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   forEach(
+//     callbackfn: (value: T, index: number, array: readonly T[]) => void,
+//     thisArg?: any
+//   ): void {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   filter<S extends T>(
+//     predicate: (value: T, index: number, array: readonly T[]) => value is S,
+//     thisArg?: any
+//   ): ArrayObject<T> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   map<U>(
+//     callbackfn: (value: T, index: number, array: T[]) => U,
+//     thisArg?: any
+//   ): ArrayObject<U> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   every<S extends T>(
+//     predicate: (value: T, index: number, array: T[]) => value is S,
+//     thisArg?: any
+//   ): BooleanObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   some(
+//     predicate: (value: T, index: number, array: T[]) => unknown,
+//     thisArg?: any
+//   ): BooleanObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   reduce(
+//     callbackfn: (
+//       previousValue: T,
+//       currentValue: T,
+//       currentIndex: number,
+//       array: T[]
+//     ) => T,
+//     initialValue?: T
+//   ): ArrayObject<T> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   reduceRight(
+//     callbackfn: (
+//       previousValue: T,
+//       currentValue: T,
+//       currentIndex: number,
+//       array: T[]
+//     ) => T,
+//     initialValue?: T
+//   ): ArrayObject<T> {
+//     return null as any;
+//   }
+//   get length(): NumberObject {
+//     return decide(this._value.length) as NumberObject;
+//   }
+// }
+const extend_util_1 = __webpack_require__(/*! ../Extends/extend-util */ "./src/Object/Able/Extends/extend-util.ts");
+const ArrayWrapper = (0, extend_util_1.createExtendsConstruct)(__webpack_require__.g.Array, []);
+class ArrayObject extends ArrayWrapper {
+}
 exports.ArrayObject = ArrayObject;
+console.log("qwertyuiop", ArrayObject, new ArrayObject());
 
 
 /***/ }),
