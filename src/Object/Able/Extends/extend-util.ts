@@ -22,18 +22,13 @@ export function createExtendsConstruct<T, TC extends any = any/**暂不生效 */
   if (ExtendsMap.has(target))
     return ExtendsMap.get(target) as unknown as ValueExtends.Constructor<T, TC>;
   const Enum = {};
-  const tempTarget = Reflect.construct(target as NewableFunction, []);
   exclude = [...exclude, 'constructor', 'valueOf'];
   Object.keys(Object.getOwnPropertyDescriptors(target.prototype)).forEach(($1) => {
     if (!exclude.includes($1) && typeof $1 !== 'symbol') {
       Enum[$1] = $1;
     }
   });
-  const result: RegExpExecArray | null = /\[object (\w+)\]/g.exec(
-    Object.prototype.toString.call(tempTarget)
-  );
-  if (!!result === false) return Object as unknown as any;
-  @Unit(Enum, `exec${result[1]}`)
+  @Unit(Enum)
   class KV extends Value.ObjectTarget<T> {
     declare _value: T;
     constructor(value: T = null) {

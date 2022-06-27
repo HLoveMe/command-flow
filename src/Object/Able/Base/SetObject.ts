@@ -5,7 +5,7 @@ import { ObjectTarget } from './ObjectTarget';
 import { NumberObject } from './NumberObject';
 import { decide } from '../../valueUtil';
 
-@Unit(ControlFlow.SetEnum, 'execSet')
+@Unit(ControlFlow.SetEnum)
 export class SetObject<T>
   extends ObjectTarget<Set<T>>
   implements Value.SetAble<T>, ControlFlow.CollectionSet<T>
@@ -37,7 +37,7 @@ export class SetObject<T>
   }
 
   @onlyDeclaration
-  execSet(key: ControlFlow.SetEnum, ...args: any[]): any {
+  execFunction(key: ControlFlow.SetEnum, ...args: any[]): any {
     return null as any;
   }
   @onlyDeclaration

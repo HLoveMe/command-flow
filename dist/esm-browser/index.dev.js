@@ -677,12 +677,12 @@ exports.Context = Context;
 // import {
 //   onlyDeclaration, Unit
 // } from '../../util';
-// import { Value } from '../../../index';
 // import { ObjectTarget } from './ObjectTarget';
 // import { NumberObject } from './NumberObject';
 // import { StringObject } from './StringObject';
 // import { BooleanObject } from './BooleanObject';
 // import { decide } from '../../valueUtil';
+// import { Value } from "../../../Object";
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ArrayObject = void 0;
 // @Unit(ControlFlow.ArrayEnum, 'execArray')
@@ -877,7 +877,8 @@ exports.ArrayObject = void 0;
 //   }
 // }
 const extend_util_1 = __webpack_require__(/*! ../Extends/extend-util */ "./src/Object/Able/Extends/extend-util.ts");
-const ArrayWrapper = (0, extend_util_1.createExtendsConstruct)(__webpack_require__.g.Array, []);
+const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
+const ArrayWrapper = (0, extend_util_1.createExtendsConstruct)(__webpack_require__.g.Array, ['length']);
 class _ArrayObject extends ArrayWrapper {
     constructor(...values) {
         const first = values[0];
@@ -892,8 +893,29 @@ class _ArrayObject extends ArrayWrapper {
         super(init);
         this._value = init;
     }
+    len() {
+        return this._value.length;
+    }
+    first() {
+        return this._value[0];
+    }
+    last() {
+        return this._value[this._value.length - 1];
+    }
+    valueOfIndex(index) {
+        return this._value[index];
+    }
+    valueOf() {
+        return this._value;
+    }
+    get length() {
+        return (0, valueUtil_1.decide)(this._value.length);
+    }
 }
 exports.ArrayObject = _ArrayObject;
+// const as: ArrayObjectAble<string> = new ArrayObject()
+// const a = as.valueOf()
+// as.execFunction
 
 
 /***/ }),
@@ -990,7 +1012,7 @@ let DateObject = class DateObject extends ObjectTarget_1.ObjectTarget {
     valueOf() {
         return new Date(this._value);
     }
-    execDate(key, ...args) {
+    execFunction(key, ...args) {
         throw new Error('Method not implemented.');
     }
     toDateString() {
@@ -1122,7 +1144,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
-], DateObject.prototype, "execDate", null);
+], DateObject.prototype, "execFunction", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
@@ -1370,7 +1392,7 @@ __decorate([
     __metadata("design:returntype", StringObject_1.StringObject)
 ], DateObject.prototype, "toJSON", null);
 DateObject = __decorate([
-    (0, util_1.Unit)(Control_1.ControlFlow.DateEnum, 'execDate'),
+    (0, util_1.Unit)(Control_1.ControlFlow.DateEnum),
     __metadata("design:paramtypes", [Date])
 ], DateObject);
 exports.DateObject = DateObject;
@@ -1420,7 +1442,7 @@ let MapObject = MapObject_1 = class MapObject extends ObjectTarget_1.ObjectTarge
         target._value.forEach(($1, key) => newMap.set(key, $1));
         return new MapObject_1(newMap);
     }
-    execMap(key, ...args) {
+    execFunction(key, ...args) {
         return null;
     }
     get(key) {
@@ -1459,7 +1481,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Object)
-], MapObject.prototype, "execMap", null);
+], MapObject.prototype, "execFunction", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
@@ -1515,10 +1537,33 @@ __decorate([
     __metadata("design:returntype", Object)
 ], MapObject.prototype, "keys", null);
 MapObject = MapObject_1 = __decorate([
-    (0, util_1.Unit)(Control_1.ControlFlow.MapEnum, 'execMap'),
+    (0, util_1.Unit)(Control_1.ControlFlow.MapEnum),
     __metadata("design:paramtypes", [Map])
 ], MapObject);
 exports.MapObject = MapObject;
+// import { createExtendsConstruct } from '../Extends/extend-util';
+// import { ValueExtends } from '../../types';
+// import { ExecFunctionAble } from '../Extends/types';
+// import { decide } from '../../valueUtil';
+// import { Value } from "../../../Object";
+// import { NumberObject } from './NumberObject';
+// type MapExecInterface<K, V> = ExecFunctionAble<Map<K, V>, 'size'>;
+// type MapInterface<K, V> = ValueExtends.WrapperReturnInterface<
+//   MapExecInterface<K, V>
+// > &
+//   ValueExtends.Constructor<Map<K, V>>;
+// const MapWrapper = createExtendsConstruct<Map<any, any>>(global.Map, ['size']);
+// class _MapObject<T> extends MapWrapper {
+//   get size(): NumberObject {
+//     return decide(this._value.length) as NumberObject;
+//   }
+// }
+// type CustomConstructor = {};
+// interface CustomMapAble<K, V>
+//   extends Value.MapAble<K, V>,
+//   MapInterface<K, V>,
+//   CustomConstructor { }
+// export const ArrayObject = _ArrayObject as unknown as CustomArrayAble<any>;
 
 
 /***/ }),
@@ -1635,7 +1680,7 @@ let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget_1.Ob
         return new NumberObject_1(target._value === 0 ? Infinity : this._value / target._value);
     }
     //
-    execNumber(key, ...args) {
+    execFunction(key, ...args) {
         (new Number()).toPrecision;
         return {};
     }
@@ -1666,7 +1711,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Object)
-], NumberObject.prototype, "execNumber", null);
+], NumberObject.prototype, "execFunction", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
@@ -1688,7 +1733,7 @@ __decorate([
 NumberObject = NumberObject_1 = __decorate([
     util_1.CalcUnit,
     util_1.CompareUnit,
-    (0, util_1.Unit)(Control_1.ControlFlow.NumberEnum, 'execNumber'),
+    (0, util_1.Unit)(Control_1.ControlFlow.NumberEnum),
     __metadata("design:paramtypes", [Number])
 ], NumberObject);
 exports.NumberObject = NumberObject;
@@ -1788,7 +1833,7 @@ let SetObject = SetObject_1 = class SetObject extends ObjectTarget_1.ObjectTarge
         new Set().keys;
         return new SetObject_1(newSet);
     }
-    execSet(key, ...args) {
+    execFunction(key, ...args) {
         return null;
     }
     has(value) {
@@ -1824,7 +1869,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Object)
-], SetObject.prototype, "execSet", null);
+], SetObject.prototype, "execFunction", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
@@ -1874,7 +1919,7 @@ __decorate([
     __metadata("design:returntype", Object)
 ], SetObject.prototype, "keys", null);
 SetObject = SetObject_1 = __decorate([
-    (0, util_1.Unit)(Control_1.ControlFlow.SetEnum, 'execSet'),
+    (0, util_1.Unit)(Control_1.ControlFlow.SetEnum),
     __metadata("design:paramtypes", [Object])
 ], SetObject);
 exports.SetObject = SetObject;
@@ -1915,7 +1960,7 @@ let StringObject = class StringObject extends ObjectTarget_1.ObjectTarget {
     valueOf() {
         return this._value;
     }
-    execString(key, ...args) {
+    execFunction(key, ...args) {
         // throw new Error('Method not implemented.');
         return null;
     }
@@ -2069,7 +2114,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
-], StringObject.prototype, "execString", null);
+], StringObject.prototype, "execFunction", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
@@ -2353,7 +2398,7 @@ __decorate([
     __metadata("design:returntype", Object)
 ], StringObject.prototype, "at", null);
 StringObject = __decorate([
-    (0, util_1.Unit)(Control_1.ControlFlow.StringEnum, 'execString'),
+    (0, util_1.Unit)(Control_1.ControlFlow.StringEnum),
     __metadata("design:paramtypes", [String])
 ], StringObject);
 exports.StringObject = StringObject;
@@ -2606,16 +2651,12 @@ function createExtendsConstruct(target, exclude = []) {
     if (ExtendsMap.has(target))
         return ExtendsMap.get(target);
     const Enum = {};
-    const tempTarget = Reflect.construct(target, []);
     exclude = [...exclude, 'constructor', 'valueOf'];
     Object.keys(Object.getOwnPropertyDescriptors(target.prototype)).forEach(($1) => {
         if (!exclude.includes($1) && typeof $1 !== 'symbol') {
             Enum[$1] = $1;
         }
     });
-    const result = /\[object (\w+)\]/g.exec(Object.prototype.toString.call(tempTarget));
-    if (!!result === false)
-        return Object;
     let KV = class KV extends Value.ObjectTarget {
         constructor(value = null) {
             super();
@@ -2623,7 +2664,7 @@ function createExtendsConstruct(target, exclude = []) {
         }
     };
     KV = __decorate([
-        (0, util_1.Unit)(Enum, `exec${result[1]}`),
+        (0, util_1.Unit)(Enum),
         __metadata("design:paramtypes", [Object])
     ], KV);
     ExtendsMap.set(target, KV);
@@ -2810,7 +2851,8 @@ function CalcUnit(host) {
         };
 }
 exports.CalcUnit = CalcUnit;
-function Unit(target, execName) {
+function Unit(target) {
+    const execName = 'execFunction';
     return function (host) {
         Object.keys(target).forEach((item) => {
             const key = target[item];

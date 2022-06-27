@@ -746,7 +746,7 @@ declare module 'command-flow' {
       [T in ArrayEnum]: ArrayFunction;
     };
     export interface CollectionArray extends ArrayAbsoluteAble {
-      execArray(key: ArrayEnum, ...args: any[]): BaseType | void;
+      execFunction(key: ArrayEnum, ...args: any[]): BaseType | void;
     }
 
     // Set
@@ -756,7 +756,7 @@ declare module 'command-flow' {
       [T in SetEnum]: SetFunction;
     };
     export interface CollectionSet extends SetAbsoluteAble {
-      execSet(key: SetEnum, ...args: any[]): BaseType;
+      execFunction(key: SetEnum, ...args: any[]): BaseType;
     }
 
     // Map
@@ -771,7 +771,7 @@ declare module 'command-flow' {
       [T in MapEnum]: MapFunction<U>;
     };
     export interface CollectionMap<T, U> extends MapAbsoluteAble<U> {
-      execMap(key: MapEnum, ...args: any[]): U | Value.NULL;
+      execFunction(key: MapEnum, ...args: any[]): U | Value.NULL;
     }
 
     // String
@@ -780,7 +780,7 @@ declare module 'command-flow' {
       [T in StringEnum]: StringExec;
     };
     export interface ObjectString extends StringFunction {
-      execString(key: StringEnum, ...args: any[]): any;
+      execFunction(key: StringEnum, ...args: any[]): any;
     }
 
     // Number
@@ -790,7 +790,7 @@ declare module 'command-flow' {
       [T in NumberEnum]: NumberExec;
     };
     export interface ObjectNumber extends NumberFunction {
-      execNumber(key: NumberEnum, ...args: any[]): any;
+      execFunction(key: NumberEnum, ...args: any[]): any;
     }
 
     // Date
@@ -800,7 +800,7 @@ declare module 'command-flow' {
       [T in DateEnum]: DateExec;
     };
     export interface ObjectDate extends DateFunction {
-      execDate(key: DateEnum, ...args: any[]): any;
+      execFunction(key: DateEnum, ...args: any[]): any;
     }
   }
   export class Context implements ContextImpl {
@@ -1407,11 +1407,11 @@ declare module 'command-flow' {
   export function createExtendsInstance<T>(
     target: Function,
     construct: any[],
-    exclude: string[] = []
+    exclude?: string[]
   ): ValueExtends.ExtendsType<T>;
 
   export function createExtendsConstruct<T, TC extends any = any>(
     target: NewableFunction,
-    exclude: string[] = []
+    exclude?: string[]
   ): ValueExtends.Constructor<T, TC>;
 }

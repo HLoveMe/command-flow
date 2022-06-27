@@ -233,7 +233,7 @@ export namespace ControlFlow {
     [T in ArrayEnum]: ArrayFunction<U>;
   };
   export interface CollectionArray<U> extends ArrayAbsoluteAble<U> {
-    execArray(
+    execFunction(
       key: ArrayEnum,
       ...args: any[]
     ): BaseType | U | Value.NULL | any;
@@ -251,7 +251,7 @@ export namespace ControlFlow {
     [T in SetEnum]: SetFunction<U>;
   };
   export interface CollectionSet<U> extends SetAbsoluteAble<U> {
-    execSet(
+    execFunction(
       key: SetEnum,
       ...args: any[]
     ): BaseType | U | Value.NULL | any;
@@ -269,7 +269,7 @@ export namespace ControlFlow {
     [T in MapEnum]: MapFunction<U>;
   };
   export interface CollectionMap<T, U> extends MapAbsoluteAble<U> {
-    execMap(key: MapEnum, ...args: any[]): U | void;
+    execFunction(key: MapEnum, ...args: any[]): U | void;
   }
 
   // String
@@ -278,7 +278,7 @@ export namespace ControlFlow {
     [T in StringEnum]: StringExec;
   };
   export interface ObjectString extends StringFunction {
-    execString(key: StringEnum, ...args: any[]): any;
+    execFunction(key: StringEnum, ...args: any[]): any;
   }
 
   // Number
@@ -288,7 +288,7 @@ export namespace ControlFlow {
     [T in NumberEnum]: NumberExec;
   };
   export interface ObjectNumber extends NumberFunction {
-    execNumber(key: NumberEnum, ...args: any[]): any;
+    execFunction(key: NumberEnum, ...args: any[]): any;
   }
 
   // Date
@@ -298,6 +298,6 @@ export namespace ControlFlow {
     [T in DateEnum]: DateExec;
   }
   export interface ObjectDate extends DateFunction {
-    execDate(key: DateEnum, ...args: any[]): any;
+    execFunction(key: DateEnum, ...args: any[]): any;
   }
 }

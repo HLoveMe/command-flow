@@ -2,12 +2,12 @@
 // import {
 //   onlyDeclaration, Unit
 // } from '../../util';
-// import { Value } from '../../../index';
 // import { ObjectTarget } from './ObjectTarget';
 // import { NumberObject } from './NumberObject';
 // import { StringObject } from './StringObject';
 // import { BooleanObject } from './BooleanObject';
 // import { decide } from '../../valueUtil';
+// import { Value } from "../../../Object";
 
 // @Unit(ControlFlow.ArrayEnum, 'execArray')
 // export class ArrayObject<T>
@@ -214,13 +214,18 @@
 import { createExtendsConstruct } from '../Extends/extend-util';
 import { ValueExtends } from '../../types';
 import { ExecFunctionAble } from '../Extends/types';
+import { decide } from '../../valueUtil';
+import { Value } from "../../../Object";
+import { NumberObject } from './NumberObject';
 
-type ArrayExecInterface<T> = ExecFunctionAble<[T], 'length'>;
-type ArrayInterface<T> = ValueExtends.WrapperReturnInterface<
-  ArrayExecInterface<T>
-> &
-  ValueExtends.Constructor<T>;
-const ArrayWrapper = createExtendsConstruct<Array<any>>(global.Array, []);
+type ArrayExecInterface<T> = ExecFunctionAble<Array<T>, 'length'>;
+type ExecFunction = ValueExtends.WrapperReturnInterface<
+  ArrayExecInterface<any>
+>
+type BaseConstruct = ValueExtends.Constructor<any[]>
+
+const ArrayWrapper = createExtendsConstruct<Array<any>>(global.Array, ['length']);
+
 
 class _ArrayObject<T> extends ArrayWrapper {
   constructor(...values: Array<Array<T> | number>) {
@@ -235,12 +240,39 @@ class _ArrayObject<T> extends ArrayWrapper {
     super(init);
     this._value = init;
   }
+
+  len(): number {
+    return this._value.length;
+  }
+  first(): T {
+    return this._value[0];
+  }
+
+  last(): T {
+    return this._value[this._value.length - 1];
+  }
+
+  valueOfIndex(index: number): T {
+    return this._value[index];
+  }
+  valueOf(): Array<T> {
+    return this._value;
+  }
+
+  get length(): NumberObject {
+    return decide(this._value.length) as NumberObject;
+  }
 }
 
-type CustomConstructor = { new(...args: any[]); new(count: number) };
+export interface ArrayObjectAble<T extends any = any>
+  extends Value.ArrayAble<T>,
+  ExecFunction,
+  BaseConstruct { }
 
-export const ArrayObject = _ArrayObject as unknown as ArrayInterface<
-  Array<any>
-> &
-  CustomConstructor;
+type CustomConstructor = { new(...args: any[]): ArrayObjectAble; new(count: number): ArrayObjectAble };
 
+export const ArrayObject = _ArrayObject as unknown as CustomConstructor;
+
+// const as: ArrayObjectAble<string> = new ArrayObject()
+// const a = as.valueOf()
+// as.execFunction

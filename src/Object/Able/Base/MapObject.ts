@@ -6,7 +6,7 @@ import { ObjectTarget } from './ObjectTarget';
 import { decide } from '../../valueUtil';
 import { NumberObject } from './NumberObject';
 // @MapUint
-@Unit(ControlFlow.MapEnum, 'execMap')
+@Unit(ControlFlow.MapEnum)
 export class MapObject<T, U>
   extends ObjectTarget<Map<T, U>>
   implements Value.MapAble<T, U>, ControlFlow.CollectionMap<T, U>
@@ -31,7 +31,7 @@ export class MapObject<T, U>
     return new MapObject(newMap);
   }
   @onlyDeclaration
-  execMap(key: ControlFlow.MapEnum, ...args: any[]): U | void {
+  execFunction(key: ControlFlow.MapEnum, ...args: any[]): U | void {
     return null as any;
   }
   @onlyDeclaration
@@ -78,3 +78,34 @@ export class MapObject<T, U>
     return decide(this._value.size) as NumberObject;
   }
 }
+
+
+// import { createExtendsConstruct } from '../Extends/extend-util';
+// import { ValueExtends } from '../../types';
+// import { ExecFunctionAble } from '../Extends/types';
+// import { decide } from '../../valueUtil';
+// import { Value } from "../../../Object";
+// import { NumberObject } from './NumberObject';
+
+// type MapExecInterface<K, V> = ExecFunctionAble<Map<K, V>, 'size'>;
+// type MapInterface<K, V> = ValueExtends.WrapperReturnInterface<
+//   MapExecInterface<K, V>
+// > &
+//   ValueExtends.Constructor<Map<K, V>>;
+// const MapWrapper = createExtendsConstruct<Map<any, any>>(global.Map, ['size']);
+
+// class _MapObject<T> extends MapWrapper {
+
+//   get size(): NumberObject {
+//     return decide(this._value.length) as NumberObject;
+//   }
+// }
+
+// type CustomConstructor = {};
+
+// interface CustomMapAble<K, V>
+//   extends Value.MapAble<K, V>,
+//   MapInterface<K, V>,
+//   CustomConstructor { }
+
+// export const ArrayObject = _ArrayObject as unknown as CustomArrayAble<any>;

@@ -1,6 +1,4 @@
 
-import { Value } from '../../types';
-
 type KeyType = string | number | symbol
 
 type ExcludeKeys = number | typeof Symbol.iterator | typeof Symbol.unscopables | 'toString' | 'toLocaleString' | 'constructor' | 'valueOf'
@@ -8,8 +6,6 @@ type ExcludeKeys = number | typeof Symbol.iterator | typeof Symbol.unscopables |
 type KeyExclude<T, E extends KeyType = never, DE extends KeyType = ExcludeKeys | E> = keyof Omit<T, DE>;
 
 declare type Exec<T, E extends KeyType = never, KS extends KeyType = KeyExclude<T, E>> = (key: KS, ...args: any[]) => any
-
-type BaseResult = Value.ObjectAble<any> | Value.Mixins | void | null
 
 type ExtendsFunction<T, E extends KeyType> = {
   [K in KeyExclude<T, E | ExcludeKeys>]:
@@ -22,6 +18,4 @@ type ExtendsFunction<T, E extends KeyType> = {
 /**
  * 生成初始 {execFunction:()=>{},需要的函数}
  */
-export type ExecFunctionAble<T, E extends KeyType = never> = { execFunction: Exec<T, E> } & ExtendsFunction<T, E>
-
-// export type ArrayExec = ExecFunctionAble<Array<any>, 'length'>
+export type ExecFunctionAble<T, E extends KeyType> = { execFunction: Exec<T, E> } & ExtendsFunction<T, E>

@@ -6,7 +6,7 @@ import { StringObject } from './StringObject';
 import { NumberObject } from './NumberObject';
 import { Unit, onlyDeclaration } from '../../util';
 
-@Unit(ControlFlow.DateEnum, 'execDate')
+@Unit(ControlFlow.DateEnum)
 export class DateObject extends ObjectTarget<Date>
   implements Value.DateAble, ControlFlow.DateFunction, ControlFlow.ObjectDate {
   declare _value: Date;
@@ -24,7 +24,7 @@ export class DateObject extends ObjectTarget<Date>
     return new Date(this._value);
   }
   @onlyDeclaration
-  execDate(key: ControlFlow.DateEnum, ...args: any[]) {
+  execFunction(key: ControlFlow.DateEnum, ...args: any[]) {
     throw new Error('Method not implemented.');
   }
   @onlyDeclaration

@@ -7,7 +7,7 @@ import { StringObject } from "./StringObject";
 
 @CalcUnit
 @CompareUnit
-@Unit(ControlFlow.NumberEnum, 'execNumber')
+@Unit(ControlFlow.NumberEnum)
 export class NumberObject
   extends ObjectTarget<number>
   implements
@@ -75,7 +75,7 @@ export class NumberObject
 
   //
   @onlyDeclaration
-  execNumber(key: ControlFlow.NumberEnum, ...args: any[]): any {
+  execFunction(key: ControlFlow.NumberEnum, ...args: any[]): any {
     (new Number()).toPrecision
     return {} as any
   }

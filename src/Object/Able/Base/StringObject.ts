@@ -5,7 +5,7 @@ import { onlyDeclaration, Unit } from '../../util';
 import { NumberObject } from './NumberObject';
 
 
-@Unit(ControlFlow.StringEnum, 'execString')
+@Unit(ControlFlow.StringEnum)
 export class StringObject
   extends ObjectTarget<string>
   implements Value.StringAble, ControlFlow.ObjectString {
@@ -21,7 +21,7 @@ export class StringObject
     return this._value;
   }
   @onlyDeclaration
-  execString(key: ControlFlow.StringEnum, ...args: any[]) {
+  execFunction(key: ControlFlow.StringEnum, ...args: any[]) {
     // throw new Error('Method not implemented.');
     return null as any;
   }

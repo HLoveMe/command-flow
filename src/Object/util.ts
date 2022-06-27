@@ -89,7 +89,8 @@ export function CalcUnit(host: any) {
     };
 }
 
-export function Unit(target: Object, execName: string) {
+export function Unit(target: Object) {
+  const execName = 'execFunction'
   return function (host: any) {
     Object.keys(target).forEach((item) => {
       const key = target[item];
