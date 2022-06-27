@@ -220,7 +220,5 @@ type ArrayExecAble<T> = ExecFunctionAble<[T], 'length'>;
 type ArrayInterface<T> = ValueExtends.ExtendsType<ArrayExecAble<T>>;
 const ArrayWrapper = createExtendsConstruct<Array<any>>(global.Array, []);
 
-
 export class ArrayObject extends ArrayWrapper implements ArrayInterface<any> { }
-console.log("qwertyuiop", ArrayObject, new ArrayObject())
 

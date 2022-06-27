@@ -881,7 +881,6 @@ const ArrayWrapper = (0, extend_util_1.createExtendsConstruct)(__webpack_require
 class ArrayObject extends ArrayWrapper {
 }
 exports.ArrayObject = ArrayObject;
-console.log("qwertyuiop", ArrayObject, new ArrayObject());
 
 
 /***/ }),
@@ -2596,7 +2595,7 @@ function createExtendsConstruct(target, exclude = []) {
     const Enum = {};
     const tempTarget = Reflect.construct(target, []);
     exclude = [...exclude, 'constructor', 'valueOf'];
-    Object.keys(tempTarget).forEach(($1) => {
+    Object.keys(Object.getOwnPropertyDescriptors(target.prototype)).forEach(($1) => {
         if (!exclude.includes($1) && typeof $1 !== 'symbol') {
             Enum[$1] = $1;
         }
