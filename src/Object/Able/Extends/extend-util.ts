@@ -63,8 +63,8 @@ export function createExtendsInstance<T>(
   target: Function,
   construct: any[],
   exclude: string[] = []
-): ValueExtends.ExtendsType<T> {
-  type DateType = ValueExtends.ExtendsType<T>;
+): ValueExtends.WrapperReturnInterface<T> {
+  type DateType = ValueExtends.WrapperReturnInterface<T>;
   const DateDome = createExtendsConstruct(target, exclude);
   return Reflect.construct(DateDome, construct) as DateType;
 }

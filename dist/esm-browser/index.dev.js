@@ -878,9 +878,22 @@ exports.ArrayObject = void 0;
 // }
 const extend_util_1 = __webpack_require__(/*! ../Extends/extend-util */ "./src/Object/Able/Extends/extend-util.ts");
 const ArrayWrapper = (0, extend_util_1.createExtendsConstruct)(__webpack_require__.g.Array, []);
-class ArrayObject extends ArrayWrapper {
+class _ArrayObject extends ArrayWrapper {
+    constructor(...values) {
+        const first = values[0];
+        const firstIsArray = first instanceof Array;
+        var init = null;
+        if (firstIsArray && values.length === 1) {
+            init = first;
+        }
+        else {
+            init = new Array(...values);
+        }
+        super(init);
+        this._value = init;
+    }
 }
-exports.ArrayObject = ArrayObject;
+exports.ArrayObject = _ArrayObject;
 
 
 /***/ }),

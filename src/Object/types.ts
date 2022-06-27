@@ -106,12 +106,12 @@ export namespace ValueExtends {
     ? (...args: P) => GetReturnWrapper<R>
     : T;
 
-  type CreateNewInterface<T> = {
+  type CreateInterface<T> = {
     [K in keyof T]: T[K] extends (...args: any[]) => any
     ? ResetFunctionType<T[K]>
     : T[K];
   };
-  export type Constructor<C, TC> = {
+  export type Constructor<C, TC extends any = any> = {
     new();
     new(value: C);
   };
@@ -120,7 +120,7 @@ export namespace ValueExtends {
    * 
    * 将()=>any 转为 ()=>Value.ValueAble<any>
    */
-  export type ExtendsType<T> = CreateNewInterface<
+  export type WrapperReturnInterface<T> = CreateInterface<
     GetInterface<T, 'constructor' | 'valueOf', (...args: any[]) => any>
   >;
 

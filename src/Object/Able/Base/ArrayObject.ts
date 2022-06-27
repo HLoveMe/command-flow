@@ -211,14 +211,36 @@
 //   }
 // }
 
+import { createExtendsConstruct } from '../Extends/extend-util';
+import { ValueExtends } from '../../types';
+import { ExecFunctionAble } from '../Extends/types';
 
-import { createExtendsConstruct } from "../Extends/extend-util";
-import { ValueExtends } from '../../types'
-import { ExecFunctionAble } from "../Extends/types";
-
-type ArrayExecAble<T> = ExecFunctionAble<[T], 'length'>;
-type ArrayInterface<T> = ValueExtends.ExtendsType<ArrayExecAble<T>>;
+type ArrayExecInterface<T> = ExecFunctionAble<[T], 'length'>;
+type ArrayInterface<T> = ValueExtends.WrapperReturnInterface<
+  ArrayExecInterface<T>
+> &
+  ValueExtends.Constructor<T>;
 const ArrayWrapper = createExtendsConstruct<Array<any>>(global.Array, []);
 
-export class ArrayObject extends ArrayWrapper implements ArrayInterface<any> { }
+class _ArrayObject<T> extends ArrayWrapper {
+  constructor(...values: Array<Array<T> | number>) {
+    const first = values[0];
+    const firstIsArray = first instanceof Array;
+    var init: any = null;
+    if (firstIsArray && values.length === 1) {
+      init = first;
+    } else {
+      init = new Array(...values);
+    }
+    super(init);
+    this._value = init;
+  }
+}
+
+type CustomConstructor = { new(...args: any[]); new(count: number) };
+
+export const ArrayObject = _ArrayObject as unknown as ArrayInterface<
+  Array<any>
+> &
+  CustomConstructor;
 
