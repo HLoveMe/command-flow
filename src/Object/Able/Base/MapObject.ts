@@ -6,7 +6,7 @@ import { ObjectTarget } from './ObjectTarget';
 import { decide } from '../../valueUtil';
 import { NumberObject } from './NumberObject';
 // @MapUint
-@Unit(ControlFlow.MapEnum, 'collectionMap')
+@Unit(ControlFlow.MapEnum, 'execMap')
 export class MapObject<T, U>
   extends ObjectTarget<Map<T, U>>
   implements Value.MapAble<T, U>, ControlFlow.CollectionMap<T, U>
@@ -31,7 +31,7 @@ export class MapObject<T, U>
     return new MapObject(newMap);
   }
   @onlyDeclaration
-  collectionMap(key: ControlFlow.MapEnum, ...args: any[]): U | void {
+  execMap(key: ControlFlow.MapEnum, ...args: any[]): U | void {
     return null as any;
   }
   @onlyDeclaration

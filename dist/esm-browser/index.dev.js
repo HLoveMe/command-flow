@@ -725,7 +725,7 @@ let ArrayObject = ArrayObject_1 = class ArrayObject extends ObjectTarget_1.Objec
     merge(target) {
         return new ArrayObject_1([...this._value, ...target._value]);
     }
-    collectionArray(key, ...args) {
+    execArray(key, ...args) {
         return null;
     }
     // array function
@@ -819,7 +819,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Object)
-], ArrayObject.prototype, "collectionArray", null);
+], ArrayObject.prototype, "execArray", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
@@ -983,7 +983,7 @@ __decorate([
     __metadata("design:returntype", ArrayObject)
 ], ArrayObject.prototype, "reduceRight", null);
 ArrayObject = ArrayObject_1 = __decorate([
-    (0, util_1.Unit)(Control_1.ControlFlow.ArrayEnum, 'collectionArray'),
+    (0, util_1.Unit)(Control_1.ControlFlow.ArrayEnum, 'execArray'),
     __metadata("design:paramtypes", [Object])
 ], ArrayObject);
 exports.ArrayObject = ArrayObject;
@@ -1513,7 +1513,7 @@ let MapObject = MapObject_1 = class MapObject extends ObjectTarget_1.ObjectTarge
         target._value.forEach(($1, key) => newMap.set(key, $1));
         return new MapObject_1(newMap);
     }
-    collectionMap(key, ...args) {
+    execMap(key, ...args) {
         return null;
     }
     get(key) {
@@ -1552,7 +1552,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Object)
-], MapObject.prototype, "collectionMap", null);
+], MapObject.prototype, "execMap", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
@@ -1608,7 +1608,7 @@ __decorate([
     __metadata("design:returntype", Object)
 ], MapObject.prototype, "keys", null);
 MapObject = MapObject_1 = __decorate([
-    (0, util_1.Unit)(Control_1.ControlFlow.MapEnum, 'collectionMap'),
+    (0, util_1.Unit)(Control_1.ControlFlow.MapEnum, 'execMap'),
     __metadata("design:paramtypes", [Map])
 ], MapObject);
 exports.MapObject = MapObject;
@@ -1881,7 +1881,7 @@ let SetObject = SetObject_1 = class SetObject extends ObjectTarget_1.ObjectTarge
         new Set().keys;
         return new SetObject_1(newSet);
     }
-    collectionSet(key, ...args) {
+    execSet(key, ...args) {
         return null;
     }
     has(value) {
@@ -1917,7 +1917,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Object)
-], SetObject.prototype, "collectionSet", null);
+], SetObject.prototype, "execSet", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
@@ -1967,7 +1967,7 @@ __decorate([
     __metadata("design:returntype", Object)
 ], SetObject.prototype, "keys", null);
 SetObject = SetObject_1 = __decorate([
-    (0, util_1.Unit)(Control_1.ControlFlow.SetEnum, 'collectionSet'),
+    (0, util_1.Unit)(Control_1.ControlFlow.SetEnum, 'execSet'),
     __metadata("design:paramtypes", [Object])
 ], SetObject);
 exports.SetObject = SetObject;
@@ -2683,7 +2683,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createExtendsInstance = exports.createExtendsConstruct = void 0;
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const Value = __webpack_require__(/*! ../../Able */ "./src/Object/Able/index.ts");
-const ExtendsMap = new Map();
+var ExtendsMap;
 /***
   创建新的包装对象
 
@@ -2694,6 +2694,8 @@ const ExtendsMap = new Map();
 
  */
 function createExtendsConstruct(target, exclude = []) {
+    if (!ExtendsMap)
+        ExtendsMap = new Map();
     if (ExtendsMap.has(target))
         return ExtendsMap.get(target);
     const Enum = {};

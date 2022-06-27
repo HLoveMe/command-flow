@@ -746,7 +746,7 @@ declare module 'command-flow' {
       [T in ArrayEnum]: ArrayFunction;
     };
     export interface CollectionArray extends ArrayAbsoluteAble {
-      collectionArray(key: ArrayEnum, ...args: any[]): BaseType | void;
+      execArray(key: ArrayEnum, ...args: any[]): BaseType | void;
     }
 
     // Set
@@ -756,7 +756,7 @@ declare module 'command-flow' {
       [T in SetEnum]: SetFunction;
     };
     export interface CollectionSet extends SetAbsoluteAble {
-      collectionSet(key: SetEnum, ...args: any[]): BaseType;
+      execSet(key: SetEnum, ...args: any[]): BaseType;
     }
 
     // Map
@@ -771,7 +771,7 @@ declare module 'command-flow' {
       [T in MapEnum]: MapFunction<U>;
     };
     export interface CollectionMap<T, U> extends MapAbsoluteAble<U> {
-      collectionMap(key: MapEnum, ...args: any[]): U | Value.NULL;
+      execMap(key: MapEnum, ...args: any[]): U | Value.NULL;
     }
 
     // String
@@ -906,7 +906,7 @@ declare module 'command-flow' {
     _value: T[];
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<T[]>): Value.ObjectAble<T[]>;
-    collectionArray(
+    execArray(
       key: ControlFlow.ArrayEnum,
       ...args: any[]
     ): BaseType | void;
@@ -1035,7 +1035,7 @@ declare module 'command-flow' {
     _value: Map<T, U>;
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<Map<T, U>>): Value.ObjectAble<Map<T, U>>;
-    collectionMap(key: ControlFlow.MapEnum, ...args: any[]): any;
+    execMap(key: ControlFlow.MapEnum, ...args: any[]): any;
 
     get(key: string): U | Value.NULL;
 
@@ -1070,7 +1070,7 @@ declare module 'command-flow' {
     _value: Set<T>;
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<Set<T>>): ObjectTarget<Set<T>>;
-    collectionSet(key: ControlFlow.SetEnum, ...args: any[]): any;
+    execSet(key: ControlFlow.SetEnum, ...args: any[]): any;
 
     has(value: T): BooleanObject;
 

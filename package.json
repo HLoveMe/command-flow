@@ -4,6 +4,7 @@
   "main": "index.js",
   "module":"./index.mjs",
   "scripts": {
+    "pre_build":"npm run pre_web && npm run pre_node",
     "pre_web": "node ./build-pre.js 0 && tsc -p tsconfig.web.json ",
     "pre_node": "node ./build-pre.js 1 && tsc -p tsconfig.node.json",
     "build_dev_web": "npm run pre_web && webpack --config webpack.config.dev.js",

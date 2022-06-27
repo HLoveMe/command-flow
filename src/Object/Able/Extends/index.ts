@@ -1,11 +1,11 @@
 import { createExtendsConstruct } from "./extend-util";
 import { ValueExtends } from '../../types'
+import { ExecFunctionAble } from "./types";
 
-const PromiseWrapper = createExtendsConstruct<Promise<any>, PromiseConstructor>(global.Promise, [])
-type PromiseInterface = ValueExtends.ExtendsType<Promise<any>>
+type ArrayExecAble = ExecFunctionAble<[], 'length'>;
+type ArrayInterface = ValueExtends.ExtendsType<ArrayExecAble>;
+const ArrayWrapper = createExtendsConstruct<Array<any>>(global.Array, []);
 
-// const a: PromiseInterface = new PromiseWrapper(new Promise(()=>{}));
-// a.finally().valueOf().catch(()=>{})
-export {
-  PromiseInterface, PromiseWrapper
-}
+
+export class ArrayObject extends ArrayWrapper implements ArrayInterface { }
+console.log("qwertyuiop", ArrayObject, new ArrayObject())

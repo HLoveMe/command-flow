@@ -220,6 +220,7 @@ export namespace ControlFlow {
     calc(type: ControlFlow.CalcEnum, target: U): U;
   }
 
+
   // Array
   export declare type CollectionArrayExec = (
     key: ArrayEnum,
@@ -232,7 +233,7 @@ export namespace ControlFlow {
     [T in ArrayEnum]: ArrayFunction<U>;
   };
   export interface CollectionArray<U> extends ArrayAbsoluteAble<U> {
-    collectionArray(
+    execArray(
       key: ArrayEnum,
       ...args: any[]
     ): BaseType | U | Value.NULL | any;
@@ -250,7 +251,7 @@ export namespace ControlFlow {
     [T in SetEnum]: SetFunction<U>;
   };
   export interface CollectionSet<U> extends SetAbsoluteAble<U> {
-    collectionSet(
+    execSet(
       key: SetEnum,
       ...args: any[]
     ): BaseType | U | Value.NULL | any;
@@ -268,7 +269,7 @@ export namespace ControlFlow {
     [T in MapEnum]: MapFunction<U>;
   };
   export interface CollectionMap<T, U> extends MapAbsoluteAble<U> {
-    collectionMap(key: MapEnum, ...args: any[]): U | void;
+    execMap(key: MapEnum, ...args: any[]): U | void;
   }
 
   // String

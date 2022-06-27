@@ -74,7 +74,7 @@ export namespace ValueExtends {
     ValueInclude<T, E>
   >;
   type GetReturnWrapper<T> = T extends null | undefined
-    ? Value.NullAble
+    ? Value.Mixins
     : T extends number
     ? Value.NumberAble
     : T extends string
@@ -91,7 +91,9 @@ export namespace ValueExtends {
     ? Value.DateAble
     : T extends ArrayBuffer
     ? Value.DataAble
-    : Value.ObjectAble<T>;
+    : Value.ObjectAble<T>
+    | void
+    ;
 
   type GetInterface<T, U extends string | number | symbol, E> = Pick<
     T,
@@ -109,11 +111,17 @@ export namespace ValueExtends {
     ? ResetFunctionType<T[K]>
     : T[K];
   };
-  export type Constructor<C,TC> = {
-    new ();
+  export type Constructor<C, TC> = {
+    new();
     new(value: C);
   };
+  /***
+   * 去掉指定'constructor' | 'valueOf'属性，并值类型为 (...args: any[]) => any
+   * 
+   * 将()=>any 转为 ()=>Value.ValueAble<any>
+   */
   export type ExtendsType<T> = CreateNewInterface<
     GetInterface<T, 'constructor' | 'valueOf', (...args: any[]) => any>
   >;
+
 }

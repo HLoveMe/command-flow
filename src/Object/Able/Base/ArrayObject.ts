@@ -9,7 +9,7 @@ import { StringObject } from './StringObject';
 import { BooleanObject } from './BooleanObject';
 import { decide } from '../../valueUtil';
 
-@Unit(ControlFlow.ArrayEnum, 'collectionArray')
+@Unit(ControlFlow.ArrayEnum, 'execArray')
 export class ArrayObject<T>
   extends ObjectTarget<Array<T>>
   implements Value.ArrayAble<T>, ControlFlow.CollectionArray<T>
@@ -51,7 +51,7 @@ export class ArrayObject<T>
   }
 
   @onlyDeclaration
-  collectionArray(key: ControlFlow.ArrayEnum, ...args: any[]): any {
+  execArray(key: ControlFlow.ArrayEnum, ...args: any[]): any {
     return null as any;
   }
   // array function
