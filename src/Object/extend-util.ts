@@ -1,6 +1,6 @@
-import { Unit } from '../../util';
-import * as Value from '../../Able';
-import { ValueExtends } from '../../types';
+import { Unit } from './util'
+import * as Value from './Able'
+import { ValueExtends } from './types'
 
 var ExtendsMap: Map<any, ValueExtends.Constructor<any, {}>>;
 
@@ -18,9 +18,9 @@ export function createExtendsConstruct<T, TC extends any = any/**暂不生效 */
   target: NewableFunction,
   exclude: string[] = []
 ): ValueExtends.Constructor<T, TC> {
-  if (!ExtendsMap) ExtendsMap = new Map<any, ValueExtends.Constructor<any, {}>>()
+  if (!ExtendsMap) ExtendsMap = new Map<any, ValueExtends.Constructor<any>>()
   if (ExtendsMap.has(target))
-    return ExtendsMap.get(target) as unknown as ValueExtends.Constructor<T, TC>;
+    return ExtendsMap.get(target) as unknown as ValueExtends.Constructor<T>;
   const Enum = {};
   exclude = [...exclude, 'constructor', 'valueOf'];
   Object.keys(Object.getOwnPropertyDescriptors(target.prototype)).forEach(($1) => {

@@ -211,23 +211,19 @@
 //   }
 // }
 
-import { createExtendsConstruct } from '../Extends/extend-util';
+import { createExtendsConstruct } from '../../extend-util'
 import { ValueExtends } from '../../types';
-import { ExecFunctionAble } from '../Extends/types';
+import { ValueExec } from '../../types';
 import { decide } from '../../valueUtil';
 import { Value } from "../../../Object";
 import { NumberObject } from './NumberObject';
 
-type ArrayExecInterface<T> = ExecFunctionAble<Array<T>, 'length'>;
-type ExecFunction = ValueExtends.WrapperReturnInterface<
-  ArrayExecInterface<any>
->
-type BaseConstruct = ValueExtends.Constructor<any[]>
-
-const ArrayWrapper = createExtendsConstruct<Array<any>>(global.Array, ['length']);
-
+type ArrayExecInterface<T> = ValueExec.ExecFunctionAble<T[], 'length'>;
+type BaseArrayInterface<T> = ValueExec.BlurArrayExecInterface<ArrayExecInterface<T>>
+const ArrayWrapper = createExtendsConstruct<Array<any>>(Array, ['length']);
 
 class _ArrayObject<T> extends ArrayWrapper {
+  declare _value: Array<T>
   constructor(...values: Array<Array<T> | number>) {
     const first = values[0];
     const firstIsArray = first instanceof Array;
@@ -264,15 +260,20 @@ class _ArrayObject<T> extends ArrayWrapper {
   }
 }
 
-export interface ArrayObjectAble<T extends any = any>
-  extends Value.ArrayAble<T>,
-  ExecFunction,
-  BaseConstruct { }
+interface _ArrayObjectAble<T extends any = any>
+  extends Value.ArrayAble<T>, BaseArrayInterface<T> { get length(): NumberObject }
+type CustomConstructor = { new(...args: any[]): _ArrayObjectAble; new(count: number): _ArrayObjectAble } & ValueExtends.Constructor<any[]>;
 
-type CustomConstructor = { new(...args: any[]): ArrayObjectAble; new(count: number): ArrayObjectAble };
+/***
+ * const dome1: ArrayObjectAble<string> = new ArrayObject();
+ * const dome2: ArrayObjectAble<string> = new ArrayObject(1);
+ * const dome3: ArrayObjectAble<string> = new ArrayObject(['1','2]);
+ * const dome4: ArrayObjectAble<string> = new ArrayObject(...['1','2]);
+ */
+type ArrayObjectAble<T> = ValueExtends.WrapperReturnInterface<ArrayExecInterface<T>>
+const ArrayObject = _ArrayObject as unknown as CustomConstructor;
 
-export const ArrayObject = _ArrayObject as unknown as CustomConstructor;
-
-// const as: ArrayObjectAble<string> = new ArrayObject()
-// const a = as.valueOf()
-// as.execFunction
+export {
+  ArrayObject,
+  ArrayObjectAble
+}
