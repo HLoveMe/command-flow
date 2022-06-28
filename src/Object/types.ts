@@ -166,7 +166,7 @@ export namespace ValueExec {
   export type ExecFunctionAble<T, E extends KeyType = never> = {
     execFunction: Exec<T, E>;
   } & ExtendsFunction<T, E>;
-  export type BlurArrayExecInterface<T> = {
+  export type BlurExecInterface<T> = {
     [K in keyof T]: K extends 'execFunction' ? T[K] : T[K] extends (...args: infer P) => any ? (...args: P) => any : T[K]
   }
 

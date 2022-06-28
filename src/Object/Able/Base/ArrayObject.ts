@@ -219,7 +219,7 @@ import { Value } from "../../../Object";
 import { NumberObject } from './NumberObject';
 
 type ArrayExecInterface<T> = ValueExec.ExecFunctionAble<T[], 'length'>;
-type BaseArrayInterface<T> = ValueExec.BlurArrayExecInterface<ArrayExecInterface<T>>
+type BaseArrayInterface<T> = ValueExec.BlurExecInterface<ArrayExecInterface<T>>
 const ArrayWrapper = createExtendsConstruct<Array<any>>(Array, ['length']);
 
 class _ArrayObject<T> extends ArrayWrapper {
