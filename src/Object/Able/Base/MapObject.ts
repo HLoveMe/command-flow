@@ -84,7 +84,7 @@ import { ValueExtends } from '../../types';
 import { ValueExec } from '../../types';
 import { decide } from '../../valueUtil';
 import { Value } from "../../../Object";
-import { NumberObject } from './NumberObject';
+import { NumberObject, NumberObjectAble } from './NumberObject';
 
 type MapExecInterface<K, V> = ValueExec.ExecFunctionAble<Map<K, V>, 'size'>;
 type BaseMapInterface<K, V> = ValueExec.BlurExecInterface<MapExecInterface<K, V>>
@@ -98,17 +98,17 @@ class _MapObject<K, V> extends MapWrapper {
   len(): number {
     return this._value.size;
   }
-  get size(): NumberObject {
-    return decide(this._value.size) as NumberObject;
+  get size(): NumberObjectAble {
+    return decide(this._value.size) as NumberObjectAble;
   }
 }
 
 interface _MapObjectAble<K, V>
-  extends Value.MapAble<K, V>, BaseMapInterface<K, V> { get size(): NumberObject }
+  extends Value.MapAble<K, V>, BaseMapInterface<K, V> { get size(): NumberObjectAble }
 type CustomConstructor = { new <K, V>(map: Map<K, V>): _MapObjectAble<K, V> } & ValueExtends.Constructor<Map<any,any>>;
 
 
-type MapObjectAble<K, V> = ValueExtends.WrapperReturnInterface<MapExecInterface<K, V>> & Value.MapAble<K, V> & { get size(): NumberObject }
+type MapObjectAble<K, V> = ValueExtends.WrapperReturnInterface<MapExecInterface<K, V>> & Value.MapAble<K, V> & { get size(): NumberObjectAble }
 const MapObject = _MapObject as unknown as CustomConstructor;
 
 export {

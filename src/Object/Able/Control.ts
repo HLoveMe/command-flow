@@ -194,17 +194,17 @@ export namespace ControlFlow {
   // 比较 接口
   export declare type CompareExec = (
     type: CompareEnum,
-    target: Value.ValueAble<any>
+    target: Value.NumberAble
   ) => Value.BooleanAble;
 
   export declare type CompareFunction = (
-    target: Value.ValueAble<any>
+    target: Value.NumberAble
   ) => Value.BooleanAble;
 
   declare type CompareAble = {
     [T in CompareEnum]: CompareFunction;
   };
-  export interface Compare<U extends Value.ValueAble<any>> extends CompareAble {
+  export interface Compare<U extends Value.NumberAble> extends CompareAble {
     compare<T extends CompareEnum>(type: T, target: U): Value.BooleanAble;
   }
 
@@ -220,58 +220,6 @@ export namespace ControlFlow {
     calc(type: ControlFlow.CalcEnum, target: U): U;
   }
 
-
-  // Array
-  export declare type CollectionArrayExec = (
-    key: ArrayEnum,
-    ...args: any[]
-  ) => BaseType;
-  export declare type ArrayFunction<U> = (
-    ...args
-  ) => BaseType | U | Value.NULL | any;
-  declare type ArrayAbsoluteAble<U> = {
-    [T in ArrayEnum]: ArrayFunction<U>;
-  };
-  export interface CollectionArray<U> extends ArrayAbsoluteAble<U> {
-    execFunction(
-      key: ArrayEnum,
-      ...args: any[]
-    ): BaseType | U | Value.NULL | any;
-  }
-
-  // Set
-  export declare type CollectionSetExec = (
-    key: SetEnum,
-    ...args: any[]
-  ) => BaseType | void;
-  export declare type SetFunction<U> = (
-    ...args: any[]
-  ) => BaseType | U | Value.NULL | any;
-  declare type SetAbsoluteAble<U> = {
-    [T in SetEnum]: SetFunction<U>;
-  };
-  export interface CollectionSet<U> extends SetAbsoluteAble<U> {
-    execFunction(
-      key: SetEnum,
-      ...args: any[]
-    ): BaseType | U | Value.NULL | any;
-  }
-
-  // Map
-  export declare type CollectionMapExec = (
-    key: MapEnum,
-    ...args: any[]
-  ) => BaseType | void;
-  export declare type MapFunction<U> = (
-    ...args: any[]
-  ) => CollectionMap<any, U> | U | any;
-  export declare type MapAbsoluteAble<U> = {
-    [T in MapEnum]: MapFunction<U>;
-  };
-  export interface CollectionMap<T, U> extends MapAbsoluteAble<U> {
-    execFunction(key: MapEnum, ...args: any[]): U | void;
-  }
-
   // String
   export declare type StringExec = (...args: any[]) => any;
   export declare type StringFunction = {
@@ -279,25 +227,5 @@ export namespace ControlFlow {
   };
   export interface ObjectString extends StringFunction {
     execFunction(key: StringEnum, ...args: any[]): any;
-  }
-
-  // Number
-
-  export declare type NumberExec = (...args: any[]) => any;
-  export declare type NumberFunction = {
-    [T in NumberEnum]: NumberExec;
-  };
-  export interface ObjectNumber extends NumberFunction {
-    execFunction(key: NumberEnum, ...args: any[]): any;
-  }
-
-  // Date
-
-  export declare type DateExec = NumberExec;
-  export declare type DateFunction = {
-    [T in DateEnum]: DateExec;
-  }
-  export interface ObjectDate extends DateFunction {
-    execFunction(key: DateEnum, ...args: any[]): any;
   }
 }

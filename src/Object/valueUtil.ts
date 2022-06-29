@@ -2,7 +2,7 @@ import { Value } from '..';
 import { BaseType } from '../Types';
 import * as ObjectValue from './Able';
 import { ValueExtends } from './types';
-
+// type Detail<T> = ValueExtends.IsValue<T> extends true ? T : ValueExtends.GetDeepAchieve<T>
 let ObjectMap = null;
 const init = () => {
   if (ObjectMap === null) {
@@ -36,12 +36,12 @@ export const isAbleType = (value: any): boolean => {
  * @param force 是否强制包装
  * @returns
  */
-export function decide<T extends BaseType | any>(
-  value: BaseType | any,
+export function decide<T>(
+  value: T,
   force: boolean = false
-): ValueExtends.GetAchieve<T> {
+): ValueExtends.GetDeepAchieve<T> {
   init();
-  if (isAbleType(value) && force === false) return value;
+  if (isAbleType(value) && force === false) return value as any;
   const key = Object.prototype.toString.call(value);
   const Target = ObjectMap[key];
   if (Target) {
@@ -49,3 +49,12 @@ export function decide<T extends BaseType | any>(
   }
   return new ObjectValue.ObjectTarget(value as any) as any;
 };
+
+
+
+type A = ObjectValue.NumberObjectAble;
+
+
+type aa = ValueExtends.GetDeepAchieve<number>
+
+const asas = decide(11)

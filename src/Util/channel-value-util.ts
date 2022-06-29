@@ -1,5 +1,5 @@
 import { ObjectTarget } from '..';
-import { ValueExtends } from '../Object';
+import { NumberObjectAble, ValueExtends } from '../Object';
 import { decide } from '../Object/valueUtil';
 import { ChannelObject, ChannelValue } from '../Types';
 /**
@@ -19,10 +19,9 @@ export function unpackValue<T extends any = string>(value: ChannelObject): T {
  * @returns
  * wrapperValue(null,string) = wrapperValue<string>(null,StringObject) => ChannelObject<StringObject>
  */
-type Detail<T> = ValueExtends.IsValue<T> extends true ? T : ValueExtends.GetDeepAchieve<T>
 
-export function wrapperValue<T>(input: ChannelObject, value: T): ChannelObject<ValueExtends.GetAchieve<Detail<T>>> {
-  const nextValue = decide<Detail<T>>(value);
+export function wrapperValue<T>(input: ChannelObject, value: T): ChannelObject<ValueExtends.GetDeepAchieve<T>> {
+  const nextValue = decide(value);
   return new ObjectTarget({
     ...input._value,
     value: nextValue,

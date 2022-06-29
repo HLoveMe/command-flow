@@ -1,6 +1,6 @@
 import { Observable, interval, asyncScheduler, timer, NEVER } from "rxjs"
 import { takeUntil, take } from "rxjs/operators"
-import { BaseType, NumberObject, ObjectTarget } from "../.."
+import { NumberObjectAble, NumberObject } from "../../Object/index"
 import { ChannelObject } from "../../Types";
 import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 import { InstructionOTM, InstructionOTO } from "../Instruction"
@@ -18,7 +18,7 @@ class IntervalWork extends InstructionOTM {
     this.notifier = notifier || NEVER;
   }
 
-  run(input: ChannelObject): Observable<ChannelObject<NumberObject>> {
+  run(input: ChannelObject): Observable<ChannelObject<NumberObjectAble>> {
     const intervalTime = parseInt(unpackValue(input)) || this.intervalTime || 1000;
     const that = this;
     return new Observable(observer => {
@@ -48,7 +48,7 @@ class TimeoutWork extends InstructionOTO {
     super()
     this.intervalTime = interval || 1000;
   }
-  run(input: ChannelObject): Observable<ChannelObject<NumberObject>> {
+  run(input: ChannelObject): Observable<ChannelObject<NumberObjectAble>> {
     const intervalTime = parseInt(unpackValue(input)) || this.intervalTime || 1000;
     const that = this;
 
@@ -88,7 +88,7 @@ class DelayIntervalWork extends InstructionOTM {
     this.notifier = notifier || NEVER;
   }
 
-  run(input: ChannelObject): Observable<ChannelObject<NumberObject>> {
+  run(input: ChannelObject): Observable<ChannelObject<NumberObjectAble>> {
     const intervalTime = parseInt(unpackValue(input)) || this.intervalTime || 1000;
     const that = this;
     return new Observable(observer => {

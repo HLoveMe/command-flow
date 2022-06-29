@@ -3,7 +3,7 @@ import { ObjectTarget } from "./Base/ObjectTarget";
 import { ArrayObject, ArrayObjectAble } from "./Base/ArrayObject";
 import { MapObject, MapObjectAble } from "./Base/MapObject";
 import { SetObject, SetObjectAble } from "./Base/SetObject";
-import { NumberObject } from "./Base/NumberObject";
+import { NumberObject,NumberObjectAble } from "./Base/NumberObject";
 import { StringObject } from "./Base/StringObject";
 import { BooleanObject } from "./Base/BooleanObject";
 import { DateObject, DateObjectAble } from "./Base/DateObject";
@@ -17,7 +17,7 @@ export {
   ArrayObject, ArrayObjectAble,
   MapObject, MapObjectAble,
   SetObject, SetObjectAble,
-  NumberObject,
+  NumberObject,NumberObjectAble,
   StringObject,
   BooleanObject,
   DateObject, DateObjectAble,

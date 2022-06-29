@@ -1199,7 +1199,7 @@ class _DateObject extends DateWrapper {
         return (0, valueUtil_1.decide)(this._value.toLocaleDateString());
     }
     timestamp() {
-        return (0, valueUtil_1.decide)(this._value.getTime());
+        return (0, valueUtil_1.decide)(this._value.getDate());
     }
 }
 const DateObject = _DateObject;
@@ -1370,32 +1370,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var NumberObject_1;
+var _NumberObject_1;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NumberObject = void 0;
-const Control_1 = __webpack_require__(/*! ../Control */ "./src/Object/Able/Control.ts");
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
 const BooleanObject_1 = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Base/BooleanObject.ts");
-const StringObject_1 = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Base/StringObject.ts");
-let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget_1.ObjectTarget {
+const extend_util_1 = __webpack_require__(/*! ../../extend-util */ "./src/Object/extend-util.ts");
+const NumberWrapper = (0, extend_util_1.createExtendsConstruct)(Number);
+let _NumberObject = _NumberObject_1 = class _NumberObject extends NumberWrapper {
     static type;
     constructor(value = 1) {
         super(value);
         this._value = value;
     }
-    // @attribute()
     valueOf() {
         return this._value;
     }
-    merge(target) {
-        return new NumberObject_1(this._value + target._value);
+    json() {
+        return super.json();
     }
     compare(type, target) {
         return new BooleanObject_1.BooleanObject(false);
     }
-    // Compare
-    // compare: ControlFlow.CompareExec;
     more(target) {
         return new BooleanObject_1.BooleanObject(this._value > target._value);
     }
@@ -1412,77 +1408,39 @@ let NumberObject = NumberObject_1 = class NumberObject extends ObjectTarget_1.Ob
         return new BooleanObject_1.BooleanObject(this._value <= target._value);
     }
     calc(type, target) {
-        return new NumberObject_1(0);
+        return new _NumberObject_1(0);
     }
     plus(target) {
-        return new NumberObject_1(this._value + target._value);
+        return new _NumberObject_1(this._value + target._value);
     }
     reduce(target) {
-        return new NumberObject_1(this._value - target._value);
+        return new _NumberObject_1(this._value - target._value);
     }
     multi(target) {
-        return new NumberObject_1(this._value * target._value);
+        return new _NumberObject_1(this._value * target._value);
     }
     divide(target) {
-        return new NumberObject_1(target._value === 0 ? Infinity : this._value / target._value);
-    }
-    //
-    execFunction(key, ...args) {
-        (new Number()).toPrecision;
-        return {};
-    }
-    toExponential(fractionDigits) {
-        return null;
-    }
-    toFixed(fractionDigits) {
-        return null;
-    }
-    toPrecision(precision) {
-        return null;
+        return new _NumberObject_1(target._value === 0 ? Infinity : this._value / target._value);
     }
 };
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, NumberObject]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", BooleanObject_1.BooleanObject)
-], NumberObject.prototype, "compare", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, NumberObject]),
-    __metadata("design:returntype", NumberObject)
-], NumberObject.prototype, "calc", null);
+], _NumberObject.prototype, "compare", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Object)
-], NumberObject.prototype, "execFunction", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", StringObject_1.StringObject)
-], NumberObject.prototype, "toExponential", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", StringObject_1.StringObject)
-], NumberObject.prototype, "toFixed", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", StringObject_1.StringObject)
-], NumberObject.prototype, "toPrecision", null);
-NumberObject = NumberObject_1 = __decorate([
+    __metadata("design:returntype", _NumberObject)
+], _NumberObject.prototype, "calc", null);
+_NumberObject = _NumberObject_1 = __decorate([
     util_1.CalcUnit,
     util_1.CompareUnit,
-    (0, util_1.Unit)(Control_1.ControlFlow.NumberEnum),
     __metadata("design:paramtypes", [Number])
-], NumberObject);
+], _NumberObject);
+const NumberObject = _NumberObject;
 exports.NumberObject = NumberObject;
 
 
@@ -1853,7 +1811,7 @@ __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", NumberObject_1.NumberObject)
+    __metadata("design:returntype", Object)
 ], StringObject.prototype, "charCodeAt", null);
 __decorate([
     util_1.onlyDeclaration,
@@ -1901,7 +1859,7 @@ __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Number]),
-    __metadata("design:returntype", NumberObject_1.NumberObject)
+    __metadata("design:returntype", Object)
 ], StringObject.prototype, "indexOf", null);
 __decorate([
     util_1.onlyDeclaration,
@@ -1913,7 +1871,7 @@ __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Number]),
-    __metadata("design:returntype", NumberObject_1.NumberObject)
+    __metadata("design:returntype", Object)
 ], StringObject.prototype, "lastIndexOf", null);
 __decorate([
     util_1.onlyDeclaration,
@@ -1925,7 +1883,7 @@ __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", NumberObject_1.NumberObject)
+    __metadata("design:returntype", Object)
 ], StringObject.prototype, "localeCompare", null);
 __decorate([
     util_1.onlyDeclaration,
@@ -1979,7 +1937,7 @@ __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [RegExp]),
-    __metadata("design:returntype", NumberObject_1.NumberObject)
+    __metadata("design:returntype", Object)
 ], StringObject.prototype, "search", null);
 __decorate([
     util_1.onlyDeclaration,
@@ -2601,6 +2559,7 @@ exports.Unit = Unit;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.decide = exports.isAbleType = void 0;
 const ObjectValue = __webpack_require__(/*! ./Able */ "./src/Object/Able/index.ts");
+// type Detail<T> = ValueExtends.IsValue<T> extends true ? T : ValueExtends.GetDeepAchieve<T>
 let ObjectMap = null;
 const init = () => {
     if (ObjectMap === null) {
@@ -2647,6 +2606,7 @@ function decide(value, force = false) {
 }
 exports.decide = decide;
 ;
+const asas = decide(11);
 
 
 /***/ }),
@@ -2917,6 +2877,13 @@ function unpackValue(value) {
     return value._value.value.valueOf();
 }
 exports.unpackValue = unpackValue;
+/**
+ * 组合包装
+ * @param input
+ * @param value
+ * @returns
+ * wrapperValue(null,string) = wrapperValue<string>(null,StringObject) => ChannelObject<StringObject>
+ */
 function wrapperValue(input, value) {
     const nextValue = (0, valueUtil_1.decide)(value);
     return new __1.ObjectTarget({
@@ -3002,7 +2969,6 @@ class Base64EnCodeWork extends Instruction_1.InstructionMTM {
             else {
                 target = (0, channel_value_util_1.unpackValue)(input);
             }
-            const nextV = (0, channel_value_util_1.wrapperValue)(input, js_base64_1.Base64.encode(target));
             subscriber.next((0, channel_value_util_1.wrapperValue)(input, js_base64_1.Base64.encode(target)));
             subscriber.complete();
             return {
@@ -3485,7 +3451,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DelayIntervalWork = exports.TimeoutWork = exports.IntervalWork = void 0;
 const rxjs_1 = __webpack_require__(/*! rxjs */ "rxjs");
 const operators_1 = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
-const __1 = __webpack_require__(/*! ../.. */ "./src/index.ts");
+const index_1 = __webpack_require__(/*! ../../Object/index */ "./src/Object/index.ts");
 const channel_value_util_1 = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
 const Instruction_1 = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
 // 一直发
@@ -3570,7 +3536,7 @@ class DelayIntervalWork extends Instruction_1.InstructionOTM {
             const sub = (0, rxjs_1.timer)(that.delayTime, intervalTime, rxjs_1.asyncScheduler)
                 .pipe((0, operators_1.take)(that.maxCount), (0, operators_1.takeUntil)(this.notifier))
                 .subscribe({
-                next: (value) => observer.next((0, channel_value_util_1.wrapperValue)(input, new __1.NumberObject(value))),
+                next: (value) => observer.next((0, channel_value_util_1.wrapperValue)(input, new index_1.NumberObject(value))),
                 error: (error) => observer.error(error),
                 complete: () => observer.complete()
             });

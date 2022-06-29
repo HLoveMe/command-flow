@@ -1,20 +1,38 @@
-import { ControlFlow } from "../Control";
-import { CalcUnit, CompareUnit, Unit, onlyDeclaration } from "../../util";
-import { Value } from "../../../Object";
-import { ObjectTarget } from "./ObjectTarget";
-import { BooleanObject } from "./BooleanObject";
-import { StringObject } from "./StringObject";
+import { ControlFlow } from '../Control';
+import { CalcUnit, CompareUnit, onlyDeclaration } from '../../util';
+import { Value } from '../../../Object';
+import { BooleanObject } from './BooleanObject';
+import { createExtendsConstruct } from '../../extend-util';
+import { ValueExtends } from '../../types';
+import { ValueExec } from '../../types';
+
+type NumberExecInterface = ValueExec.ExecFunctionAble<Number>;
+type BaseNumberInterface = ValueExec.BlurExecInterface<NumberExecInterface>;
+const NumberWrapper = createExtendsConstruct<Number>(Number);
+interface _NumberObjectAble
+  extends Value.NumberAble,
+  BaseNumberInterface,
+  ControlFlow.Compare<Value.NumberAble>,
+  ControlFlow.Calc<Value.NumberAble> { }
+
+type CustomConstructor = {
+  new(count: number): _NumberObjectAble;
+} & ValueExtends.Constructor<number>;
+
+type NumberObjectAble =
+  ValueExtends.WrapperReturnInterface<NumberExecInterface> &
+  Value.NumberAble & {} & ControlFlow.Compare<Value.NumberAble> &
+  ControlFlow.Calc<Value.NumberAble>;
 
 @CalcUnit
 @CompareUnit
-@Unit(ControlFlow.NumberEnum)
-export class NumberObject
-  extends ObjectTarget<number>
+class _NumberObject
+  extends NumberWrapper
   implements
   Value.NumberAble,
   ControlFlow.Compare<Value.NumberAble>,
-  ControlFlow.Calc<Value.NumberAble>,
-  ControlFlow.ObjectNumber, ControlFlow.NumberFunction {
+  ControlFlow.Calc<Value.NumberAble>
+{
   static type: string;
   declare _value: number;
   constructor(value: number = 1) {
@@ -22,73 +40,55 @@ export class NumberObject
     this._value = value;
   }
 
-  // @attribute()
   valueOf(): number {
     return this._value;
   }
 
-  merge(target: NumberObject): NumberObject {
-    return new NumberObject(this._value + target._value);
+  json(): Value.StringAble {
+    return super.json();
   }
 
   @onlyDeclaration
-  compare(type: ControlFlow.CompareEnum, target: NumberObject): BooleanObject {
-    return new BooleanObject(false)
+  compare(type: string, target: Value.NumberAble): BooleanObject {
+    return new BooleanObject(false);
   }
-  // Compare
-  // compare: ControlFlow.CompareExec;
-  more(target: Value.ValueAble<any>): BooleanObject {
+
+  more(target: Value.NumberAble): BooleanObject {
     return new BooleanObject(this._value > target._value);
   }
-  equal(target: Value.ValueAble<any>): BooleanObject {
+  equal(target: Value.NumberAble): BooleanObject {
     return new BooleanObject(this._value === target._value);
   }
-  less(target: Value.ValueAble<any>): BooleanObject {
+  less(target: Value.NumberAble): BooleanObject {
     return new BooleanObject(this._value < target._value);
   }
-  moreEqual(target: Value.ValueAble<any>): BooleanObject {
+  moreEqual(target: Value.NumberAble): BooleanObject {
     return new BooleanObject(this._value >= target._value);
   }
-  lessEqual(target: Value.ValueAble<any>): BooleanObject {
+  lessEqual(target: Value.NumberAble): BooleanObject {
     return new BooleanObject(this._value <= target._value);
   }
 
   @onlyDeclaration
-  calc(type: ControlFlow.CalcEnum, target: NumberObject): NumberObject {
-    return new NumberObject(0);
+  calc(type: string, target: Value.NumberAble): _NumberObject {
+    return new _NumberObject(0);
   }
 
-  plus(target: Value.NumberAble): NumberObject {
-    return new NumberObject(this._value + target._value);
+  plus(target: Value.NumberAble): _NumberObject {
+    return new _NumberObject(this._value + target._value);
   }
-  reduce(target: Value.NumberAble): NumberObject {
-    return new NumberObject(this._value - target._value);
+  reduce(target: Value.NumberAble): _NumberObject {
+    return new _NumberObject(this._value - target._value);
   }
-  multi(target: Value.NumberAble): NumberObject {
-    return new NumberObject(this._value * target._value);
+  multi(target: Value.NumberAble): _NumberObject {
+    return new _NumberObject(this._value * target._value);
   }
-  divide(target: Value.NumberAble): NumberObject {
-    return new NumberObject(
+  divide(target: Value.NumberAble): _NumberObject {
+    return new _NumberObject(
       target._value === 0 ? Infinity : this._value / target._value
     );
   }
-
-  //
-  @onlyDeclaration
-  execFunction(key: ControlFlow.NumberEnum, ...args: any[]): any {
-    (new Number()).toPrecision
-    return {} as any
-  }
-  @onlyDeclaration
-  toExponential(fractionDigits?: number): StringObject {
-    return null as any
-  }
-  @onlyDeclaration
-  toFixed(fractionDigits?: number): StringObject {
-    return null as any
-  }
-  @onlyDeclaration
-  toPrecision(precision?: number): StringObject {
-    return null as any
-  }
 }
+const NumberObject = _NumberObject as unknown as CustomConstructor;
+
+export { NumberObject, NumberObjectAble };

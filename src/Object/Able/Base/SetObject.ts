@@ -88,7 +88,7 @@ import { ValueExtends } from '../../types';
 import { ValueExec } from '../../types';
 import { decide } from '../../valueUtil';
 import { Value } from "../../../Object";
-import { NumberObject } from './NumberObject';
+import { NumberObjectAble } from './NumberObject';
 
 type SetExecInterface<K> = ValueExec.ExecFunctionAble<Set<K>, 'size'>;
 type BaseSetInterface<K> = ValueExec.BlurExecInterface<SetExecInterface<K>>
@@ -102,17 +102,17 @@ class _SetObject<K> extends SetWrapper {
   valueOf(): Set<K> {
     return this._value;
   }
-  get size(): NumberObject {
-    return decide(this._value.size) as NumberObject;
+  get size(): NumberObjectAble {
+    return decide(this._value.size) as NumberObjectAble;
   }
 }
 
 interface _SetObjectAble<K>
-  extends Value.SetAble<K>, BaseSetInterface<K> { get size(): NumberObject }
+  extends Value.SetAble<K>, BaseSetInterface<K> { get size(): NumberObjectAble }
 type CustomConstructor = { new <K>(map: Set<K>): _SetObjectAble<K> } & ValueExtends.Constructor<Set<any>>;
 
 
-type SetObjectAble<K> = ValueExtends.WrapperReturnInterface<SetExecInterface<K>> & Value.SetAble<K> & { get size(): NumberObject }
+type SetObjectAble<K> = ValueExtends.WrapperReturnInterface<SetExecInterface<K>> & Value.SetAble<K> & { get size(): NumberObjectAble }
 const SetObject = _SetObject as unknown as CustomConstructor;
 
 export {

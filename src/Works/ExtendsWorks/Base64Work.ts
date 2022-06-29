@@ -18,8 +18,7 @@ class Base64EnCodeWork extends InstructionMTM {
       else {
         target = unpackValue(input)
       }
-      const nextV = wrapperValue(input, Base64.encode(target))
-      subscriber.next(wrapperValue<string>(input, Base64.encode(target)))
+      subscriber.next(wrapperValue(input, Base64.encode(target)))
       subscriber.complete();
       return {
         unsubscribe: () => subscriber.unsubscribe(),

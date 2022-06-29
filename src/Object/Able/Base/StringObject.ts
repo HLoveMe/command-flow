@@ -2,7 +2,7 @@ import { ControlFlow } from '../Control';
 import { Value } from '../../../Object';
 import { ObjectTarget } from './ObjectTarget';
 import { onlyDeclaration, Unit } from '../../util';
-import { NumberObject } from './NumberObject';
+import { NumberObjectAble, NumberObject } from './NumberObject';
 import { BooleanObject } from './BooleanObject'
 
 
@@ -27,7 +27,7 @@ export class StringObject
     return null as any;
   }
 
-  get length(): NumberObject {
+  get length(): NumberObjectAble {
     return new NumberObject(this._value.length);
   }
   @onlyDeclaration
@@ -51,7 +51,7 @@ export class StringObject
     return null as any;
   }
   @onlyDeclaration
-  charCodeAt(index: number): NumberObject {
+  charCodeAt(index: number): NumberObjectAble {
     return null as any;
   }
   @onlyDeclaration
@@ -83,7 +83,7 @@ export class StringObject
     return null as any;
   }
   @onlyDeclaration
-  indexOf(searchString: string, position?: number): NumberObject {
+  indexOf(searchString: string, position?: number): NumberObjectAble {
     return null as any;
   }
   @onlyDeclaration
@@ -91,7 +91,7 @@ export class StringObject
     return null as any;
   }
   @onlyDeclaration
-  lastIndexOf(searchString: string, position?: number): NumberObject {
+  lastIndexOf(searchString: string, position?: number): NumberObjectAble {
     return null as any;
   }
   @onlyDeclaration
@@ -99,7 +99,7 @@ export class StringObject
     return null as any;
   }
   @onlyDeclaration
-  localeCompare(that: string): NumberObject {
+  localeCompare(that: string): NumberObjectAble {
     return null as any;
   }
   @onlyDeclaration
@@ -141,7 +141,7 @@ export class StringObject
     return null as any;
   }
   @onlyDeclaration
-  search(regexp: RegExp): NumberObject {
+  search(regexp: RegExp): NumberObjectAble {
     return null as any;
   }
   @onlyDeclaration

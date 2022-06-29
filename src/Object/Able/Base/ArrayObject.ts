@@ -216,7 +216,7 @@ import { ValueExtends } from '../../types';
 import { ValueExec } from '../../types';
 import { decide } from '../../valueUtil';
 import { Value } from "../../../Object";
-import { NumberObject } from './NumberObject';
+import { NumberObjectAble } from './NumberObject';
 
 type ArrayExecInterface<T> = ValueExec.ExecFunctionAble<T[], 'length'>;
 type BaseArrayInterface<T> = ValueExec.BlurExecInterface<ArrayExecInterface<T>>
@@ -255,16 +255,16 @@ class _ArrayObject<T> extends ArrayWrapper {
     return this._value;
   }
 
-  get length(): NumberObject {
-    return decide(this._value.length) as NumberObject;
+  get length(): NumberObjectAble {
+    return decide(this._value.length) as NumberObjectAble;
   }
 }
 
 interface _ArrayObjectAble<T extends any = any>
-  extends Value.ArrayAble<T>, BaseArrayInterface<T> { get length(): NumberObject }
-type CustomConstructor = { new<T>(...args: any[]): _ArrayObjectAble<T>; new<T>(count: number): _ArrayObjectAble<T> } & ValueExtends.Constructor<any[]>;
+  extends Value.ArrayAble<T>, BaseArrayInterface<T> { get length(): NumberObjectAble }
+type CustomConstructor = { new <T>(...args: any[]): _ArrayObjectAble<T>; new <T>(count: number): _ArrayObjectAble<T> } & ValueExtends.Constructor<any[]>;
 
-type ArrayObjectAble<T> = ValueExtends.WrapperReturnInterface<ArrayExecInterface<T>> & Value.ArrayAble<T> & { get length(): NumberObject }
+type ArrayObjectAble<T> = ValueExtends.WrapperReturnInterface<ArrayExecInterface<T>> & Value.ArrayAble<T> & { get length(): NumberObjectAble }
 const ArrayObject = _ArrayObject as unknown as CustomConstructor;
 
 export {
