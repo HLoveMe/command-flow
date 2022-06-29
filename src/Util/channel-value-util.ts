@@ -1,5 +1,5 @@
 import { ObjectTarget } from '..';
-import { NumberObjectAble, ValueExtends } from '../Object';
+import { ValueExtends } from '../Object';
 import { decide } from '../Object/valueUtil';
 import { ChannelObject, ChannelValue } from '../Types';
 /**

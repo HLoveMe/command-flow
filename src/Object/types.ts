@@ -161,8 +161,7 @@ export namespace ValueExtends {
 
   // number===>NumberObject
   // value.NumberAble ===>NumberObject
-  //NumberObject ====>NumberObject
-  // export type GetDeepAchieve<T extends any = string> = GetAchieve<Wrapper<T>>;
+  // NumberObject ====>NumberObject
   export type GetDeepAchieve<T extends any = string> = IsValue<T> extends true ? GetAchieve<T> : GetAchieve<Wrapper<T>>;
 
   type GetInterface<T, U extends KeyType, E> = Pick<T, ValidKey<T, U, E>>;
