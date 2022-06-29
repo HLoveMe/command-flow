@@ -1,8 +1,17 @@
-type isEqual<X, Y> = [X] extends [Y]
-  ? [Y] extends [X]
-  ? true
-  : false
-  : false;
+import { MapObjectAble } from './Able/Base/MapObject';
+import { SetObjectAble } from './Able/Base/SetObject';
+import {
+  ArrayObjectAble,
+  BooleanObject,
+  DataObject,
+  DateObjectAble,
+  NULLObject,
+  NumberObject,
+  ObjectTarget,
+  StringObject,
+} from './Able/index';
+
+type isEqual<X, Y> = [X] extends [Y] ? ([Y] extends [X] ? true : false) : false;
 
 export namespace Value {
   export type NULL = null | undefined;
@@ -12,11 +21,10 @@ export namespace Value {
   }
   export interface ObjectAble<V> extends ValueAble<V> {
     json(): Value.StringAble;
-    merge(target: ObjectAble<V>): ObjectAble<V>;
   }
   export interface ArrayAble<T>
     extends ValueAble<Array<T>>,
-    ObjectAble<Array<T>> {
+      ObjectAble<Array<T>> {
     len(): number;
     first(): T;
     last(): T;
@@ -26,7 +34,7 @@ export namespace Value {
 
   export interface MapAble<T, U>
     extends ValueAble<Map<T, U>>,
-    ObjectAble<Map<T, U>> {
+      ObjectAble<Map<T, U>> {
     len(): number;
     valueOf(): Map<T, U>;
   }
@@ -54,7 +62,7 @@ export namespace Value {
 
   export interface DataAble
     extends ValueAble<ArrayBuffer>,
-    ObjectAble<ArrayBuffer> {
+      ObjectAble<ArrayBuffer> {
     data(): ArrayBuffer;
   }
   // null  | undefined
@@ -68,7 +76,7 @@ export namespace Value {
   export interface Mixins<
     V extends Value.ObjectAble<any> = Value.ObjectAble<any>,
     U extends any = NULL
-    > extends ValueAble<V | U> { }
+  > extends ValueAble<V | U> {}
 }
 export namespace ValueExtends {
   type KeyType = string | number | symbol;
@@ -80,42 +88,95 @@ export namespace ValueExtends {
     KeyExclude<T, K>,
     ValueInclude<T, E>
   >;
-  type GetReturnWrapper<T> = T extends null | undefined
-    ? Value.Mixins
+  // T 是否为 Value.XXX
+  export type IsValue<T> = T extends Value.NUllAble
+    ? true
+    : T extends Value.NumberAble
+    ? true
+    : T extends Value.StringAble
+    ? true
+    : T extends Value.BooleanAble
+    ? true
+    : T extends Value.ArrayAble<infer U>
+    ? true
+    : T extends Value.MapAble<infer K, infer U>
+    ? true
+    : T extends Value.SetAble<infer U>
+    ? true
+    : T extends Value.DateAble
+    ? true
+    : T extends Value.DataAble
+    ? true
+    : T extends Value.ObjectAble<any>
+    ? true
+    : T extends Value.Mixins
+    ? true
+    : T extends Value.ValueAble<any>
+    ? true
+    : false;
+  // string ===> Value.StringAble
+  export type Wrapper<T> = T extends null | undefined
+    ? NULLObject
     : T extends number
-    ? Value.NumberAble
+    ? NumberObject
     : T extends string
     ? Value.StringAble
     : T extends boolean
-    ? Value.BooleanAble
+    ? BooleanObject
     : T extends Array<infer U>
-    ? Value.ArrayAble<U>
+    ? ArrayObjectAble<U>
     : T extends Map<infer K, infer U>
-    ? Value.MapAble<K, U>
+    ? MapObjectAble<K, U>
     : T extends Set<infer U>
-    ? Value.SetAble<U>
+    ? SetObjectAble<U>
     : T extends Date
-    ? Value.DateAble
+    ? DateObjectAble
     : T extends ArrayBuffer
-    ? Value.DataAble
-    : Value.ObjectAble<T>;
+    ? DataObject
+    : ObjectTarget<T>;
+
+  // Value.NumberAble ===>NumberObject
+  export type GetAchieve<T> = T extends ObjectTarget<any>
+    ? T
+    : T extends Value.NUllAble
+    ? NULLObject
+    : T extends Value.NumberAble
+    ? NumberObject
+    : T extends Value.StringAble
+    ? StringObject
+    : T extends Value.BooleanAble
+    ? BooleanObject
+    : T extends Value.ArrayAble<infer U>
+    ? ArrayObjectAble<U>
+    : T extends Value.MapAble<infer K, infer U>
+    ? MapObjectAble<K, U>
+    : T extends Value.SetAble<infer U>
+    ? SetObjectAble<U>
+    : T extends Value.DateAble
+    ? DateObjectAble
+    : T extends Value.DataAble
+    ? DataObject
+    : ObjectTarget<T>;
+
+  // number===>NumberObject
+  export type GetDeepAchieve<T extends any = string> = GetAchieve<Wrapper<T>>;
 
   type GetInterface<T, U extends KeyType, E> = Pick<T, ValidKey<T, U, E>>;
 
   type ResetFunctionType<T extends (...args: any[]) => any> = T extends (
     ...args: infer P
   ) => infer R
-    ? (...args: P) => isEqual<R, unknown> extends true ? void : GetReturnWrapper<R>
+    ? (...args: P) => isEqual<R, unknown> extends true ? void : Wrapper<R>
     : T;
 
   type CreateInterface<T> = {
     [K in keyof T]: T[K] extends (...args: any[]) => any
-    ? ResetFunctionType<T[K]>
-    : T[K];
+      ? ResetFunctionType<T[K]>
+      : T[K];
   };
   export type Constructor<C, TC extends any = any> = {
-    new();
-    new(value: C);
+    new ();
+    new (value: C);
   };
   /***
    * 去掉指定'constructor' | 'valueOf'属性，并值类型为 (...args: any[]) => any
@@ -143,31 +204,33 @@ export namespace ValueExec {
     T,
     E extends KeyType = never,
     DE extends KeyType = ExcludeKeys | E
-    > = keyof Omit<T, DE>;
+  > = keyof Omit<T, DE>;
 
   declare type Exec<
     T,
     E extends KeyType = never,
     KS extends KeyType = KeyExclude<T, E>
-    > = (key: KS, ...args: any[]) => any;
-
+  > = (key: KS, ...args: any[]) => any;
 
   type ExtendsFunction<T, E extends KeyType> = {
     [K in KeyExclude<T, E | ExcludeKeys>]: T[K] extends (
       ...args: [infer P, ...infer P2]
     ) => infer R
-    ? isEqual<P, unknown> extends true
-    ? () => R
-    : P extends (...args: any[]) => any
-    ? (...args: [(...args: any[]) => any, ...P2]) => R
-    : (...args: [P, ...P2]) => R
-    : T[K];
+      ? isEqual<P, unknown> extends true
+        ? () => R
+        : P extends (...args: any[]) => any
+        ? (...args: [(...args: any[]) => any, ...P2]) => R
+        : (...args: [P, ...P2]) => R
+      : T[K];
   };
   export type ExecFunctionAble<T, E extends KeyType = never> = {
     execFunction: Exec<T, E>;
   } & ExtendsFunction<T, E>;
   export type BlurExecInterface<T> = {
-    [K in keyof T]: K extends 'execFunction' ? T[K] : T[K] extends (...args: infer P) => any ? (...args: P) => any : T[K]
-  }
-
+    [K in keyof T]: K extends 'execFunction'
+      ? T[K]
+      : T[K] extends (...args: infer P) => any
+      ? (...args: P) => any
+      : T[K];
+  };
 }

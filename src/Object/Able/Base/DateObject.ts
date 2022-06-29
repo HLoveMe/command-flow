@@ -207,8 +207,10 @@ import { createExtendsConstruct } from '../../extend-util'
 import { ValueExtends } from '../../types';
 import { ValueExec } from '../../types';
 import { Value } from "../../../Object";
+import { decide } from '../../valueUtil';
+import { NumberObject } from './NumberObject';
 
-type DateExecInterface = ValueExec.ExecFunctionAble<Date, 'length'>;
+type DateExecInterface = ValueExec.ExecFunctionAble<Date>;
 type BaseDateInterface = ValueExec.BlurExecInterface<DateExecInterface>
 const DateWrapper = createExtendsConstruct<Date>(Date);
 
@@ -221,6 +223,12 @@ class _DateObject extends DateWrapper {
   valueOf() {
     return this._value;
   }
+  toLocaleString(): Value.StringAble {
+    return decide<string>(this._value.toLocaleDateString())
+  }
+  timestamp(): NumberObject {
+    return decide<number>(this._value.getTime()) as NumberObject
+  }
 }
 
 interface _DateObjectAble
@@ -230,7 +238,7 @@ type CustomConstructor = { new(source: Date): _DateObjectAble; } & ValueExtends.
 /***
 
  */
-type DateObjectAble = ValueExtends.WrapperReturnInterface<DateExecInterface>
+type DateObjectAble = ValueExtends.WrapperReturnInterface<DateExecInterface> & Value.DateAble
 const DateObject = _DateObject as unknown as CustomConstructor;
 
 export {

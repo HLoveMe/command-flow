@@ -32,24 +32,24 @@ export class NumberObject
   }
 
   @onlyDeclaration
-  compare(type: ControlFlow.CompareEnum, target: NumberObject): Value.BooleanAble {
+  compare(type: ControlFlow.CompareEnum, target: NumberObject): BooleanObject {
     return new BooleanObject(false)
   }
   // Compare
   // compare: ControlFlow.CompareExec;
-  more(target: Value.ValueAble<any>): Value.BooleanAble {
+  more(target: Value.ValueAble<any>): BooleanObject {
     return new BooleanObject(this._value > target._value);
   }
-  equal(target: Value.ValueAble<any>): Value.BooleanAble {
+  equal(target: Value.ValueAble<any>): BooleanObject {
     return new BooleanObject(this._value === target._value);
   }
-  less(target: Value.ValueAble<any>): Value.BooleanAble {
+  less(target: Value.ValueAble<any>): BooleanObject {
     return new BooleanObject(this._value < target._value);
   }
-  moreEqual(target: Value.ValueAble<any>): Value.BooleanAble {
+  moreEqual(target: Value.ValueAble<any>): BooleanObject {
     return new BooleanObject(this._value >= target._value);
   }
-  lessEqual(target: Value.ValueAble<any>): Value.BooleanAble {
+  lessEqual(target: Value.ValueAble<any>): BooleanObject {
     return new BooleanObject(this._value <= target._value);
   }
 

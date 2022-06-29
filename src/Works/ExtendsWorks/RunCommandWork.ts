@@ -89,7 +89,7 @@ export default class RunCommandWork extends InstructionOTO {
         .subscribe({
           next: (info: CommandStatus) => {
             this.logMsg(`执行command：${info.error ? '失败' : '成功'}。结果：${info.result}`, command);
-            subscriber.next(wrapperValue(command, info.error ? undefined : info.result))
+            subscriber.next(wrapperValue(command, !!(info.error ? undefined : info.result)))
           },
           complete: () => subscriber.complete(),
           error: (err) => subscriber.error(err)

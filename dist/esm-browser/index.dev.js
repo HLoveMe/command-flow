@@ -1185,6 +1185,7 @@ exports.DateObject = void 0;
 //   }
 // }
 const extend_util_1 = __webpack_require__(/*! ../../extend-util */ "./src/Object/extend-util.ts");
+const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
 const DateWrapper = (0, extend_util_1.createExtendsConstruct)(Date);
 class _DateObject extends DateWrapper {
     constructor(value = new Date()) {
@@ -1193,6 +1194,12 @@ class _DateObject extends DateWrapper {
     }
     valueOf() {
         return this._value;
+    }
+    toLocaleString() {
+        return (0, valueUtil_1.decide)(this._value.toLocaleDateString());
+    }
+    timestamp() {
+        return (0, valueUtil_1.decide)(this._value.getTime());
     }
 }
 const DateObject = _DateObject;
@@ -1205,166 +1212,105 @@ exports.DateObject = DateObject;
 /*!*******************************************!*\
   !*** ./src/Object/Able/Base/MapObject.ts ***!
   \*******************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var MapObject_1;
+// import { ControlFlow } from '../Control';
+// import { onlyDeclaration, Unit } from '../../util';
+// import { BaseType } from '../../../Types';
+// import { Value } from '../../../Object'
+// import { ObjectTarget } from './ObjectTarget';
+// import { decide } from '../../valueUtil';
+// import { NumberObject } from './NumberObject';
+// // @MapUint
+// @Unit(ControlFlow.MapEnum)
+// export class MapObject<T, U>
+//   extends ObjectTarget<Map<T, U>>
+//   implements Value.MapAble<T, U>, ControlFlow.CollectionMap<T, U>
+// {
+//   declare _value: Map<T, U>;
+//   constructor(value: Map<T, U> = new Map()) {
+//     super(value);
+//     this._value = new Map(value);
+//   }
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MapObject = void 0;
-const Control_1 = __webpack_require__(/*! ../Control */ "./src/Object/Able/Control.ts");
-const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
+//   // @attribute()
+//   len(): number {
+//     return this._value.size;
+//   }
+//   valueOf(): Map<T, U> {
+//     return this._value;
+//   }
+//   merge(target: MapObject<T, U>): MapObject<T, U> {
+//     const newMap = new Map<T, U>(this._value);
+//     target._value.forEach(($1, key) => newMap.set(key, $1));
+//     return new MapObject(newMap);
+//   }
+//   @onlyDeclaration
+//   execFunction(key: ControlFlow.MapEnum, ...args: any[]): U | void {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   get(key: string): U | void {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   set(key: string, value: BaseType): void {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   has(key: string): Value.BooleanAble {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   delete(key: string): Value.BooleanAble {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   clear(): void {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   entries(): Value.ObjectAble<IterableIterator<[T, U]>> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   forEach(
+//     callback: (value: U, key: T, map: Map<T, U>) => void,
+//     thisArg?: any
+//   ): void {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   values(): Value.ObjectAble<IterableIterator<U>> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   keys(): Value.ObjectAble<IterableIterator<T>> {
+//     return null as any;
+//   }
+//   get size(): Value.NumberAble {
+//     return decide(this._value.size) as NumberObject;
+//   }
+// }
+const extend_util_1 = __webpack_require__(/*! ../../extend-util */ "./src/Object/extend-util.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
-// @MapUint
-let MapObject = MapObject_1 = class MapObject extends ObjectTarget_1.ObjectTarget {
-    constructor(value = new Map()) {
-        super(value);
-        this._value = new Map(value);
-    }
-    // @attribute()
-    len() {
-        return this._value.size;
-    }
+const MapWrapper = (0, extend_util_1.createExtendsConstruct)(Map, ['size']);
+class _MapObject extends MapWrapper {
     valueOf() {
         return this._value;
     }
-    merge(target) {
-        const newMap = new Map(this._value);
-        target._value.forEach(($1, key) => newMap.set(key, $1));
-        return new MapObject_1(newMap);
-    }
-    execFunction(key, ...args) {
-        return null;
-    }
-    get(key) {
-        return null;
-    }
-    set(key, value) {
-        return null;
-    }
-    has(key) {
-        return null;
-    }
-    delete(key) {
-        return null;
-    }
-    clear() {
-        return null;
-    }
-    entries() {
-        return null;
-    }
-    forEach(callback, thisArg) {
-        return null;
-    }
-    values() {
-        return null;
-    }
-    keys() {
-        return null;
+    len() {
+        return this._value.size;
     }
     get size() {
         return (0, valueUtil_1.decide)(this._value.size);
     }
-};
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Object)
-], MapObject.prototype, "execFunction", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Object)
-], MapObject.prototype, "get", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", void 0)
-], MapObject.prototype, "set", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Object)
-], MapObject.prototype, "has", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Object)
-], MapObject.prototype, "delete", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], MapObject.prototype, "clear", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
-], MapObject.prototype, "entries", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Function, Object]),
-    __metadata("design:returntype", void 0)
-], MapObject.prototype, "forEach", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
-], MapObject.prototype, "values", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
-], MapObject.prototype, "keys", null);
-MapObject = MapObject_1 = __decorate([
-    (0, util_1.Unit)(Control_1.ControlFlow.MapEnum),
-    __metadata("design:paramtypes", [Map])
-], MapObject);
+}
+const MapObject = _MapObject;
 exports.MapObject = MapObject;
-// import { createExtendsConstruct } from '../Extends/extend-util';
-// import { ValueExtends } from '../../types';
-// import { ExecFunctionAble } from '../Extends/types';
-// import { decide } from '../../valueUtil';
-// import { Value } from "../../../Object";
-// import { NumberObject } from './NumberObject';
-// type MapExecInterface<K, V> = ExecFunctionAble<Map<K, V>, 'size'>;
-// type MapInterface<K, V> = ValueExtends.WrapperReturnInterface<
-//   MapExecInterface<K, V>
-// > &
-//   ValueExtends.Constructor<Map<K, V>>;
-// const MapWrapper = createExtendsConstruct<Map<any, any>>(global.Map, ['size']);
-// class _MapObject<T> extends MapWrapper {
-//   get size(): NumberObject {
-//     return decide(this._value.length) as NumberObject;
-//   }
-// }
-// type CustomConstructor = {};
-// interface CustomMapAble<K, V>
-//   extends Value.MapAble<K, V>,
-//   MapInterface<K, V>,
-//   CustomConstructor { }
-// export const ArrayObject = _ArrayObject as unknown as CustomArrayAble<any>;
 
 
 /***/ }),
@@ -1499,7 +1445,7 @@ __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, NumberObject]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", BooleanObject_1.BooleanObject)
 ], NumberObject.prototype, "compare", null);
 __decorate([
     util_1.onlyDeclaration,
@@ -1562,15 +1508,6 @@ class ObjectTarget {
     valueOf() {
         return this._value;
     }
-    merge(target) {
-        try {
-            const result = Object.assign(this._value, target._value);
-            return new ObjectTarget(result);
-        }
-        catch (error) {
-            return new ObjectTarget({});
-        }
-    }
     json() {
         const { StringObject } = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Base/StringObject.ts");
         try {
@@ -1590,139 +1527,104 @@ exports.ObjectTarget = ObjectTarget;
 /*!*******************************************!*\
   !*** ./src/Object/Able/Base/SetObject.ts ***!
   \*******************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var SetObject_1;
+// import { ControlFlow } from '../Control';
+// import { onlyDeclaration, Unit } from '../../util';
+// import { Value } from '../../../Object';
+// import { ObjectTarget } from './ObjectTarget';
+// import { NumberObject } from './NumberObject';
+// import { decide } from '../../valueUtil';
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SetObject = void 0;
-const Control_1 = __webpack_require__(/*! ../Control */ "./src/Object/Able/Control.ts");
-const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
+// @Unit(ControlFlow.SetEnum)
+// export class SetObject<T>
+//   extends ObjectTarget<Set<T>>
+//   implements Value.SetAble<T>, ControlFlow.CollectionSet<T>
+// {
+//   constructor(value?: Set<T> | Array<T>) {
+//     const init = !!value
+//       ? Array.isArray(value)
+//         ? new Set(value)
+//         : value
+//       : new Set<T>();
+//     super(init);
+//     this._value = init;
+//   }
+//   // @attribute()
+//   len(): number {
+//     return this._value.size;
+//   }
+//   valueOf(): Set<T> {
+//     return this._value;
+//   }
+//   merge(target: SetObject<T>): SetObject<T> {
+//     const newSet = new Set<T>();
+//     this._value.forEach(($1) => newSet.add($1));
+//     target.forEach(($1) => newSet.add($1));
+//     new Set().keys;
+//     return new SetObject(newSet);
+//   }
+//   @onlyDeclaration
+//   execFunction(key: ControlFlow.SetEnum, ...args: any[]): any {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   has(value: T): Value.BooleanAble {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   add(value: T): this {
+//     return this;
+//   }
+//   @onlyDeclaration
+//   delete(value: T): Value.BooleanAble {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   clear(): void {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   forEach(
+//     callbackfn: (value: T, value2: T, set: Set<T>) => void,
+//     thisArg?: any
+//   ): void {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   entries(): Value.ObjectAble<IterableIterator<[T, T]>> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   values(): Value.ObjectAble<IterableIterator<T>> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   keys(): Value.ObjectAble<IterableIterator<T>> {
+//     return null as any;
+//   }
+//   get size(): Value.NumberAble {
+//     return decide(this._value.size) as NumberObject;
+//   }
+// }
+const extend_util_1 = __webpack_require__(/*! ../../extend-util */ "./src/Object/extend-util.ts");
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
-let SetObject = SetObject_1 = class SetObject extends ObjectTarget_1.ObjectTarget {
-    constructor(value) {
-        const init = !!value
-            ? Array.isArray(value)
-                ? new Set(value)
-                : value
-            : new Set();
-        super(init);
-        this._value = init;
-    }
-    // @attribute()
+const SetWrapper = (0, extend_util_1.createExtendsConstruct)(Set, ['size']);
+class _SetObject extends SetWrapper {
     len() {
         return this._value.size;
     }
     valueOf() {
         return this._value;
     }
-    merge(target) {
-        const newSet = new Set();
-        this._value.forEach(($1) => newSet.add($1));
-        target.forEach(($1) => newSet.add($1));
-        new Set().keys;
-        return new SetObject_1(newSet);
-    }
-    execFunction(key, ...args) {
-        return null;
-    }
-    has(value) {
-        return null;
-    }
-    add(value) {
-        return this;
-    }
-    delete(value) {
-        return null;
-    }
-    clear() {
-        return null;
-    }
-    forEach(callbackfn, thisArg) {
-        return null;
-    }
-    entries() {
-        return null;
-    }
-    values() {
-        return null;
-    }
-    keys() {
-        return null;
-    }
     get size() {
         return (0, valueUtil_1.decide)(this._value.size);
     }
-};
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Object)
-], SetObject.prototype, "execFunction", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Object)
-], SetObject.prototype, "has", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Object)
-], SetObject.prototype, "add", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Object)
-], SetObject.prototype, "delete", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], SetObject.prototype, "clear", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Function, Object]),
-    __metadata("design:returntype", void 0)
-], SetObject.prototype, "forEach", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
-], SetObject.prototype, "entries", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
-], SetObject.prototype, "values", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
-], SetObject.prototype, "keys", null);
-SetObject = SetObject_1 = __decorate([
-    (0, util_1.Unit)(Control_1.ControlFlow.SetEnum),
-    __metadata("design:paramtypes", [Object])
-], SetObject);
+}
+const SetObject = _SetObject;
 exports.SetObject = SetObject;
 
 
@@ -1751,6 +1653,7 @@ const Control_1 = __webpack_require__(/*! ../Control */ "./src/Object/Able/Contr
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
 const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 const NumberObject_1 = __webpack_require__(/*! ./NumberObject */ "./src/Object/Able/Base/NumberObject.ts");
+const BooleanObject_1 = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Base/BooleanObject.ts");
 let StringObject = class StringObject extends ObjectTarget_1.ObjectTarget {
     static type;
     constructor(value = '') {
@@ -1920,37 +1823,37 @@ __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "anchor", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "big", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "blink", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "bold", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "charAt", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", NumberObject_1.NumberObject)
 ], StringObject.prototype, "charCodeAt", null);
 __decorate([
     util_1.onlyDeclaration,
@@ -1962,241 +1865,241 @@ __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "concat", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", BooleanObject_1.BooleanObject)
 ], StringObject.prototype, "endsWith", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "fixed", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "fontcolor", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "fontsize", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", BooleanObject_1.BooleanObject)
 ], StringObject.prototype, "includes", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", NumberObject_1.NumberObject)
 ], StringObject.prototype, "indexOf", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "italics", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", NumberObject_1.NumberObject)
 ], StringObject.prototype, "lastIndexOf", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "link", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", NumberObject_1.NumberObject)
 ], StringObject.prototype, "localeCompare", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [RegExp]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "match", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [RegExp]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "matchAll", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "normalize", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, String]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "padEnd", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, String]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "padStart", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "repeat", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "replace", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "replaceAll", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [RegExp]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", NumberObject_1.NumberObject)
 ], StringObject.prototype, "search", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "slice", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "small", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "split", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "strike", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "sub", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "substr", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "substring", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "toLocaleLowerCase", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "toLocaleUpperCase", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "toLowerCase", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "toUpperCase", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "trim", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "trimLeft", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "trimRight", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "toString", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "sup", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", BooleanObject_1.BooleanObject)
 ], StringObject.prototype, "startsWith", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "trimStart", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "trimEnd", null);
 __decorate([
     util_1.onlyDeclaration,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", StringObject)
 ], StringObject.prototype, "at", null);
 StringObject = __decorate([
     (0, util_1.Unit)(Control_1.ControlFlow.StringEnum),
@@ -3010,20 +2913,14 @@ const valueUtil_1 = __webpack_require__(/*! ../Object/valueUtil */ "./src/Object
  */
 function unpackValue(value) {
     if (!!value === false)
-        return "";
+        return '';
     return value._value.value.valueOf();
 }
 exports.unpackValue = unpackValue;
-/**
- * 组合包装
- * @param input
- * @param value
- * @returns
- */
 function wrapperValue(input, value) {
     const nextValue = (0, valueUtil_1.decide)(value);
     return new __1.ObjectTarget({
-        ...(input._value),
+        ...input._value,
         value: nextValue,
     });
 }
@@ -3105,6 +3002,7 @@ class Base64EnCodeWork extends Instruction_1.InstructionMTM {
             else {
                 target = (0, channel_value_util_1.unpackValue)(input);
             }
+            const nextV = (0, channel_value_util_1.wrapperValue)(input, js_base64_1.Base64.encode(target));
             subscriber.next((0, channel_value_util_1.wrapperValue)(input, js_base64_1.Base64.encode(target)));
             subscriber.complete();
             return {
@@ -3438,7 +3336,7 @@ class QRCodeWork extends Instruction_1.InstructionOTO {
             const sub = that.context.platform
                 .createQrCode(target, option)
                 .subscribe({
-                next: (res) => subscriber.next((0, channel_value_util_1.wrapperValue)(input, res)),
+                next: (res) => subscriber.next((0, channel_value_util_1.wrapperValue)(input, res._value)),
                 complete: () => subscriber.complete(),
                 error: (err) => subscriber.error(err),
             });
@@ -3552,7 +3450,7 @@ class RunCommandWork extends Instruction_1.InstructionOTO {
                 .subscribe({
                 next: (info) => {
                     this.logMsg(`执行command：${info.error ? '失败' : '成功'}。结果：${info.result}`, command);
-                    subscriber.next((0, channel_value_util_1.wrapperValue)(command, info.error ? undefined : info.result));
+                    subscriber.next((0, channel_value_util_1.wrapperValue)(command, !!(info.error ? undefined : info.result)));
                 },
                 complete: () => subscriber.complete(),
                 error: (err) => subscriber.error(err)
@@ -3607,7 +3505,7 @@ class IntervalWork extends Instruction_1.InstructionOTM {
         const that = this;
         return new rxjs_1.Observable(observer => {
             const sub = (0, rxjs_1.interval)(intervalTime, rxjs_1.asyncScheduler).pipe((0, operators_1.take)(that.maxCount), (0, operators_1.takeUntil)(this.notifier)).subscribe({
-                next: (value) => observer.next((0, channel_value_util_1.wrapperValue)(input, new __1.NumberObject(value))),
+                next: (value) => observer.next((0, channel_value_util_1.wrapperValue)(input, value)),
                 error: (error) => observer.error(error),
                 complete: () => observer.complete()
             });
@@ -3636,7 +3534,7 @@ class TimeoutWork extends Instruction_1.InstructionOTO {
             const sub = (0, rxjs_1.interval)(intervalTime, rxjs_1.asyncScheduler)
                 .pipe((0, operators_1.take)(1)).subscribe({
                 next: (value) => {
-                    observer.next((0, channel_value_util_1.wrapperValue)(input, new __1.NumberObject(value)));
+                    observer.next((0, channel_value_util_1.wrapperValue)(input, value));
                 },
                 error: (error) => observer.error(error),
                 complete: () => observer.complete()

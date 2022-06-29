@@ -1,5 +1,7 @@
+import { Value } from '..';
 import { BaseType } from '../Types';
 import * as ObjectValue from './Able';
+import { ValueExtends } from './types';
 
 let ObjectMap = null;
 const init = () => {
@@ -34,10 +36,10 @@ export const isAbleType = (value: any): boolean => {
  * @param force 是否强制包装
  * @returns
  */
-export function decide<T extends BaseType = BaseType>(
-  value: T | any,
+export function decide<T extends BaseType | any>(
+  value: BaseType | any,
   force: boolean = false
-): T {
+): ValueExtends.GetAchieve<T> {
   init();
   if (isAbleType(value) && force === false) return value;
   const key = Object.prototype.toString.call(value);
@@ -45,5 +47,5 @@ export function decide<T extends BaseType = BaseType>(
   if (Target) {
     return new Target(value ?? {});
   }
-  return new ObjectValue.ObjectTarget(value) as any as T;
+  return new ObjectValue.ObjectTarget(value as any) as any;
 };

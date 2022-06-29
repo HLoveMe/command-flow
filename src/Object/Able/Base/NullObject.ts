@@ -15,7 +15,7 @@ export class NULLObject
     return this._value;
   }
 
-  merge(target: Value.ObjectAble<Value.NULL>): Value.ObjectAble<Value.NULL> {
+  merge(target: Value.ObjectAble<Value.NULL>): any {
     return new NULLObject(null);
   }
 

@@ -1,12 +1,12 @@
 
 import { ObjectTarget } from "./Base/ObjectTarget";
 import { ArrayObject, ArrayObjectAble } from "./Base/ArrayObject";
-import { MapObject } from "./Base/MapObject";
-import { SetObject } from "./Base/SetObject";
+import { MapObject, MapObjectAble } from "./Base/MapObject";
+import { SetObject, SetObjectAble } from "./Base/SetObject";
 import { NumberObject } from "./Base/NumberObject";
 import { StringObject } from "./Base/StringObject";
 import { BooleanObject } from "./Base/BooleanObject";
-import { DateObject,DateObjectAble } from "./Base/DateObject";
+import { DateObject, DateObjectAble } from "./Base/DateObject";
 import { DataObject } from "./Base/DataObject";
 import { NULLObject } from './Base/NULLObject'
 import { createExtendsConstruct, createExtendsInstance } from '../extend-util'
@@ -14,13 +14,13 @@ import { createExtendsConstruct, createExtendsInstance } from '../extend-util'
 
 export {
   ObjectTarget,
-  ArrayObject,ArrayObjectAble,
-  MapObject,
-  SetObject,
+  ArrayObject, ArrayObjectAble,
+  MapObject, MapObjectAble,
+  SetObject, SetObjectAble,
   NumberObject,
   StringObject,
   BooleanObject,
-  DateObject,DateObjectAble,
+  DateObject, DateObjectAble,
   DataObject,
   // MixinsObject,
   NULLObject,

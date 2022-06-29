@@ -12,13 +12,14 @@ class Base64EnCodeWork extends InstructionMTM {
   name: string = "Base64EnCodeWork";
 
   run(input: ChannelObject): Observable<ChannelObject> {
-    return new Observable((subscriber: Subscriber<ChannelObject>) => {
+    return new Observable((subscriber: Subscriber<ChannelObject<StringObject>>) => {
       let target: string
       if (input === null || input === undefined) target = ''
       else {
         target = unpackValue(input)
       }
-      subscriber.next(wrapperValue(input, Base64.encode(target)))
+      const nextV = wrapperValue(input, Base64.encode(target))
+      subscriber.next(wrapperValue<string>(input, Base64.encode(target)))
       subscriber.complete();
       return {
         unsubscribe: () => subscriber.unsubscribe(),
@@ -34,7 +35,7 @@ class Base64DecodeWork extends InstructionMTM {
   name: string = "Base64DecodeWork";
 
   run(input: ChannelObject): Observable<ChannelObject> {
-    return new Observable((subscriber: Subscriber<ChannelObject>) => {
+    return new Observable((subscriber: Subscriber<ChannelObject<StringObject>>) => {
       let target: string
       if (input === null || input === undefined) target = ''
       else {

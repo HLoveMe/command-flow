@@ -3,6 +3,7 @@ import { Value } from '../../../Object';
 import { ObjectTarget } from './ObjectTarget';
 import { onlyDeclaration, Unit } from '../../util';
 import { NumberObject } from './NumberObject';
+import { BooleanObject } from './BooleanObject'
 
 
 @Unit(ControlFlow.StringEnum)
@@ -26,31 +27,31 @@ export class StringObject
     return null as any;
   }
 
-  get length(): Value.NumberAble {
+  get length(): NumberObject {
     return new NumberObject(this._value.length);
   }
   @onlyDeclaration
-  anchor(name: string): Value.StringAble {
+  anchor(name: string): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  big(): Value.StringAble {
+  big(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  blink(): Value.StringAble {
+  blink(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  bold(): Value.StringAble {
+  bold(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  charAt(pos: number): Value.StringAble {
+  charAt(pos: number): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  charCodeAt(index: number): Value.NumberAble {
+  charCodeAt(index: number): NumberObject {
     return null as any;
   }
   @onlyDeclaration
@@ -58,169 +59,169 @@ export class StringObject
     return null as any;
   }
   @onlyDeclaration
-  concat(...args: string[]): Value.StringAble {
+  concat(...args: string[]): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  endsWith(searchString: string, endPosition?: number): Value.BooleanAble {
+  endsWith(searchString: string, endPosition?: number): BooleanObject {
     return null as any;
   }
   @onlyDeclaration
-  fixed(): Value.StringAble {
+  fixed(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  fontcolor(color: string): Value.StringAble {
+  fontcolor(color: string): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  fontsize(size: number): Value.StringAble {
+  fontsize(size: number): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  includes(searchString: string, position?: number): Value.BooleanAble {
+  includes(searchString: string, position?: number): BooleanObject {
     return null as any;
   }
   @onlyDeclaration
-  indexOf(searchString: string, position?: number): Value.NumberAble {
+  indexOf(searchString: string, position?: number): NumberObject {
     return null as any;
   }
   @onlyDeclaration
-  italics(): Value.StringAble {
+  italics(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  lastIndexOf(searchString: string, position?: number): Value.NumberAble {
+  lastIndexOf(searchString: string, position?: number): NumberObject {
     return null as any;
   }
   @onlyDeclaration
-  link(url: string): Value.StringAble {
+  link(url: string): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  localeCompare(that: string): Value.NumberAble {
+  localeCompare(that: string): NumberObject {
     return null as any;
   }
   @onlyDeclaration
-  match(regexp: RegExp): Value.StringAble {
+  match(regexp: RegExp): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  matchAll(regexp: RegExp): Value.StringAble {
+  matchAll(regexp: RegExp): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  normalize(form?: string): Value.StringAble {
+  normalize(form?: string): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  padEnd(targetLength: number, padString?: string): Value.StringAble {
+  padEnd(targetLength: number, padString?: string): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  padStart(targetLength: number, padString?: string): Value.StringAble {
+  padStart(targetLength: number, padString?: string): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  repeat(count: number): Value.StringAble {
+  repeat(count: number): StringObject {
     return null as any;
   }
   @onlyDeclaration
   replace(
     searchValue: string | RegExp,
     replaceValue: string | ((substring: string, ...args: any[]) => string)
-  ): Value.StringAble {
+  ): StringObject {
     return null as any;
   }
   @onlyDeclaration
   replaceAll(
     searchValue: string | RegExp,
     replaceValue: string | ((substring: string, ...args: any[]) => string)
-  ): Value.StringAble {
+  ): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  search(regexp: RegExp): Value.NumberAble {
+  search(regexp: RegExp): NumberObject {
     return null as any;
   }
   @onlyDeclaration
-  slice(start: number, end?: number): Value.StringAble {
+  slice(start: number, end?: number): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  small(): Value.StringAble {
+  small(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  split(separator?: string | RegExp, limit?: number): Value.StringAble {
+  split(separator?: string | RegExp, limit?: number): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  strike(): Value.StringAble {
+  strike(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  sub(): Value.StringAble {
+  sub(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  substr(start: number, length?: number): Value.StringAble {
+  substr(start: number, length?: number): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  substring(start: number, end?: number): Value.StringAble {
+  substring(start: number, end?: number): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  toLocaleLowerCase(): Value.StringAble {
+  toLocaleLowerCase(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  toLocaleUpperCase(): Value.StringAble {
+  toLocaleUpperCase(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  toLowerCase(): Value.StringAble {
+  toLowerCase(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  toUpperCase(): Value.StringAble {
+  toUpperCase(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  trim(): Value.StringAble {
+  trim(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  trimLeft(): Value.StringAble {
+  trimLeft(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  trimRight(): Value.StringAble {
+  trimRight(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  toString(): Value.StringAble {
+  toString(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  sup(): Value.StringAble {
+  sup(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  startsWith(searchString: string, position?: number): Value.BooleanAble {
+  startsWith(searchString: string, position?: number): BooleanObject {
     return null as any;
   }
   @onlyDeclaration
-  trimStart(): Value.StringAble {
+  trimStart(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  trimEnd(): Value.StringAble {
+  trimEnd(): StringObject {
     return null as any;
   }
   @onlyDeclaration
-  at(index: number): Value.StringAble {
+  at(index: number): StringObject {
     return null as any;
   }
 }

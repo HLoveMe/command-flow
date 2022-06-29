@@ -906,7 +906,7 @@ declare module 'command-flow' {
     _value: T[];
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<T[]>): Value.ObjectAble<T[]>;
-    execArray(
+    execFunction(
       key: ControlFlow.ArrayEnum,
       ...args: any[]
     ): BaseType | void;
@@ -1035,7 +1035,7 @@ declare module 'command-flow' {
     _value: Map<T, U>;
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<Map<T, U>>): Value.ObjectAble<Map<T, U>>;
-    execMap(key: ControlFlow.MapEnum, ...args: any[]): any;
+    execFunction(key: ControlFlow.MapEnum, ...args: any[]): any;
 
     get(key: string): U | Value.NULL;
 
@@ -1070,7 +1070,7 @@ declare module 'command-flow' {
     _value: Set<T>;
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<Set<T>>): ObjectTarget<Set<T>>;
-    execSet(key: ControlFlow.SetEnum, ...args: any[]): any;
+    execFunction(key: ControlFlow.SetEnum, ...args: any[]): any;
 
     has(value: T): BooleanObject;
 
@@ -1122,7 +1122,7 @@ declare module 'command-flow' {
     multi(target: Value.NumberAble): NumberObject;
     divide(target: Value.NumberAble): NumberObject;
 
-    execNumber(key: ControlFlow.NumberEnum, ...args: any[]): any;
+    execFunction(key: ControlFlow.NumberEnum, ...args: any[]): any;
     toExponential(fractionDigits?: number): StringObject;
     toFixed(fractionDigits?: number): StringObject;
     toPrecision(precision?: number): StringObject;
@@ -1140,7 +1140,7 @@ declare module 'command-flow' {
     json(): StringObject;
     merge(target: StringObject): StringObject;
 
-    execString(key: ControlFlow.StringEnum, ...args: any[]): any;
+    execFunction(key: ControlFlow.StringEnum, ...args: any[]): any;
 
     get length(): NumberObject;
 
@@ -1278,7 +1278,7 @@ declare module 'command-flow' {
     json(): Value.StringAble;
     merge(target: Value.ObjectAble<Date>): Value.ObjectAble<Date>;
 
-    execDate(key: ControlFlow.DateEnum, ...args: any[]): any;
+    execFunction(key: ControlFlow.DateEnum, ...args: any[]): any;
 
     toDateString(): StringObject;
 

@@ -3,18 +3,18 @@ import { Value } from './Object'
 import { ContextRunOption } from './Configs';
 import { PlatformBridgeAble } from './Bridge/ConfigTypes';
 
-export type BaseType =
-  | Value.ObjectAble<any> // ObjectTarget
-  | Value.ArrayAble<any> // ArrayTarget
-  | Value.MapAble<string | symbol, any> // MapTarget
-  | Value.SetAble<any> // SetTarget
+export type BaseType<T extends any = any, U extends any = any> =
+  | Value.ObjectAble<T> // ObjectTarget
+  | Value.ArrayAble<T> // ArrayTarget
+  | Value.MapAble<string | symbol | number, U> // MapTarget
+  | Value.SetAble<T> // SetTarget
   | Value.StringAble // StringTarget
   | Value.NumberAble // NumberTarget
   | Value.BooleanAble // BooleanTarget
   | Value.DateAble //  DateTarget
   | Value.DataAble // DataTarget
   | Value.NUllAble // NullTarget
-  | Value.Mixins<Value.ObjectAble<any>>; // MixinsTarget
+  | Value.Mixins<Value.ObjectAble<T>>; // MixinsTarget
 
 export type ChannelValue<T extends BaseType = BaseType> = {
   value: T;

@@ -26,7 +26,7 @@ class IntervalWork extends InstructionOTM {
         take(that.maxCount),
         takeUntil(this.notifier),
       ).subscribe({
-        next: (value) => observer.next(wrapperValue(input, new NumberObject(value))),
+        next: (value: number) => observer.next(wrapperValue(input, value)),
         error: (error) => observer.error(error),
         complete: () => observer.complete()
       })
@@ -58,7 +58,7 @@ class TimeoutWork extends InstructionOTO {
           take(1)
         ).subscribe({
           next: (value) => {
-            observer.next(wrapperValue(input, new NumberObject(value)))
+            observer.next(wrapperValue(input, value))
           },
           error: (error) => observer.error(error),
           complete: () => observer.complete()

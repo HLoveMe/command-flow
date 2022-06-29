@@ -262,15 +262,9 @@ class _ArrayObject<T> extends ArrayWrapper {
 
 interface _ArrayObjectAble<T extends any = any>
   extends Value.ArrayAble<T>, BaseArrayInterface<T> { get length(): NumberObject }
-type CustomConstructor = { new(...args: any[]): _ArrayObjectAble; new(count: number): _ArrayObjectAble } & ValueExtends.Constructor<any[]>;
+type CustomConstructor = { new<T>(...args: any[]): _ArrayObjectAble<T>; new<T>(count: number): _ArrayObjectAble<T> } & ValueExtends.Constructor<any[]>;
 
-/***
- * const dome1: ArrayObjectAble<string> = new ArrayObject();
- * const dome2: ArrayObjectAble<string> = new ArrayObject(1);
- * const dome3: ArrayObjectAble<string> = new ArrayObject(['1','2]);
- * const dome4: ArrayObjectAble<string> = new ArrayObject(...['1','2]);
- */
-type ArrayObjectAble<T> = ValueExtends.WrapperReturnInterface<ArrayExecInterface<T>>
+type ArrayObjectAble<T> = ValueExtends.WrapperReturnInterface<ArrayExecInterface<T>> & Value.ArrayAble<T> & { get length(): NumberObject }
 const ArrayObject = _ArrayObject as unknown as CustomConstructor;
 
 export {

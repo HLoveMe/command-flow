@@ -1,5 +1,5 @@
 import { BaseType, ChannelObject, ChannelValue, ContextImpl } from "../../Types";
-import { Value } from '../../Object'
+import { StringObject, Value } from '../../Object'
 import { InstructionOTO } from "../Instruction";
 import { Observable, Subscriber } from "rxjs";
 import { isJS } from "../../Util/Equipment";
@@ -13,9 +13,9 @@ import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
  */
 class QRCodeWork extends InstructionOTO {
   name: string = "QRCodeWork";
-  run(input: ChannelObject, option?: QRcodeOption): Observable<ChannelObject<Value.StringAble>> {
+  run(input: ChannelObject, option?: QRcodeOption): Observable<ChannelObject<StringObject>> {
     const that = this;
-    return new Observable((subscriber: Subscriber<ChannelObject<Value.StringAble>>) => {
+    return new Observable((subscriber: Subscriber<ChannelObject<StringObject>>) => {
       let target: string;
       if (input === null || input === undefined) target = "";
       else {
@@ -24,7 +24,7 @@ class QRCodeWork extends InstructionOTO {
       const sub = (that.context as ContextImpl).platform
         .createQrCode(target, option)
         .subscribe({
-          next: (res) => subscriber.next(wrapperValue(input, res)),
+          next: (res) => subscriber.next(wrapperValue<string>(input, res._value)),
           complete: () => subscriber.complete(),
           error: (err) => subscriber.error(err),
         });
