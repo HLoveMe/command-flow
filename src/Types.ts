@@ -13,7 +13,7 @@ export type BaseType =
   | Value.BooleanAble // BooleanTarget
   | Value.DateAble //  DateTarget
   | Value.DataAble // DataTarget
-  | Value.NullAble // NullTarget
+  | Value.NUllAble // NullTarget
   | Value.Mixins<Value.ObjectAble<any>>; // MixinsTarget
 
 export type ChannelValue<T extends BaseType = BaseType> = {

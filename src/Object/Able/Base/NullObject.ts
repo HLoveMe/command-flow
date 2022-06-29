@@ -1,10 +1,10 @@
 // import { attribute, DefaultValue } from '../../util';
-import { Value } from '../../../Object';
+import { Value } from '../..';
 import { ObjectTarget } from './ObjectTarget';
 
-export class OptionalObject
+export class NULLObject
   extends ObjectTarget<Value.NULL>
-  implements Value.NullAble {
+  implements Value.NUllAble {
   declare _value: Value.NULL;
   constructor(value: Value.NULL = null) {
     super(value);
@@ -16,7 +16,7 @@ export class OptionalObject
   }
 
   merge(target: Value.ObjectAble<Value.NULL>): Value.ObjectAble<Value.NULL> {
-    return new OptionalObject(null);
+    return new NULLObject(null);
   }
 
   isTruly(): boolean {

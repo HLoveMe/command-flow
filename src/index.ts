@@ -8,7 +8,7 @@ import {
   BooleanObject,
   DateObject,
   DataObject,
-  OptionalObject,
+  NULLObject,
   createExtendsConstruct,
   createExtendsInstance
 } from "./Object";
@@ -44,7 +44,7 @@ export {
   BooleanObject,
   DateObject,
   DataObject,
-  OptionalObject,
+  NULLObject,
   ContextImpl,
   Context,
   Value,

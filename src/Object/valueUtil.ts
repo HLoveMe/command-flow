@@ -16,8 +16,8 @@ const init = () => {
       '[object ArrayBuffer]': ObjectValue.DataObject,
       '[object Uint8Array]': ObjectValue.DataObject,
       '[object Promise]': ObjectValue.ObjectTarget,
-      '[object Null]': ObjectValue.OptionalObject,
-      '[object Undefined]': ObjectValue.OptionalObject,
+      '[object Null]': ObjectValue.NULLObject,
+      '[object Undefined]': ObjectValue.NULLObject,
     };
   }
   return ObjectMap;

@@ -57,19 +57,19 @@ export namespace Value {
     ObjectAble<ArrayBuffer> {
     data(): ArrayBuffer;
   }
-
-  export interface NullAble extends ValueAble<NULL>, ObjectAble<NULL> {
+  // null  | undefined
+  export interface NUllAble extends ObjectAble<NULL> {
     valueOf(): null | undefined;
     isTruly(): boolean;
     isNull(): boolean;
     isUndefined(): boolean;
   }
+  // T | undefined
   export interface Mixins<
     V extends Value.ObjectAble<any> = Value.ObjectAble<any>,
     U extends any = NULL
     > extends ValueAble<V | U> { }
 }
-
 export namespace ValueExtends {
   type KeyType = string | number | symbol;
   type KeyExclude<T, E extends KeyType> = keyof Omit<T, E>;

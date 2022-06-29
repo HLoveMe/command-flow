@@ -1566,18 +1566,18 @@ exports.MapObject = MapObject;
 
 /***/ }),
 
-/***/ "./src/Object/Able/Base/NullObject.ts":
+/***/ "./src/Object/Able/Base/NULLObject.ts":
 /*!********************************************!*\
-  !*** ./src/Object/Able/Base/NullObject.ts ***!
+  !*** ./src/Object/Able/Base/NULLObject.ts ***!
   \********************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.OptionalObject = void 0;
+exports.NULLObject = void 0;
 const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
-class OptionalObject extends ObjectTarget_1.ObjectTarget {
+class NULLObject extends ObjectTarget_1.ObjectTarget {
     constructor(value = null) {
         super(value);
         this._value = value;
@@ -1587,7 +1587,7 @@ class OptionalObject extends ObjectTarget_1.ObjectTarget {
         return this._value;
     }
     merge(target) {
-        return new OptionalObject(null);
+        return new NULLObject(null);
     }
     isTruly() {
         return !!this._value;
@@ -1599,7 +1599,7 @@ class OptionalObject extends ObjectTarget_1.ObjectTarget {
         return this._value === undefined;
     }
 }
-exports.OptionalObject = OptionalObject;
+exports.NULLObject = NULLObject;
 
 
 /***/ }),
@@ -2621,7 +2621,7 @@ var ControlFlow;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createExtendsInstance = exports.createExtendsConstruct = exports.OptionalObject = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
+exports.createExtendsInstance = exports.createExtendsConstruct = exports.NULLObject = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
 const ObjectTarget_1 = __webpack_require__(/*! ./Base/ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
 Object.defineProperty(exports, "ObjectTarget", ({ enumerable: true, get: function () { return ObjectTarget_1.ObjectTarget; } }));
 const ArrayObject_1 = __webpack_require__(/*! ./Base/ArrayObject */ "./src/Object/Able/Base/ArrayObject.ts");
@@ -2640,8 +2640,8 @@ const DateObject_1 = __webpack_require__(/*! ./Base/DateObject */ "./src/Object/
 Object.defineProperty(exports, "DateObject", ({ enumerable: true, get: function () { return DateObject_1.DateObject; } }));
 const DataObject_1 = __webpack_require__(/*! ./Base/DataObject */ "./src/Object/Able/Base/DataObject.ts");
 Object.defineProperty(exports, "DataObject", ({ enumerable: true, get: function () { return DataObject_1.DataObject; } }));
-const NullObject_1 = __webpack_require__(/*! ./Base/NullObject */ "./src/Object/Able/Base/NullObject.ts");
-Object.defineProperty(exports, "OptionalObject", ({ enumerable: true, get: function () { return NullObject_1.OptionalObject; } }));
+const NULLObject_1 = __webpack_require__(/*! ./Base/NULLObject */ "./src/Object/Able/Base/NULLObject.ts");
+Object.defineProperty(exports, "NULLObject", ({ enumerable: true, get: function () { return NULLObject_1.NULLObject; } }));
 const extend_util_1 = __webpack_require__(/*! ../extend-util */ "./src/Object/extend-util.ts");
 Object.defineProperty(exports, "createExtendsConstruct", ({ enumerable: true, get: function () { return extend_util_1.createExtendsConstruct; } }));
 Object.defineProperty(exports, "createExtendsInstance", ({ enumerable: true, get: function () { return extend_util_1.createExtendsInstance; } }));
@@ -2910,8 +2910,8 @@ const init = () => {
             '[object ArrayBuffer]': ObjectValue.DataObject,
             '[object Uint8Array]': ObjectValue.DataObject,
             '[object Promise]': ObjectValue.ObjectTarget,
-            '[object Null]': ObjectValue.OptionalObject,
-            '[object Undefined]': ObjectValue.OptionalObject,
+            '[object Null]': ObjectValue.NULLObject,
+            '[object Undefined]': ObjectValue.NULLObject,
         };
     }
     return ObjectMap;
@@ -4165,7 +4165,7 @@ exports.WorkUnit = WorkUnit;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createExtendsInstance = exports.createExtendsConstruct = exports.decide = exports.isAbleType = exports.wrapperValue = exports.unpackValue = exports.FetchWork = exports.DelayIntervalWork = exports.TimeoutWork = exports.IntervalWork = exports.RunCommandWork = exports.QRCodeWork = exports.OpenURLWork = exports.LoadFileWork = exports.Base64EnCodeWork = exports.Base64DecodeWork = exports.InstructionOTO = exports.InstructionOTM = exports.InstructionMTM = exports.ControlFlow = exports.WorkType = exports.Context = exports.OptionalObject = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
+exports.createExtendsInstance = exports.createExtendsConstruct = exports.decide = exports.isAbleType = exports.wrapperValue = exports.unpackValue = exports.FetchWork = exports.DelayIntervalWork = exports.TimeoutWork = exports.IntervalWork = exports.RunCommandWork = exports.QRCodeWork = exports.OpenURLWork = exports.LoadFileWork = exports.Base64EnCodeWork = exports.Base64DecodeWork = exports.InstructionOTO = exports.InstructionOTM = exports.InstructionMTM = exports.ControlFlow = exports.WorkType = exports.Context = exports.NULLObject = exports.DataObject = exports.DateObject = exports.BooleanObject = exports.StringObject = exports.NumberObject = exports.SetObject = exports.MapObject = exports.ArrayObject = exports.ObjectTarget = void 0;
 const Object_1 = __webpack_require__(/*! ./Object */ "./src/Object/index.ts");
 Object.defineProperty(exports, "ObjectTarget", ({ enumerable: true, get: function () { return Object_1.ObjectTarget; } }));
 Object.defineProperty(exports, "ArrayObject", ({ enumerable: true, get: function () { return Object_1.ArrayObject; } }));
@@ -4176,7 +4176,7 @@ Object.defineProperty(exports, "StringObject", ({ enumerable: true, get: functio
 Object.defineProperty(exports, "BooleanObject", ({ enumerable: true, get: function () { return Object_1.BooleanObject; } }));
 Object.defineProperty(exports, "DateObject", ({ enumerable: true, get: function () { return Object_1.DateObject; } }));
 Object.defineProperty(exports, "DataObject", ({ enumerable: true, get: function () { return Object_1.DataObject; } }));
-Object.defineProperty(exports, "OptionalObject", ({ enumerable: true, get: function () { return Object_1.OptionalObject; } }));
+Object.defineProperty(exports, "NULLObject", ({ enumerable: true, get: function () { return Object_1.NULLObject; } }));
 Object.defineProperty(exports, "createExtendsConstruct", ({ enumerable: true, get: function () { return Object_1.createExtendsConstruct; } }));
 Object.defineProperty(exports, "createExtendsInstance", ({ enumerable: true, get: function () { return Object_1.createExtendsInstance; } }));
 const Types_1 = __webpack_require__(/*! ./Types */ "./src/Types.ts");
