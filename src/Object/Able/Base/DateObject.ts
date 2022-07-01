@@ -209,7 +209,7 @@ import { ValueExec } from '../../types';
 import { Value } from "../../../Object";
 import { decide } from '../../valueUtil';
 import { NumberObject, NumberObjectAble } from './NumberObject';
-import { StringObject } from './StringObject'
+import { StringObject, StringObjectAble } from './StringObject'
 
 type DateExecInterface = ValueExec.ExecFunctionAble<Date>;
 type BaseDateInterface = ValueExec.BlurExecInterface<DateExecInterface>
@@ -224,7 +224,7 @@ class _DateObject extends DateWrapper {
   valueOf() {
     return this._value;
   }
-  toLocaleString(): StringObject {
+  toLocaleString(): StringObjectAble {
     return decide<string>(this._value.toLocaleDateString())
   }
   timestamp(): NumberObjectAble {

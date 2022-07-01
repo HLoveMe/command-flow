@@ -49,12 +49,3 @@ export function decide<T>(
   }
   return new ObjectValue.ObjectTarget(value as any) as any;
 };
-
-
-
-type A = ObjectValue.NumberObjectAble;
-
-
-type aa = ValueExtends.GetDeepAchieve<number>
-
-const asas = decide(11)

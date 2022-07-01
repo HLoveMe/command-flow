@@ -2,6 +2,7 @@ import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { Observable } from "rxjs";
 import { BooleanObject, StringObject } from "../Object";
 import { Value } from "../Object";
+import { StringObjectAble } from "../Object/Able/Base/StringObject";
 
 export interface RunTimeInfo {
   name: string;
@@ -192,7 +193,7 @@ export declare interface PlatformBridgeAble extends Hardware.PlatformDrive {
   createQrCode(
     context: String,
     option?: QRcodeOption
-  ): Observable<StringObject>;
+  ): Observable<StringObjectAble>;
 
   // 网络
   // 仅仅支持json/txt

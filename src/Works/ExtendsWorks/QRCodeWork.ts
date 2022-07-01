@@ -5,6 +5,7 @@ import { Observable, Subscriber } from "rxjs";
 import { isJS } from "../../Util/Equipment";
 import { QRcodeOption } from "../../Bridge/ConfigTypes";
 import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
+import { StringObjectAble } from "../../Object/Able/Base/StringObject";
 
 /**
  * 字符串生产QRcode base64
@@ -13,9 +14,9 @@ import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
  */
 class QRCodeWork extends InstructionOTO {
   name: string = "QRCodeWork";
-  run(input: ChannelObject, option?: QRcodeOption): Observable<ChannelObject<StringObject>> {
+  run(input: ChannelObject, option?: QRcodeOption): Observable<ChannelObject<StringObjectAble>> {
     const that = this;
-    return new Observable((subscriber: Subscriber<ChannelObject<StringObject>>) => {
+    return new Observable((subscriber: Subscriber<ChannelObject<StringObjectAble>>) => {
       let target: string;
       if (input === null || input === undefined) target = "";
       else {

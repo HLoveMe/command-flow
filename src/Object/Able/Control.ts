@@ -1,6 +1,3 @@
-// import { BooleanAble, NumberAble, ValueAble } from "./Able/Ables";
-
-import { BaseType } from '../..';
 import { Value } from '..';
 export namespace ControlFlow {
   // 比较属性 compare
@@ -19,51 +16,6 @@ export namespace ControlFlow {
     Divide = 'divide', // /
   }
 
-  // Number
-  export enum NumberEnum {
-    ToExponential$ = 'toExponential',
-    ToFixed$ = 'toFixed',
-    ToPrecision = 'toPrecision',
-  }
-
-  //集合属性
-  export enum CollectionEnum {
-    Contain = 'contain', //是否包含
-    Add = 'add', //增加
-    ValueFor = 'valueFor', // 取值
-    Keys = 'keys', // 所有keys
-    Values = 'values', // 所有values
-  }
-
-  export enum ArrayEnum {
-    Concat = 'concat',
-    CopyWithin = 'copyWithin',
-    Fill = 'fill',
-    Find = 'find',
-    FindIndex = 'findIndex',
-    LastIndexOf = 'lastIndexOf',
-    Pop = 'pop',
-    Push = 'push',
-    Reverse = 'reverse',
-    Shift = 'shift',
-    Unshift = 'unshift',
-    Slice = 'slice',
-    Sort = 'sort',
-    Splice = 'splice',
-    Includes = 'includes',
-    IndexOf = 'indexOf',
-    Join = 'join',
-    Keys = 'keys',
-    Entries = 'entries',
-    Values = 'values',
-    ForEach = 'forEach',
-    Filter = 'filter',
-    Map = 'map',
-    Every = 'every',
-    Some = 'some',
-    Reduce = 'reduce',
-    ReduceRight = 'reduceRight',
-  }
   /**
    a = Object.keys(Object.getOwnPropertyDescriptors(String.prototype)).map($1=>`${$1}: ${$1}`).join('\n')
    b = a.split("\n")
@@ -73,123 +25,6 @@ export namespace ControlFlow {
   }
   c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "$$"+titleCase($1)})
  */
-  export enum SetEnum {
-    Has = 'has',
-    Add = 'add',
-    Delete = 'delete',
-    Clear = 'clear',
-    Entries = 'entries',
-    ForEach = 'forEach',
-    Values = 'values',
-    Keys = 'keys',
-  }
-
-  export enum MapEnum {
-    Get = 'get',
-    Set = 'set',
-    Has = 'has',
-    Delete = 'delete',
-    Clear = 'clear',
-    Entries = 'entries',
-    ForEach = 'forEach',
-    Keys = 'keys',
-    Values = 'values',
-  }
-
-  export enum StringEnum {
-    Anchor = 'anchor',
-    Big = 'big',
-    Blink = 'blink',
-    Bold = 'bold',
-    CharAt = 'charAt',
-    CharCodeAt = 'charCodeAt',
-    CodePointAt = 'codePointAt',
-    Concat = 'concat',
-    EndsWith = 'endsWith',
-    Fontcolor = 'fontcolor',
-    Fontsize = 'fontsize',
-    Fixed = 'fixed',
-    Includes = 'includes',
-    IndexOf = 'indexOf',
-    Italics = 'italics',
-    LastIndexOf = 'lastIndexOf',
-    Link = 'link',
-    LocaleCompare = 'localeCompare',
-    Match = 'match',
-    MatchAll = 'matchAll',
-    Normalize = 'normalize',
-    PadEnd = 'padEnd',
-    PadStart = 'padStart',
-    Repeat = 'repeat',
-    Replace = 'replace',
-    ReplaceAll = 'replaceAll',
-    Search = 'search',
-    Slice = 'slice',
-    Small = 'small',
-    Split = 'split',
-    Strike = 'strike',
-    Sub = 'sub',
-    Substr = 'substr',
-    Substring = 'substring',
-    Sup = 'sup',
-    StartsWith = 'startsWith',
-    ToString = 'toString',
-    Trim = 'trim',
-    TrimStart = 'trimStart',
-    TrimLeft = 'trimLeft',
-    TrimEnd = 'trimEnd',
-    TrimRight = 'trimRight',
-    ToLocaleLowerCase = 'toLocaleLowerCase',
-    ToLocaleUpperCase = 'toLocaleUpperCase',
-    ToLowerCase = 'toLowerCase',
-    ToUpperCase = 'toUpperCase',
-    ValueOf = 'valueOf',
-    At = 'at',
-  }
-
-  export enum DateEnum {
-    ToDateString = 'toDateString',
-    ToTimeString = 'toTimeString',
-    ToISOString = 'toISOString',
-    ToUTCString = 'toUTCString',
-    GetDate = 'getDate',
-    SetDate = 'setDate',
-    GetDay = 'getDay',
-    GetFullYear = 'getFullYear',
-    SetFullYear = 'setFullYear',
-    GetHours = 'getHours',
-    SetHours = 'setHours',
-    GetMilliseconds = 'getMilliseconds',
-    SetMilliseconds = 'setMilliseconds',
-    GetMinutes = 'getMinutes',
-    SetMinutes = 'setMinutes',
-    GetMonth = 'getMonth',
-    SetMonth = 'setMonth',
-    GetSeconds = 'getSeconds',
-    SetSeconds = 'setSeconds',
-    GetTime = 'getTime',
-    SetTime = 'setTime',
-    GetTimezoneOffset = 'getTimezoneOffset',
-    GetUTCDate = 'getUTCDate',
-    SetUTCDate = 'setUTCDate',
-    GetUTCDay = 'getUTCDay',
-    GetUTCFullYear = 'getUTCFullYear',
-    SetUTCFullYear = 'setUTCFullYear',
-    GetUTCHours = 'getUTCHours',
-    SetUTCHours = 'setUTCHours',
-    GetUTCMilliseconds = 'getUTCMilliseconds',
-    SetUTCMilliseconds = 'setUTCMilliseconds',
-    GetUTCMinutes = 'getUTCMinutes',
-    SetUTCMinutes = 'setUTCMinutes',
-    GetUTCMonth = 'getUTCMonth',
-    SetUTCMonth = 'setUTCMonth',
-    GetUTCSeconds = 'getUTCSeconds',
-    SetUTCSeconds = 'setUTCSeconds',
-    ToJSON = 'toJSON',
-    ToLocaleString = 'toLocaleString',
-    ToLocaleDateString = 'toLocaleDateString',
-    ToLocaleTimeString = 'toLocaleTimeString',
-  }
 
   // 比较 接口
   export declare type CompareExec = (
@@ -218,14 +53,5 @@ export namespace ControlFlow {
   };
   export interface Calc<U extends Value.NumberAble> extends CalcAble {
     calc(type: ControlFlow.CalcEnum, target: U): U;
-  }
-
-  // String
-  export declare type StringExec = (...args: any[]) => any;
-  export declare type StringFunction = {
-    [T in StringEnum]: StringExec;
-  };
-  export interface ObjectString extends StringFunction {
-    execFunction(key: StringEnum, ...args: any[]): any;
   }
 }

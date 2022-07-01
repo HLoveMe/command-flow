@@ -1,6 +1,7 @@
 import { MapObjectAble } from './Able/Base/MapObject';
 import { NumberObjectAble } from './Able/Base/NumberObject';
 import { SetObjectAble } from './Able/Base/SetObject';
+import { StringObjectAble } from './Able/Base/StringObject';
 import {
   ArrayObjectAble,
   BooleanObject,
@@ -144,7 +145,7 @@ export namespace ValueExtends {
     : T extends Value.NumberAble
     ? NumberObjectAble
     : T extends Value.StringAble
-    ? StringObject
+    ? StringObjectAble
     : T extends Value.BooleanAble
     ? BooleanObject
     : T extends Value.ArrayAble<infer U>

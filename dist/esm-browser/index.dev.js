@@ -1592,477 +1592,251 @@ exports.SetObject = SetObject;
 /*!**********************************************!*\
   !*** ./src/Object/Able/Base/StringObject.ts ***!
   \**********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+// import { ControlFlow } from '../Control';
+// import { Value } from '../../../Object';
+// import { ObjectTarget } from './ObjectTarget';
+// import { onlyDeclaration, Unit } from '../../util';
+// import { NumberObjectAble, NumberObject } from './NumberObject';
+// import { BooleanObject } from './BooleanObject'
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.StringObject = void 0;
-const Control_1 = __webpack_require__(/*! ../Control */ "./src/Object/Able/Control.ts");
-const ObjectTarget_1 = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
-const util_1 = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
-const NumberObject_1 = __webpack_require__(/*! ./NumberObject */ "./src/Object/Able/Base/NumberObject.ts");
-const BooleanObject_1 = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Base/BooleanObject.ts");
-let StringObject = class StringObject extends ObjectTarget_1.ObjectTarget {
-    static type;
-    constructor(value = '') {
-        super(value);
+// @Unit(ControlFlow.StringEnum)
+// export class StringObject
+//   extends ObjectTarget<string>
+//   implements Value.StringAble, ControlFlow.ObjectString {
+//   static type: string;
+//   declare _value: string;
+//   constructor(value: string = '') {
+//     super(value);
+//     this._value = value;
+//   }
+//   // @attribute()
+//   valueOf(): string {
+//     return this._value;
+//   }
+//   @onlyDeclaration
+//   execFunction(key: ControlFlow.StringEnum, ...args: any[]) {
+//     // throw new Error('Method not implemented.');
+//     return null as any;
+//   }
+//   get length(): NumberObjectAble {
+//     return new NumberObject(this._value.length);
+//   }
+//   @onlyDeclaration
+//   anchor(name: string): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   big(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   blink(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   bold(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   charAt(pos: number): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   charCodeAt(index: number): NumberObjectAble {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   codePointAt(pos: number): Value.Mixins<Value.NumberAble> {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   concat(...args: string[]): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   endsWith(searchString: string, endPosition?: number): BooleanObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   fixed(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   fontcolor(color: string): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   fontsize(size: number): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   includes(searchString: string, position?: number): BooleanObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   indexOf(searchString: string, position?: number): NumberObjectAble {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   italics(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   lastIndexOf(searchString: string, position?: number): NumberObjectAble {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   link(url: string): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   localeCompare(that: string): NumberObjectAble {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   match(regexp: RegExp): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   matchAll(regexp: RegExp): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   normalize(form?: string): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   padEnd(targetLength: number, padString?: string): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   padStart(targetLength: number, padString?: string): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   repeat(count: number): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   replace(
+//     searchValue: string | RegExp,
+//     replaceValue: string | ((substring: string, ...args: any[]) => string)
+//   ): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   replaceAll(
+//     searchValue: string | RegExp,
+//     replaceValue: string | ((substring: string, ...args: any[]) => string)
+//   ): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   search(regexp: RegExp): NumberObjectAble {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   slice(start: number, end?: number): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   small(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   split(separator?: string | RegExp, limit?: number): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   strike(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   sub(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   substr(start: number, length?: number): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   substring(start: number, end?: number): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   toLocaleLowerCase(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   toLocaleUpperCase(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   toLowerCase(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   toUpperCase(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   trim(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   trimLeft(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   trimRight(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   toString(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   sup(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   startsWith(searchString: string, position?: number): BooleanObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   trimStart(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   trimEnd(): StringObject {
+//     return null as any;
+//   }
+//   @onlyDeclaration
+//   at(index: number): StringObject {
+//     return null as any;
+//   }
+// }
+const extend_util_1 = __webpack_require__(/*! ../../extend-util */ "./src/Object/extend-util.ts");
+const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
+const StringWrapper = (0, extend_util_1.createExtendsConstruct)(String, ['length']);
+class _StringObject extends StringWrapper {
+    constructor(value) {
+        super();
         this._value = value;
     }
-    // @attribute()
     valueOf() {
         return this._value;
     }
-    execFunction(key, ...args) {
-        // throw new Error('Method not implemented.');
-        return null;
-    }
     get length() {
-        return new NumberObject_1.NumberObject(this._value.length);
+        return (0, valueUtil_1.decide)(this._value.length);
     }
-    anchor(name) {
-        return null;
-    }
-    big() {
-        return null;
-    }
-    blink() {
-        return null;
-    }
-    bold() {
-        return null;
-    }
-    charAt(pos) {
-        return null;
-    }
-    charCodeAt(index) {
-        return null;
-    }
-    codePointAt(pos) {
-        return null;
-    }
-    concat(...args) {
-        return null;
-    }
-    endsWith(searchString, endPosition) {
-        return null;
-    }
-    fixed() {
-        return null;
-    }
-    fontcolor(color) {
-        return null;
-    }
-    fontsize(size) {
-        return null;
-    }
-    includes(searchString, position) {
-        return null;
-    }
-    indexOf(searchString, position) {
-        return null;
-    }
-    italics() {
-        return null;
-    }
-    lastIndexOf(searchString, position) {
-        return null;
-    }
-    link(url) {
-        return null;
-    }
-    localeCompare(that) {
-        return null;
-    }
-    match(regexp) {
-        return null;
-    }
-    matchAll(regexp) {
-        return null;
-    }
-    normalize(form) {
-        return null;
-    }
-    padEnd(targetLength, padString) {
-        return null;
-    }
-    padStart(targetLength, padString) {
-        return null;
-    }
-    repeat(count) {
-        return null;
-    }
-    replace(searchValue, replaceValue) {
-        return null;
-    }
-    replaceAll(searchValue, replaceValue) {
-        return null;
-    }
-    search(regexp) {
-        return null;
-    }
-    slice(start, end) {
-        return null;
-    }
-    small() {
-        return null;
-    }
-    split(separator, limit) {
-        return null;
-    }
-    strike() {
-        return null;
-    }
-    sub() {
-        return null;
-    }
-    substr(start, length) {
-        return null;
-    }
-    substring(start, end) {
-        return null;
-    }
-    toLocaleLowerCase() {
-        return null;
-    }
-    toLocaleUpperCase() {
-        return null;
-    }
-    toLowerCase() {
-        return null;
-    }
-    toUpperCase() {
-        return null;
-    }
-    trim() {
-        return null;
-    }
-    trimLeft() {
-        return null;
-    }
-    trimRight() {
-        return null;
-    }
-    toString() {
-        return null;
-    }
-    sup() {
-        return null;
-    }
-    startsWith(searchString, position) {
-        return null;
-    }
-    trimStart() {
-        return null;
-    }
-    trimEnd() {
-        return null;
-    }
-    at(index) {
-        return null;
-    }
-};
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", void 0)
-], StringObject.prototype, "execFunction", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "anchor", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "big", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "blink", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "bold", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "charAt", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Object)
-], StringObject.prototype, "charCodeAt", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Object)
-], StringObject.prototype, "codePointAt", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "concat", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Number]),
-    __metadata("design:returntype", BooleanObject_1.BooleanObject)
-], StringObject.prototype, "endsWith", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "fixed", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "fontcolor", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "fontsize", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Number]),
-    __metadata("design:returntype", BooleanObject_1.BooleanObject)
-], StringObject.prototype, "includes", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Number]),
-    __metadata("design:returntype", Object)
-], StringObject.prototype, "indexOf", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "italics", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Number]),
-    __metadata("design:returntype", Object)
-], StringObject.prototype, "lastIndexOf", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "link", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Object)
-], StringObject.prototype, "localeCompare", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [RegExp]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "match", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [RegExp]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "matchAll", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "normalize", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, String]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "padEnd", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, String]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "padStart", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "repeat", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "replace", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "replaceAll", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [RegExp]),
-    __metadata("design:returntype", Object)
-], StringObject.prototype, "search", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "slice", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "small", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Number]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "split", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "strike", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "sub", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "substr", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "substring", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "toLocaleLowerCase", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "toLocaleUpperCase", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "toLowerCase", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "toUpperCase", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "trim", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "trimLeft", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "trimRight", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "toString", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "sup", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Number]),
-    __metadata("design:returntype", BooleanObject_1.BooleanObject)
-], StringObject.prototype, "startsWith", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "trimStart", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "trimEnd", null);
-__decorate([
-    util_1.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", StringObject)
-], StringObject.prototype, "at", null);
-StringObject = __decorate([
-    (0, util_1.Unit)(Control_1.ControlFlow.StringEnum),
-    __metadata("design:paramtypes", [String])
-], StringObject);
+}
+const StringObject = _StringObject;
 exports.StringObject = StringObject;
 
 
@@ -2076,7 +1850,6 @@ exports.StringObject = StringObject;
 
 "use strict";
 
-// import { BooleanAble, NumberAble, ValueAble } from "./Able/Ables";
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ControlFlow = void 0;
 var ControlFlow;
@@ -2098,179 +1871,6 @@ var ControlFlow;
         CalcEnum["Multi"] = "multi";
         CalcEnum["Divide"] = "divide";
     })(CalcEnum = ControlFlow.CalcEnum || (ControlFlow.CalcEnum = {}));
-    // Number
-    let NumberEnum;
-    (function (NumberEnum) {
-        NumberEnum["ToExponential$"] = "toExponential";
-        NumberEnum["ToFixed$"] = "toFixed";
-        NumberEnum["ToPrecision"] = "toPrecision";
-    })(NumberEnum = ControlFlow.NumberEnum || (ControlFlow.NumberEnum = {}));
-    //集合属性
-    let CollectionEnum;
-    (function (CollectionEnum) {
-        CollectionEnum["Contain"] = "contain";
-        CollectionEnum["Add"] = "add";
-        CollectionEnum["ValueFor"] = "valueFor";
-        CollectionEnum["Keys"] = "keys";
-        CollectionEnum["Values"] = "values";
-    })(CollectionEnum = ControlFlow.CollectionEnum || (ControlFlow.CollectionEnum = {}));
-    let ArrayEnum;
-    (function (ArrayEnum) {
-        ArrayEnum["Concat"] = "concat";
-        ArrayEnum["CopyWithin"] = "copyWithin";
-        ArrayEnum["Fill"] = "fill";
-        ArrayEnum["Find"] = "find";
-        ArrayEnum["FindIndex"] = "findIndex";
-        ArrayEnum["LastIndexOf"] = "lastIndexOf";
-        ArrayEnum["Pop"] = "pop";
-        ArrayEnum["Push"] = "push";
-        ArrayEnum["Reverse"] = "reverse";
-        ArrayEnum["Shift"] = "shift";
-        ArrayEnum["Unshift"] = "unshift";
-        ArrayEnum["Slice"] = "slice";
-        ArrayEnum["Sort"] = "sort";
-        ArrayEnum["Splice"] = "splice";
-        ArrayEnum["Includes"] = "includes";
-        ArrayEnum["IndexOf"] = "indexOf";
-        ArrayEnum["Join"] = "join";
-        ArrayEnum["Keys"] = "keys";
-        ArrayEnum["Entries"] = "entries";
-        ArrayEnum["Values"] = "values";
-        ArrayEnum["ForEach"] = "forEach";
-        ArrayEnum["Filter"] = "filter";
-        ArrayEnum["Map"] = "map";
-        ArrayEnum["Every"] = "every";
-        ArrayEnum["Some"] = "some";
-        ArrayEnum["Reduce"] = "reduce";
-        ArrayEnum["ReduceRight"] = "reduceRight";
-    })(ArrayEnum = ControlFlow.ArrayEnum || (ControlFlow.ArrayEnum = {}));
-    /**
-     a = Object.keys(Object.getOwnPropertyDescriptors(String.prototype)).map($1=>`${$1}: ${$1}`).join('\n')
-     b = a.split("\n")
-     function titleCase(str) {
-      newStr = str.slice(0,1).toUpperCase() +str.slice(1);
-      return newStr;
-    }
-    c = b.map($1=>{return $1.replace(':','$=$')}).map($1=>{return "$$"+titleCase($1)})
-   */
-    let SetEnum;
-    (function (SetEnum) {
-        SetEnum["Has"] = "has";
-        SetEnum["Add"] = "add";
-        SetEnum["Delete"] = "delete";
-        SetEnum["Clear"] = "clear";
-        SetEnum["Entries"] = "entries";
-        SetEnum["ForEach"] = "forEach";
-        SetEnum["Values"] = "values";
-        SetEnum["Keys"] = "keys";
-    })(SetEnum = ControlFlow.SetEnum || (ControlFlow.SetEnum = {}));
-    let MapEnum;
-    (function (MapEnum) {
-        MapEnum["Get"] = "get";
-        MapEnum["Set"] = "set";
-        MapEnum["Has"] = "has";
-        MapEnum["Delete"] = "delete";
-        MapEnum["Clear"] = "clear";
-        MapEnum["Entries"] = "entries";
-        MapEnum["ForEach"] = "forEach";
-        MapEnum["Keys"] = "keys";
-        MapEnum["Values"] = "values";
-    })(MapEnum = ControlFlow.MapEnum || (ControlFlow.MapEnum = {}));
-    let StringEnum;
-    (function (StringEnum) {
-        StringEnum["Anchor"] = "anchor";
-        StringEnum["Big"] = "big";
-        StringEnum["Blink"] = "blink";
-        StringEnum["Bold"] = "bold";
-        StringEnum["CharAt"] = "charAt";
-        StringEnum["CharCodeAt"] = "charCodeAt";
-        StringEnum["CodePointAt"] = "codePointAt";
-        StringEnum["Concat"] = "concat";
-        StringEnum["EndsWith"] = "endsWith";
-        StringEnum["Fontcolor"] = "fontcolor";
-        StringEnum["Fontsize"] = "fontsize";
-        StringEnum["Fixed"] = "fixed";
-        StringEnum["Includes"] = "includes";
-        StringEnum["IndexOf"] = "indexOf";
-        StringEnum["Italics"] = "italics";
-        StringEnum["LastIndexOf"] = "lastIndexOf";
-        StringEnum["Link"] = "link";
-        StringEnum["LocaleCompare"] = "localeCompare";
-        StringEnum["Match"] = "match";
-        StringEnum["MatchAll"] = "matchAll";
-        StringEnum["Normalize"] = "normalize";
-        StringEnum["PadEnd"] = "padEnd";
-        StringEnum["PadStart"] = "padStart";
-        StringEnum["Repeat"] = "repeat";
-        StringEnum["Replace"] = "replace";
-        StringEnum["ReplaceAll"] = "replaceAll";
-        StringEnum["Search"] = "search";
-        StringEnum["Slice"] = "slice";
-        StringEnum["Small"] = "small";
-        StringEnum["Split"] = "split";
-        StringEnum["Strike"] = "strike";
-        StringEnum["Sub"] = "sub";
-        StringEnum["Substr"] = "substr";
-        StringEnum["Substring"] = "substring";
-        StringEnum["Sup"] = "sup";
-        StringEnum["StartsWith"] = "startsWith";
-        StringEnum["ToString"] = "toString";
-        StringEnum["Trim"] = "trim";
-        StringEnum["TrimStart"] = "trimStart";
-        StringEnum["TrimLeft"] = "trimLeft";
-        StringEnum["TrimEnd"] = "trimEnd";
-        StringEnum["TrimRight"] = "trimRight";
-        StringEnum["ToLocaleLowerCase"] = "toLocaleLowerCase";
-        StringEnum["ToLocaleUpperCase"] = "toLocaleUpperCase";
-        StringEnum["ToLowerCase"] = "toLowerCase";
-        StringEnum["ToUpperCase"] = "toUpperCase";
-        StringEnum["ValueOf"] = "valueOf";
-        StringEnum["At"] = "at";
-    })(StringEnum = ControlFlow.StringEnum || (ControlFlow.StringEnum = {}));
-    let DateEnum;
-    (function (DateEnum) {
-        DateEnum["ToDateString"] = "toDateString";
-        DateEnum["ToTimeString"] = "toTimeString";
-        DateEnum["ToISOString"] = "toISOString";
-        DateEnum["ToUTCString"] = "toUTCString";
-        DateEnum["GetDate"] = "getDate";
-        DateEnum["SetDate"] = "setDate";
-        DateEnum["GetDay"] = "getDay";
-        DateEnum["GetFullYear"] = "getFullYear";
-        DateEnum["SetFullYear"] = "setFullYear";
-        DateEnum["GetHours"] = "getHours";
-        DateEnum["SetHours"] = "setHours";
-        DateEnum["GetMilliseconds"] = "getMilliseconds";
-        DateEnum["SetMilliseconds"] = "setMilliseconds";
-        DateEnum["GetMinutes"] = "getMinutes";
-        DateEnum["SetMinutes"] = "setMinutes";
-        DateEnum["GetMonth"] = "getMonth";
-        DateEnum["SetMonth"] = "setMonth";
-        DateEnum["GetSeconds"] = "getSeconds";
-        DateEnum["SetSeconds"] = "setSeconds";
-        DateEnum["GetTime"] = "getTime";
-        DateEnum["SetTime"] = "setTime";
-        DateEnum["GetTimezoneOffset"] = "getTimezoneOffset";
-        DateEnum["GetUTCDate"] = "getUTCDate";
-        DateEnum["SetUTCDate"] = "setUTCDate";
-        DateEnum["GetUTCDay"] = "getUTCDay";
-        DateEnum["GetUTCFullYear"] = "getUTCFullYear";
-        DateEnum["SetUTCFullYear"] = "setUTCFullYear";
-        DateEnum["GetUTCHours"] = "getUTCHours";
-        DateEnum["SetUTCHours"] = "setUTCHours";
-        DateEnum["GetUTCMilliseconds"] = "getUTCMilliseconds";
-        DateEnum["SetUTCMilliseconds"] = "setUTCMilliseconds";
-        DateEnum["GetUTCMinutes"] = "getUTCMinutes";
-        DateEnum["SetUTCMinutes"] = "setUTCMinutes";
-        DateEnum["GetUTCMonth"] = "getUTCMonth";
-        DateEnum["SetUTCMonth"] = "setUTCMonth";
-        DateEnum["GetUTCSeconds"] = "getUTCSeconds";
-        DateEnum["SetUTCSeconds"] = "setUTCSeconds";
-        DateEnum["ToJSON"] = "toJSON";
-        DateEnum["ToLocaleString"] = "toLocaleString";
-        DateEnum["ToLocaleDateString"] = "toLocaleDateString";
-        DateEnum["ToLocaleTimeString"] = "toLocaleTimeString";
-    })(DateEnum = ControlFlow.DateEnum || (ControlFlow.DateEnum = {}));
 })(ControlFlow = exports.ControlFlow || (exports.ControlFlow = {}));
 
 
@@ -2418,6 +2018,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 __exportStar(__webpack_require__(/*! ./types */ "./src/Object/types.ts"), exports);
 __exportStar(__webpack_require__(/*! ./Able */ "./src/Object/Able/index.ts"), exports);
+__exportStar(__webpack_require__(/*! ./extend-util */ "./src/Object/extend-util.ts"), exports);
 
 
 /***/ }),
@@ -2606,7 +2207,6 @@ function decide(value, force = false) {
 }
 exports.decide = decide;
 ;
-const asas = decide(11);
 
 
 /***/ }),

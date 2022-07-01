@@ -15,13 +15,14 @@ import * as QRCode from "qrcode-generator";
 import { Value } from "../../Object";
 import Axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { HardwareBase } from "./Hardware";
+import { StringObjectAble } from "../../Object/Able/Base/StringObject";
 
 export class PlatformBridge extends HardwareBase implements PlatformBridgeAble {
   createQrCode(
     context: String,
     option?: QRcodeOption
-  ): Observable<StringObject> {
-    return new Observable((sub: Subscriber<StringObject>) => {
+  ): Observable<StringObjectAble> {
+    return new Observable((sub: Subscriber<StringObjectAble>) => {
       let width = option?.SideLength ?? 200;
       let margin = 2;
       const qrCode = QRCode(option?.type || 4, option?.Level || "H");

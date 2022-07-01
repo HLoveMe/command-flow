@@ -6,13 +6,14 @@ import { Observable, of, Subscriber } from "rxjs";
 import { StringObject, ObjectTarget } from "../../Object";
 import { isJS } from "../../Util/Equipment";
 import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
+import { StringObjectAble } from "../../Object/Able/Base/StringObject";
 
 //编码
 class Base64EnCodeWork extends InstructionMTM {
   name: string = "Base64EnCodeWork";
 
   run(input: ChannelObject): Observable<ChannelObject> {
-    return new Observable((subscriber: Subscriber<ChannelObject<StringObject>>) => {
+    return new Observable((subscriber: Subscriber<ChannelObject<StringObjectAble>>) => {
       let target: string
       if (input === null || input === undefined) target = ''
       else {
@@ -34,7 +35,7 @@ class Base64DecodeWork extends InstructionMTM {
   name: string = "Base64DecodeWork";
 
   run(input: ChannelObject): Observable<ChannelObject> {
-    return new Observable((subscriber: Subscriber<ChannelObject<StringObject>>) => {
+    return new Observable((subscriber: Subscriber<ChannelObject<StringObjectAble>>) => {
       let target: string
       if (input === null || input === undefined) target = ''
       else {

@@ -1,7 +1,7 @@
 
 // import { DefaultValue } from "../../util";
 import { Value } from "../../../Object";
-import { StringObject } from './StringObject'
+import { StringObjectAble } from './StringObject'
 export class ObjectTarget<T>
   implements Value.ObjectAble<T>
 {
@@ -15,7 +15,7 @@ export class ObjectTarget<T>
   valueOf(): T {
     return this._value;
   }
-  json(): StringObject {
+  json(): StringObjectAble {
     const { StringObject } = require("./StringObject");
     try {
       return new StringObject(JSON.stringify(this._value));
