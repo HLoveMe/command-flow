@@ -17,7 +17,6 @@ export class PCNodejsBridge extends PlatformBridge {
   open(url: string): Observable<BooleanObject> {
     return new Observable((subscriber) => {
       nodeOpen(url, { wait: true }).then($1 => {
-        debugger
         subscriber.next(new BooleanObject(true));
         subscriber.complete();
       })
