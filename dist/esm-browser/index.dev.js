@@ -1572,6 +1572,10 @@ const extend_util_1 = __webpack_require__(/*! ../../extend-util */ "./src/Object
 const valueUtil_1 = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
 const SetWrapper = (0, extend_util_1.createExtendsConstruct)(Set, ['size']);
 class _SetObject extends SetWrapper {
+    constructor(source) {
+        super();
+        this._value = new Set(source);
+    }
     len() {
         return this._value.size;
     }

@@ -96,6 +96,10 @@ const SetWrapper = createExtendsConstruct<Set<any>>(Set, ['size']);
 
 class _SetObject<K> extends SetWrapper {
   declare _value: Set<K>
+  constructor(source: Set<K> | Array<K>) {
+    super();
+    this._value = new Set(source)
+  }
   len(): number {
     return this._value.size;
   }
@@ -109,7 +113,7 @@ class _SetObject<K> extends SetWrapper {
 
 interface _SetObjectAble<K>
   extends Value.SetAble<K>, BaseSetInterface<K> { get size(): NumberObjectAble }
-type CustomConstructor = { new <K>(map: Set<K>): _SetObjectAble<K> } & ValueExtends.Constructor<Set<any>>;
+type CustomConstructor = { new <K>(map: Set<K>): _SetObjectAble<K>; new <K>(source: Array<K>): _SetObjectAble<K> } & ValueExtends.Constructor<Set<any>>;
 
 
 type SetObjectAble<K> = ValueExtends.WrapperReturnInterface<SetExecInterface<K>> & Value.SetAble<K> & { get size(): NumberObjectAble }
