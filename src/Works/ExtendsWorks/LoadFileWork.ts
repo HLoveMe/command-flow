@@ -6,7 +6,7 @@ import {
   DataObject,
   ObjectTarget,
 } from "../../Object";
-import { isElectron, isJS, isMobile, isNode, isPC, isWeb } from "../../Util/Equipment";
+import { isJS} from "../../Util/Equipment";
 import { FileLoadEvent, FileOption, FileType } from "../../Bridge/ConfigTypes";
 import { takeLast, tap } from "rxjs/operators";
 import { unpackValue } from "../../Util/channel-value-util";

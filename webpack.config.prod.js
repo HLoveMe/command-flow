@@ -3,19 +3,15 @@ const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   mode: 'production',
   entry: {
-    'index': path.join(__dirname, "src",'index.ts')
+    'index': path.join(__dirname, "source", "web", 'index.js')
   },
   output: {
-    filename: 'index.js',
-    path: path.join(__dirname, "dist","esm-browser"),
+    filename: 'index.prod.js',
+    path: path.join(__dirname, "dist","esm5"),
     libraryTarget: 'umd',
   },
   module: {
     rules: [{
-      test: /\.ts$/,
-      exclude: /node_modules/,
-      use: ['ts-loader']
-    }, {
       test: /\.(js|jsx)$/,
       exclude: /(node_modules|bower_components|build)/,
       use: {

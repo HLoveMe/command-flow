@@ -1,8 +1,8 @@
 {
   "name": "command-flow",
-  "version": "1.0.2",
-  "main": "index.js",
-  "module":"./index.mjs",
+  "version": "1.0.3",
+  "main": "./dist/cjs/index.js",
+  "module":"./dist/esm5/index.prod.js",
   "scripts": {
     "pre_build":"npm run pre_web && npm run pre_node",
     "pre_web": "node ./build-pre.js 0 && tsc -p tsconfig.web.json ",
@@ -12,6 +12,7 @@
     "build_web": "npm run build_dev_web && npm run build_prod_web",
     "build_node": "npm run pre_node &&  webpack --config webpack.config.node.js",
     "build":"npm run build_prod_web && npm run build_dev_web && npm run build_node",
+    "types":"tsc -p ./tsconfig.types.json",
     "web_serve": "vite"
   },
   "repository": {
@@ -33,14 +34,13 @@
   "bugs": {
     "url": "https://github.com/HLoveMe/command-flow/issues"
   },
-  "typings":"index.d.ts",
   "exports":{
     ".": {
-      "node": {
-        "module": "./dist/cjs/index.js"
-      },
-      "default": "./index.js",
-      "types": "index.d.ts"
+      "node":'./dist/cjs/index.js',
+      "require":"./dist/cjs/index.js",
+      "es2015":"./dist/esm5/index.prod.js",
+      "default": "./dist/esm5/index.prod.js",
+      "types": "./index.d.ts"
     }
   },
   "files":[

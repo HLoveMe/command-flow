@@ -4,20 +4,16 @@ const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   mode: 'development',
   entry: {
-    'index': path.join(__dirname, "src", 'index.ts')
+    'index': path.join(__dirname, "source", "node", 'index.js')
   },
-  target:'node',
+  target: 'node',
   output: {
     filename: 'index.js',
-    path: path.join(__dirname, "dist","cjs"),
+    path: path.join(__dirname, "dist", "cjs"),
     libraryTarget: 'commonjs2',
   },
   module: {
     rules: [{
-      test: /\.ts$/,
-      exclude: /node_modules/,
-      use: ['ts-loader']
-    }, {
       test: /\.(js|jsx)$/,
       exclude: /(node_modules|bower_components|build)/,
       use: {

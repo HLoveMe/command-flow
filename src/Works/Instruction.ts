@@ -100,10 +100,6 @@ export class Instruction
         ((that as WorkType.Work).node_run ?? ((that as WorkType.Work).run || noop)).bind(
           that
         )(value, nextOption),
-      electron: () =>
-        ((that as WorkType.Work).electron_run ?? ((that as WorkType.Work).run || noop)).bind(
-          that
-        )(value, nextOption),
       other: () =>
         (((that as WorkType.Work).run || noop)).bind(
           that
