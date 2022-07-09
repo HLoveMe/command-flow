@@ -3,7 +3,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   mode: 'production',
   entry: {
-    'index': path.join(__dirname, "source", "web", 'index.js')
+    'index': path.join(__dirname, "src", 'index.ts')
   },
   output: {
     filename: 'index.prod.js',
@@ -12,6 +12,12 @@ module.exports = {
   },
   module: {
     rules: [{
+      test: /\.(ts)$/,
+      loader: "ts-loader",
+      options: {
+        configFile: "tsconfig.esm5.json"
+      }
+    },{
       test: /\.(js|jsx)$/,
       exclude: /(node_modules|bower_components|build)/,
       use: {

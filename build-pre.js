@@ -3,6 +3,12 @@ const argv = process.argv;
 const param = argv[2];
 const fs = require('fs');
 const path = require('path');
+const types = path.join(__dirname, 'tsconfig.types.tsbuildinfo');
+fs.stat(types, function(error,stat) {
+  if(!!error === false && stat.isFile()){
+    fs.unlink(types,function(){})
+  }
+})
 
 function replaceContext(currentPath, nodeFile, webFile, item) {
   console.log(currentPath, nodeFile, webFile, item)
@@ -79,4 +85,4 @@ function replaceFile(currentPath) {
   })
 }
 
-replaceFile(path.join(__dirname, 'src'))
+replaceFile(path.join(__dirname, 'src'));

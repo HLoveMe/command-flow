@@ -2,15 +2,21 @@ const path = require('path');
 module.exports = {
   mode: 'development',
   entry: {
-    'index': path.join(__dirname, "source", "web", 'index.js')
+    'index': path.join(__dirname, "src", 'index.ts')
   },
   output: {
     filename: 'index.dev.js',
-    path: path.join(__dirname, "dist","esm5"),
+    path: path.join(__dirname, "dist", "esm5"),
     libraryTarget: 'umd',
   },
   module: {
-    rules: [ {
+    rules: [{
+      test: /\.(ts)$/,
+      loader: "ts-loader",
+      options: {
+        configFile: "tsconfig.esm5.json"
+      }
+    }, {
       test: /\.(js|jsx)$/,
       exclude: /(node_modules|bower_components|build)/,
       use: {
