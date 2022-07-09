@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata":true,
+    "outDir": "dist/esm",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "es2015",
+    "watch": false,
+    "skipLibCheck": true,
+    "moduleResolution":"node"
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "**/*.d.ts", "src/**/*", "test.ts"],
+  "exclude": ["node_modules","src/**/*.ignore.node.ts","src/**/*.ignore.web.ts"]
+}

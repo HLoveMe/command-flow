@@ -5,14 +5,14 @@
   "module":"./dist/esm5/index.prod.js",
   "scripts": {
     "pre_build":"npm run pre_web && npm run pre_node",
-    "pre_web": "node ./build-pre.js 0 && tsc -p tsconfig.web.json ",
+    "pre_web": "node ./build-pre.js 0 && tsc -p tsconfig.esm5.json && tsc -p tsconfig.esm.next.json",
     "pre_node": "node ./build-pre.js 1 && tsc -p tsconfig.node.json",
     "build_dev_web": "npm run pre_web && webpack --config webpack.config.dev.js",
     "build_prod_web": "npm run pre_web &&  webpack --config webpack.config.prod.js",
     "build_web": "npm run build_dev_web && npm run build_prod_web",
     "build_node": "npm run pre_node &&  webpack --config webpack.config.node.js",
-    "build":"npm run build_prod_web && npm run build_dev_web && npm run build_node",
     "types":"tsc -p ./tsconfig.types.json",
+    "build":"npm run build_prod_web && npm run build_dev_web && npm run build_node  && npm run types",
     "web_serve": "vite"
   },
   "repository": {
@@ -36,10 +36,10 @@
   },
   "exports":{
     ".": {
-      "node":'./dist/cjs/index.js',
+      "node":"./dist/cjs/index.js",
       "require":"./dist/cjs/index.js",
-      "es2015":"./dist/esm5/index.prod.js",
-      "default": "./dist/esm5/index.prod.js",
+      "es2015":"./dist/esm/index.js",
+      "default": "./index.js",
       "types": "./index.d.ts"
     }
   },
