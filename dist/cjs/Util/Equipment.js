@@ -1,8 +1,9 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlatformSelect = exports.isJS = exports.isMobile = exports.isPC = exports.isNode = exports.isWeb = exports.currentEnir = exports.JSRUNEnvirType = exports.getJSEnvironment = exports.isReactNative = void 0;
 /* eslint-disable */
-const tools_1 = require("./tools");
+var tools_1 = require("./tools");
 var JSRUNEnvirType;
 (function (JSRUNEnvirType) {
     JSRUNEnvirType[JSRUNEnvirType["NODE_PC"] = 10] = "NODE_PC";
@@ -11,7 +12,7 @@ var JSRUNEnvirType;
     JSRUNEnvirType[JSRUNEnvirType["OTHER"] = 100] = "OTHER";
 })(JSRUNEnvirType || (JSRUNEnvirType = {}));
 exports.JSRUNEnvirType = JSRUNEnvirType;
-const EnvirType = {
+var EnvirType = {
     /**
      * WIndow 浏览器 运行环境
      */
@@ -62,7 +63,7 @@ function getJSEnvironment() {
     if (navigator.userAgent) {
         var userAgent = navigator.userAgent;
         var platform, result;
-        const getDesktopOS = () => {
+        var getDesktopOS = function () {
             var pf = navigator.platform;
             if (pf.indexOf('Win') != -1) {
                 // 说明当前是Windows操作系统
@@ -142,14 +143,14 @@ function getJSEnvironment() {
     }
 }
 exports.getJSEnvironment = getJSEnvironment;
-const topThis = Function('return this')();
+var topThis = Function('return this')();
 var currentEnir;
 exports.currentEnir = currentEnir;
 if (topThis.process && (0, tools_1.getObjectType)(topThis.process) === '[object process]') {
     exports.currentEnir = currentEnir = JSRUNEnvirType.NODE_PC;
 }
 else {
-    const typeName = getJSEnvironment()?.name;
+    var typeName = (_a = getJSEnvironment()) === null || _a === void 0 ? void 0 : _a.name;
     switch (typeName) {
         case EnvirType.WINDOWS:
             exports.currentEnir = currentEnir = JSRUNEnvirType.WEB_PC;
@@ -171,20 +172,20 @@ else {
             break;
     }
 }
-const isWeb = currentEnir === JSRUNEnvirType.WEB_MOBILE ||
+var isWeb = currentEnir === JSRUNEnvirType.WEB_MOBILE ||
     currentEnir === JSRUNEnvirType.WEB_PC;
 exports.isWeb = isWeb;
-const isNode = currentEnir === JSRUNEnvirType.NODE_PC;
+var isNode = currentEnir === JSRUNEnvirType.NODE_PC;
 exports.isNode = isNode;
-const isPC = currentEnir === JSRUNEnvirType.NODE_PC ||
+var isPC = currentEnir === JSRUNEnvirType.NODE_PC ||
     currentEnir === JSRUNEnvirType.WEB_PC;
 exports.isPC = isPC;
-const isMobile = currentEnir === JSRUNEnvirType.WEB_MOBILE;
+var isMobile = currentEnir === JSRUNEnvirType.WEB_MOBILE;
 exports.isMobile = isMobile;
-const isJS = true;
+var isJS = true;
 exports.isJS = isJS;
-const PlatformSelect = (select) => {
-    let target;
+var PlatformSelect = function (select) {
+    var target;
     if (isWeb) {
         target = select.web;
     }

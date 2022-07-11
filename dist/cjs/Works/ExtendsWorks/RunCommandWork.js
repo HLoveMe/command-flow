@@ -1,9 +1,25 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
-const Instruction_1 = require("../Instruction");
-const rxjs_1 = require("rxjs");
-const Equipment_1 = require("../../Util/Equipment");
-const channel_value_util_1 = require("../../Util/channel-value-util");
+var Instruction_1 = require("../Instruction");
+var rxjs_1 = require("rxjs");
+var Equipment_1 = require("../../Util/Equipment");
+var channel_value_util_1 = require("../../Util/channel-value-util");
+var tools_1 = require("../../Util/tools");
 /**
  * "1 + $I$ "
  * @param template
@@ -12,21 +28,19 @@ const channel_value_util_1 = require("../../Util/channel-value-util");
  * @returns
  */
 function handleEvalCommand(template, params, config, runOption) {
-    const input = (0, channel_value_util_1.unpackValue)(params);
-    let runCommand = template;
+    var input = (0, channel_value_util_1.unpackValue)(params);
+    var runCommand = template;
     if (typeof input === 'string') {
-        const placeholder = config['*'];
+        var placeholder = config['*'];
         if (placeholder) {
-            const reg = new RegExp(placeholder, 'g');
-            runCommand = runCommand.replace(reg, input);
+            runCommand = (0, tools_1.replaceAll)(runCommand, placeholder, input);
         }
     }
     else {
-        Object.keys(config).forEach((key) => {
-            const placeholder = config[key];
-            const reg = new RegExp(placeholder, 'g');
-            const value = input[key];
-            runCommand = runCommand.replace(reg, value);
+        Object.keys(config).forEach(function (key) {
+            var placeholder = config[key];
+            var value = input[key];
+            runCommand = (0, tools_1.replaceAll)(runCommand, placeholder, value);
         });
     }
     return runCommand;
@@ -54,53 +68,61 @@ function handleEvalCommand(template, params, config, runOption) {
  *     return `${A} * 2 + ${B}`
  *  })
  */
-class RunCommandWork extends Instruction_1.InstructionOTO {
-    template = '';
-    name = 'RunCommandWork';
-    paramsConfig = {};
-    callBack = undefined;
-    constructor(...args) {
-        super();
+var RunCommandWork = /** @class */ (function (_super) {
+    __extends(RunCommandWork, _super);
+    function RunCommandWork() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var _this = _super.call(this) || this;
+        _this.template = '';
+        _this.name = 'RunCommandWork';
+        _this.paramsConfig = {};
+        _this.callBack = undefined;
         if (typeof args[0] === 'string') {
-            const template = args[0] || '$I$';
-            const paramsConfig = args[1] || { '*': '$I$' };
-            this.template = template;
-            this.paramsConfig = paramsConfig;
+            var template = args[0] || '$I$';
+            var paramsConfig = args[1] || { '*': '$I$' };
+            _this.template = template;
+            _this.paramsConfig = paramsConfig;
         }
         else if (typeof args[0] === 'function') {
-            this.callBack = args[0];
+            _this.callBack = args[0];
         }
+        return _this;
     }
-    run(command, option) {
-        const that = this;
-        return new rxjs_1.Observable((subscriber) => {
-            let target;
+    RunCommandWork.prototype.run = function (command, option) {
+        var _this = this;
+        var that = this;
+        return new rxjs_1.Observable(function (subscriber) {
+            var target;
             if (that.callBack && typeof that.callBack === 'function') {
-                target = this.callBack((0, channel_value_util_1.unpackValue)(command), option);
+                target = _this.callBack((0, channel_value_util_1.unpackValue)(command), option);
             }
             else
-                target = handleEvalCommand(that.template, command, this.paramsConfig, option);
-            const sub = that.context.platform
+                target = handleEvalCommand(that.template, command, _this.paramsConfig, option);
+            var sub = that.context.platform
                 .runCommand(target)
                 .subscribe({
-                next: (info) => {
-                    this.logMsg(`执行command：${info.error ? '失败' : '成功'}。结果：${info.result}`, command);
+                next: function (info) {
+                    _this.logMsg("\u6267\u884Ccommand\uFF1A".concat(info.error ? '失败' : '成功', "\u3002\u7ED3\u679C\uFF1A").concat(info.result), command);
                     subscriber.next((0, channel_value_util_1.wrapperValue)(command, (info.error ? undefined : info.result)));
                 },
-                complete: () => subscriber.complete(),
-                error: (err) => subscriber.error(err),
+                complete: function () { return subscriber.complete(); },
+                error: function (err) { return subscriber.error(err); },
             });
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     sub.unsubscribe();
                     subscriber.unsubscribe();
                 },
             };
         });
-    }
-    static isAble() {
+    };
+    RunCommandWork.isAble = function () {
         return Equipment_1.isJS;
         // return isNode || isWeb || isRN || isElectron
-    }
-}
+    };
+    return RunCommandWork;
+}(Instruction_1.InstructionOTO));
 exports.default = RunCommandWork;

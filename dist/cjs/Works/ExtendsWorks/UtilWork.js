@@ -1,104 +1,126 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DelayIntervalWork = exports.TimeoutWork = exports.IntervalWork = void 0;
-const rxjs_1 = require("rxjs");
-const operators_1 = require("rxjs/operators");
-const index_1 = require("../../Object/index");
-const channel_value_util_1 = require("../../Util/channel-value-util");
-const Instruction_1 = require("../Instruction");
+var rxjs_1 = require("rxjs");
+var operators_1 = require("rxjs/operators");
+var index_1 = require("../../Object/index");
+var channel_value_util_1 = require("../../Util/channel-value-util");
+var Instruction_1 = require("../Instruction");
 // 一直发
-class IntervalWork extends Instruction_1.InstructionOTM {
-    name = "IntervalWork";
-    intervalTime;
-    maxCount;
-    notifier;
-    constructor(interval, max = Infinity, notifier) {
-        super();
-        this.intervalTime = interval || 1000;
-        this.maxCount = max;
-        this.notifier = notifier || rxjs_1.NEVER;
+var IntervalWork = /** @class */ (function (_super) {
+    __extends(IntervalWork, _super);
+    function IntervalWork(interval, max, notifier) {
+        if (max === void 0) { max = Infinity; }
+        var _this = _super.call(this) || this;
+        _this.name = "IntervalWork";
+        _this.intervalTime = interval || 1000;
+        _this.maxCount = max;
+        _this.notifier = notifier || rxjs_1.NEVER;
+        return _this;
     }
-    run(input) {
-        const intervalTime = parseInt((0, channel_value_util_1.unpackValue)(input)) || this.intervalTime || 1000;
-        const that = this;
-        return new rxjs_1.Observable(observer => {
-            const sub = (0, rxjs_1.interval)(intervalTime, rxjs_1.asyncScheduler).pipe((0, operators_1.take)(that.maxCount), (0, operators_1.takeUntil)(this.notifier)).subscribe({
-                next: (value) => observer.next((0, channel_value_util_1.wrapperValue)(input, value)),
-                error: (error) => observer.error(error),
-                complete: () => observer.complete()
+    IntervalWork.prototype.run = function (input) {
+        var _this = this;
+        var intervalTime = parseInt((0, channel_value_util_1.unpackValue)(input)) || this.intervalTime || 1000;
+        var that = this;
+        return new rxjs_1.Observable(function (observer) {
+            var sub = (0, rxjs_1.interval)(intervalTime, rxjs_1.asyncScheduler).pipe((0, operators_1.take)(that.maxCount), (0, operators_1.takeUntil)(_this.notifier)).subscribe({
+                next: function (value) { return observer.next((0, channel_value_util_1.wrapperValue)(input, value)); },
+                error: function (error) { return observer.error(error); },
+                complete: function () { return observer.complete(); }
             });
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     observer.unsubscribe();
                     sub.unsubscribe();
                 }
             };
         });
-    }
-}
+    };
+    return IntervalWork;
+}(Instruction_1.InstructionOTM));
 exports.IntervalWork = IntervalWork;
 // 定时发
-class TimeoutWork extends Instruction_1.InstructionOTO {
-    name = "TimeoutWork";
-    intervalTime;
-    constructor(interval) {
-        super();
-        this.intervalTime = interval || 1000;
+var TimeoutWork = /** @class */ (function (_super) {
+    __extends(TimeoutWork, _super);
+    function TimeoutWork(interval) {
+        var _this = _super.call(this) || this;
+        _this.name = "TimeoutWork";
+        _this.intervalTime = interval || 1000;
+        return _this;
     }
-    run(input) {
-        const intervalTime = parseInt((0, channel_value_util_1.unpackValue)(input)) || this.intervalTime || 1000;
-        const that = this;
-        return new rxjs_1.Observable(observer => {
-            const sub = (0, rxjs_1.interval)(intervalTime, rxjs_1.asyncScheduler)
+    TimeoutWork.prototype.run = function (input) {
+        var intervalTime = parseInt((0, channel_value_util_1.unpackValue)(input)) || this.intervalTime || 1000;
+        var that = this;
+        return new rxjs_1.Observable(function (observer) {
+            var sub = (0, rxjs_1.interval)(intervalTime, rxjs_1.asyncScheduler)
                 .pipe((0, operators_1.take)(1)).subscribe({
-                next: (value) => {
+                next: function (value) {
                     observer.next((0, channel_value_util_1.wrapperValue)(input, value));
                 },
-                error: (error) => observer.error(error),
-                complete: () => observer.complete()
+                error: function (error) { return observer.error(error); },
+                complete: function () { return observer.complete(); }
             });
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     observer.unsubscribe();
                     sub.unsubscribe();
                 }
             };
         });
-    }
-}
+    };
+    return TimeoutWork;
+}(Instruction_1.InstructionOTO));
 exports.TimeoutWork = TimeoutWork;
 // 延迟 然后一直发
-class DelayIntervalWork extends Instruction_1.InstructionOTM {
-    name = 'DelayIntervalWork';
-    intervalTime;
-    maxCount;
-    delayTime;
-    notifier;
-    constructor(delay = 0, interval = 1000, max = Infinity, notifier) {
-        super();
-        this.intervalTime = interval || 1000;
-        this.maxCount = max;
-        this.delayTime = delay || 0;
-        this.notifier = notifier || rxjs_1.NEVER;
+var DelayIntervalWork = /** @class */ (function (_super) {
+    __extends(DelayIntervalWork, _super);
+    function DelayIntervalWork(delay, interval, max, notifier) {
+        if (delay === void 0) { delay = 0; }
+        if (interval === void 0) { interval = 1000; }
+        if (max === void 0) { max = Infinity; }
+        var _this = _super.call(this) || this;
+        _this.name = 'DelayIntervalWork';
+        _this.intervalTime = interval || 1000;
+        _this.maxCount = max;
+        _this.delayTime = delay || 0;
+        _this.notifier = notifier || rxjs_1.NEVER;
+        return _this;
     }
-    run(input) {
-        const intervalTime = parseInt((0, channel_value_util_1.unpackValue)(input)) || this.intervalTime || 1000;
-        const that = this;
-        return new rxjs_1.Observable(observer => {
-            const sub = (0, rxjs_1.timer)(that.delayTime, intervalTime, rxjs_1.asyncScheduler)
-                .pipe((0, operators_1.take)(that.maxCount), (0, operators_1.takeUntil)(this.notifier))
+    DelayIntervalWork.prototype.run = function (input) {
+        var _this = this;
+        var intervalTime = parseInt((0, channel_value_util_1.unpackValue)(input)) || this.intervalTime || 1000;
+        var that = this;
+        return new rxjs_1.Observable(function (observer) {
+            var sub = (0, rxjs_1.timer)(that.delayTime, intervalTime, rxjs_1.asyncScheduler)
+                .pipe((0, operators_1.take)(that.maxCount), (0, operators_1.takeUntil)(_this.notifier))
                 .subscribe({
-                next: (value) => observer.next((0, channel_value_util_1.wrapperValue)(input, new index_1.NumberObject(value))),
-                error: (error) => observer.error(error),
-                complete: () => observer.complete()
+                next: function (value) { return observer.next((0, channel_value_util_1.wrapperValue)(input, new index_1.NumberObject(value))); },
+                error: function (error) { return observer.error(error); },
+                complete: function () { return observer.complete(); }
             });
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     observer.unsubscribe();
                     sub.unsubscribe();
                 }
             };
         });
-    }
-}
+    };
+    return DelayIntervalWork;
+}(Instruction_1.InstructionOTM));
 exports.DelayIntervalWork = DelayIntervalWork;

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isRunElectron = exports.isRunNode = exports.isRunWeb = void 0;
-const Equipment_1 = require("./Equipment");
+var Equipment_1 = require("./Equipment");
 function isRunWeb($1, $2, descriptor) {
-    descriptor.value = () => Equipment_1.isWeb;
+    descriptor.value = function () { return Equipment_1.isWeb; };
 }
 exports.isRunWeb = isRunWeb;
 function isRunNode($1, $2, descriptor) {
-    descriptor.value = () => Equipment_1.isNode;
+    descriptor.value = function () { return Equipment_1.isNode; };
 }
 exports.isRunNode = isRunNode;
 function isRunElectron($1, $2, descriptor) {
-    descriptor.value = () => isRunElectron;
+    descriptor.value = function () { return isRunElectron; };
 }
 exports.isRunElectron = isRunElectron;
 // export class BaseRunTime implements EnvironmentAble {

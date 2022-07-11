@@ -1,3 +1,4 @@
+var _a;
 /* eslint-disable */
 import { getObjectType } from './tools';
 var JSRUNEnvirType;
@@ -142,7 +143,7 @@ if (topThis.process && getObjectType(topThis.process) === '[object process]') {
     currentEnir = JSRUNEnvirType.NODE_PC;
 }
 else {
-    const typeName = getJSEnvironment()?.name;
+    const typeName = (_a = getJSEnvironment()) === null || _a === void 0 ? void 0 : _a.name;
     switch (typeName) {
         case EnvirType.WINDOWS:
             currentEnir = JSRUNEnvirType.WEB_PC;

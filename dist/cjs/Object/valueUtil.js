@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.decide = exports.isAbleType = void 0;
-const ObjectValue = require("./Able");
+var ObjectValue = require("./Able");
 // type Detail<T> = ValueExtends.IsValue<T> extends true ? T : ValueExtends.GetDeepAchieve<T>
-let ObjectMap = null;
-const init = () => {
+var ObjectMap = null;
+var init = function () {
     if (ObjectMap === null) {
         ObjectMap = {
             '[object Object]': ObjectValue.ObjectTarget,
@@ -24,7 +24,7 @@ const init = () => {
     }
     return ObjectMap;
 };
-const isAbleType = (value) => {
+var isAbleType = function (value) {
     init();
     return Object.prototype.toString.call(value) === '[object flow-object]';
 };
@@ -36,14 +36,15 @@ exports.isAbleType = isAbleType;
  * @param force 是否强制包装
  * @returns
  */
-function decide(value, force = false) {
+function decide(value, force) {
+    if (force === void 0) { force = false; }
     init();
     if ((0, exports.isAbleType)(value) && force === false)
         return value;
-    const key = Object.prototype.toString.call(value);
-    const Target = ObjectMap[key];
+    var key = Object.prototype.toString.call(value);
+    var Target = ObjectMap[key];
     if (Target) {
-        return new Target(value ?? {});
+        return new Target(value !== null && value !== void 0 ? value : {});
     }
     return new ObjectValue.ObjectTarget(value);
 }

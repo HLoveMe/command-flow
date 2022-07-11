@@ -3,12 +3,12 @@
  * @Author:
  * @Date: 2022-06-08 19:31:16
  * @Last Modified by: zihao.zhu
- * @Last Modified time: 2022-07-06 15:53:56
+ * @Last Modified time: 2022-07-11 16:38:59
  * @desc : undefined
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getObjectType = exports.has = exports.noop = void 0;
-const isURL = (url) => {
+exports.replaceAll = exports.getObjectType = exports.has = exports.noop = void 0;
+var isURL = function (url) {
     var strRegex = '^((https|http|ftp)://)?' + //(https或http或ftp):// 可有可无
         "(([\\w_!~*'()\\.&=+$%-]+: )?[\\w_!~*'()\\.&=+$%-]+@)?" + //ftp的user@  可有可无
         '(([0-9]{1,3}\\.){3}[0-9]{1,3}' + // IP形式的URL- 3位数字.3位数字.3位数字.3位数字
@@ -29,12 +29,27 @@ const isURL = (url) => {
         return false;
     }
 };
-const isWindowFilePath = (url) => {
+var isWindowFilePath = function (url) {
     return url.startsWith('file://');
 };
-const has = Function.call.bind(Object.prototype.hasOwnProperty);
+/**
+ *
+ * @param source String.prototype.replaceAll
+ * @param string
+ * @param replaceValue
+ * @returns
+ */
+var replaceAll = function (source, string, replaceValue) {
+    if (source.indexOf(string) >= 0) {
+        source = source.replace(string, replaceValue);
+        return replaceAll(source, string, replaceValue);
+    }
+    return source;
+};
+exports.replaceAll = replaceAll;
+var has = Function.call.bind(Object.prototype.hasOwnProperty);
 exports.has = has;
-const getObjectType = (source) => Object.prototype.toString.call(source);
+var getObjectType = function (source) { return Object.prototype.toString.call(source); };
 exports.getObjectType = getObjectType;
 function noop() { }
 exports.noop = noop;

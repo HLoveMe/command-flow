@@ -2,7 +2,7 @@
  * @Author:
  * @Date: 2022-06-08 19:31:16
  * @Last Modified by: zihao.zhu
- * @Last Modified time: 2022-07-06 15:53:56
+ * @Last Modified time: 2022-07-11 16:38:59
  * @desc : undefined
  */
 
@@ -32,10 +32,29 @@ const isURL = (url: string): boolean => {
 const isWindowFilePath = (url: string): boolean => {
   return url.startsWith('file://');
 };
+/**
+ * 
+ * @param source String.prototype.replaceAll
+ * @param string 
+ * @param replaceValue 
+ * @returns 
+ */
+const replaceAll = (
+  source: string,
+  string: string,
+  replaceValue: string
+): string => {
+  if (source.indexOf(string) >= 0) {
+    source = source.replace(string, replaceValue);
+    return replaceAll(source, string, replaceValue);
+  }
+  return source;
+};
 
 const has = Function.call.bind(Object.prototype.hasOwnProperty);
 
 const getObjectType = (source: any) => Object.prototype.toString.call(source);
+
 function noop() {}
 
-export { noop, has, getObjectType };
+export { noop, has, getObjectType,replaceAll };

@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es5",
     "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata":true,
     "outDir": "source/web",
     "sourceMap": true,
     "noImplicitAny": false,
-    "module": "es2015",
+    "module": "esnext",
     "watch": false,
     "skipLibCheck": true,
     "moduleResolution": "node"

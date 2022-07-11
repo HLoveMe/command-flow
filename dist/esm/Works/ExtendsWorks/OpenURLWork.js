@@ -12,7 +12,10 @@ import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
  * web:只能代开网页
  */
 export default class OpenURLWork extends InstructionOTO {
-    name = "OpenURLWork";
+    constructor() {
+        super(...arguments);
+        this.name = "OpenURLWork";
+    }
     run(input, option) {
         const that = this;
         return new Observable((subscriber) => {

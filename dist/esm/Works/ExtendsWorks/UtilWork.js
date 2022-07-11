@@ -5,12 +5,9 @@ import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 import { InstructionOTM, InstructionOTO } from "../Instruction";
 // 一直发
 class IntervalWork extends InstructionOTM {
-    name = "IntervalWork";
-    intervalTime;
-    maxCount;
-    notifier;
     constructor(interval, max = Infinity, notifier) {
         super();
+        this.name = "IntervalWork";
         this.intervalTime = interval || 1000;
         this.maxCount = max;
         this.notifier = notifier || NEVER;
@@ -35,10 +32,9 @@ class IntervalWork extends InstructionOTM {
 }
 // 定时发
 class TimeoutWork extends InstructionOTO {
-    name = "TimeoutWork";
-    intervalTime;
     constructor(interval) {
         super();
+        this.name = "TimeoutWork";
         this.intervalTime = interval || 1000;
     }
     run(input) {
@@ -64,13 +60,9 @@ class TimeoutWork extends InstructionOTO {
 }
 // 延迟 然后一直发
 class DelayIntervalWork extends InstructionOTM {
-    name = 'DelayIntervalWork';
-    intervalTime;
-    maxCount;
-    delayTime;
-    notifier;
     constructor(delay = 0, interval = 1000, max = Infinity, notifier) {
         super();
+        this.name = 'DelayIntervalWork';
         this.intervalTime = interval || 1000;
         this.maxCount = max;
         this.delayTime = delay || 0;

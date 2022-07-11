@@ -39,7 +39,7 @@ export function decide(value, force = false) {
     const key = Object.prototype.toString.call(value);
     const Target = ObjectMap[key];
     if (Target) {
-        return new Target(value ?? {});
+        return new Target(value !== null && value !== void 0 ? value : {});
     }
     return new ObjectValue.ObjectTarget(value);
 }

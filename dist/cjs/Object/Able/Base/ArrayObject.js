@@ -9,6 +9,30 @@
 // import { BooleanObject } from './BooleanObject';
 // import { decide } from '../../valueUtil';
 // import { Value } from "../../../Object";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArrayObject = void 0;
 // @Unit(ControlFlow.ArrayEnum, 'execArray')
@@ -202,41 +226,53 @@ exports.ArrayObject = void 0;
 //     return decide(this._value.length) as NumberObject;
 //   }
 // }
-const extend_util_1 = require("../../extend-util");
-const valueUtil_1 = require("../../valueUtil");
-const ArrayWrapper = (0, extend_util_1.createExtendsConstruct)(Array, ['length']);
-class _ArrayObject extends ArrayWrapper {
-    constructor(...values) {
-        const first = values[0];
-        const firstIsArray = first instanceof Array;
+var extend_util_1 = require("../../extend-util");
+var valueUtil_1 = require("../../valueUtil");
+var ArrayWrapper = (0, extend_util_1.createExtendsConstruct)(Array, ['length']);
+var _ArrayObject = /** @class */ (function (_super) {
+    __extends(_ArrayObject, _super);
+    function _ArrayObject() {
+        var values = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            values[_i] = arguments[_i];
+        }
+        var _this = this;
+        var first = values[0];
+        var firstIsArray = first instanceof Array;
         var init = null;
         if (firstIsArray && values.length === 1) {
             init = first;
         }
         else {
-            init = new Array(...values);
+            init = new (Array.bind.apply(Array, __spreadArray([void 0], values, false)))();
         }
-        super(init);
-        this._value = init;
+        _this = _super.call(this, init) || this;
+        _this._value = init;
+        return _this;
     }
-    len() {
+    _ArrayObject.prototype.len = function () {
         return this._value.length;
-    }
-    first() {
+    };
+    _ArrayObject.prototype.first = function () {
         return this._value[0];
-    }
-    last() {
+    };
+    _ArrayObject.prototype.last = function () {
         return this._value[this._value.length - 1];
-    }
-    valueOfIndex(index) {
+    };
+    _ArrayObject.prototype.valueOfIndex = function (index) {
         return this._value[index];
-    }
-    valueOf() {
+    };
+    _ArrayObject.prototype.valueOf = function () {
         return this._value;
-    }
-    get length() {
-        return (0, valueUtil_1.decide)(this._value.length);
-    }
-}
-const ArrayObject = _ArrayObject;
+    };
+    Object.defineProperty(_ArrayObject.prototype, "length", {
+        get: function () {
+            return (0, valueUtil_1.decide)(this._value.length);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return _ArrayObject;
+}(ArrayWrapper));
+var ArrayObject = _ArrayObject;
 exports.ArrayObject = ArrayObject;

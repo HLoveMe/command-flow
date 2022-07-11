@@ -4,7 +4,10 @@ import { isJS } from '../../Util/Equipment';
 import { ObjectTarget } from '../..';
 import { tap } from 'rxjs/operators';
 export default class FetchWork extends InstructionOTO {
-    name = 'FetchWork';
+    constructor() {
+        super(...arguments);
+        this.name = 'FetchWork';
+    }
     _getInitOption(input, baseOption = {}) {
         const initParams = input.valueOf();
         const { url, method, timeout, data } = initParams;
@@ -12,10 +15,7 @@ export default class FetchWork extends InstructionOTO {
             url,
             method: initParams.method || baseOption.method || 'GET',
             timeout: timeout || baseOption.timeout || 10000,
-            headers: {
-                ...(baseOption.headers || {}),
-                ...(initParams.headers || {}),
-            },
+            headers: Object.assign(Object.assign({}, (baseOption.headers || {})), (initParams.headers || {})),
         };
         request.data = data;
         if (method && method.toLocaleUpperCase() === 'GET') {
@@ -42,10 +42,7 @@ export default class FetchWork extends InstructionOTO {
                         subscriber.error(result.error);
                     }
                     else {
-                        subscriber.next(new ObjectTarget({
-                            ...input._value,
-                            value: result.data,
-                        }));
+                        subscriber.next(new ObjectTarget(Object.assign(Object.assign({}, input._value), { value: result.data })));
                         subscriber.complete();
                     }
                 },

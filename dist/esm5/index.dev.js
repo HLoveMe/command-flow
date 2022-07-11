@@ -85,12 +85,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const runConfig = (0,_Util_Equipment__WEBPACK_IMPORTED_MODULE_0__.PlatformSelect)({
+var runConfig = (0,_Util_Equipment__WEBPACK_IMPORTED_MODULE_0__.PlatformSelect)({
     web: { pc: _Platform_Web_PC__WEBPACK_IMPORTED_MODULE_4__.PCWebBridge, mobile: _Platform_Web_Mobile__WEBPACK_IMPORTED_MODULE_3__.MobileWebBridge },
     node: { pc: _Platform_Node_PC__WEBPACK_IMPORTED_MODULE_2__.PCNodejsBridge, mobile: _Platform_Node_Mobile__WEBPACK_IMPORTED_MODULE_1__.MobileNodejsBridge },
 });
-const Target = runConfig[_Util_Equipment__WEBPACK_IMPORTED_MODULE_0__.isPC ? 'pc' : 'mobile'];
-const Platform = Reflect.construct(Target, []);
+var Target = runConfig[_Util_Equipment__WEBPACK_IMPORTED_MODULE_0__.isPC ? 'pc' : 'mobile'];
+var Platform = Reflect.construct(Target, []);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Platform);
 
 
@@ -115,40 +115,60 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "axios");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Hardware__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Hardware */ "./src/Bridge/Platform/Hardware.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
 
 
 
 
-class PlatformBridge extends _Hardware__WEBPACK_IMPORTED_MODULE_4__.HardwareBase {
-    createQrCode(context, option) {
-        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable((sub) => {
-            let width = option?.SideLength ?? 200;
-            let margin = 2;
-            const qrCode = qrcode_generator__WEBPACK_IMPORTED_MODULE_2__(option?.type || 4, option?.Level || "H");
-            qrCode.addData((context ?? ""));
+var PlatformBridge = /** @class */ (function (_super) {
+    __extends(PlatformBridge, _super);
+    function PlatformBridge() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    PlatformBridge.prototype.createQrCode = function (context, option) {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable(function (sub) {
+            var _a;
+            var width = (_a = option === null || option === void 0 ? void 0 : option.SideLength) !== null && _a !== void 0 ? _a : 200;
+            var margin = 2;
+            var qrCode = qrcode_generator__WEBPACK_IMPORTED_MODULE_2__((option === null || option === void 0 ? void 0 : option.type) || 4, (option === null || option === void 0 ? void 0 : option.Level) || "H");
+            qrCode.addData((context !== null && context !== void 0 ? context : ""));
             qrCode.make();
-            const moduleCount = qrCode.getModuleCount();
-            const cellSize = (width - margin * 2) / moduleCount;
-            const base64 = qrCode.createDataURL(cellSize, margin);
+            var moduleCount = qrCode.getModuleCount();
+            var cellSize = (width - margin * 2) / moduleCount;
+            var base64 = qrCode.createDataURL(cellSize, margin);
             // const base64 = qrcode.createDataURL(cellSize, margin).replace('data:image/gif;base64', 'data:image/png;base64');
             sub.next(new _Object__WEBPACK_IMPORTED_MODULE_1__.StringObject(base64));
             sub.complete();
             return {
-                unsubscribe: () => sub.unsubscribe(),
+                unsubscribe: function () { return sub.unsubscribe(); },
             };
         });
-    }
-    loadRunInfo() {
+    };
+    PlatformBridge.prototype.loadRunInfo = function () {
         throw new Error("Method not implemented.");
-    }
-    runCommand(command, option) {
-        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable((subscriber) => {
-            let result = null;
-            let error = null;
-            let status = false;
+    };
+    PlatformBridge.prototype.runCommand = function (command, option) {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable(function (subscriber) {
+            var result = null;
+            var error = null;
+            var status = false;
             try {
-                result = eval(command?.toString());
+                result = eval(command === null || command === void 0 ? void 0 : command.toString());
                 status = true;
             }
             catch (_error) {
@@ -157,33 +177,33 @@ class PlatformBridge extends _Hardware__WEBPACK_IMPORTED_MODULE_4__.HardwareBase
             }
             finally {
                 subscriber.next({
-                    result,
-                    status,
-                    error,
-                    command
+                    result: result,
+                    status: status,
+                    error: error,
+                    command: command
                 });
                 subscriber.complete();
             }
             return {
-                unsubscribe: () => subscriber.unsubscribe()
+                unsubscribe: function () { return subscriber.unsubscribe(); }
             };
         });
-    }
-    open(url, option) {
+    };
+    PlatformBridge.prototype.open = function (url, option) {
         throw new Error("Method not implemented.");
-    }
-    loadFile(url, option) {
+    };
+    PlatformBridge.prototype.loadFile = function (url, option) {
         throw new Error("Method not implemented.");
-    }
-    fetch(req) {
-        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable((subscriber) => {
+    };
+    PlatformBridge.prototype.fetch = function (req) {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable(function (subscriber) {
             axios__WEBPACK_IMPORTED_MODULE_3___default().request(req)
-                .then((response) => {
-                let error = null;
-                let data = null;
-                const content = {};
+                .then(function (response) {
+                var error = null;
+                var data = null;
+                var content = {};
                 if (response.status !== 200) {
-                    error = new Error(`${response.status} ${response.statusText}`);
+                    error = new Error("".concat(response.status, " ").concat(response.statusText));
                 }
                 else {
                     data = response.data;
@@ -194,17 +214,19 @@ class PlatformBridge extends _Hardware__WEBPACK_IMPORTED_MODULE_4__.HardwareBase
                 subscriber.next(new _Object__WEBPACK_IMPORTED_MODULE_1__.ObjectTarget(content));
                 subscriber.complete();
             })
-                .catch((error) => {
+                .catch(function (error) {
                 subscriber.error(error);
             });
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     subscriber.unsubscribe();
                 }
             };
         });
-    }
-}
+    };
+    return PlatformBridge;
+}(_Hardware__WEBPACK_IMPORTED_MODULE_4__.HardwareBase));
+
 
 
 /***/ }),
@@ -220,83 +242,87 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "HardwareBase": () => (/* binding */ HardwareBase)
 /* harmony export */ });
-class HardwareBase {
-    takePhoto(option) {
-        throw new Error("Method not implemented.");
+var HardwareBase = /** @class */ (function () {
+    function HardwareBase() {
     }
-    recordVideo(option) {
+    HardwareBase.prototype.takePhoto = function (option) {
         throw new Error("Method not implemented.");
-    }
-    getPhotos() {
+    };
+    HardwareBase.prototype.recordVideo = function (option) {
         throw new Error("Method not implemented.");
-    }
-    getCurrentPosition() {
+    };
+    HardwareBase.prototype.getPhotos = function () {
         throw new Error("Method not implemented.");
-    }
-    watchPosition(option) {
+    };
+    HardwareBase.prototype.getCurrentPosition = function () {
         throw new Error("Method not implemented.");
-    }
-    closePosition() {
+    };
+    HardwareBase.prototype.watchPosition = function (option) {
         throw new Error("Method not implemented.");
-    }
-    recordAudio() {
+    };
+    HardwareBase.prototype.closePosition = function () {
         throw new Error("Method not implemented.");
-    }
-    stopAudio() {
+    };
+    HardwareBase.prototype.recordAudio = function () {
         throw new Error("Method not implemented.");
-    }
-    getFile(option) {
+    };
+    HardwareBase.prototype.stopAudio = function () {
         throw new Error("Method not implemented.");
-    }
-    startVibrator(option) {
+    };
+    HardwareBase.prototype.getFile = function (option) {
         throw new Error("Method not implemented.");
-    }
-    stopVibrator() {
+    };
+    HardwareBase.prototype.startVibrator = function (option) {
         throw new Error("Method not implemented.");
-    }
-    getSystemInfo() {
+    };
+    HardwareBase.prototype.stopVibrator = function () {
         throw new Error("Method not implemented.");
-    }
-    getVolume() {
+    };
+    HardwareBase.prototype.getSystemInfo = function () {
         throw new Error("Method not implemented.");
-    }
-    setVolume(volume) {
+    };
+    HardwareBase.prototype.getVolume = function () {
         throw new Error("Method not implemented.");
-    }
-    getBrightness() {
+    };
+    HardwareBase.prototype.setVolume = function (volume) {
         throw new Error("Method not implemented.");
-    }
-    setBrightness(brightness) {
+    };
+    HardwareBase.prototype.getBrightness = function () {
         throw new Error("Method not implemented.");
-    }
-    scanBluetooth() {
+    };
+    HardwareBase.prototype.setBrightness = function (brightness) {
         throw new Error("Method not implemented.");
-    }
-    connectBluetooth(device) {
+    };
+    HardwareBase.prototype.scanBluetooth = function () {
         throw new Error("Method not implemented.");
-    }
-    bluetoothSendData(data) {
+    };
+    HardwareBase.prototype.connectBluetooth = function (device) {
         throw new Error("Method not implemented.");
-    }
-    bluetoothReceiveData(device) {
+    };
+    HardwareBase.prototype.bluetoothSendData = function (data) {
         throw new Error("Method not implemented.");
-    }
-    bluetoothClose(device) {
+    };
+    HardwareBase.prototype.bluetoothReceiveData = function (device) {
         throw new Error("Method not implemented.");
-    }
-    speechInit(option) {
+    };
+    HardwareBase.prototype.bluetoothClose = function (device) {
         throw new Error("Method not implemented.");
-    }
-    speak(text) {
+    };
+    HardwareBase.prototype.speechInit = function (option) {
         throw new Error("Method not implemented.");
-    }
-    stopSpeak() {
+    };
+    HardwareBase.prototype.speak = function (text) {
         throw new Error("Method not implemented.");
-    }
-    clearSpeech() {
+    };
+    HardwareBase.prototype.stopSpeak = function () {
         throw new Error("Method not implemented.");
-    }
-}
+    };
+    HardwareBase.prototype.clearSpeech = function () {
+        throw new Error("Method not implemented.");
+    };
+    return HardwareBase;
+}());
+
 
 
 /***/ }),
@@ -316,14 +342,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Object__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Object */ "./src/Object/index.ts");
 /* harmony import */ var _BasePlatform__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../BasePlatform */ "./src/Bridge/Platform/BasePlatform.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
 
 
-class MobileNodejsBridge extends _BasePlatform__WEBPACK_IMPORTED_MODULE_2__.PlatformBridge {
-    open(url) {
-        return (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.of)(new _Object__WEBPACK_IMPORTED_MODULE_1__.BooleanObject(false));
+var MobileNodejsBridge = /** @class */ (function (_super) {
+    __extends(MobileNodejsBridge, _super);
+    function MobileNodejsBridge() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-    loadFile(url, option) {
+    MobileNodejsBridge.prototype.open = function (url) {
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.of)(new _Object__WEBPACK_IMPORTED_MODULE_1__.BooleanObject(false));
+    };
+    MobileNodejsBridge.prototype.loadFile = function (url, option) {
         return (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.of)(new _Object__WEBPACK_IMPORTED_MODULE_1__.ObjectTarget({
             total: 0,
             loaded: 0,
@@ -331,8 +376,10 @@ class MobileNodejsBridge extends _BasePlatform__WEBPACK_IMPORTED_MODULE_2__.Plat
             finish: true,
             file: undefined,
         }));
-    }
-}
+    };
+    return MobileNodejsBridge;
+}(_BasePlatform__WEBPACK_IMPORTED_MODULE_2__.PlatformBridge));
+
 
 
 /***/ }),
@@ -349,9 +396,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "PCNodejsBridge": () => (/* binding */ PCNodejsBridge)
 /* harmony export */ });
 /* harmony import */ var _BasePlatform__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../BasePlatform */ "./src/Bridge/Platform/BasePlatform.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
-class PCNodejsBridge extends _BasePlatform__WEBPACK_IMPORTED_MODULE_0__.PlatformBridge {
-}
+var PCNodejsBridge = /** @class */ (function (_super) {
+    __extends(PCNodejsBridge, _super);
+    function PCNodejsBridge() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return PCNodejsBridge;
+}(_BasePlatform__WEBPACK_IMPORTED_MODULE_0__.PlatformBridge));
+
 
 
 /***/ }),
@@ -368,9 +436,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "MobileWebBridge": () => (/* binding */ MobileWebBridge)
 /* harmony export */ });
 /* harmony import */ var _WebBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WebBase */ "./src/Bridge/Platform/Web/WebBase.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
-class MobileWebBridge extends _WebBase__WEBPACK_IMPORTED_MODULE_0__.WebBridge {
-}
+var MobileWebBridge = /** @class */ (function (_super) {
+    __extends(MobileWebBridge, _super);
+    function MobileWebBridge() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return MobileWebBridge;
+}(_WebBase__WEBPACK_IMPORTED_MODULE_0__.WebBridge));
+
 
 
 /***/ }),
@@ -387,9 +476,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "PCWebBridge": () => (/* binding */ PCWebBridge)
 /* harmony export */ });
 /* harmony import */ var _WebBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WebBase */ "./src/Bridge/Platform/Web/WebBase.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
-class PCWebBridge extends _WebBase__WEBPACK_IMPORTED_MODULE_0__.WebBridge {
-}
+var PCWebBridge = /** @class */ (function (_super) {
+    __extends(PCWebBridge, _super);
+    function PCWebBridge() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return PCWebBridge;
+}(_WebBase__WEBPACK_IMPORTED_MODULE_0__.WebBridge));
+
 
 
 /***/ }),
@@ -409,61 +519,82 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Object__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Object */ "./src/Object/index.ts");
 /* harmony import */ var _BasePlatform__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../BasePlatform */ "./src/Bridge/Platform/BasePlatform.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
 
 
-class WebBridge extends _BasePlatform__WEBPACK_IMPORTED_MODULE_2__.PlatformBridge {
-    open(url) {
-        const result = window.open(url, "__blank");
-        return (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.of)(new _Object__WEBPACK_IMPORTED_MODULE_1__.BooleanObject(result !== null));
+var WebBridge = /** @class */ (function (_super) {
+    __extends(WebBridge, _super);
+    function WebBridge() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
+    WebBridge.prototype.open = function (url) {
+        var result = window.open(url, "__blank");
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.of)(new _Object__WEBPACK_IMPORTED_MODULE_1__.BooleanObject(result !== null));
+    };
     /**
      * 打开文件路径
      * @param url
      * @param option
      * @returns
      */
-    loadFile(url, option) {
-        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable((subscriber) => {
-            const input = document.createElement("input");
+    WebBridge.prototype.loadFile = function (url, option) {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable(function (subscriber) {
+            var input = document.createElement("input");
             //input.value = url.toString();
             input.type = "file";
             input.id = "_temp_input_select";
-            input.accept = option?.type || "*";
+            input.accept = (option === null || option === void 0 ? void 0 : option.type) || "*";
             input.style.display = "none";
             document.body.append(input);
-            input.addEventListener("change", (_) => {
-                const reader = new FileReader();
-                const file = input.files[0];
-                reader.onprogress = (info) => {
-                    const { total, loaded } = info;
-                    const data = reader.result;
+            input.addEventListener("change", function (_) {
+                var reader = new FileReader();
+                var file = input.files[0];
+                reader.onprogress = function (info) {
+                    var total = info.total, loaded = info.loaded;
+                    var data = reader.result;
                     subscriber.next(new _Object__WEBPACK_IMPORTED_MODULE_1__.ObjectTarget({
-                        total,
-                        loaded,
+                        total: total,
+                        loaded: loaded,
                         data: data,
                         finish: false,
-                        file
+                        file: file
                     }));
                 };
-                reader.onload = (info) => {
-                    const data = reader.result;
-                    const { total, loaded } = info;
-                    subscriber.next(new _Object__WEBPACK_IMPORTED_MODULE_1__.ObjectTarget({ total, loaded, data, finish: true, file }));
+                reader.onload = function (info) {
+                    var data = reader.result;
+                    var total = info.total, loaded = info.loaded;
+                    subscriber.next(new _Object__WEBPACK_IMPORTED_MODULE_1__.ObjectTarget({ total: total, loaded: loaded, data: data, finish: true, file: file }));
                     subscriber.complete();
                 };
-                reader.onerror = (ev) => {
+                reader.onerror = function (ev) {
                     subscriber.error(ev);
                 };
                 reader.readAsArrayBuffer(file);
             });
             input.click();
             return {
-                unsubscribe: () => subscriber.unsubscribe(),
+                unsubscribe: function () { return subscriber.unsubscribe(); },
             };
         });
-    }
-}
+    };
+    return WebBridge;
+}(_BasePlatform__WEBPACK_IMPORTED_MODULE_2__.PlatformBridge));
+
 
 
 /***/ }),
@@ -484,7 +615,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * 默认的配置
  */
-const DefaultRunConfig = {
+var DefaultRunConfig = {
     development: true,
     environment: {},
     workConfig: {
@@ -529,6 +660,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Object_valueUtil__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Object/valueUtil */ "./src/Object/valueUtil.ts");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__);
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 
 
 
@@ -537,77 +704,74 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-class Context {
-    status = _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.INIT;
-    platform = _Bridge_Index__WEBPACK_IMPORTED_MODULE_4__["default"];
-    /**
-     * 运行配置文件 todo
-     */
-    runOptions;
-    /**
-     * 上下文变量
-     */
-    runConstant = new Map();
-    /**
-     * 所有work
-     */
-    works = [];
-    /**
-     * 消息传输通道
-     */
-    msgChannel = new rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject();
-    constructor(runOptions) {
+var Context = /** @class */ (function () {
+    function Context(runOptions) {
+        var _this = this;
+        this.status = _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.INIT;
+        this.platform = _Bridge_Index__WEBPACK_IMPORTED_MODULE_4__["default"];
+        /**
+         * 上下文变量
+         */
+        this.runConstant = new Map();
+        /**
+         * 所有work
+         */
+        this.works = [];
+        /**
+         * 消息传输通道
+         */
+        this.msgChannel = new rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject();
+        /**
+         * 需要销毁的Subscription
+         */
+        this.pools = [];
         this.runOptions = (runOptions || _Configs__WEBPACK_IMPORTED_MODULE_2__.DefaultRunConfig);
-        const sub = this.msgChannel.subscribe({
-            next: (value) => this.workMessage(value),
-            error: (error) => this.workError(error),
+        var sub = this.msgChannel.subscribe({
+            next: function (value) { return _this.workMessage(value); },
+            error: function (error) { return _this.workError(error); },
         });
         this.pools.push(sub);
         this.addWork(new _Works_ExtendsWorks_BeginWork__WEBPACK_IMPORTED_MODULE_5__.BeginWork());
     }
-    /**
-     * 需要销毁的Subscription
-     */
-    pools = [];
     /**
      * 增加上下文变量
      * @param from
      * @param name
      * @param value
      */
-    addVariable(from, name, value) {
-        const w_map = this.runConstant.get(from.uuid);
+    Context.prototype.addVariable = function (from, name, value) {
+        var w_map = this.runConstant.get(from.uuid);
         !w_map && this.runConstant.set(from.uuid, new Map());
         this.runConstant.get(from.uuid).set(name, value);
-    }
-    workMessage(input) {
+    };
+    Context.prototype.workMessage = function (input) {
         console.log('msgChannel', input);
-    }
-    workError(error) {
+    };
+    Context.prototype.workError = function (error) {
         console.log('msgChannelError', error);
         this.stopWorkChain();
-    }
-    addWorkLog(tap) {
+    };
+    Context.prototype.addWorkLog = function (tap) {
         return this.msgChannel.subscribe(tap);
-    }
-    sendLog(status) {
-        const log = {
+    };
+    Context.prototype.sendLog = function (status) {
+        var log = {
             date: new Date(),
-            work: status.work.filter(($1) => $1?.name),
+            work: status.work.filter(function ($1) { return $1 === null || $1 === void 0 ? void 0 : $1.name; }),
             desc: status.desc,
             value: status.value,
             error: status.error,
         };
         this.msgChannel.next(log);
-    }
-    addWork(work) {
+    };
+    Context.prototype.addWork = function (work) {
         if (work.constructor.isAble &&
             work.constructor.isAble() === false) {
-            const desc = '[content][Func:addWork][work isAble is false]';
+            var desc = '[content][Func:addWork][work isAble is false]';
             return this.sendLog({
                 content: this,
                 work: [],
-                desc,
+                desc: desc,
                 value: null,
                 error: new Error(desc),
             });
@@ -622,27 +786,41 @@ class Context {
         }
         work.context = this;
         this.works.push(work);
-    }
-    addWorks(...works) {
-        works.forEach(this.addWork);
-    }
-    async prepareWorks() {
-        if (this.status !== _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.INIT) {
-            return this.sendLog({
-                content: this,
-                work: [],
-                desc: '[content][Func:prepareWorks][context status is not init]',
-                value: new _Object__WEBPACK_IMPORTED_MODULE_3__.BooleanObject(false),
-            });
+    };
+    Context.prototype.addWorks = function () {
+        var works = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            works[_i] = arguments[_i];
         }
-        await Promise.all(this.works.map(($1, index, source) => {
-            const before = source[index - 1];
-            const after = source[index + 1];
-            return $1.prepare(before, after);
-        }));
-        this.status = _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.READY;
-    }
-    dispatch(input) {
+        works.forEach(this.addWork);
+    };
+    Context.prototype.prepareWorks = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (this.status !== _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.INIT) {
+                            return [2 /*return*/, this.sendLog({
+                                    content: this,
+                                    work: [],
+                                    desc: '[content][Func:prepareWorks][context status is not init]',
+                                    value: new _Object__WEBPACK_IMPORTED_MODULE_3__.BooleanObject(false),
+                                })];
+                        }
+                        return [4 /*yield*/, Promise.all(this.works.map(function ($1, index, source) {
+                                var before = source[index - 1];
+                                var after = source[index + 1];
+                                return $1.prepare(before, after);
+                            }))];
+                    case 1:
+                        _a.sent();
+                        this.status = _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.READY;
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Context.prototype.dispatch = function (input) {
         if (this.status === _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.INIT) {
             return this.sendLog({
                 content: this,
@@ -651,40 +829,43 @@ class Context {
                 value: new _Object__WEBPACK_IMPORTED_MODULE_3__.BooleanObject(false),
             });
         }
-        const inputWork = this.works[0];
+        var inputWork = this.works[0];
         if (inputWork) {
             inputWork.startRun((0,_Object_valueUtil__WEBPACK_IMPORTED_MODULE_6__.decide)(input));
         }
         this.status = _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.RUNNING;
-    }
+    };
     /**
      * 停止执行
      * 关闭
      */
-    stopWorkChain() {
-        const that = this;
-        return new Promise((resolve, reject) => {
-            const taskUns = this.works.map(($1) => $1.stopWork());
-            let isSuccess = false;
-            let errors = [];
+    Context.prototype.stopWorkChain = function () {
+        var _this = this;
+        var that = this;
+        return new Promise(function (resolve, reject) {
+            var taskUns = _this.works.map(function ($1) {
+                return $1.stopWork();
+            });
+            var isSuccess = false;
+            var errors = [];
             (0,rxjs__WEBPACK_IMPORTED_MODULE_1__.forkJoin)(taskUns)
                 .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.take)(1))
                 .subscribe({
-                next: (values) => {
-                    isSuccess = values.every(($1, index) => {
+                next: function (values) {
+                    isSuccess = values.every(function ($1, index) {
                         if ($1 === true)
                             return true;
-                        errors.push(this.works[index]);
+                        errors.push(_this.works[index]);
                         return false;
                     });
                     resolve(isSuccess);
                 },
-                error: (error) => {
+                error: function (error) {
                     // 关闭报错
                     reject(error);
                 },
-                complete: () => {
-                    this.sendLog({
+                complete: function () {
+                    _this.sendLog({
                         content: that,
                         work: errors,
                         desc: '[content][Func:stopWorkChain]',
@@ -697,11 +878,13 @@ class Context {
                 },
             });
         });
-    }
-    clear() {
-        this.pools.forEach(($1) => $1.unsubscribe());
-    }
-}
+    };
+    Context.prototype.clear = function () {
+        this.pools.forEach(function ($1) { return $1.unsubscribe(); });
+    };
+    return Context;
+}());
+
 
 
 /***/ }),
@@ -729,6 +912,30 @@ __webpack_require__.r(__webpack_exports__);
 // import { BooleanObject } from './BooleanObject';
 // import { decide } from '../../valueUtil';
 // import { Value } from "../../../Object";
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 // @Unit(ControlFlow.ArrayEnum, 'execArray')
 // export class ArrayObject<T>
 //   extends ObjectTarget<Array<T>>
@@ -922,41 +1129,53 @@ __webpack_require__.r(__webpack_exports__);
 // }
 
 
-const ArrayWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(Array, ['length']);
-class _ArrayObject extends ArrayWrapper {
-    constructor(...values) {
-        const first = values[0];
-        const firstIsArray = first instanceof Array;
+var ArrayWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(Array, ['length']);
+var _ArrayObject = /** @class */ (function (_super) {
+    __extends(_ArrayObject, _super);
+    function _ArrayObject() {
+        var values = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            values[_i] = arguments[_i];
+        }
+        var _this = this;
+        var first = values[0];
+        var firstIsArray = first instanceof Array;
         var init = null;
         if (firstIsArray && values.length === 1) {
             init = first;
         }
         else {
-            init = new Array(...values);
+            init = new (Array.bind.apply(Array, __spreadArray([void 0], values, false)))();
         }
-        super(init);
-        this._value = init;
+        _this = _super.call(this, init) || this;
+        _this._value = init;
+        return _this;
     }
-    len() {
+    _ArrayObject.prototype.len = function () {
         return this._value.length;
-    }
-    first() {
+    };
+    _ArrayObject.prototype.first = function () {
         return this._value[0];
-    }
-    last() {
+    };
+    _ArrayObject.prototype.last = function () {
         return this._value[this._value.length - 1];
-    }
-    valueOfIndex(index) {
+    };
+    _ArrayObject.prototype.valueOfIndex = function (index) {
         return this._value[index];
-    }
-    valueOf() {
+    };
+    _ArrayObject.prototype.valueOf = function () {
         return this._value;
-    }
-    get length() {
-        return (0,_valueUtil__WEBPACK_IMPORTED_MODULE_1__.decide)(this._value.length);
-    }
-}
-const ArrayObject = _ArrayObject;
+    };
+    Object.defineProperty(_ArrayObject.prototype, "length", {
+        get: function () {
+            return (0,_valueUtil__WEBPACK_IMPORTED_MODULE_1__.decide)(this._value.length);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return _ArrayObject;
+}(ArrayWrapper));
+var ArrayObject = _ArrayObject;
 
 
 
@@ -974,17 +1193,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "BooleanObject": () => (/* binding */ BooleanObject)
 /* harmony export */ });
 /* harmony import */ var _ObjectTarget__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
-class BooleanObject extends _ObjectTarget__WEBPACK_IMPORTED_MODULE_0__.ObjectTarget {
-    static type;
-    constructor(value = false) {
-        super(value);
-        this._value = value;
+var BooleanObject = /** @class */ (function (_super) {
+    __extends(BooleanObject, _super);
+    function BooleanObject(value) {
+        if (value === void 0) { value = false; }
+        var _this = _super.call(this, value) || this;
+        _this._value = value;
+        return _this;
     }
-    valueOf() {
+    BooleanObject.prototype.valueOf = function () {
         return !!this._value;
-    }
-}
+    };
+    return BooleanObject;
+}(_ObjectTarget__WEBPACK_IMPORTED_MODULE_0__.ObjectTarget));
+
 
 
 /***/ }),
@@ -1001,20 +1239,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "DataObject": () => (/* binding */ DataObject)
 /* harmony export */ });
 /* harmony import */ var _ObjectTarget__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
-class DataObject extends _ObjectTarget__WEBPACK_IMPORTED_MODULE_0__.ObjectTarget {
-    constructor(value = new ArrayBuffer(0)) {
-        super(value);
-        this._value = value;
+var DataObject = /** @class */ (function (_super) {
+    __extends(DataObject, _super);
+    function DataObject(value) {
+        if (value === void 0) { value = new ArrayBuffer(0); }
+        var _this = _super.call(this, value) || this;
+        _this._value = value;
+        return _this;
     }
-    data() {
+    DataObject.prototype.data = function () {
         return this.valueOf();
-    }
+    };
     // @attribute()
-    valueOf() {
+    DataObject.prototype.valueOf = function () {
         return this._value;
-    }
-}
+    };
+    return DataObject;
+}(_ObjectTarget__WEBPACK_IMPORTED_MODULE_0__.ObjectTarget));
+
 
 
 /***/ }),
@@ -1038,6 +1296,21 @@ __webpack_require__.r(__webpack_exports__);
 // import { StringObject } from './StringObject';
 // import { NumberObject } from './NumberObject';
 // import { Unit, onlyDeclaration } from '../../util';
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 // @Unit(ControlFlow.DateEnum)
 // export class DateObject extends ObjectTarget<Date>
 //   implements Value.DateAble, ControlFlow.DateFunction, ControlFlow.ObjectDate {
@@ -1235,23 +1508,27 @@ __webpack_require__.r(__webpack_exports__);
 // }
 
 
-const DateWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(Date);
-class _DateObject extends DateWrapper {
-    constructor(value = new Date()) {
-        super(value);
-        this._value = value;
+var DateWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(Date);
+var _DateObject = /** @class */ (function (_super) {
+    __extends(_DateObject, _super);
+    function _DateObject(value) {
+        if (value === void 0) { value = new Date(); }
+        var _this = _super.call(this, value) || this;
+        _this._value = value;
+        return _this;
     }
-    valueOf() {
+    _DateObject.prototype.valueOf = function () {
         return this._value;
-    }
-    toLocaleString() {
+    };
+    _DateObject.prototype.toLocaleString = function () {
         return (0,_valueUtil__WEBPACK_IMPORTED_MODULE_1__.decide)(this._value.toLocaleDateString());
-    }
-    timestamp() {
+    };
+    _DateObject.prototype.timestamp = function () {
         return (0,_valueUtil__WEBPACK_IMPORTED_MODULE_1__.decide)(this._value.getDate());
-    }
-}
-const DateObject = _DateObject;
+    };
+    return _DateObject;
+}(DateWrapper));
+var DateObject = _DateObject;
 
 
 
@@ -1288,6 +1565,21 @@ __webpack_require__.r(__webpack_exports__);
 //     super(value);
 //     this._value = new Map(value);
 //   }
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 //   // @attribute()
 //   len(): number {
 //     return this._value.size;
@@ -1349,19 +1641,28 @@ __webpack_require__.r(__webpack_exports__);
 // }
 
 
-const MapWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(Map, ['size']);
-class _MapObject extends MapWrapper {
-    valueOf() {
+var MapWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(Map, ['size']);
+var _MapObject = /** @class */ (function (_super) {
+    __extends(_MapObject, _super);
+    function _MapObject() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    _MapObject.prototype.valueOf = function () {
         return this._value;
-    }
-    len() {
+    };
+    _MapObject.prototype.len = function () {
         return this._value.size;
-    }
-    get size() {
-        return (0,_valueUtil__WEBPACK_IMPORTED_MODULE_1__.decide)(this._value.size);
-    }
-}
-const MapObject = _MapObject;
+    };
+    Object.defineProperty(_MapObject.prototype, "size", {
+        get: function () {
+            return (0,_valueUtil__WEBPACK_IMPORTED_MODULE_1__.decide)(this._value.size);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return _MapObject;
+}(MapWrapper));
+var MapObject = _MapObject;
 
 
 
@@ -1379,29 +1680,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "NULLObject": () => (/* binding */ NULLObject)
 /* harmony export */ });
 /* harmony import */ var _ObjectTarget__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
-class NULLObject extends _ObjectTarget__WEBPACK_IMPORTED_MODULE_0__.ObjectTarget {
-    constructor(value = null) {
-        super(value);
-        this._value = value;
+var NULLObject = /** @class */ (function (_super) {
+    __extends(NULLObject, _super);
+    function NULLObject(value) {
+        if (value === void 0) { value = null; }
+        var _this = _super.call(this, value) || this;
+        _this._value = value;
+        return _this;
     }
     // @attribute()
-    valueOf() {
+    NULLObject.prototype.valueOf = function () {
         return this._value;
-    }
-    merge(target) {
+    };
+    NULLObject.prototype.merge = function (target) {
         return new NULLObject(null);
-    }
-    isTruly() {
+    };
+    NULLObject.prototype.isTruly = function () {
         return !!this._value;
-    }
-    isNull() {
+    };
+    NULLObject.prototype.isNull = function () {
         return this._value === null;
-    }
-    isUndefined() {
+    };
+    NULLObject.prototype.isUndefined = function () {
         return this._value === undefined;
-    }
-}
+    };
+    return NULLObject;
+}(_ObjectTarget__WEBPACK_IMPORTED_MODULE_0__.ObjectTarget));
+
 
 
 /***/ }),
@@ -1420,6 +1741,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 /* harmony import */ var _BooleanObject__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Base/BooleanObject.ts");
 /* harmony import */ var _extend_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../extend-util */ "./src/Object/extend-util.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1429,78 +1765,86 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _NumberObject_1;
 
 
 
-const NumberWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_2__.createExtendsConstruct)(Number);
-let _NumberObject = _NumberObject_1 = class _NumberObject extends NumberWrapper {
-    static type;
-    constructor(value = 1) {
-        super(value);
-        this._value = value;
+var NumberWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_2__.createExtendsConstruct)(Number);
+var _NumberObject = /** @class */ (function (_super) {
+    __extends(_NumberObject, _super);
+    function _NumberObject(value) {
+        if (value === void 0) { value = 1; }
+        var _this = _super.call(this, value) || this;
+        _this._value = value;
+        return _this;
     }
-    get [Symbol.toStringTag]() {
-        return super[Symbol.toStringTag];
-    }
-    valueOf() {
+    _NumberObject_1 = _NumberObject;
+    Object.defineProperty(_NumberObject.prototype, Symbol.toStringTag, {
+        get: function () {
+            return _super.prototype[Symbol.toStringTag];
+        },
+        enumerable: false,
+        configurable: true
+    });
+    _NumberObject.prototype.valueOf = function () {
         return this._value;
-    }
-    json() {
-        return super.json();
-    }
-    compare(type, target) {
+    };
+    _NumberObject.prototype.json = function () {
+        return _super.prototype.json.call(this);
+    };
+    _NumberObject.prototype.compare = function (type, target) {
         return new _BooleanObject__WEBPACK_IMPORTED_MODULE_1__.BooleanObject(false);
-    }
-    more(target) {
+    };
+    _NumberObject.prototype.more = function (target) {
         return new _BooleanObject__WEBPACK_IMPORTED_MODULE_1__.BooleanObject(this._value > target._value);
-    }
-    equal(target) {
+    };
+    _NumberObject.prototype.equal = function (target) {
         return new _BooleanObject__WEBPACK_IMPORTED_MODULE_1__.BooleanObject(this._value === target._value);
-    }
-    less(target) {
+    };
+    _NumberObject.prototype.less = function (target) {
         return new _BooleanObject__WEBPACK_IMPORTED_MODULE_1__.BooleanObject(this._value < target._value);
-    }
-    moreEqual(target) {
+    };
+    _NumberObject.prototype.moreEqual = function (target) {
         return new _BooleanObject__WEBPACK_IMPORTED_MODULE_1__.BooleanObject(this._value >= target._value);
-    }
-    lessEqual(target) {
+    };
+    _NumberObject.prototype.lessEqual = function (target) {
         return new _BooleanObject__WEBPACK_IMPORTED_MODULE_1__.BooleanObject(this._value <= target._value);
-    }
-    calc(type, target) {
+    };
+    _NumberObject.prototype.calc = function (type, target) {
         return new _NumberObject_1(0);
-    }
-    plus(target) {
+    };
+    _NumberObject.prototype.plus = function (target) {
         return new _NumberObject_1(this._value + target._value);
-    }
-    reduce(target) {
+    };
+    _NumberObject.prototype.reduce = function (target) {
         return new _NumberObject_1(this._value - target._value);
-    }
-    multi(target) {
+    };
+    _NumberObject.prototype.multi = function (target) {
         return new _NumberObject_1(this._value * target._value);
-    }
-    divide(target) {
+    };
+    _NumberObject.prototype.divide = function (target) {
         return new _NumberObject_1(target._value === 0 ? Infinity : this._value / target._value);
-    }
-};
-__decorate([
-    _util__WEBPACK_IMPORTED_MODULE_0__.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", _BooleanObject__WEBPACK_IMPORTED_MODULE_1__.BooleanObject)
-], _NumberObject.prototype, "compare", null);
-__decorate([
-    _util__WEBPACK_IMPORTED_MODULE_0__.onlyDeclaration,
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", _NumberObject)
-], _NumberObject.prototype, "calc", null);
-_NumberObject = _NumberObject_1 = __decorate([
-    _util__WEBPACK_IMPORTED_MODULE_0__.CalcUnit,
-    _util__WEBPACK_IMPORTED_MODULE_0__.CompareUnit,
-    __metadata("design:paramtypes", [Number])
-], _NumberObject);
-const NumberObject = _NumberObject;
+    };
+    var _NumberObject_1;
+    __decorate([
+        _util__WEBPACK_IMPORTED_MODULE_0__.onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [String, Object]),
+        __metadata("design:returntype", _BooleanObject__WEBPACK_IMPORTED_MODULE_1__.BooleanObject)
+    ], _NumberObject.prototype, "compare", null);
+    __decorate([
+        _util__WEBPACK_IMPORTED_MODULE_0__.onlyDeclaration,
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [String, Object]),
+        __metadata("design:returntype", _NumberObject)
+    ], _NumberObject.prototype, "calc", null);
+    _NumberObject = _NumberObject_1 = __decorate([
+        _util__WEBPACK_IMPORTED_MODULE_0__.CalcUnit,
+        _util__WEBPACK_IMPORTED_MODULE_0__.CompareUnit,
+        __metadata("design:paramtypes", [Number])
+    ], _NumberObject);
+    return _NumberObject;
+}(NumberWrapper));
+var NumberObject = _NumberObject;
 
 
 
@@ -1517,26 +1861,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ObjectTarget": () => (/* binding */ ObjectTarget)
 /* harmony export */ });
-class ObjectTarget {
-    get [Symbol.toStringTag]() {
-        return 'flow-object';
-    }
-    constructor(value = {}) {
+var ObjectTarget = /** @class */ (function () {
+    function ObjectTarget(value) {
+        if (value === void 0) { value = {}; }
         this._value = value;
     }
-    valueOf() {
+    Object.defineProperty(ObjectTarget.prototype, Symbol.toStringTag, {
+        get: function () {
+            return 'flow-object';
+        },
+        enumerable: false,
+        configurable: true
+    });
+    ObjectTarget.prototype.valueOf = function () {
         return this._value;
-    }
-    json() {
-        const { StringObject } = __webpack_require__(/*! ./StringObject */ "./src/Object/Able/Base/StringObject.ts");
+    };
+    ObjectTarget.prototype.json = function () {
+        var StringObject = (__webpack_require__(/*! ./StringObject */ "./src/Object/Able/Base/StringObject.ts").StringObject);
         try {
             return new StringObject(JSON.stringify(this._value));
         }
         catch (error) {
             return new StringObject("{}");
         }
-    }
-}
+    };
+    return ObjectTarget;
+}());
+
 
 
 /***/ }),
@@ -1560,6 +1911,21 @@ __webpack_require__.r(__webpack_exports__);
 // import { ObjectTarget } from './ObjectTarget';
 // import { NumberObject } from './NumberObject';
 // import { decide } from '../../valueUtil';
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 // @Unit(ControlFlow.SetEnum)
 // export class SetObject<T>
 //   extends ObjectTarget<Set<T>>
@@ -1633,23 +1999,30 @@ __webpack_require__.r(__webpack_exports__);
 // }
 
 
-const SetWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(Set, ['size']);
-class _SetObject extends SetWrapper {
-    constructor(source) {
-        super();
-        this._value = new Set(source);
+var SetWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(Set, ['size']);
+var _SetObject = /** @class */ (function (_super) {
+    __extends(_SetObject, _super);
+    function _SetObject(source) {
+        var _this = _super.call(this) || this;
+        _this._value = new Set(source);
+        return _this;
     }
-    len() {
+    _SetObject.prototype.len = function () {
         return this._value.size;
-    }
-    valueOf() {
+    };
+    _SetObject.prototype.valueOf = function () {
         return this._value;
-    }
-    get size() {
-        return (0,_valueUtil__WEBPACK_IMPORTED_MODULE_1__.decide)(this._value.size);
-    }
-}
-const SetObject = _SetObject;
+    };
+    Object.defineProperty(_SetObject.prototype, "size", {
+        get: function () {
+            return (0,_valueUtil__WEBPACK_IMPORTED_MODULE_1__.decide)(this._value.size);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return _SetObject;
+}(SetWrapper));
+var SetObject = _SetObject;
 
 
 
@@ -1674,6 +2047,21 @@ __webpack_require__.r(__webpack_exports__);
 // import { onlyDeclaration, Unit } from '../../util';
 // import { NumberObjectAble, NumberObject } from './NumberObject';
 // import { BooleanObject } from './BooleanObject'
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 // @Unit(ControlFlow.StringEnum)
 // export class StringObject
 //   extends ObjectTarget<string>
@@ -1893,20 +2281,27 @@ __webpack_require__.r(__webpack_exports__);
 // }
 
 
-const StringWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(String, ['length']);
-class _StringObject extends StringWrapper {
-    constructor(value) {
-        super();
-        this._value = value;
+var StringWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(String, ['length']);
+var _StringObject = /** @class */ (function (_super) {
+    __extends(_StringObject, _super);
+    function _StringObject(value) {
+        var _this = _super.call(this) || this;
+        _this._value = value;
+        return _this;
     }
-    valueOf() {
+    _StringObject.prototype.valueOf = function () {
         return this._value;
-    }
-    get length() {
-        return (0,_valueUtil__WEBPACK_IMPORTED_MODULE_1__.decide)(this._value.length);
-    }
-}
-const StringObject = _StringObject;
+    };
+    Object.defineProperty(_StringObject.prototype, "length", {
+        get: function () {
+            return (0,_valueUtil__WEBPACK_IMPORTED_MODULE_1__.decide)(this._value.length);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return _StringObject;
+}(StringWrapper));
+var StringObject = _StringObject;
 
 
 
@@ -1926,7 +2321,7 @@ __webpack_require__.r(__webpack_exports__);
 var ControlFlow;
 (function (ControlFlow) {
     // 比较属性 compare
-    let CompareEnum;
+    var CompareEnum;
     (function (CompareEnum) {
         CompareEnum["More"] = "more";
         CompareEnum["Equal"] = "equal";
@@ -1935,7 +2330,7 @@ var ControlFlow;
         CompareEnum["LessEqual"] = "lessEqual";
     })(CompareEnum = ControlFlow.CompareEnum || (ControlFlow.CompareEnum = {}));
     // 计算属性
-    let CalcEnum;
+    var CalcEnum;
     (function (CalcEnum) {
         CalcEnum["Plus"] = "plus";
         CalcEnum["Reduce"] = "reduce";
@@ -2011,6 +2406,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ "./src/Object/util.ts");
 /* harmony import */ var _Able__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Able */ "./src/Object/Able/index.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2019,6 +2429,15 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 };
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 
@@ -2032,28 +2451,33 @@ var ExtendsMap;
   instance.then(()=>{})
 
  */
-function createExtendsConstruct(target, exclude = []) {
+function createExtendsConstruct(target, exclude) {
+    if (exclude === void 0) { exclude = []; }
     if (!ExtendsMap)
         ExtendsMap = new Map();
     if (ExtendsMap.has(target))
         return ExtendsMap.get(target);
-    const Enum = {};
-    exclude = [...exclude, 'constructor', 'valueOf'];
-    Object.keys(Object.getOwnPropertyDescriptors(target.prototype)).forEach(($1) => {
+    var Enum = {};
+    exclude = __spreadArray(__spreadArray([], exclude, true), ['constructor', 'valueOf'], false);
+    Object.keys(Object.getOwnPropertyDescriptors(target.prototype)).forEach(function ($1) {
         if (!exclude.includes($1) && typeof $1 !== 'symbol') {
             Enum[$1] = $1;
         }
     });
-    let KV = class KV extends _Able__WEBPACK_IMPORTED_MODULE_1__.ObjectTarget {
-        constructor(value = {}) {
-            super();
-            this._value = value ?? {};
+    var KV = /** @class */ (function (_super) {
+        __extends(KV, _super);
+        function KV(value) {
+            if (value === void 0) { value = {}; }
+            var _this = _super.call(this) || this;
+            _this._value = value !== null && value !== void 0 ? value : {};
+            return _this;
         }
-    };
-    KV = __decorate([
-        (0,_util__WEBPACK_IMPORTED_MODULE_0__.Unit)(Enum),
-        __metadata("design:paramtypes", [Object])
-    ], KV);
+        KV = __decorate([
+            (0,_util__WEBPACK_IMPORTED_MODULE_0__.Unit)(Enum),
+            __metadata("design:paramtypes", [Object])
+        ], KV);
+        return KV;
+    }(_Able__WEBPACK_IMPORTED_MODULE_1__.ObjectTarget));
     ExtendsMap.set(target, KV);
     return KV;
 }
@@ -2071,8 +2495,9 @@ function createExtendsConstruct(target, exclude = []) {
   aa.then(res => { })
 
  */
-function createExtendsInstance(target, construct, exclude = []) {
-    const DateDome = createExtendsConstruct(target, exclude);
+function createExtendsInstance(target, construct, exclude) {
+    if (exclude === void 0) { exclude = []; }
+    var DateDome = createExtendsConstruct(target, exclude);
     return Reflect.construct(DateDome, construct);
 }
 
@@ -2145,7 +2570,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const onlyDeclarationTag = 'onlyDeclaration';
+var onlyDeclarationTag = 'onlyDeclaration';
 // export function attribute() {
 //   return function ($1: any, $2: string, descriptor: PropertyDescriptor) {
 //     ($1.constructor.attributes as Set<string>).add($2);
@@ -2174,52 +2599,61 @@ function onlyDeclaration(target, name, dec) {
     dec.value.declaration = onlyDeclarationTag;
 }
 function CompareUnit(host) {
-    Object.keys(_Able_Control__WEBPACK_IMPORTED_MODULE_1__.ControlFlow.CompareEnum).forEach((item) => {
-        const key = _Able_Control__WEBPACK_IMPORTED_MODULE_1__.ControlFlow.CompareEnum[item];
-        const comFunction = host.prototype[key];
+    var _a;
+    Object.keys(_Able_Control__WEBPACK_IMPORTED_MODULE_1__.ControlFlow.CompareEnum).forEach(function (item) {
+        var key = _Able_Control__WEBPACK_IMPORTED_MODULE_1__.ControlFlow.CompareEnum[item];
+        var comFunction = host.prototype[key];
         if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
-            host.prototype[key] = () => new _Able__WEBPACK_IMPORTED_MODULE_0__.BooleanObject(false);
+            host.prototype[key] = function () { return new _Able__WEBPACK_IMPORTED_MODULE_0__.BooleanObject(false); };
         }
     });
-    if (host.prototype.compare?.declaration === onlyDeclarationTag ||
+    if (((_a = host.prototype.compare) === null || _a === void 0 ? void 0 : _a.declaration) === onlyDeclarationTag ||
         !!host.prototype.compare === false)
         host.prototype.compare = function (type, target) {
-            const execFunc = host.prototype[type]?.bind(this);
+            var _a;
+            var execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
             if (execFunc && typeof execFunc === 'function')
                 return execFunc.call(this, target);
             return false;
         };
 }
 function CalcUnit(host) {
-    Object.keys(_Able_Control__WEBPACK_IMPORTED_MODULE_1__.ControlFlow.CalcEnum).forEach((item) => {
-        const key = _Able_Control__WEBPACK_IMPORTED_MODULE_1__.ControlFlow.CalcEnum[item];
-        const comFunction = host.prototype[key];
+    var _a;
+    Object.keys(_Able_Control__WEBPACK_IMPORTED_MODULE_1__.ControlFlow.CalcEnum).forEach(function (item) {
+        var key = _Able_Control__WEBPACK_IMPORTED_MODULE_1__.ControlFlow.CalcEnum[item];
+        var comFunction = host.prototype[key];
         if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
-            host.prototype[key] = () => new _Able__WEBPACK_IMPORTED_MODULE_0__.NumberObject(0);
+            host.prototype[key] = function () { return new _Able__WEBPACK_IMPORTED_MODULE_0__.NumberObject(0); };
         }
     });
-    if (host.prototype.calc?.declaration === onlyDeclarationTag ||
+    if (((_a = host.prototype.calc) === null || _a === void 0 ? void 0 : _a.declaration) === onlyDeclarationTag ||
         !!host.prototype.calc === false)
         host.prototype.calc = function (type, target) {
-            const execFunc = host.prototype[type]?.bind(this);
+            var _a;
+            var execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
             if (execFunc && typeof execFunc === 'function')
                 return execFunc.call(this, target);
             return false;
         };
 }
 function Unit(target) {
-    const execName = 'execFunction';
+    var execName = 'execFunction';
     return function (host) {
-        Object.keys(target).forEach((item) => {
-            const key = target[item];
-            const comFunction = host.prototype[key];
+        var _a;
+        Object.keys(target).forEach(function (item) {
+            var key = target[item];
+            var comFunction = host.prototype[key];
             if (!comFunction || comFunction.declaration === onlyDeclarationTag) {
-                host.prototype[key] = function (...args) {
-                    const value = this.valueOf();
-                    const execFunc = value[key];
-                    let result;
+                host.prototype[key] = function () {
+                    var args = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        args[_i] = arguments[_i];
+                    }
+                    var value = this.valueOf();
+                    var execFunc = value[key];
+                    var result;
                     if (typeof execFunc === 'function') {
-                        result = execFunc.bind(value)(...args);
+                        result = execFunc.bind(value).apply(void 0, args);
                     }
                     else
                         result = value;
@@ -2227,12 +2661,17 @@ function Unit(target) {
                 };
             }
         });
-        if (host.prototype[execName]?.declaration === onlyDeclarationTag ||
+        if (((_a = host.prototype[execName]) === null || _a === void 0 ? void 0 : _a.declaration) === onlyDeclarationTag ||
             !!host.prototype[execName] === false)
-            host.prototype[execName] = function (type, ...args) {
-                const execFunc = host.prototype[type]?.bind(this);
+            host.prototype[execName] = function (type) {
+                var _a;
+                var args = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    args[_i - 1] = arguments[_i];
+                }
+                var execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
                 if (execFunc && typeof execFunc === 'function')
-                    return execFunc(...args);
+                    return execFunc.apply(void 0, args);
                 return false;
             };
     };
@@ -2256,8 +2695,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Able__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Able */ "./src/Object/Able/index.ts");
 
 // type Detail<T> = ValueExtends.IsValue<T> extends true ? T : ValueExtends.GetDeepAchieve<T>
-let ObjectMap = null;
-const init = () => {
+var ObjectMap = null;
+var init = function () {
     if (ObjectMap === null) {
         ObjectMap = {
             '[object Object]': _Able__WEBPACK_IMPORTED_MODULE_0__.ObjectTarget,
@@ -2277,7 +2716,7 @@ const init = () => {
     }
     return ObjectMap;
 };
-const isAbleType = (value) => {
+var isAbleType = function (value) {
     init();
     return Object.prototype.toString.call(value) === '[object flow-object]';
 };
@@ -2288,14 +2727,15 @@ const isAbleType = (value) => {
  * @param force 是否强制包装
  * @returns
  */
-function decide(value, force = false) {
+function decide(value, force) {
+    if (force === void 0) { force = false; }
     init();
     if (isAbleType(value) && force === false)
         return value;
-    const key = Object.prototype.toString.call(value);
-    const Target = ObjectMap[key];
+    var key = Object.prototype.toString.call(value);
+    var Target = ObjectMap[key];
     if (Target) {
-        return new Target(value ?? {});
+        return new Target(value !== null && value !== void 0 ? value : {});
     }
     return new _Able__WEBPACK_IMPORTED_MODULE_0__.ObjectTarget(value);
 }
@@ -2317,7 +2757,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var WorkType;
 (function (WorkType) {
-    let WorkRunStatus;
+    var WorkRunStatus;
     (function (WorkRunStatus) {
         WorkRunStatus[WorkRunStatus["INIT"] = 0] = "INIT";
         // FROZEN,//冻结状态
@@ -2352,6 +2792,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isWeb": () => (/* binding */ isWeb)
 /* harmony export */ });
 /* harmony import */ var _tools__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tools */ "./src/Util/tools.ts");
+var _a;
 /* eslint-disable */
 
 var JSRUNEnvirType;
@@ -2361,7 +2802,7 @@ var JSRUNEnvirType;
     JSRUNEnvirType[JSRUNEnvirType["WEB_MOBILE"] = 26] = "WEB_MOBILE";
     JSRUNEnvirType[JSRUNEnvirType["OTHER"] = 100] = "OTHER";
 })(JSRUNEnvirType || (JSRUNEnvirType = {}));
-const EnvirType = {
+var EnvirType = {
     /**
      * WIndow 浏览器 运行环境
      */
@@ -2411,7 +2852,7 @@ function getJSEnvironment() {
     if (navigator.userAgent) {
         var userAgent = navigator.userAgent;
         var platform, result;
-        const getDesktopOS = () => {
+        var getDesktopOS = function () {
             var pf = navigator.platform;
             if (pf.indexOf('Win') != -1) {
                 // 说明当前是Windows操作系统
@@ -2490,13 +2931,13 @@ function getJSEnvironment() {
         return { name: EnvirType.Other, versionStr: '' };
     }
 }
-const topThis = Function('return this')();
+var topThis = Function('return this')();
 var currentEnir;
 if (topThis.process && (0,_tools__WEBPACK_IMPORTED_MODULE_0__.getObjectType)(topThis.process) === '[object process]') {
     currentEnir = JSRUNEnvirType.NODE_PC;
 }
 else {
-    const typeName = getJSEnvironment()?.name;
+    var typeName = (_a = getJSEnvironment()) === null || _a === void 0 ? void 0 : _a.name;
     switch (typeName) {
         case EnvirType.WINDOWS:
             currentEnir = JSRUNEnvirType.WEB_PC;
@@ -2518,15 +2959,15 @@ else {
             break;
     }
 }
-const isWeb = currentEnir === JSRUNEnvirType.WEB_MOBILE ||
+var isWeb = currentEnir === JSRUNEnvirType.WEB_MOBILE ||
     currentEnir === JSRUNEnvirType.WEB_PC;
-const isNode = currentEnir === JSRUNEnvirType.NODE_PC;
-const isPC = currentEnir === JSRUNEnvirType.NODE_PC ||
+var isNode = currentEnir === JSRUNEnvirType.NODE_PC;
+var isPC = currentEnir === JSRUNEnvirType.NODE_PC ||
     currentEnir === JSRUNEnvirType.WEB_PC;
-const isMobile = currentEnir === JSRUNEnvirType.WEB_MOBILE;
-const isJS = true;
-const PlatformSelect = (select) => {
-    let target;
+var isMobile = currentEnir === JSRUNEnvirType.WEB_MOBILE;
+var isJS = true;
+var PlatformSelect = function (select) {
+    var target;
     if (isWeb) {
         target = select.web;
     }
@@ -2554,6 +2995,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! .. */ "./src/index.ts");
 /* harmony import */ var _Object_valueUtil__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Object/valueUtil */ "./src/Object/valueUtil.ts");
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 
 
 /**
@@ -2564,7 +3016,7 @@ __webpack_require__.r(__webpack_exports__);
 function unpackValue(value) {
     if (!!value === false)
         return '';
-    return value?._value.value.valueOf();
+    return (value === null || value === void 0 ? void 0 : value._value).value.valueOf();
 }
 /**
  * 组合包装
@@ -2574,11 +3026,8 @@ function unpackValue(value) {
  * wrapperValue(null,string) = wrapperValue<string>(null,StringObject) => ChannelObject<StringObject>
  */
 function wrapperValue(input, value) {
-    const nextValue = (0,_Object_valueUtil__WEBPACK_IMPORTED_MODULE_1__.decide)(value);
-    return new ___WEBPACK_IMPORTED_MODULE_0__.ObjectTarget({
-        ...input._value,
-        value: nextValue,
-    });
+    var nextValue = (0,_Object_valueUtil__WEBPACK_IMPORTED_MODULE_1__.decide)(value);
+    return new ___WEBPACK_IMPORTED_MODULE_0__.ObjectTarget(__assign(__assign({}, input._value), { value: nextValue }));
 }
 
 
@@ -2595,16 +3044,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "getObjectType": () => (/* binding */ getObjectType),
 /* harmony export */   "has": () => (/* binding */ has),
-/* harmony export */   "noop": () => (/* binding */ noop)
+/* harmony export */   "noop": () => (/* binding */ noop),
+/* harmony export */   "replaceAll": () => (/* binding */ replaceAll)
 /* harmony export */ });
 /*
  * @Author:
  * @Date: 2022-06-08 19:31:16
  * @Last Modified by: zihao.zhu
- * @Last Modified time: 2022-07-06 15:53:56
+ * @Last Modified time: 2022-07-11 16:38:59
  * @desc : undefined
  */
-const isURL = (url) => {
+var isURL = function (url) {
     var strRegex = '^((https|http|ftp)://)?' + //(https或http或ftp):// 可有可无
         "(([\\w_!~*'()\\.&=+$%-]+: )?[\\w_!~*'()\\.&=+$%-]+@)?" + //ftp的user@  可有可无
         '(([0-9]{1,3}\\.){3}[0-9]{1,3}' + // IP形式的URL- 3位数字.3位数字.3位数字.3位数字
@@ -2625,11 +3075,25 @@ const isURL = (url) => {
         return false;
     }
 };
-const isWindowFilePath = (url) => {
+var isWindowFilePath = function (url) {
     return url.startsWith('file://');
 };
-const has = Function.call.bind(Object.prototype.hasOwnProperty);
-const getObjectType = (source) => Object.prototype.toString.call(source);
+/**
+ *
+ * @param source String.prototype.replaceAll
+ * @param string
+ * @param replaceValue
+ * @returns
+ */
+var replaceAll = function (source, string, replaceValue) {
+    if (source.indexOf(string) >= 0) {
+        source = source.replace(string, replaceValue);
+        return replaceAll(source, string, replaceValue);
+    }
+    return source;
+};
+var has = Function.call.bind(Object.prototype.hasOwnProperty);
+var getObjectType = function (source) { return Object.prototype.toString.call(source); };
 function noop() { }
 
 
@@ -2655,17 +3119,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/Equipment.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
 
 
 
 
 //编码
-class Base64EnCodeWork extends _Instruction__WEBPACK_IMPORTED_MODULE_1__.InstructionMTM {
-    name = "Base64EnCodeWork";
-    run(input) {
-        return new rxjs__WEBPACK_IMPORTED_MODULE_2__.Observable((subscriber) => {
-            let target;
+var Base64EnCodeWork = /** @class */ (function (_super) {
+    __extends(Base64EnCodeWork, _super);
+    function Base64EnCodeWork() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = "Base64EnCodeWork";
+        return _this;
+    }
+    Base64EnCodeWork.prototype.run = function (input) {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_2__.Observable(function (subscriber) {
+            var target;
             if (input === null || input === undefined)
                 target = '';
             else {
@@ -2674,20 +3158,26 @@ class Base64EnCodeWork extends _Instruction__WEBPACK_IMPORTED_MODULE_1__.Instruc
             subscriber.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_4__.wrapperValue)(input, js_base64__WEBPACK_IMPORTED_MODULE_0__.Base64.encode(target)));
             subscriber.complete();
             return {
-                unsubscribe: () => subscriber.unsubscribe(),
+                unsubscribe: function () { return subscriber.unsubscribe(); },
             };
         });
-    }
-    static isAble() {
+    };
+    Base64EnCodeWork.isAble = function () {
         return _Util_Equipment__WEBPACK_IMPORTED_MODULE_3__.isJS;
-    }
-}
+    };
+    return Base64EnCodeWork;
+}(_Instruction__WEBPACK_IMPORTED_MODULE_1__.InstructionMTM));
 //解码
-class Base64DecodeWork extends _Instruction__WEBPACK_IMPORTED_MODULE_1__.InstructionMTM {
-    name = "Base64DecodeWork";
-    run(input) {
-        return new rxjs__WEBPACK_IMPORTED_MODULE_2__.Observable((subscriber) => {
-            let target;
+var Base64DecodeWork = /** @class */ (function (_super) {
+    __extends(Base64DecodeWork, _super);
+    function Base64DecodeWork() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = "Base64DecodeWork";
+        return _this;
+    }
+    Base64DecodeWork.prototype.run = function (input) {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_2__.Observable(function (subscriber) {
+            var target;
             if (input === null || input === undefined)
                 target = '';
             else {
@@ -2696,14 +3186,15 @@ class Base64DecodeWork extends _Instruction__WEBPACK_IMPORTED_MODULE_1__.Instruc
             subscriber.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_4__.wrapperValue)(input, js_base64__WEBPACK_IMPORTED_MODULE_0__.Base64.decode(target)));
             subscriber.complete();
             return {
-                unsubscribe: () => subscriber.unsubscribe(),
+                unsubscribe: function () { return subscriber.unsubscribe(); },
             };
         });
-    }
-    static isAble() {
+    };
+    Base64DecodeWork.isAble = function () {
         return _Util_Equipment__WEBPACK_IMPORTED_MODULE_3__.isJS;
-    }
-}
+    };
+    return Base64DecodeWork;
+}(_Instruction__WEBPACK_IMPORTED_MODULE_1__.InstructionMTM));
 
 
 
@@ -2726,21 +3217,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/Equipment.ts");
 /* harmony import */ var _Object__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Object */ "./src/Object/index.ts");
 /* harmony import */ var _Object_valueUtil__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Object/valueUtil */ "./src/Object/valueUtil.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
 
 
 
 
-class BeginWork extends _Instruction__WEBPACK_IMPORTED_MODULE_1__.InstructionOTO {
-    static OPTION;
-    name = "BeginWork";
-    static _id = 0;
-    // 输入 头部work
-    // inputSubject: Subject<BaseType> = new Subject<BaseType>();
-    inputSubscription;
-    constructor() {
-        super();
-        this.uuid = (0,uuid__WEBPACK_IMPORTED_MODULE_0__.v4)();
+var BeginWork = /** @class */ (function (_super) {
+    __extends(BeginWork, _super);
+    function BeginWork() {
+        var _this = _super.call(this) || this;
+        _this.name = "BeginWork";
+        _this.uuid = (0,uuid__WEBPACK_IMPORTED_MODULE_0__.v4)();
+        return _this;
     }
     // // 处理上一个的传入
     // _connectChannel() {
@@ -2766,19 +3269,22 @@ class BeginWork extends _Instruction__WEBPACK_IMPORTED_MODULE_1__.InstructionOTO
      * 运行 头部
      * @param value
      */
-    startRun(value, runId) {
-        const id = runId ?? (0,uuid__WEBPACK_IMPORTED_MODULE_0__.v4)();
+    BeginWork.prototype.startRun = function (value, runId) {
+        var id = runId !== null && runId !== void 0 ? runId : (0,uuid__WEBPACK_IMPORTED_MODULE_0__.v4)();
         this.nextWork.next(new _Object__WEBPACK_IMPORTED_MODULE_3__.ObjectTarget({
-            id,
+            id: id,
             value: (0,_Object_valueUtil__WEBPACK_IMPORTED_MODULE_4__.decide)(value),
             option: {},
         }));
-    }
-    completeOneLoop() { }
-    static isAble() {
+    };
+    BeginWork.prototype.completeOneLoop = function () { };
+    BeginWork.isAble = function () {
         return _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__.isJS;
-    }
-}
+    };
+    BeginWork._id = 0;
+    return BeginWork;
+}(_Instruction__WEBPACK_IMPORTED_MODULE_1__.InstructionOTO));
+
 
 
 /***/ }),
@@ -2792,7 +3298,7 @@ class BeginWork extends _Instruction__WEBPACK_IMPORTED_MODULE_1__.InstructionOTO
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ FetchWork)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Instruction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
@@ -2801,24 +3307,53 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../.. */ "./src/index.ts");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__);
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 
 
 
 
 
-class FetchWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO {
-    name = 'FetchWork';
-    _getInitOption(input, baseOption = {}) {
-        const initParams = input.valueOf();
-        const { url, method, timeout, data } = initParams;
-        const request = {
-            url,
+var FetchWork = /** @class */ (function (_super) {
+    __extends(FetchWork, _super);
+    function FetchWork() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = 'FetchWork';
+        return _this;
+    }
+    FetchWork.prototype._getInitOption = function (input, baseOption) {
+        if (baseOption === void 0) { baseOption = {}; }
+        var initParams = input.valueOf();
+        var url = initParams.url, method = initParams.method, timeout = initParams.timeout, data = initParams.data;
+        var request = {
+            url: url,
             method: initParams.method || baseOption.method || 'GET',
             timeout: timeout || baseOption.timeout || 10000,
-            headers: {
-                ...(baseOption.headers || {}),
-                ...(initParams.headers || {}),
-            },
+            headers: __assign(__assign({}, (baseOption.headers || {})), (initParams.headers || {})),
         };
         request.data = data;
         if (method && method.toLocaleUpperCase() === 'GET') {
@@ -2827,46 +3362,46 @@ class FetchWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO
         }
         request.timeoutErrorMessage = '请求超时';
         return request;
-    }
-    run(input, baseOption) {
-        const that = this;
-        const options = this._getInitOption(input._value.value, baseOption);
-        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscriber) => {
-            const fetchSub = that.context.platform
+    };
+    FetchWork.prototype.run = function (input, baseOption) {
+        var _this = this;
+        var that = this;
+        var options = this._getInitOption(input._value.value, baseOption);
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable(function (subscriber) {
+            var fetchSub = that.context.platform
                 .fetch(options)
-                .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.tap)((result) => {
-                const { data } = result.valueOf();
-                this.logMsg(`[FetchWork][load:data]${data}`, input);
+                .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.tap)(function (result) {
+                var data = result.valueOf().data;
+                _this.logMsg("[FetchWork][load:data]".concat(data), input);
             }))
                 .subscribe({
-                next: (data) => {
-                    const result = data.valueOf();
+                next: function (data) {
+                    var result = data.valueOf();
                     if (result.error) {
                         subscriber.error(result.error);
                     }
                     else {
-                        subscriber.next(new ___WEBPACK_IMPORTED_MODULE_3__.ObjectTarget({
-                            ...input._value,
-                            value: result.data,
-                        }));
+                        subscriber.next(new ___WEBPACK_IMPORTED_MODULE_3__.ObjectTarget(__assign(__assign({}, input._value), { value: result.data })));
                         subscriber.complete();
                     }
                 },
-                error: (error) => subscriber.error(error),
-                complete: () => subscriber.complete(),
+                error: function (error) { return subscriber.error(error); },
+                complete: function () { return subscriber.complete(); },
             });
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     subscriber.unsubscribe();
                     fetchSub.unsubscribe();
                 },
             };
         });
-    }
-    static isAble() {
+    };
+    FetchWork.isAble = function () {
         return _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__.isJS;
-    }
-}
+    };
+    return FetchWork;
+}(_Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FetchWork);
 
 
 /***/ }),
@@ -2880,7 +3415,7 @@ class FetchWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ LoadFileWork)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Instruction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
@@ -2891,6 +3426,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 
 
 
@@ -2898,50 +3459,51 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-class LoadFileWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO {
-    name = 'LoadFileWork';
-    currentConfig = { type: _Bridge_ConfigTypes__WEBPACK_IMPORTED_MODULE_4__.FileType.All };
-    constructor(config) {
-        super();
-        this.currentConfig = config || { type: _Bridge_ConfigTypes__WEBPACK_IMPORTED_MODULE_4__.FileType.All };
+var LoadFileWork = /** @class */ (function (_super) {
+    __extends(LoadFileWork, _super);
+    function LoadFileWork(config) {
+        var _this = _super.call(this) || this;
+        _this.name = 'LoadFileWork';
+        _this.currentConfig = { type: _Bridge_ConfigTypes__WEBPACK_IMPORTED_MODULE_4__.FileType.All };
+        _this.currentConfig = config || { type: _Bridge_ConfigTypes__WEBPACK_IMPORTED_MODULE_4__.FileType.All };
+        return _this;
     }
-    run(input, option) {
-        const that = this;
-        const runOption = { ...option, ...this.currentConfig };
-        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscriber) => {
-            const target = (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_6__.unpackValue)(input);
-            const sub = that.context.platform
+    LoadFileWork.prototype.run = function (input, option) {
+        var _this = this;
+        var that = this;
+        var runOption = __assign(__assign({}, option), this.currentConfig);
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable(function (subscriber) {
+            var target = (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_6__.unpackValue)(input);
+            var sub = that.context.platform
                 .loadFile(target, runOption)
-                .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.tap)((data) => {
-                const obj = data;
-                const { loaded, total, finish } = obj.valueOf();
-                this.logMsg(`加载进度[load:progress]---：${loaded}/${total} 是否完成：${finish}`, input);
+                .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.tap)(function (data) {
+                var obj = data;
+                var _a = obj.valueOf(), loaded = _a.loaded, total = _a.total, finish = _a.finish;
+                _this.logMsg("\u52A0\u8F7D\u8FDB\u5EA6[load:progress]---\uFF1A".concat(loaded, "/").concat(total, " \u662F\u5426\u5B8C\u6210\uFF1A").concat(finish), input);
             }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.takeLast)(1))
                 .subscribe({
-                next: (obj) => {
-                    const { data, file } = obj.valueOf();
-                    subscriber.next(new _Object__WEBPACK_IMPORTED_MODULE_2__.ObjectTarget({
-                        ...input._value,
-                        value: new _Object__WEBPACK_IMPORTED_MODULE_2__.DataObject(data),
-                        option: { file },
-                    }));
+                next: function (obj) {
+                    var _a = obj.valueOf(), data = _a.data, file = _a.file;
+                    subscriber.next(new _Object__WEBPACK_IMPORTED_MODULE_2__.ObjectTarget(__assign(__assign({}, input._value), { value: new _Object__WEBPACK_IMPORTED_MODULE_2__.DataObject(data), option: { file: file } })));
                     subscriber.complete();
                 },
-                complete: () => subscriber.complete(),
-                error: (err) => subscriber.error(err),
+                complete: function () { return subscriber.complete(); },
+                error: function (err) { return subscriber.error(err); },
             });
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     sub.unsubscribe();
                     subscriber.unsubscribe();
                 },
             };
         });
-    }
-    static isAble() {
+    };
+    LoadFileWork.isAble = function () {
         return _Util_Equipment__WEBPACK_IMPORTED_MODULE_3__.isJS;
-    }
-}
+    };
+    return LoadFileWork;
+}(_Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LoadFileWork);
 
 
 /***/ }),
@@ -2955,7 +3517,7 @@ class LoadFileWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.Instruction
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ OpenURLWork)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Instruction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
@@ -2963,6 +3525,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Object__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Object */ "./src/Object/index.ts");
 /* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/Equipment.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
 
 
@@ -2976,31 +3553,38 @@ __webpack_require__.r(__webpack_exports__);
  * node:可以打开文件 网页
  * web:只能代开网页
  */
-class OpenURLWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO {
-    name = "OpenURLWork";
-    run(input, option) {
-        const that = this;
-        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscriber) => {
-            const target = (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_4__.unpackValue)(input);
-            const sub = that.context.platform
+var OpenURLWork = /** @class */ (function (_super) {
+    __extends(OpenURLWork, _super);
+    function OpenURLWork() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = "OpenURLWork";
+        return _this;
+    }
+    OpenURLWork.prototype.run = function (input, option) {
+        var that = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable(function (subscriber) {
+            var target = (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_4__.unpackValue)(input);
+            var sub = that.context.platform
                 .open(target, option)
                 .subscribe({
-                next: _ => subscriber.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_4__.wrapperValue)(input, new _Object__WEBPACK_IMPORTED_MODULE_2__.BooleanObject(true))),
-                complete: () => subscriber.complete(),
-                error: (err) => subscriber.error(err)
+                next: function (_) { return subscriber.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_4__.wrapperValue)(input, new _Object__WEBPACK_IMPORTED_MODULE_2__.BooleanObject(true))); },
+                complete: function () { return subscriber.complete(); },
+                error: function (err) { return subscriber.error(err); }
             });
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     sub.unsubscribe();
                     subscriber.unsubscribe();
                 },
             };
         });
-    }
-    static isAble() {
+    };
+    OpenURLWork.isAble = function () {
         return _Util_Equipment__WEBPACK_IMPORTED_MODULE_3__.isJS;
-    }
-}
+    };
+    return OpenURLWork;
+}(_Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OpenURLWork);
 
 
 /***/ }),
@@ -3021,6 +3605,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/Equipment.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
 
 
@@ -3030,37 +3629,43 @@ __webpack_require__.r(__webpack_exports__);
  * input => StringObject
  * output => StringObject
  */
-class QRCodeWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO {
-    name = "QRCodeWork";
-    run(input, option) {
-        const that = this;
-        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscriber) => {
-            let target;
+var QRCodeWork = /** @class */ (function (_super) {
+    __extends(QRCodeWork, _super);
+    function QRCodeWork() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = "QRCodeWork";
+        return _this;
+    }
+    QRCodeWork.prototype.run = function (input, option) {
+        var that = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable(function (subscriber) {
+            var target;
             if (input === null || input === undefined)
                 target = "";
             else {
                 target = (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.unpackValue)(input);
             }
-            const sub = that.context.platform
+            var sub = that.context.platform
                 .createQrCode(target, option)
                 .subscribe({
-                next: (res) => subscriber.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.wrapperValue)(input, res._value)),
-                complete: () => subscriber.complete(),
-                error: (err) => subscriber.error(err),
+                next: function (res) { return subscriber.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.wrapperValue)(input, res._value)); },
+                complete: function () { return subscriber.complete(); },
+                error: function (err) { return subscriber.error(err); },
             });
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     sub.unsubscribe();
                     subscriber.unsubscribe();
                 },
             };
         });
-    }
-    static isAble() {
+    };
+    QRCodeWork.isAble = function () {
         return _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__.isJS;
         // return isNode || isWeb || isRN
-    }
-}
+    };
+    return QRCodeWork;
+}(_Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO));
 
 
 
@@ -3075,13 +3680,30 @@ class QRCodeWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOT
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ RunCommandWork)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Instruction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/Equipment.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
+/* harmony import */ var _Util_tools__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Util/tools */ "./src/Util/tools.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
 
 
 
@@ -3094,21 +3716,19 @@ __webpack_require__.r(__webpack_exports__);
  * @returns
  */
 function handleEvalCommand(template, params, config, runOption) {
-    const input = (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.unpackValue)(params);
-    let runCommand = template;
+    var input = (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.unpackValue)(params);
+    var runCommand = template;
     if (typeof input === 'string') {
-        const placeholder = config['*'];
+        var placeholder = config['*'];
         if (placeholder) {
-            const reg = new RegExp(placeholder, 'g');
-            runCommand = runCommand.replace(reg, input);
+            runCommand = (0,_Util_tools__WEBPACK_IMPORTED_MODULE_4__.replaceAll)(runCommand, placeholder, input);
         }
     }
     else {
-        Object.keys(config).forEach((key) => {
-            const placeholder = config[key];
-            const reg = new RegExp(placeholder, 'g');
-            const value = input[key];
-            runCommand = runCommand.replace(reg, value);
+        Object.keys(config).forEach(function (key) {
+            var placeholder = config[key];
+            var value = input[key];
+            runCommand = (0,_Util_tools__WEBPACK_IMPORTED_MODULE_4__.replaceAll)(runCommand, placeholder, value);
         });
     }
     return runCommand;
@@ -3136,55 +3756,64 @@ function handleEvalCommand(template, params, config, runOption) {
  *     return `${A} * 2 + ${B}`
  *  })
  */
-class RunCommandWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO {
-    template = '';
-    name = 'RunCommandWork';
-    paramsConfig = {};
-    callBack = undefined;
-    constructor(...args) {
-        super();
+var RunCommandWork = /** @class */ (function (_super) {
+    __extends(RunCommandWork, _super);
+    function RunCommandWork() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var _this = _super.call(this) || this;
+        _this.template = '';
+        _this.name = 'RunCommandWork';
+        _this.paramsConfig = {};
+        _this.callBack = undefined;
         if (typeof args[0] === 'string') {
-            const template = args[0] || '$I$';
-            const paramsConfig = args[1] || { '*': '$I$' };
-            this.template = template;
-            this.paramsConfig = paramsConfig;
+            var template = args[0] || '$I$';
+            var paramsConfig = args[1] || { '*': '$I$' };
+            _this.template = template;
+            _this.paramsConfig = paramsConfig;
         }
         else if (typeof args[0] === 'function') {
-            this.callBack = args[0];
+            _this.callBack = args[0];
         }
+        return _this;
     }
-    run(command, option) {
-        const that = this;
-        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscriber) => {
-            let target;
+    RunCommandWork.prototype.run = function (command, option) {
+        var _this = this;
+        var that = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable(function (subscriber) {
+            var target;
             if (that.callBack && typeof that.callBack === 'function') {
-                target = this.callBack((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.unpackValue)(command), option);
+                target = _this.callBack((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.unpackValue)(command), option);
             }
             else
-                target = handleEvalCommand(that.template, command, this.paramsConfig, option);
-            const sub = that.context.platform
+                target = handleEvalCommand(that.template, command, _this.paramsConfig, option);
+            var sub = that.context.platform
                 .runCommand(target)
                 .subscribe({
-                next: (info) => {
-                    this.logMsg(`执行command：${info.error ? '失败' : '成功'}。结果：${info.result}`, command);
+                next: function (info) {
+                    _this.logMsg("\u6267\u884Ccommand\uFF1A".concat(info.error ? '失败' : '成功', "\u3002\u7ED3\u679C\uFF1A").concat(info.result), command);
                     subscriber.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.wrapperValue)(command, (info.error ? undefined : info.result)));
                 },
-                complete: () => subscriber.complete(),
-                error: (err) => subscriber.error(err),
+                complete: function () { return subscriber.complete(); },
+                error: function (err) { return subscriber.error(err); },
             });
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     sub.unsubscribe();
                     subscriber.unsubscribe();
                 },
             };
         });
-    }
-    static isAble() {
+    };
+    RunCommandWork.isAble = function () {
         return _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__.isJS;
         // return isNode || isWeb || isRN || isElectron
-    }
-}
+    };
+    return RunCommandWork;
+}(_Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RunCommandWork);
 
 
 /***/ }),
@@ -3209,104 +3838,126 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Object_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Object/index */ "./src/Object/index.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
 /* harmony import */ var _Instruction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
 
 
 
 
 // 一直发
-class IntervalWork extends _Instruction__WEBPACK_IMPORTED_MODULE_4__.InstructionOTM {
-    name = "IntervalWork";
-    intervalTime;
-    maxCount;
-    notifier;
-    constructor(interval, max = Infinity, notifier) {
-        super();
-        this.intervalTime = interval || 1000;
-        this.maxCount = max;
-        this.notifier = notifier || rxjs__WEBPACK_IMPORTED_MODULE_0__.NEVER;
+var IntervalWork = /** @class */ (function (_super) {
+    __extends(IntervalWork, _super);
+    function IntervalWork(interval, max, notifier) {
+        if (max === void 0) { max = Infinity; }
+        var _this = _super.call(this) || this;
+        _this.name = "IntervalWork";
+        _this.intervalTime = interval || 1000;
+        _this.maxCount = max;
+        _this.notifier = notifier || rxjs__WEBPACK_IMPORTED_MODULE_0__.NEVER;
+        return _this;
     }
-    run(input) {
-        const intervalTime = parseInt((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.unpackValue)(input)) || this.intervalTime || 1000;
-        const that = this;
-        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable(observer => {
-            const sub = (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.interval)(intervalTime, rxjs__WEBPACK_IMPORTED_MODULE_0__.asyncScheduler).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.take)(that.maxCount), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.takeUntil)(this.notifier)).subscribe({
-                next: (value) => observer.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.wrapperValue)(input, value)),
-                error: (error) => observer.error(error),
-                complete: () => observer.complete()
+    IntervalWork.prototype.run = function (input) {
+        var _this = this;
+        var intervalTime = parseInt((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.unpackValue)(input)) || this.intervalTime || 1000;
+        var that = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable(function (observer) {
+            var sub = (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.interval)(intervalTime, rxjs__WEBPACK_IMPORTED_MODULE_0__.asyncScheduler).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.take)(that.maxCount), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.takeUntil)(_this.notifier)).subscribe({
+                next: function (value) { return observer.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.wrapperValue)(input, value)); },
+                error: function (error) { return observer.error(error); },
+                complete: function () { return observer.complete(); }
             });
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     observer.unsubscribe();
                     sub.unsubscribe();
                 }
             };
         });
-    }
-}
+    };
+    return IntervalWork;
+}(_Instruction__WEBPACK_IMPORTED_MODULE_4__.InstructionOTM));
 // 定时发
-class TimeoutWork extends _Instruction__WEBPACK_IMPORTED_MODULE_4__.InstructionOTO {
-    name = "TimeoutWork";
-    intervalTime;
-    constructor(interval) {
-        super();
-        this.intervalTime = interval || 1000;
+var TimeoutWork = /** @class */ (function (_super) {
+    __extends(TimeoutWork, _super);
+    function TimeoutWork(interval) {
+        var _this = _super.call(this) || this;
+        _this.name = "TimeoutWork";
+        _this.intervalTime = interval || 1000;
+        return _this;
     }
-    run(input) {
-        const intervalTime = parseInt((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.unpackValue)(input)) || this.intervalTime || 1000;
-        const that = this;
-        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable(observer => {
-            const sub = (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.interval)(intervalTime, rxjs__WEBPACK_IMPORTED_MODULE_0__.asyncScheduler)
+    TimeoutWork.prototype.run = function (input) {
+        var intervalTime = parseInt((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.unpackValue)(input)) || this.intervalTime || 1000;
+        var that = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable(function (observer) {
+            var sub = (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.interval)(intervalTime, rxjs__WEBPACK_IMPORTED_MODULE_0__.asyncScheduler)
                 .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.take)(1)).subscribe({
-                next: (value) => {
+                next: function (value) {
                     observer.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.wrapperValue)(input, value));
                 },
-                error: (error) => observer.error(error),
-                complete: () => observer.complete()
+                error: function (error) { return observer.error(error); },
+                complete: function () { return observer.complete(); }
             });
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     observer.unsubscribe();
                     sub.unsubscribe();
                 }
             };
         });
-    }
-}
+    };
+    return TimeoutWork;
+}(_Instruction__WEBPACK_IMPORTED_MODULE_4__.InstructionOTO));
 // 延迟 然后一直发
-class DelayIntervalWork extends _Instruction__WEBPACK_IMPORTED_MODULE_4__.InstructionOTM {
-    name = 'DelayIntervalWork';
-    intervalTime;
-    maxCount;
-    delayTime;
-    notifier;
-    constructor(delay = 0, interval = 1000, max = Infinity, notifier) {
-        super();
-        this.intervalTime = interval || 1000;
-        this.maxCount = max;
-        this.delayTime = delay || 0;
-        this.notifier = notifier || rxjs__WEBPACK_IMPORTED_MODULE_0__.NEVER;
+var DelayIntervalWork = /** @class */ (function (_super) {
+    __extends(DelayIntervalWork, _super);
+    function DelayIntervalWork(delay, interval, max, notifier) {
+        if (delay === void 0) { delay = 0; }
+        if (interval === void 0) { interval = 1000; }
+        if (max === void 0) { max = Infinity; }
+        var _this = _super.call(this) || this;
+        _this.name = 'DelayIntervalWork';
+        _this.intervalTime = interval || 1000;
+        _this.maxCount = max;
+        _this.delayTime = delay || 0;
+        _this.notifier = notifier || rxjs__WEBPACK_IMPORTED_MODULE_0__.NEVER;
+        return _this;
     }
-    run(input) {
-        const intervalTime = parseInt((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.unpackValue)(input)) || this.intervalTime || 1000;
-        const that = this;
-        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable(observer => {
-            const sub = (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.timer)(that.delayTime, intervalTime, rxjs__WEBPACK_IMPORTED_MODULE_0__.asyncScheduler)
-                .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.take)(that.maxCount), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.takeUntil)(this.notifier))
+    DelayIntervalWork.prototype.run = function (input) {
+        var _this = this;
+        var intervalTime = parseInt((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.unpackValue)(input)) || this.intervalTime || 1000;
+        var that = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable(function (observer) {
+            var sub = (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.timer)(that.delayTime, intervalTime, rxjs__WEBPACK_IMPORTED_MODULE_0__.asyncScheduler)
+                .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.take)(that.maxCount), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.takeUntil)(_this.notifier))
                 .subscribe({
-                next: (value) => observer.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.wrapperValue)(input, new _Object_index__WEBPACK_IMPORTED_MODULE_2__.NumberObject(value))),
-                error: (error) => observer.error(error),
-                complete: () => observer.complete()
+                next: function (value) { return observer.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.wrapperValue)(input, new _Object_index__WEBPACK_IMPORTED_MODULE_2__.NumberObject(value))); },
+                error: function (error) { return observer.error(error); },
+                complete: function () { return observer.complete(); }
             });
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     observer.unsubscribe();
                     sub.unsubscribe();
                 }
             };
         });
-    }
-}
+    };
+    return DelayIntervalWork;
+}(_Instruction__WEBPACK_IMPORTED_MODULE_4__.InstructionOTM));
 
 
 
@@ -3337,6 +3988,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _WorkUnit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./WorkUnit */ "./src/Works/WorkUnit.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
 /* harmony import */ var _Util_tools__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Util/tools */ "./src/Util/tools.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 
 
 
@@ -3351,114 +4017,124 @@ __webpack_require__.r(__webpack_exports__);
  * 一次输入--->多次输出 InstructionOTM
  * n次输入---->m次输出 InstructionMTM
  */
-class Instruction extends rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject {
-    name = 'Instruction';
-    static _id = 0;
-    id = Instruction._id++;
-    uuid;
-    beforeWork;
-    nextWork;
-    context;
-    runSubscriptions = new Map();
-    pools = []; // 订阅自己的
-    // 运行配置 config:OPTION todo
-    config = { development: true };
-    constructor() {
-        super();
-        this.uuid = (0,uuid__WEBPACK_IMPORTED_MODULE_4__.v4)();
+var Instruction = /** @class */ (function (_super) {
+    __extends(Instruction, _super);
+    function Instruction() {
+        var _this = _super.call(this) || this;
+        _this.name = 'Instruction';
+        _this.id = Instruction._id++;
+        _this.runSubscriptions = new Map();
+        _this.pools = []; // 订阅自己的
+        // 运行配置 config:OPTION todo
+        _this.config = { development: true };
+        _this.uuid = (0,uuid__WEBPACK_IMPORTED_MODULE_4__.v4)();
+        return _this;
     }
     // 连接上下通道
-    prepare(before, next) {
+    Instruction.prototype.prepare = function (before, next) {
+        var _a;
         this.beforeWork = before;
         this.nextWork = next;
-        this.config = this.context?.runOptions || {};
+        this.config = ((_a = this.context) === null || _a === void 0 ? void 0 : _a.runOptions) || {};
         this._connectChannel();
         return Promise.resolve();
-    }
+    };
     // 处理上一个的传入
-    _connectChannel() {
-        const that = this;
+    Instruction.prototype._connectChannel = function () {
+        var _this = this;
+        var that = this;
         // // 处理数据
-        const sub2 = this.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.tap)((value) => {
-            this.config?.development &&
-                that.context?.sendLog({
+        var sub2 = this.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.tap)(function (value) {
+            var _a, _b;
+            ((_a = _this.config) === null || _a === void 0 ? void 0 : _a.development) &&
+                ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                     work: [that],
-                    content: this.context,
+                    content: _this.context,
                     desc: '[Work:preRun]->接受到数据',
                     value: value,
-                });
+                }));
         })).subscribe({
-            complete: () => { },
-            error: (error) => that.error(error),
-            next: (value) => that._run(value),
+            complete: function () { },
+            error: function (error) { return that.error(error); },
+            next: function (value) { return that._run(value); },
         });
         this.pools.push(sub2);
-    }
-    _run(value) {
-        const sendLog = (desc, _value, _error) => {
-            that.config?.development &&
-                that.context?.sendLog({
+    };
+    Instruction.prototype._run = function (value) {
+        var _this = this;
+        var _a;
+        var sendLog = function (desc, _value, _error) {
+            var _a, _b;
+            ((_a = that.config) === null || _a === void 0 ? void 0 : _a.development) &&
+                ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                     work: [that],
-                    content: this.context,
+                    content: _this.context,
                     desc: desc,
                     value: _value || value,
                     error: _error,
-                });
+                }));
         };
         value = this.nextValue(value) || value;
-        const that = this;
-        const nextOption = (this.config?.workConfig || {})[this.name] || {};
-        const execFunc = (0,_Util_Equipment__WEBPACK_IMPORTED_MODULE_2__.PlatformSelect)({
-            web: () => (that.web_run ??
-                (that.run || _Util_tools__WEBPACK_IMPORTED_MODULE_7__.noop)).bind(that)(value, nextOption),
-            node: () => (that.node_run ??
-                (that.run || _Util_tools__WEBPACK_IMPORTED_MODULE_7__.noop)).bind(that)(value, nextOption),
-            other: () => (that.run || _Util_tools__WEBPACK_IMPORTED_MODULE_7__.noop).bind(that)(value, nextOption),
+        var that = this;
+        var nextOption = (((_a = this.config) === null || _a === void 0 ? void 0 : _a.workConfig) || {})[this.name] || {};
+        var execFunc = (0,_Util_Equipment__WEBPACK_IMPORTED_MODULE_2__.PlatformSelect)({
+            web: function () {
+                var _a;
+                return ((_a = that.web_run) !== null && _a !== void 0 ? _a : (that.run || _Util_tools__WEBPACK_IMPORTED_MODULE_7__.noop)).bind(that)(value, nextOption);
+            },
+            node: function () {
+                var _a;
+                return ((_a = that.node_run) !== null && _a !== void 0 ? _a : (that.run || _Util_tools__WEBPACK_IMPORTED_MODULE_7__.noop)).bind(that)(value, nextOption);
+            },
+            other: function () {
+                return (that.run || _Util_tools__WEBPACK_IMPORTED_MODULE_7__.noop).bind(that)(value, nextOption);
+            },
         });
         sendLog('[Work][Func:run]->入口', value);
-        const uuid = (0,uuid__WEBPACK_IMPORTED_MODULE_4__.v4)();
-        const runSub = execFunc(value)
+        var uuid = (0,uuid__WEBPACK_IMPORTED_MODULE_4__.v4)();
+        var runSub = execFunc(value)
             .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.tap)(function (_value) {
             sendLog('[Work][Func:run]->结果', _value);
         }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.observeOn)(rxjs__WEBPACK_IMPORTED_MODULE_1__.asyncScheduler))
             .subscribe({
-            complete: () => {
-                const unit = that.runSubscriptions.get(uuid);
-                unit?.sub.unsubscribe();
+            complete: function () {
+                var unit = that.runSubscriptions.get(uuid);
+                unit === null || unit === void 0 ? void 0 : unit.sub.unsubscribe();
                 that.runSubscriptions.delete(uuid);
             },
-            error: (err) => {
+            error: function (err) {
                 sendLog('[Work][Func:run]->执行错误', value, err);
                 that.completeOneLoop(value, new _Object__WEBPACK_IMPORTED_MODULE_0__.NULLObject(), false);
             },
-            next: (res) => {
+            next: function (res) {
+                var _a;
                 sendLog('[Work][Func:run]->将执行下一个Work', res);
                 that.completeOneLoop(value, res, true);
-                that.nextWork?.next(res);
+                (_a = that.nextWork) === null || _a === void 0 ? void 0 : _a.next(res);
             },
         });
-        const unit = new _WorkUnit__WEBPACK_IMPORTED_MODULE_5__.WorkUnit(that.context, that, runSub, uuid);
+        var unit = new _WorkUnit__WEBPACK_IMPORTED_MODULE_5__.WorkUnit(that.context, that, runSub, uuid);
         this.runSubscriptions.set(unit.uuid, unit);
-    }
-    stopWork() {
-        const that = this;
-        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscribe) => {
-            that.runSubscriptions.forEach((value) => {
-                value?.sub.unsubscribe();
+    };
+    Instruction.prototype.stopWork = function () {
+        var that = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable(function (subscribe) {
+            that.runSubscriptions.forEach(function (value) {
+                value === null || value === void 0 ? void 0 : value.sub.unsubscribe();
             });
             subscribe.next(true);
             subscribe.complete();
             return {
-                unsubscribe: () => subscribe.unsubscribe(),
+                unsubscribe: function () { return subscribe.unsubscribe(); },
             };
         });
-    }
-    clear() {
-        this.pools && this.pools.forEach(($1) => $1.unsubscribe());
+    };
+    Instruction.prototype.clear = function () {
+        this.pools && this.pools.forEach(function ($1) { return $1.unsubscribe(); });
         this.pools.length = 0;
         this.unsubscribe();
-    }
-    error(err) {
+    };
+    Instruction.prototype.error = function (err) {
         this.context &&
             this.context.sendLog({
                 work: [this],
@@ -3467,23 +4143,24 @@ class Instruction extends rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject {
                 date: new Date(),
                 value: new _Object__WEBPACK_IMPORTED_MODULE_0__.StringObject(err.message),
             });
-    }
-    addVariable(name, value) {
+    };
+    Instruction.prototype.addVariable = function (name, value) {
         this.context && this.context.addVariable(this, name, value);
-    }
-    logMsg(msg, input) {
-        this.config?.development &&
-            this.context?.sendLog({
+    };
+    Instruction.prototype.logMsg = function (msg, input) {
+        var _a, _b;
+        ((_a = this.config) === null || _a === void 0 ? void 0 : _a.development) &&
+            ((_b = this.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                 work: [this],
                 content: this.context,
                 desc: msg,
                 value: (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_6__.wrapperValue)(input, null),
-            });
-    }
+            }));
+    };
     //重写
-    next(value) {
+    Instruction.prototype.next = function (value) {
         if (this.closed === false) {
-            super.next(value);
+            _super.prototype.next.call(this, value);
         }
         else {
             this.context.sendLog({
@@ -3493,79 +4170,98 @@ class Instruction extends rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject {
                 value: (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_6__.wrapperValue)(value, null),
             });
         }
-    }
+    };
     // 声明周期
     // 处理输入的值
-    nextValue(input) {
+    Instruction.prototype.nextValue = function (input) {
         return input;
-    }
-    completeOneLoop(input, toValue, success) { }
+    };
+    Instruction.prototype.completeOneLoop = function (input, toValue, success) { };
     // 基础
-    toString() {
-        return `[${this.name}:${this.id}]`;
-    }
-    isAble() {
+    Instruction.prototype.toString = function () {
+        return "[".concat(this.name, ":").concat(this.id, "]");
+    };
+    Instruction.prototype.isAble = function () {
         return this.__proto__.isAble();
-    }
-    static isAble() {
+    };
+    Instruction.isAble = function () {
         return _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__.isJS;
+    };
+    Instruction._id = 0;
+    return Instruction;
+}(rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject));
+
+var InstructionOTO = /** @class */ (function (_super) {
+    __extends(InstructionOTO, _super);
+    function InstructionOTO() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-}
-class InstructionOTO extends Instruction {
-    nextValue(input) {
+    InstructionOTO.prototype.nextValue = function (input) {
         return input;
-    }
-    completeOneLoop(input, toValue, success) { }
-    run(input) {
-        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscriber) => {
+    };
+    InstructionOTO.prototype.completeOneLoop = function (input, toValue, success) { };
+    InstructionOTO.prototype.run = function (input) {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable(function (subscriber) {
             subscriber.next(input);
             subscriber.complete();
             return {
-                unsubscribe: () => subscriber.unsubscribe(),
+                unsubscribe: function () { return subscriber.unsubscribe(); },
             };
         });
+    };
+    return InstructionOTO;
+}(Instruction));
+
+var InstructionOTM = /** @class */ (function (_super) {
+    __extends(InstructionOTM, _super);
+    function InstructionOTM() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = 'MultipleInstruction';
+        return _this;
     }
-}
-class InstructionOTM extends Instruction {
-    // 声明可以进行配置的属性 todo
-    static OPTION;
-    name = 'MultipleInstruction';
-    nextValue(input) {
+    InstructionOTM.prototype.nextValue = function (input) {
         return input;
-    }
-    completeOneLoop(input, next, success) { }
-    run(input) {
-        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscriber) => {
+    };
+    InstructionOTM.prototype.completeOneLoop = function (input, next, success) { };
+    InstructionOTM.prototype.run = function (input) {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable(function (subscriber) {
             // subscriber.next(input);
             // 输出多次
             subscriber.next(input);
             subscriber.complete();
             return {
-                unsubscribe: () => subscriber.unsubscribe(),
+                unsubscribe: function () { return subscriber.unsubscribe(); },
             };
         });
+    };
+    return InstructionOTM;
+}(Instruction));
+
+var InstructionMTM = /** @class */ (function (_super) {
+    __extends(InstructionMTM, _super);
+    function InstructionMTM() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = 'MultipleInstruction';
+        return _this;
     }
-}
-class InstructionMTM extends Instruction {
-    // 声明可以进行配置的属性 todo
-    static OPTION;
-    name = 'MultipleInstruction';
-    nextValue(input) {
+    InstructionMTM.prototype.nextValue = function (input) {
         return input;
-    }
-    completeOneLoop(input, next, success) { }
-    run(input) {
-        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscriber) => {
+    };
+    InstructionMTM.prototype.completeOneLoop = function (input, next, success) { };
+    InstructionMTM.prototype.run = function (input) {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable(function (subscriber) {
             // subscriber.next(input);
             // 输出多次
             subscriber.next(input);
             subscriber.complete();
             return {
-                unsubscribe: () => subscriber.unsubscribe(),
+                unsubscribe: function () { return subscriber.unsubscribe(); },
             };
         });
-    }
-}
+    };
+    return InstructionMTM;
+}(Instruction));
+
 
 
 /***/ }),
@@ -3584,18 +4280,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "uuid");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
 
-class WorkUnit {
-    context;
-    work;
-    uuid;
-    sub;
-    constructor(context, work, sub, uuid) {
+var WorkUnit = /** @class */ (function () {
+    function WorkUnit(context, work, sub, uuid) {
         this.context = context;
         this.work = work;
         this.sub = sub;
-        this.uuid = uuid ?? (0,uuid__WEBPACK_IMPORTED_MODULE_0__.v4)();
+        this.uuid = uuid !== null && uuid !== void 0 ? uuid : (0,uuid__WEBPACK_IMPORTED_MODULE_0__.v4)();
     }
-}
+    return WorkUnit;
+}());
+
 
 
 /***/ }),
@@ -3672,6 +4366,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // 1
+new Promise(function (a) {
+    a(1);
+});
 
 
 /***/ }),

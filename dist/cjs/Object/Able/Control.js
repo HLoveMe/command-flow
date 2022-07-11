@@ -4,7 +4,7 @@ exports.ControlFlow = void 0;
 var ControlFlow;
 (function (ControlFlow) {
     // 比较属性 compare
-    let CompareEnum;
+    var CompareEnum;
     (function (CompareEnum) {
         CompareEnum["More"] = "more";
         CompareEnum["Equal"] = "equal";
@@ -13,7 +13,7 @@ var ControlFlow;
         CompareEnum["LessEqual"] = "lessEqual";
     })(CompareEnum = ControlFlow.CompareEnum || (ControlFlow.CompareEnum = {}));
     // 计算属性
-    let CalcEnum;
+    var CalcEnum;
     (function (CalcEnum) {
         CalcEnum["Plus"] = "plus";
         CalcEnum["Reduce"] = "reduce";

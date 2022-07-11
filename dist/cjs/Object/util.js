@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Unit = exports.CalcUnit = exports.CompareUnit = exports.onlyDeclaration = exports.onlyDeclarationTag = void 0;
-const Able_1 = require("./Able");
-const Control_1 = require("./Able/Control");
-const valueUtil_1 = require("./valueUtil");
+var Able_1 = require("./Able");
+var Control_1 = require("./Able/Control");
+var valueUtil_1 = require("./valueUtil");
 exports.onlyDeclarationTag = 'onlyDeclaration';
 // export function attribute() {
 //   return function ($1: any, $2: string, descriptor: PropertyDescriptor) {
@@ -34,17 +34,19 @@ function onlyDeclaration(target, name, dec) {
 }
 exports.onlyDeclaration = onlyDeclaration;
 function CompareUnit(host) {
-    Object.keys(Control_1.ControlFlow.CompareEnum).forEach((item) => {
-        const key = Control_1.ControlFlow.CompareEnum[item];
-        const comFunction = host.prototype[key];
+    var _a;
+    Object.keys(Control_1.ControlFlow.CompareEnum).forEach(function (item) {
+        var key = Control_1.ControlFlow.CompareEnum[item];
+        var comFunction = host.prototype[key];
         if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
-            host.prototype[key] = () => new Able_1.BooleanObject(false);
+            host.prototype[key] = function () { return new Able_1.BooleanObject(false); };
         }
     });
-    if (host.prototype.compare?.declaration === exports.onlyDeclarationTag ||
+    if (((_a = host.prototype.compare) === null || _a === void 0 ? void 0 : _a.declaration) === exports.onlyDeclarationTag ||
         !!host.prototype.compare === false)
         host.prototype.compare = function (type, target) {
-            const execFunc = host.prototype[type]?.bind(this);
+            var _a;
+            var execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
             if (execFunc && typeof execFunc === 'function')
                 return execFunc.call(this, target);
             return false;
@@ -52,17 +54,19 @@ function CompareUnit(host) {
 }
 exports.CompareUnit = CompareUnit;
 function CalcUnit(host) {
-    Object.keys(Control_1.ControlFlow.CalcEnum).forEach((item) => {
-        const key = Control_1.ControlFlow.CalcEnum[item];
-        const comFunction = host.prototype[key];
+    var _a;
+    Object.keys(Control_1.ControlFlow.CalcEnum).forEach(function (item) {
+        var key = Control_1.ControlFlow.CalcEnum[item];
+        var comFunction = host.prototype[key];
         if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
-            host.prototype[key] = () => new Able_1.NumberObject(0);
+            host.prototype[key] = function () { return new Able_1.NumberObject(0); };
         }
     });
-    if (host.prototype.calc?.declaration === exports.onlyDeclarationTag ||
+    if (((_a = host.prototype.calc) === null || _a === void 0 ? void 0 : _a.declaration) === exports.onlyDeclarationTag ||
         !!host.prototype.calc === false)
         host.prototype.calc = function (type, target) {
-            const execFunc = host.prototype[type]?.bind(this);
+            var _a;
+            var execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
             if (execFunc && typeof execFunc === 'function')
                 return execFunc.call(this, target);
             return false;
@@ -70,18 +74,23 @@ function CalcUnit(host) {
 }
 exports.CalcUnit = CalcUnit;
 function Unit(target) {
-    const execName = 'execFunction';
+    var execName = 'execFunction';
     return function (host) {
-        Object.keys(target).forEach((item) => {
-            const key = target[item];
-            const comFunction = host.prototype[key];
+        var _a;
+        Object.keys(target).forEach(function (item) {
+            var key = target[item];
+            var comFunction = host.prototype[key];
             if (!comFunction || comFunction.declaration === exports.onlyDeclarationTag) {
-                host.prototype[key] = function (...args) {
-                    const value = this.valueOf();
-                    const execFunc = value[key];
-                    let result;
+                host.prototype[key] = function () {
+                    var args = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        args[_i] = arguments[_i];
+                    }
+                    var value = this.valueOf();
+                    var execFunc = value[key];
+                    var result;
                     if (typeof execFunc === 'function') {
-                        result = execFunc.bind(value)(...args);
+                        result = execFunc.bind(value).apply(void 0, args);
                     }
                     else
                         result = value;
@@ -89,12 +98,17 @@ function Unit(target) {
                 };
             }
         });
-        if (host.prototype[execName]?.declaration === exports.onlyDeclarationTag ||
+        if (((_a = host.prototype[execName]) === null || _a === void 0 ? void 0 : _a.declaration) === exports.onlyDeclarationTag ||
             !!host.prototype[execName] === false)
-            host.prototype[execName] = function (type, ...args) {
-                const execFunc = host.prototype[type]?.bind(this);
+            host.prototype[execName] = function (type) {
+                var _a;
+                var args = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    args[_i - 1] = arguments[_i];
+                }
+                var execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
                 if (execFunc && typeof execFunc === 'function')
-                    return execFunc(...args);
+                    return execFunc.apply(void 0, args);
                 return false;
             };
     };

@@ -71,5 +71,3 @@ export {
   createExtendsConstruct,
   createExtendsInstance
 };
-
-// 1

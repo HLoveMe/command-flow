@@ -1,54 +1,73 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PCNodejsBridge = void 0;
-const rxjs_1 = require("rxjs");
-const Object_1 = require("../../../Object");
-const fs = require("fs");
-const BasePlatform_1 = require("../BasePlatform");
-const nodeOpen = require('open');
-const process = require("child_process");
+var rxjs_1 = require("rxjs");
+var Object_1 = require("../../../Object");
+var fs = require("fs");
+var BasePlatform_1 = require("../BasePlatform");
+var nodeOpen = require('open');
+var process = require("child_process");
 /*** */
-class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
-    open(url) {
-        return new rxjs_1.Observable((subscriber) => {
-            nodeOpen(url, { wait: true }).then($1 => {
+var PCNodejsBridge = /** @class */ (function (_super) {
+    __extends(PCNodejsBridge, _super);
+    function PCNodejsBridge() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    PCNodejsBridge.prototype.open = function (url) {
+        return new rxjs_1.Observable(function (subscriber) {
+            nodeOpen(url, { wait: true }).then(function ($1) {
                 subscriber.next(new Object_1.BooleanObject(true));
                 subscriber.complete();
             });
             return {
-                unsubscribe: () => subscriber.unsubscribe(),
+                unsubscribe: function () { return subscriber.unsubscribe(); },
             };
         });
-    }
-    loadFile(url, option) {
-        return new rxjs_1.Observable((subscriber) => {
-            const stat = fs.lstatSync(url);
-            const subs = [];
+    };
+    PCNodejsBridge.prototype.loadFile = function (url, option) {
+        return new rxjs_1.Observable(function (subscriber) {
+            var stat = fs.lstatSync(url);
+            var subs = [];
             if (!fs.existsSync(url)) {
-                subscriber.error(new Error(`${url.toString()} is not exists`));
+                subscriber.error(new Error("".concat(url.toString(), " is not exists")));
             }
             else if (stat.isDirectory()) {
-                subscriber.error(new Error(`${url.toString()} is not file`));
+                subscriber.error(new Error("".concat(url.toString(), " is not file")));
             }
             else {
-                const rs = fs.createReadStream(url);
-                let data = Buffer.of();
-                const sub1 = (0, rxjs_1.fromEvent)(rs, 'data').subscribe({
-                    next: (chunk) => {
-                        data = Buffer.concat([data, chunk]);
+                var rs = fs.createReadStream(url);
+                var data_1 = Buffer.of();
+                var sub1 = (0, rxjs_1.fromEvent)(rs, 'data').subscribe({
+                    next: function (chunk) {
+                        data_1 = Buffer.concat([data_1, chunk]);
                         subscriber.next(new Object_1.ObjectTarget({
                             total: stat.size,
-                            loaded: data.byteLength,
-                            data: data,
+                            loaded: data_1.byteLength,
+                            data: data_1,
                             finish: false,
                             file: undefined,
                         }));
                     },
-                    complete: () => { },
-                    error: (err) => { }
+                    complete: function () { },
+                    error: function (err) { }
                 });
-                const sub2 = (0, rxjs_1.fromEvent)(rs, 'end').subscribe({
-                    next: () => {
+                var sub2 = (0, rxjs_1.fromEvent)(rs, 'end').subscribe({
+                    next: function () {
                         subscriber.complete();
                     },
                 });
@@ -56,13 +75,13 @@ class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
                 subs.push(sub2);
             }
             return {
-                unsubscribe: () => {
+                unsubscribe: function () {
                     subscriber.unsubscribe();
-                    subs.forEach(($1) => $1.unsubscribe());
+                    subs.forEach(function ($1) { return $1.unsubscribe(); });
                 },
             };
         });
-    }
+    };
     /**
      * = "#javascript#console.log('hello world')" :default
      *  = "#shell#echo hello world"
@@ -70,14 +89,14 @@ class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
      * @param option
      * @returns
      */
-    runCommand(command, option) {
-        return new rxjs_1.Observable((subscriber) => {
-            const runJs = () => {
-                let result = undefined;
-                let status = false;
-                let error = undefined;
+    PCNodejsBridge.prototype.runCommand = function (command, option) {
+        return new rxjs_1.Observable(function (subscriber) {
+            var runJs = function () {
+                var result = undefined;
+                var status = false;
+                var error = undefined;
                 try {
-                    result = eval(command?.toString());
+                    result = eval(command === null || command === void 0 ? void 0 : command.toString());
                     status = true;
                 }
                 catch (err) {
@@ -86,19 +105,19 @@ class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
                     error = err;
                 }
                 return {
-                    status,
-                    result,
-                    command,
-                    error,
+                    status: status,
+                    result: result,
+                    command: command,
+                    error: error,
                 };
             };
             if (command.startsWith('#shell#')) {
                 process.exec(command, function (error, stdout, stderr) {
                     subscriber.next({
                         result: stdout,
-                        command,
+                        command: command,
                         status: error != null,
-                        error,
+                        error: error,
                     });
                     subscriber.complete();
                 });
@@ -112,9 +131,10 @@ class PCNodejsBridge extends BasePlatform_1.PlatformBridge {
                 subscriber.complete();
             }
             return {
-                unsubscribe: () => subscriber.unsubscribe(),
+                unsubscribe: function () { return subscriber.unsubscribe(); },
             };
         });
-    }
-}
+    };
+    return PCNodejsBridge;
+}(BasePlatform_1.PlatformBridge));
 exports.PCNodejsBridge = PCNodejsBridge;

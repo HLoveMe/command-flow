@@ -13,26 +13,22 @@ import { noop } from '../Util/tools';
  * n次输入---->m次输出 InstructionMTM
  */
 export class Instruction extends Subject {
-    name = 'Instruction';
-    static _id = 0;
-    id = Instruction._id++;
-    uuid;
-    beforeWork;
-    nextWork;
-    context;
-    runSubscriptions = new Map();
-    pools = []; // 订阅自己的
-    // 运行配置 config:OPTION todo
-    config = { development: true };
     constructor() {
         super();
+        this.name = 'Instruction';
+        this.id = Instruction._id++;
+        this.runSubscriptions = new Map();
+        this.pools = []; // 订阅自己的
+        // 运行配置 config:OPTION todo
+        this.config = { development: true };
         this.uuid = UUID();
     }
     // 连接上下通道
     prepare(before, next) {
+        var _a;
         this.beforeWork = before;
         this.nextWork = next;
-        this.config = this.context?.runOptions || {};
+        this.config = ((_a = this.context) === null || _a === void 0 ? void 0 : _a.runOptions) || {};
         this._connectChannel();
         return Promise.resolve();
     }
@@ -41,13 +37,14 @@ export class Instruction extends Subject {
         const that = this;
         // // 处理数据
         const sub2 = this.pipe(tap((value) => {
-            this.config?.development &&
-                that.context?.sendLog({
+            var _a, _b;
+            ((_a = this.config) === null || _a === void 0 ? void 0 : _a.development) &&
+                ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                     work: [that],
                     content: this.context,
                     desc: '[Work:preRun]->接受到数据',
                     value: value,
-                });
+                }));
         })).subscribe({
             complete: () => { },
             error: (error) => that.error(error),
@@ -56,24 +53,30 @@ export class Instruction extends Subject {
         this.pools.push(sub2);
     }
     _run(value) {
+        var _a;
         const sendLog = (desc, _value, _error) => {
-            that.config?.development &&
-                that.context?.sendLog({
+            var _a, _b;
+            ((_a = that.config) === null || _a === void 0 ? void 0 : _a.development) &&
+                ((_b = that.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                     work: [that],
                     content: this.context,
                     desc: desc,
                     value: _value || value,
                     error: _error,
-                });
+                }));
         };
         value = this.nextValue(value) || value;
         const that = this;
-        const nextOption = (this.config?.workConfig || {})[this.name] || {};
+        const nextOption = (((_a = this.config) === null || _a === void 0 ? void 0 : _a.workConfig) || {})[this.name] || {};
         const execFunc = PlatformSelect({
-            web: () => (that.web_run ??
-                (that.run || noop)).bind(that)(value, nextOption),
-            node: () => (that.node_run ??
-                (that.run || noop)).bind(that)(value, nextOption),
+            web: () => {
+                var _a;
+                return ((_a = that.web_run) !== null && _a !== void 0 ? _a : (that.run || noop)).bind(that)(value, nextOption);
+            },
+            node: () => {
+                var _a;
+                return ((_a = that.node_run) !== null && _a !== void 0 ? _a : (that.run || noop)).bind(that)(value, nextOption);
+            },
             other: () => (that.run || noop).bind(that)(value, nextOption),
         });
         sendLog('[Work][Func:run]->入口', value);
@@ -85,7 +88,7 @@ export class Instruction extends Subject {
             .subscribe({
             complete: () => {
                 const unit = that.runSubscriptions.get(uuid);
-                unit?.sub.unsubscribe();
+                unit === null || unit === void 0 ? void 0 : unit.sub.unsubscribe();
                 that.runSubscriptions.delete(uuid);
             },
             error: (err) => {
@@ -93,9 +96,10 @@ export class Instruction extends Subject {
                 that.completeOneLoop(value, new NULLObject(), false);
             },
             next: (res) => {
+                var _a;
                 sendLog('[Work][Func:run]->将执行下一个Work', res);
                 that.completeOneLoop(value, res, true);
-                that.nextWork?.next(res);
+                (_a = that.nextWork) === null || _a === void 0 ? void 0 : _a.next(res);
             },
         });
         const unit = new WorkUnit(that.context, that, runSub, uuid);
@@ -105,7 +109,7 @@ export class Instruction extends Subject {
         const that = this;
         return new Observable((subscribe) => {
             that.runSubscriptions.forEach((value) => {
-                value?.sub.unsubscribe();
+                value === null || value === void 0 ? void 0 : value.sub.unsubscribe();
             });
             subscribe.next(true);
             subscribe.complete();
@@ -133,13 +137,14 @@ export class Instruction extends Subject {
         this.context && this.context.addVariable(this, name, value);
     }
     logMsg(msg, input) {
-        this.config?.development &&
-            this.context?.sendLog({
+        var _a, _b;
+        ((_a = this.config) === null || _a === void 0 ? void 0 : _a.development) &&
+            ((_b = this.context) === null || _b === void 0 ? void 0 : _b.sendLog({
                 work: [this],
                 content: this.context,
                 desc: msg,
                 value: wrapperValue(input, null),
-            });
+            }));
     }
     //重写
     next(value) {
@@ -172,6 +177,7 @@ export class Instruction extends Subject {
         return isJS;
     }
 }
+Instruction._id = 0;
 export class InstructionOTO extends Instruction {
     nextValue(input) {
         return input;
@@ -188,9 +194,10 @@ export class InstructionOTO extends Instruction {
     }
 }
 export class InstructionOTM extends Instruction {
-    // 声明可以进行配置的属性 todo
-    static OPTION;
-    name = 'MultipleInstruction';
+    constructor() {
+        super(...arguments);
+        this.name = 'MultipleInstruction';
+    }
     nextValue(input) {
         return input;
     }
@@ -208,9 +215,10 @@ export class InstructionOTM extends Instruction {
     }
 }
 export class InstructionMTM extends Instruction {
-    // 声明可以进行配置的属性 todo
-    static OPTION;
-    name = 'MultipleInstruction';
+    constructor() {
+        super(...arguments);
+        this.name = 'MultipleInstruction';
+    }
     nextValue(input) {
         return input;
     }

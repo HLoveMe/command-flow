@@ -1,17 +1,37 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Base64EnCodeWork = exports.Base64DecodeWork = void 0;
-const js_base64_1 = require("js-base64");
-const Instruction_1 = require("../Instruction");
-const rxjs_1 = require("rxjs");
-const Equipment_1 = require("../../Util/Equipment");
-const channel_value_util_1 = require("../../Util/channel-value-util");
+var js_base64_1 = require("js-base64");
+var Instruction_1 = require("../Instruction");
+var rxjs_1 = require("rxjs");
+var Equipment_1 = require("../../Util/Equipment");
+var channel_value_util_1 = require("../../Util/channel-value-util");
 //编码
-class Base64EnCodeWork extends Instruction_1.InstructionMTM {
-    name = "Base64EnCodeWork";
-    run(input) {
-        return new rxjs_1.Observable((subscriber) => {
-            let target;
+var Base64EnCodeWork = /** @class */ (function (_super) {
+    __extends(Base64EnCodeWork, _super);
+    function Base64EnCodeWork() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = "Base64EnCodeWork";
+        return _this;
+    }
+    Base64EnCodeWork.prototype.run = function (input) {
+        return new rxjs_1.Observable(function (subscriber) {
+            var target;
             if (input === null || input === undefined)
                 target = '';
             else {
@@ -20,21 +40,27 @@ class Base64EnCodeWork extends Instruction_1.InstructionMTM {
             subscriber.next((0, channel_value_util_1.wrapperValue)(input, js_base64_1.Base64.encode(target)));
             subscriber.complete();
             return {
-                unsubscribe: () => subscriber.unsubscribe(),
+                unsubscribe: function () { return subscriber.unsubscribe(); },
             };
         });
-    }
-    static isAble() {
+    };
+    Base64EnCodeWork.isAble = function () {
         return Equipment_1.isJS;
-    }
-}
+    };
+    return Base64EnCodeWork;
+}(Instruction_1.InstructionMTM));
 exports.Base64EnCodeWork = Base64EnCodeWork;
 //解码
-class Base64DecodeWork extends Instruction_1.InstructionMTM {
-    name = "Base64DecodeWork";
-    run(input) {
-        return new rxjs_1.Observable((subscriber) => {
-            let target;
+var Base64DecodeWork = /** @class */ (function (_super) {
+    __extends(Base64DecodeWork, _super);
+    function Base64DecodeWork() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = "Base64DecodeWork";
+        return _this;
+    }
+    Base64DecodeWork.prototype.run = function (input) {
+        return new rxjs_1.Observable(function (subscriber) {
+            var target;
             if (input === null || input === undefined)
                 target = '';
             else {
@@ -43,12 +69,13 @@ class Base64DecodeWork extends Instruction_1.InstructionMTM {
             subscriber.next((0, channel_value_util_1.wrapperValue)(input, js_base64_1.Base64.decode(target)));
             subscriber.complete();
             return {
-                unsubscribe: () => subscriber.unsubscribe(),
+                unsubscribe: function () { return subscriber.unsubscribe(); },
             };
         });
-    }
-    static isAble() {
+    };
+    Base64DecodeWork.isAble = function () {
         return Equipment_1.isJS;
-    }
-}
+    };
+    return Base64DecodeWork;
+}(Instruction_1.InstructionMTM));
 exports.Base64DecodeWork = Base64DecodeWork;

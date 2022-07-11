@@ -1,24 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ObjectTarget = void 0;
-class ObjectTarget {
-    get [Symbol.toStringTag]() {
-        return 'flow-object';
-    }
-    constructor(value = {}) {
+var ObjectTarget = /** @class */ (function () {
+    function ObjectTarget(value) {
+        if (value === void 0) { value = {}; }
         this._value = value;
     }
-    valueOf() {
+    Object.defineProperty(ObjectTarget.prototype, Symbol.toStringTag, {
+        get: function () {
+            return 'flow-object';
+        },
+        enumerable: false,
+        configurable: true
+    });
+    ObjectTarget.prototype.valueOf = function () {
         return this._value;
-    }
-    json() {
-        const { StringObject } = require("./StringObject");
+    };
+    ObjectTarget.prototype.json = function () {
+        var StringObject = require("./StringObject").StringObject;
         try {
             return new StringObject(JSON.stringify(this._value));
         }
         catch (error) {
             return new StringObject("{}");
         }
-    }
-}
+    };
+    return ObjectTarget;
+}());
 exports.ObjectTarget = ObjectTarget;

@@ -4,14 +4,9 @@ import { isJS } from "../../Util/Equipment";
 import { ObjectTarget } from "../../Object";
 import { decide } from '../../Object/valueUtil';
 export class BeginWork extends InstructionOTO {
-    static OPTION;
-    name = "BeginWork";
-    static _id = 0;
-    // 输入 头部work
-    // inputSubject: Subject<BaseType> = new Subject<BaseType>();
-    inputSubscription;
     constructor() {
         super();
+        this.name = "BeginWork";
         this.uuid = UUID();
     }
     // // 处理上一个的传入
@@ -39,7 +34,7 @@ export class BeginWork extends InstructionOTO {
      * @param value
      */
     startRun(value, runId) {
-        const id = runId ?? UUID();
+        const id = runId !== null && runId !== void 0 ? runId : UUID();
         this.nextWork.next(new ObjectTarget({
             id,
             value: decide(value),
@@ -51,4 +46,5 @@ export class BeginWork extends InstructionOTO {
         return isJS;
     }
 }
+BeginWork._id = 0;
 //# sourceMappingURL=BeginWork.js.map

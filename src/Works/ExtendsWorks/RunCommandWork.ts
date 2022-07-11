@@ -6,7 +6,7 @@ import { ChannelObject, ContextImpl, BaseType } from '../../Types';
 import { BooleanObject, ObjectTarget } from '../../Object';
 import { unpackValue, wrapperValue } from '../../Util/channel-value-util';
 import { RunCommandWorkConfig } from '../../Configs';
-import { noop } from '../../Util/tools';
+import { noop, replaceAll } from '../../Util/tools';
 
 type CommandParams = { [key: string]: string };
 type HandleEvalCommand = (
@@ -31,15 +31,13 @@ function handleEvalCommand(
   if (typeof input === 'string') {
     const placeholder = config['*'];
     if (placeholder) {
-      const reg = new RegExp(placeholder, 'g');
-      runCommand = runCommand.replace(reg, input);
+      runCommand = replaceAll(runCommand, placeholder, input);
     }
   } else {
     Object.keys(config).forEach((key) => {
       const placeholder = config[key];
-      const reg = new RegExp(placeholder, 'g');
       const value = input[key];
-      runCommand = runCommand.replace(reg, value);
+      runCommand = replaceAll(runCommand, placeholder, value);
     });
   }
   return runCommand;

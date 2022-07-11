@@ -1,3 +1,4 @@
+import { __awaiter } from "tslib";
 import { WorkType, } from './Types';
 import { forkJoin, Subject, } from 'rxjs';
 import { DefaultRunConfig } from './Configs';
@@ -7,25 +8,25 @@ import { BeginWork } from './Works/ExtendsWorks/BeginWork';
 import { decide } from './Object/valueUtil';
 import { take } from 'rxjs/operators';
 export class Context {
-    status = WorkType.WorkRunStatus.INIT;
-    platform = Platform;
-    /**
-     * 运行配置文件 todo
-     */
-    runOptions;
-    /**
-     * 上下文变量
-     */
-    runConstant = new Map();
-    /**
-     * 所有work
-     */
-    works = [];
-    /**
-     * 消息传输通道
-     */
-    msgChannel = new Subject();
     constructor(runOptions) {
+        this.status = WorkType.WorkRunStatus.INIT;
+        this.platform = Platform;
+        /**
+         * 上下文变量
+         */
+        this.runConstant = new Map();
+        /**
+         * 所有work
+         */
+        this.works = [];
+        /**
+         * 消息传输通道
+         */
+        this.msgChannel = new Subject();
+        /**
+         * 需要销毁的Subscription
+         */
+        this.pools = [];
         this.runOptions = (runOptions || DefaultRunConfig);
         const sub = this.msgChannel.subscribe({
             next: (value) => this.workMessage(value),
@@ -34,10 +35,6 @@ export class Context {
         this.pools.push(sub);
         this.addWork(new BeginWork());
     }
-    /**
-     * 需要销毁的Subscription
-     */
-    pools = [];
     /**
      * 增加上下文变量
      * @param from
@@ -62,7 +59,7 @@ export class Context {
     sendLog(status) {
         const log = {
             date: new Date(),
-            work: status.work.filter(($1) => $1?.name),
+            work: status.work.filter(($1) => $1 === null || $1 === void 0 ? void 0 : $1.name),
             desc: status.desc,
             value: status.value,
             error: status.error,
@@ -95,21 +92,23 @@ export class Context {
     addWorks(...works) {
         works.forEach(this.addWork);
     }
-    async prepareWorks() {
-        if (this.status !== WorkType.WorkRunStatus.INIT) {
-            return this.sendLog({
-                content: this,
-                work: [],
-                desc: '[content][Func:prepareWorks][context status is not init]',
-                value: new BooleanObject(false),
-            });
-        }
-        await Promise.all(this.works.map(($1, index, source) => {
-            const before = source[index - 1];
-            const after = source[index + 1];
-            return $1.prepare(before, after);
-        }));
-        this.status = WorkType.WorkRunStatus.READY;
+    prepareWorks() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.status !== WorkType.WorkRunStatus.INIT) {
+                return this.sendLog({
+                    content: this,
+                    work: [],
+                    desc: '[content][Func:prepareWorks][context status is not init]',
+                    value: new BooleanObject(false),
+                });
+            }
+            yield Promise.all(this.works.map(($1, index, source) => {
+                const before = source[index - 1];
+                const after = source[index + 1];
+                return $1.prepare(before, after);
+            }));
+            this.status = WorkType.WorkRunStatus.READY;
+        });
     }
     dispatch(input) {
         if (this.status === WorkType.WorkRunStatus.INIT) {

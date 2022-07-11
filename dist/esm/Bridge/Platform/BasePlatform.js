@@ -6,10 +6,11 @@ import { HardwareBase } from "./Hardware";
 export class PlatformBridge extends HardwareBase {
     createQrCode(context, option) {
         return new Observable((sub) => {
-            let width = option?.SideLength ?? 200;
+            var _a;
+            let width = (_a = option === null || option === void 0 ? void 0 : option.SideLength) !== null && _a !== void 0 ? _a : 200;
             let margin = 2;
-            const qrCode = QRCode(option?.type || 4, option?.Level || "H");
-            qrCode.addData((context ?? ""));
+            const qrCode = QRCode((option === null || option === void 0 ? void 0 : option.type) || 4, (option === null || option === void 0 ? void 0 : option.Level) || "H");
+            qrCode.addData((context !== null && context !== void 0 ? context : ""));
             qrCode.make();
             const moduleCount = qrCode.getModuleCount();
             const cellSize = (width - margin * 2) / moduleCount;
@@ -31,7 +32,7 @@ export class PlatformBridge extends HardwareBase {
             let error = null;
             let status = false;
             try {
-                result = eval(command?.toString());
+                result = eval(command === null || command === void 0 ? void 0 : command.toString());
                 status = true;
             }
             catch (_error) {

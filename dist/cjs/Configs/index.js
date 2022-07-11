@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DefaultRunConfig = void 0;
-const ConfigTypes_1 = require("../Bridge/ConfigTypes");
+var ConfigTypes_1 = require("../Bridge/ConfigTypes");
 /**
  * 默认的配置
  */

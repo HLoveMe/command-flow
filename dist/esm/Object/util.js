@@ -30,6 +30,7 @@ export function onlyDeclaration(target, name, dec) {
     dec.value.declaration = onlyDeclarationTag;
 }
 export function CompareUnit(host) {
+    var _a;
     Object.keys(ControlFlow.CompareEnum).forEach((item) => {
         const key = ControlFlow.CompareEnum[item];
         const comFunction = host.prototype[key];
@@ -37,16 +38,18 @@ export function CompareUnit(host) {
             host.prototype[key] = () => new BooleanObject(false);
         }
     });
-    if (host.prototype.compare?.declaration === onlyDeclarationTag ||
+    if (((_a = host.prototype.compare) === null || _a === void 0 ? void 0 : _a.declaration) === onlyDeclarationTag ||
         !!host.prototype.compare === false)
         host.prototype.compare = function (type, target) {
-            const execFunc = host.prototype[type]?.bind(this);
+            var _a;
+            const execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
             if (execFunc && typeof execFunc === 'function')
                 return execFunc.call(this, target);
             return false;
         };
 }
 export function CalcUnit(host) {
+    var _a;
     Object.keys(ControlFlow.CalcEnum).forEach((item) => {
         const key = ControlFlow.CalcEnum[item];
         const comFunction = host.prototype[key];
@@ -54,10 +57,11 @@ export function CalcUnit(host) {
             host.prototype[key] = () => new NumberObject(0);
         }
     });
-    if (host.prototype.calc?.declaration === onlyDeclarationTag ||
+    if (((_a = host.prototype.calc) === null || _a === void 0 ? void 0 : _a.declaration) === onlyDeclarationTag ||
         !!host.prototype.calc === false)
         host.prototype.calc = function (type, target) {
-            const execFunc = host.prototype[type]?.bind(this);
+            var _a;
+            const execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
             if (execFunc && typeof execFunc === 'function')
                 return execFunc.call(this, target);
             return false;
@@ -66,6 +70,7 @@ export function CalcUnit(host) {
 export function Unit(target) {
     const execName = 'execFunction';
     return function (host) {
+        var _a;
         Object.keys(target).forEach((item) => {
             const key = target[item];
             const comFunction = host.prototype[key];
@@ -83,10 +88,11 @@ export function Unit(target) {
                 };
             }
         });
-        if (host.prototype[execName]?.declaration === onlyDeclarationTag ||
+        if (((_a = host.prototype[execName]) === null || _a === void 0 ? void 0 : _a.declaration) === onlyDeclarationTag ||
             !!host.prototype[execName] === false)
             host.prototype[execName] = function (type, ...args) {
-                const execFunc = host.prototype[type]?.bind(this);
+                var _a;
+                const execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
                 if (execFunc && typeof execFunc === 'function')
                     return execFunc(...args);
                 return false;

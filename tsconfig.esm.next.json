@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2015",
     "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata":true,
     "outDir": "dist/esm",
     "sourceMap": true,
     "noImplicitAny": false,
-    "module": "es2015",
+    "importHelpers":true,
+    "module": "esnext",
     "watch": false,
     "skipLibCheck": true,
     "moduleResolution":"node"

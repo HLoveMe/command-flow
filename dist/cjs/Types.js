@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WorkType = void 0;
 var WorkType;
 (function (WorkType) {
-    let WorkRunStatus;
+    var WorkRunStatus;
     (function (WorkRunStatus) {
         WorkRunStatus[WorkRunStatus["INIT"] = 0] = "INIT";
         // FROZEN,//冻结状态

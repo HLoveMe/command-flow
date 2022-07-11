@@ -2,6 +2,7 @@ import { InstructionOTO } from '../Instruction';
 import { Observable } from 'rxjs';
 import { isJS } from '../../Util/Equipment';
 import { unpackValue, wrapperValue } from '../../Util/channel-value-util';
+import { replaceAll } from '../../Util/tools';
 /**
  * "1 + $I$ "
  * @param template
@@ -15,16 +16,14 @@ function handleEvalCommand(template, params, config, runOption) {
     if (typeof input === 'string') {
         const placeholder = config['*'];
         if (placeholder) {
-            const reg = new RegExp(placeholder, 'g');
-            runCommand = runCommand.replace(reg, input);
+            runCommand = replaceAll(runCommand, placeholder, input);
         }
     }
     else {
         Object.keys(config).forEach((key) => {
             const placeholder = config[key];
-            const reg = new RegExp(placeholder, 'g');
             const value = input[key];
-            runCommand = runCommand.replace(reg, value);
+            runCommand = replaceAll(runCommand, placeholder, value);
         });
     }
     return runCommand;
@@ -53,12 +52,12 @@ function handleEvalCommand(template, params, config, runOption) {
  *  })
  */
 export default class RunCommandWork extends InstructionOTO {
-    template = '';
-    name = 'RunCommandWork';
-    paramsConfig = {};
-    callBack = undefined;
     constructor(...args) {
         super();
+        this.template = '';
+        this.name = 'RunCommandWork';
+        this.paramsConfig = {};
+        this.callBack = undefined;
         if (typeof args[0] === 'string') {
             const template = args[0] || '$I$';
             const paramsConfig = args[1] || { '*': '$I$' };

@@ -6,15 +6,15 @@ import { FileType } from '../../Bridge/ConfigTypes';
 import { takeLast, tap } from 'rxjs/operators';
 import { unpackValue } from '../../Util/channel-value-util';
 export default class LoadFileWork extends InstructionOTO {
-    name = 'LoadFileWork';
-    currentConfig = { type: FileType.All };
     constructor(config) {
         super();
+        this.name = 'LoadFileWork';
+        this.currentConfig = { type: FileType.All };
         this.currentConfig = config || { type: FileType.All };
     }
     run(input, option) {
         const that = this;
-        const runOption = { ...option, ...this.currentConfig };
+        const runOption = Object.assign(Object.assign({}, option), this.currentConfig);
         return new Observable((subscriber) => {
             const target = unpackValue(input);
             const sub = that.context.platform
@@ -27,11 +27,7 @@ export default class LoadFileWork extends InstructionOTO {
                 .subscribe({
                 next: (obj) => {
                     const { data, file } = obj.valueOf();
-                    subscriber.next(new ObjectTarget({
-                        ...input._value,
-                        value: new DataObject(data),
-                        option: { file },
-                    }));
+                    subscriber.next(new ObjectTarget(Object.assign(Object.assign({}, input._value), { value: new DataObject(data), option: { file } })));
                     subscriber.complete();
                 },
                 complete: () => subscriber.complete(),

@@ -5,6 +5,21 @@
 // import { StringObject } from './StringObject';
 // import { NumberObject } from './NumberObject';
 // import { Unit, onlyDeclaration } from '../../util';
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DateObject = void 0;
 // @Unit(ControlFlow.DateEnum)
@@ -202,23 +217,27 @@ exports.DateObject = void 0;
 //     return null as any
 //   }
 // }
-const extend_util_1 = require("../../extend-util");
-const valueUtil_1 = require("../../valueUtil");
-const DateWrapper = (0, extend_util_1.createExtendsConstruct)(Date);
-class _DateObject extends DateWrapper {
-    constructor(value = new Date()) {
-        super(value);
-        this._value = value;
+var extend_util_1 = require("../../extend-util");
+var valueUtil_1 = require("../../valueUtil");
+var DateWrapper = (0, extend_util_1.createExtendsConstruct)(Date);
+var _DateObject = /** @class */ (function (_super) {
+    __extends(_DateObject, _super);
+    function _DateObject(value) {
+        if (value === void 0) { value = new Date(); }
+        var _this = _super.call(this, value) || this;
+        _this._value = value;
+        return _this;
     }
-    valueOf() {
+    _DateObject.prototype.valueOf = function () {
         return this._value;
-    }
-    toLocaleString() {
+    };
+    _DateObject.prototype.toLocaleString = function () {
         return (0, valueUtil_1.decide)(this._value.toLocaleDateString());
-    }
-    timestamp() {
+    };
+    _DateObject.prototype.timestamp = function () {
         return (0, valueUtil_1.decide)(this._value.getDate());
-    }
-}
-const DateObject = _DateObject;
+    };
+    return _DateObject;
+}(DateWrapper));
+var DateObject = _DateObject;
 exports.DateObject = DateObject;

@@ -1,81 +1,84 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HardwareBase = void 0;
-class HardwareBase {
-    takePhoto(option) {
-        throw new Error("Method not implemented.");
+var HardwareBase = /** @class */ (function () {
+    function HardwareBase() {
     }
-    recordVideo(option) {
+    HardwareBase.prototype.takePhoto = function (option) {
         throw new Error("Method not implemented.");
-    }
-    getPhotos() {
+    };
+    HardwareBase.prototype.recordVideo = function (option) {
         throw new Error("Method not implemented.");
-    }
-    getCurrentPosition() {
+    };
+    HardwareBase.prototype.getPhotos = function () {
         throw new Error("Method not implemented.");
-    }
-    watchPosition(option) {
+    };
+    HardwareBase.prototype.getCurrentPosition = function () {
         throw new Error("Method not implemented.");
-    }
-    closePosition() {
+    };
+    HardwareBase.prototype.watchPosition = function (option) {
         throw new Error("Method not implemented.");
-    }
-    recordAudio() {
+    };
+    HardwareBase.prototype.closePosition = function () {
         throw new Error("Method not implemented.");
-    }
-    stopAudio() {
+    };
+    HardwareBase.prototype.recordAudio = function () {
         throw new Error("Method not implemented.");
-    }
-    getFile(option) {
+    };
+    HardwareBase.prototype.stopAudio = function () {
         throw new Error("Method not implemented.");
-    }
-    startVibrator(option) {
+    };
+    HardwareBase.prototype.getFile = function (option) {
         throw new Error("Method not implemented.");
-    }
-    stopVibrator() {
+    };
+    HardwareBase.prototype.startVibrator = function (option) {
         throw new Error("Method not implemented.");
-    }
-    getSystemInfo() {
+    };
+    HardwareBase.prototype.stopVibrator = function () {
         throw new Error("Method not implemented.");
-    }
-    getVolume() {
+    };
+    HardwareBase.prototype.getSystemInfo = function () {
         throw new Error("Method not implemented.");
-    }
-    setVolume(volume) {
+    };
+    HardwareBase.prototype.getVolume = function () {
         throw new Error("Method not implemented.");
-    }
-    getBrightness() {
+    };
+    HardwareBase.prototype.setVolume = function (volume) {
         throw new Error("Method not implemented.");
-    }
-    setBrightness(brightness) {
+    };
+    HardwareBase.prototype.getBrightness = function () {
         throw new Error("Method not implemented.");
-    }
-    scanBluetooth() {
+    };
+    HardwareBase.prototype.setBrightness = function (brightness) {
         throw new Error("Method not implemented.");
-    }
-    connectBluetooth(device) {
+    };
+    HardwareBase.prototype.scanBluetooth = function () {
         throw new Error("Method not implemented.");
-    }
-    bluetoothSendData(data) {
+    };
+    HardwareBase.prototype.connectBluetooth = function (device) {
         throw new Error("Method not implemented.");
-    }
-    bluetoothReceiveData(device) {
+    };
+    HardwareBase.prototype.bluetoothSendData = function (data) {
         throw new Error("Method not implemented.");
-    }
-    bluetoothClose(device) {
+    };
+    HardwareBase.prototype.bluetoothReceiveData = function (device) {
         throw new Error("Method not implemented.");
-    }
-    speechInit(option) {
+    };
+    HardwareBase.prototype.bluetoothClose = function (device) {
         throw new Error("Method not implemented.");
-    }
-    speak(text) {
+    };
+    HardwareBase.prototype.speechInit = function (option) {
         throw new Error("Method not implemented.");
-    }
-    stopSpeak() {
+    };
+    HardwareBase.prototype.speak = function (text) {
         throw new Error("Method not implemented.");
-    }
-    clearSpeech() {
+    };
+    HardwareBase.prototype.stopSpeak = function () {
         throw new Error("Method not implemented.");
-    }
-}
+    };
+    HardwareBase.prototype.clearSpeech = function () {
+        throw new Error("Method not implemented.");
+    };
+    return HardwareBase;
+}());
 exports.HardwareBase = HardwareBase;

@@ -5,7 +5,10 @@ import { isJS } from "../../Util/Equipment";
 import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
 //编码
 class Base64EnCodeWork extends InstructionMTM {
-    name = "Base64EnCodeWork";
+    constructor() {
+        super(...arguments);
+        this.name = "Base64EnCodeWork";
+    }
     run(input) {
         return new Observable((subscriber) => {
             let target;
@@ -27,7 +30,10 @@ class Base64EnCodeWork extends InstructionMTM {
 }
 //解码
 class Base64DecodeWork extends InstructionMTM {
-    name = "Base64DecodeWork";
+    constructor() {
+        super(...arguments);
+        this.name = "Base64DecodeWork";
+    }
     run(input) {
         return new Observable((subscriber) => {
             let target;

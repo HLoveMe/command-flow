@@ -2,7 +2,7 @@
  * @Author:
  * @Date: 2022-06-08 19:31:16
  * @Last Modified by: zihao.zhu
- * @Last Modified time: 2022-07-06 15:53:56
+ * @Last Modified time: 2022-07-11 16:38:59
  * @desc : undefined
  */
 const isURL = (url) => {
@@ -29,8 +29,22 @@ const isURL = (url) => {
 const isWindowFilePath = (url) => {
     return url.startsWith('file://');
 };
+/**
+ *
+ * @param source String.prototype.replaceAll
+ * @param string
+ * @param replaceValue
+ * @returns
+ */
+const replaceAll = (source, string, replaceValue) => {
+    if (source.indexOf(string) >= 0) {
+        source = source.replace(string, replaceValue);
+        return replaceAll(source, string, replaceValue);
+    }
+    return source;
+};
 const has = Function.call.bind(Object.prototype.hasOwnProperty);
 const getObjectType = (source) => Object.prototype.toString.call(source);
 function noop() { }
-export { noop, has, getObjectType };
+export { noop, has, getObjectType, replaceAll };
 //# sourceMappingURL=tools.js.map

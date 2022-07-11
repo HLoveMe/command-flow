@@ -18,7 +18,7 @@ export class WebBridge extends PlatformBridge {
             //input.value = url.toString();
             input.type = "file";
             input.id = "_temp_input_select";
-            input.accept = option?.type || "*";
+            input.accept = (option === null || option === void 0 ? void 0 : option.type) || "*";
             input.style.display = "none";
             document.body.append(input);
             input.addEventListener("change", (_) => {

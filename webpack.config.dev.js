@@ -26,19 +26,21 @@ module.exports = {
             [
               "@babel/plugin-transform-runtime",
               {
-                "helpers": false,
-                "corejs": false,
+                "helpers": true,
+                "corejs": true,
                 "regenerator": true,
                 "useESModules": false,
                 "absoluteRuntime": false,
               }
             ]
           ],
-          presets: [
-            [
-              "@babel/preset-env", {}
-            ]
-          ]
+          // presets: [
+          //   [
+          //     "@babel/preset-env", {
+          //       useBuiltIns: "usage",
+          //     }
+          //   ]
+          // ]
         }
       },
     },]

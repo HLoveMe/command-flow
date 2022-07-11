@@ -8,7 +8,10 @@ import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
  * output => StringObject
  */
 class QRCodeWork extends InstructionOTO {
-    name = "QRCodeWork";
+    constructor() {
+        super(...arguments);
+        this.name = "QRCodeWork";
+    }
     run(input, option) {
         const that = this;
         return new Observable((subscriber) => {
