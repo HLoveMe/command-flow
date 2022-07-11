@@ -34,7 +34,7 @@ export default class RunCommandWork extends InstructionOTO {
     template: string;
     name: string;
     paramsConfig: CommandParams;
-    callBack: HandleEvalCommand;
+    callBack?: HandleEvalCommand;
     constructor(...args: any[]);
     run(command: ChannelObject, option?: RunCommandWorkConfig): Observable<ChannelObject<ObjectTarget<any>>>;
     static isAble(): boolean;

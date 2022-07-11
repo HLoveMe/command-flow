@@ -72,7 +72,7 @@ export default class RunCommandWork extends InstructionOTO {
   template: string = '';
   name: string = 'RunCommandWork';
   paramsConfig: CommandParams = {};
-  callBack: HandleEvalCommand = noop as any;
+  callBack?: HandleEvalCommand = undefined;
   constructor(...args: any[]) {
     super();
     if (typeof args[0] === 'string') {
@@ -94,7 +94,7 @@ export default class RunCommandWork extends InstructionOTO {
       (subscriber: Subscriber<ChannelObject<ObjectTarget<any>>>) => {
         let target: string;
         if (that.callBack && typeof that.callBack === 'function') {
-          target = this.callBack(
+          target = (this.callBack as HandleEvalCommand)(
             unpackValue<CommandParams | string>(command),
             option
           );

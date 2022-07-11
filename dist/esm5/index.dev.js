@@ -3082,8 +3082,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/Equipment.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
-/* harmony import */ var _Util_tools__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Util/tools */ "./src/Util/tools.ts");
-
 
 
 
@@ -3142,7 +3140,7 @@ class RunCommandWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.Instructi
     template = '';
     name = 'RunCommandWork';
     paramsConfig = {};
-    callBack = _Util_tools__WEBPACK_IMPORTED_MODULE_4__.noop;
+    callBack = undefined;
     constructor(...args) {
         super();
         if (typeof args[0] === 'string') {

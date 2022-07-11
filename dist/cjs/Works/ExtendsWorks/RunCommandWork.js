@@ -4,7 +4,6 @@ const Instruction_1 = require("../Instruction");
 const rxjs_1 = require("rxjs");
 const Equipment_1 = require("../../Util/Equipment");
 const channel_value_util_1 = require("../../Util/channel-value-util");
-const tools_1 = require("../../Util/tools");
 /**
  * "1 + $I$ "
  * @param template
@@ -59,7 +58,7 @@ class RunCommandWork extends Instruction_1.InstructionOTO {
     template = '';
     name = 'RunCommandWork';
     paramsConfig = {};
-    callBack = tools_1.noop;
+    callBack = undefined;
     constructor(...args) {
         super();
         if (typeof args[0] === 'string') {

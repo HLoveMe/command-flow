@@ -2,7 +2,6 @@ import { InstructionOTO } from '../Instruction';
 import { Observable } from 'rxjs';
 import { isJS } from '../../Util/Equipment';
 import { unpackValue, wrapperValue } from '../../Util/channel-value-util';
-import { noop } from '../../Util/tools';
 /**
  * "1 + $I$ "
  * @param template
@@ -57,7 +56,7 @@ export default class RunCommandWork extends InstructionOTO {
     template = '';
     name = 'RunCommandWork';
     paramsConfig = {};
-    callBack = noop;
+    callBack = undefined;
     constructor(...args) {
         super();
         if (typeof args[0] === 'string') {
