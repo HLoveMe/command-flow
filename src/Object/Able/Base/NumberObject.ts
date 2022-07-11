@@ -39,6 +39,9 @@ class _NumberObject
     super(value);
     this._value = value;
   }
+  get [Symbol.toStringTag](): string {
+    return super[Symbol.toStringTag]
+  }
 
   valueOf(): number {
     return this._value;

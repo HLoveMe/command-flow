@@ -1,14 +1,15 @@
-import { BaseType, ContextImpl, WorkType, ChannelObject } from "../Types";
-import { Subject, Subscription, Observable } from "rxjs";
-import { ContextRunOption, WorkRunOption } from "../Configs";
-import { WorkUnit } from "./WorkUnit";
-import { EnvironmentAble } from "../Util/EvalEquipment";
+import { BaseType, ContextImpl, WorkType, ChannelObject } from '../Types';
+import { Subject, Subscription, Observable, Observer } from 'rxjs';
+import { ContextRunOption, WorkRunOption } from '../Configs';
+import { WorkUnit } from './WorkUnit';
+import { EnvironmentAble } from '../Util/EvalEquipment';
 /**
  * 一次输入--->一次输出 InstructionOTO
  * 一次输入--->多次输出 InstructionOTM
  * n次输入---->m次输出 InstructionMTM
  */
 export declare class Instruction extends Subject<ChannelObject> implements WorkType.Work, EnvironmentAble {
+    observers: Observer<BaseType>[];
     name: string;
     static _id: number;
     id: number;

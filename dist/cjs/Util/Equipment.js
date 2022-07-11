@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlatformSelect = exports.isJS = exports.isMobile = exports.isPC = exports.isNode = exports.isWeb = exports.currentEnir = exports.JSRUNEnvirType = exports.getJSEnvironment = exports.isReactNative = void 0;
+/* eslint-disable */
 const tools_1 = require("./tools");
 var JSRUNEnvirType;
 (function (JSRUNEnvirType) {
@@ -148,7 +149,7 @@ if (topThis.process && (0, tools_1.getObjectType)(topThis.process) === '[object 
     exports.currentEnir = currentEnir = JSRUNEnvirType.NODE_PC;
 }
 else {
-    const typeName = getJSEnvironment().name;
+    const typeName = getJSEnvironment()?.name;
     switch (typeName) {
         case EnvirType.WINDOWS:
             exports.currentEnir = currentEnir = JSRUNEnvirType.WEB_PC;

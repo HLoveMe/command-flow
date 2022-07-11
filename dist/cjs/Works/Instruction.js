@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InstructionMTM = exports.InstructionOTM = exports.InstructionOTO = exports.Instruction = void 0;
+const Object_1 = require("../Object");
 const rxjs_1 = require("rxjs");
 const Equipment_1 = require("../Util/Equipment");
 const operators_1 = require("rxjs/operators");
 const uuid_1 = require("uuid");
 const WorkUnit_1 = require("./WorkUnit");
-const Object_1 = require("../Object");
+const Object_2 = require("../Object");
 const channel_value_util_1 = require("../Util/channel-value-util");
 const tools_1 = require("../Util/tools");
 /**
@@ -15,7 +16,7 @@ const tools_1 = require("../Util/tools");
  * n次输入---->m次输出 InstructionMTM
  */
 class Instruction extends rxjs_1.Subject {
-    name = "Instruction";
+    name = 'Instruction';
     static _id = 0;
     id = Instruction._id++;
     uuid;
@@ -42,17 +43,15 @@ class Instruction extends rxjs_1.Subject {
     _connectChannel() {
         const that = this;
         // // 处理数据
-        const sub2 = this
-            .pipe((0, operators_1.tap)((value) => {
+        const sub2 = this.pipe((0, operators_1.tap)((value) => {
             this.config?.development &&
                 that.context?.sendLog({
                     work: [that],
                     content: this.context,
-                    desc: "[Work:preRun]->接受到数据",
+                    desc: '[Work:preRun]->接受到数据',
                     value: value,
                 });
-        }))
-            .subscribe({
+        })).subscribe({
             complete: () => { },
             error: (error) => that.error(error),
             next: (value) => that._run(value),
@@ -74,15 +73,17 @@ class Instruction extends rxjs_1.Subject {
         const that = this;
         const nextOption = (this.config?.workConfig || {})[this.name] || {};
         const execFunc = (0, Equipment_1.PlatformSelect)({
-            web: () => (that.web_run ?? (that.run || tools_1.noop)).bind(that)(value, nextOption),
-            node: () => (that.node_run ?? (that.run || tools_1.noop)).bind(that)(value, nextOption),
-            other: () => ((that.run || tools_1.noop)).bind(that)(value, nextOption)
+            web: () => (that.web_run ??
+                (that.run || tools_1.noop)).bind(that)(value, nextOption),
+            node: () => (that.node_run ??
+                (that.run || tools_1.noop)).bind(that)(value, nextOption),
+            other: () => (that.run || tools_1.noop).bind(that)(value, nextOption),
         });
-        sendLog("[Work][Func:run]->入口", value);
+        sendLog('[Work][Func:run]->入口', value);
         const uuid = (0, uuid_1.v4)();
         const runSub = execFunc(value)
             .pipe((0, operators_1.tap)(function (_value) {
-            sendLog("[Work][Func:run]->结果", _value);
+            sendLog('[Work][Func:run]->结果', _value);
         }), (0, operators_1.observeOn)(rxjs_1.asyncScheduler))
             .subscribe({
             complete: () => {
@@ -91,11 +92,11 @@ class Instruction extends rxjs_1.Subject {
                 that.runSubscriptions.delete(uuid);
             },
             error: (err) => {
-                sendLog("[Work][Func:run]->执行错误", value, err);
-                that.completeOneLoop(value, null, false);
+                sendLog('[Work][Func:run]->执行错误', value, err);
+                that.completeOneLoop(value, new Object_1.NULLObject(), false);
             },
             next: (res) => {
-                sendLog("[Work][Func:run]->将执行下一个Work", res);
+                sendLog('[Work][Func:run]->将执行下一个Work', res);
                 that.completeOneLoop(value, res, true);
                 that.nextWork?.next(res);
             },
@@ -126,9 +127,9 @@ class Instruction extends rxjs_1.Subject {
             this.context.sendLog({
                 work: [this],
                 content: this.context,
-                desc: "[Work:preRun]-接受上一个消息错误",
+                desc: '[Work:preRun]-接受上一个消息错误',
                 date: new Date(),
-                value: new Object_1.StringObject(err.message),
+                value: new Object_2.StringObject(err.message),
             });
     }
     addVariable(name, value) {
@@ -152,14 +153,16 @@ class Instruction extends rxjs_1.Subject {
             this.context.sendLog({
                 work: [this],
                 content: this.context,
-                desc: this.toString() + " 已经关闭",
+                desc: this.toString() + ' 已经关闭',
                 value: (0, channel_value_util_1.wrapperValue)(value, null),
             });
         }
     }
     // 声明周期
     // 处理输入的值
-    nextValue(input) { return input; }
+    nextValue(input) {
+        return input;
+    }
     completeOneLoop(input, toValue, success) { }
     // 基础
     toString() {
@@ -192,8 +195,10 @@ exports.InstructionOTO = InstructionOTO;
 class InstructionOTM extends Instruction {
     // 声明可以进行配置的属性 todo
     static OPTION;
-    name = "MultipleInstruction";
-    nextValue(input) { return input; }
+    name = 'MultipleInstruction';
+    nextValue(input) {
+        return input;
+    }
     completeOneLoop(input, next, success) { }
     run(input) {
         return new rxjs_1.Observable((subscriber) => {
@@ -211,8 +216,10 @@ exports.InstructionOTM = InstructionOTM;
 class InstructionMTM extends Instruction {
     // 声明可以进行配置的属性 todo
     static OPTION;
-    name = "MultipleInstruction";
-    nextValue(input) { return input; }
+    name = 'MultipleInstruction';
+    nextValue(input) {
+        return input;
+    }
     completeOneLoop(input, next, success) { }
     run(input) {
         return new rxjs_1.Observable((subscriber) => {

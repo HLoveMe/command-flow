@@ -11,7 +11,7 @@ const valueUtil_1 = require("../Object/valueUtil");
 function unpackValue(value) {
     if (!!value === false)
         return '';
-    return value._value.value.valueOf();
+    return value?._value.value.valueOf();
 }
 exports.unpackValue = unpackValue;
 /**

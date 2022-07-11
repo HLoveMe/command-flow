@@ -1,12 +1,12 @@
-import { InstructionOTO } from "../Instruction";
-import { Observable } from "rxjs";
-import { ChannelObject } from "../../Types";
-import { BooleanObject } from '../../Object';
-import { RunCommandWorkConfig } from "../../Configs";
+import { InstructionOTO } from '../Instruction';
+import { Observable } from 'rxjs';
+import { ChannelObject } from '../../Types';
+import { ObjectTarget } from '../../Object';
+import { RunCommandWorkConfig } from '../../Configs';
 declare type CommandParams = {
     [key: string]: string;
 };
-declare type HandleEvalCommand = (params: CommandParams | string, runOption: RunCommandWorkConfig) => string;
+declare type HandleEvalCommand = (params: CommandParams | string, runOption?: RunCommandWorkConfig) => string;
 /**
  * 默认：
  * run javascript
@@ -36,7 +36,7 @@ export default class RunCommandWork extends InstructionOTO {
     paramsConfig: CommandParams;
     callBack: HandleEvalCommand;
     constructor(...args: any[]);
-    run(command: ChannelObject, option?: RunCommandWorkConfig): Observable<ChannelObject<BooleanObject>>;
+    run(command: ChannelObject, option?: RunCommandWorkConfig): Observable<ChannelObject<ObjectTarget<any>>>;
     static isAble(): boolean;
 }
 export {};

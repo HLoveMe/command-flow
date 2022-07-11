@@ -5,7 +5,7 @@ import { ChannelObject } from '../Types';
  * @param value
  * @returns
  */
-export declare function unpackValue<T extends any = string>(value: ChannelObject): T;
+export declare function unpackValue<T extends any = string>(value?: ChannelObject): T;
 /**
  * 组合包装
  * @param input

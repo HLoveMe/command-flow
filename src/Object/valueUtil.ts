@@ -3,7 +3,7 @@ import { BaseType } from '../Types';
 import * as ObjectValue from './Able';
 import { ValueExtends } from './types';
 // type Detail<T> = ValueExtends.IsValue<T> extends true ? T : ValueExtends.GetDeepAchieve<T>
-let ObjectMap = null;
+let ObjectMap:any = null;
 const init = () => {
   if (ObjectMap === null) {
     ObjectMap = {

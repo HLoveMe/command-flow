@@ -2,18 +2,18 @@ import { MapObjectAble } from './Able/Base/MapObject';
 import { NumberObjectAble } from './Able/Base/NumberObject';
 import { SetObjectAble } from './Able/Base/SetObject';
 import { StringObjectAble } from './Able/Base/StringObject';
-import { ArrayObjectAble } from './Able/Base/ArrayObject'
-import { BooleanObject } from './Able/Base/BooleanObject'
-import { DataObject } from './Able/Base/DataObject'
-import { DateObjectAble } from './Able/Base/DateObject'
-import { NULLObject } from './Able/Base/NULLObject'
-import { ObjectTarget } from './Able/Base/ObjectTarget'
-
+import { ArrayObjectAble } from './Able/Base/ArrayObject';
+import { BooleanObject } from './Able/Base/BooleanObject';
+import { DataObject } from './Able/Base/DataObject';
+import { DateObjectAble } from './Able/Base/DateObject';
+import { NULLObject } from './Able/Base/NULLObject';
+import { ObjectTarget } from './Able/Base/ObjectTarget';
 
 type isEqual<X, Y> = [X] extends [Y] ? ([Y] extends [X] ? true : false) : false;
 export namespace Value {
   export type NULL = null | undefined;
   export interface ValueAble<V> {
+    get [Symbol.toStringTag](): string;
     _value: V;
     valueOf(): V;
   }
@@ -22,7 +22,7 @@ export namespace Value {
   }
   export interface ArrayAble<T>
     extends ValueAble<Array<T>>,
-    ObjectAble<Array<T>> {
+      ObjectAble<Array<T>> {
     len(): number;
     first(): T;
     last(): T;
@@ -32,7 +32,7 @@ export namespace Value {
 
   export interface MapAble<T, U>
     extends ValueAble<Map<T, U>>,
-    ObjectAble<Map<T, U>> {
+      ObjectAble<Map<T, U>> {
     len(): number;
     valueOf(): Map<T, U>;
   }
@@ -60,7 +60,7 @@ export namespace Value {
 
   export interface DataAble
     extends ValueAble<ArrayBuffer>,
-    ObjectAble<ArrayBuffer> {
+      ObjectAble<ArrayBuffer> {
     data(): ArrayBuffer;
   }
   // null  | undefined
@@ -74,7 +74,7 @@ export namespace Value {
   export interface Mixins<
     V extends Value.ObjectAble<any> = Value.ObjectAble<any>,
     U extends any = NULL
-    > extends ValueAble<V | U> { }
+  > extends ValueAble<V | U> {}
 }
 export namespace ValueExtends {
   type KeyType = string | number | symbol;
@@ -159,7 +159,9 @@ export namespace ValueExtends {
   // number===>NumberObject
   // value.NumberAble ===>NumberObject
   // NumberObject ====>NumberObject
-  export type GetDeepAchieve<T extends any = string> = IsValue<T> extends true ? GetAchieve<T> : GetAchieve<Wrapper<T>>;
+  export type GetDeepAchieve<T extends any = string> = IsValue<T> extends true
+    ? GetAchieve<T>
+    : GetAchieve<Wrapper<T>>;
 
   type GetInterface<T, U extends KeyType, E> = Pick<T, ValidKey<T, U, E>>;
 
@@ -171,12 +173,12 @@ export namespace ValueExtends {
 
   type CreateInterface<T> = {
     [K in keyof T]: T[K] extends (...args: any[]) => any
-    ? ResetFunctionType<T[K]>
-    : T[K];
+      ? ResetFunctionType<T[K]>
+      : T[K];
   };
   export type Constructor<C, TC extends any = any> = {
-    new();
-    new(value: C);
+    new ();
+    new (value: C);
   };
   /***
    * 去掉指定'constructor' | 'valueOf'属性，并值类型为 (...args: any[]) => any
@@ -204,33 +206,33 @@ export namespace ValueExec {
     T,
     E extends KeyType = never,
     DE extends KeyType = ExcludeKeys | E
-    > = keyof Omit<T, DE>;
+  > = keyof Omit<T, DE>;
 
   declare type Exec<
     T,
     E extends KeyType = never,
     KS extends KeyType = KeyExclude<T, E>
-    > = (key: KS, ...args: any[]) => any;
+  > = (key: KS, ...args: any[]) => any;
 
   type ExtendsFunction<T, E extends KeyType> = {
     [K in KeyExclude<T, E | ExcludeKeys>]: T[K] extends (
       ...args: [infer P, ...infer P2]
     ) => infer R
-    ? isEqual<P, unknown> extends true
-    ? () => R
-    : P extends (...args: any[]) => any
-    ? (...args: [(...args: any[]) => any, ...P2]) => R
-    : (...args: [P, ...P2]) => R
-    : T[K];
+      ? isEqual<P, unknown> extends true
+        ? () => R
+        : P extends (...args: any[]) => any
+        ? (...args: [(...args: any[]) => any, ...P2]) => R
+        : (...args: [P, ...P2]) => R
+      : T[K];
   };
   export type ExecFunctionAble<T, E extends KeyType = never> = {
     execFunction: Exec<T, E>;
   } & ExtendsFunction<T, E>;
   export type BlurExecInterface<T> = {
     [K in keyof T]: K extends 'execFunction'
-    ? T[K]
-    : T[K] extends (...args: infer P) => any
-    ? (...args: P) => any
-    : T[K];
+      ? T[K]
+      : T[K] extends (...args: infer P) => any
+      ? (...args: P) => any
+      : T[K];
   };
 }

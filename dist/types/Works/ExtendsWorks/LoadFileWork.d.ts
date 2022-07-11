@@ -1,8 +1,8 @@
-import { ChannelObject } from "../../Types";
-import { InstructionOTO } from "../Instruction";
-import { Observable } from "rxjs";
-import { DataObject } from "../../Object";
-import { FileOption } from "../../Bridge/ConfigTypes";
+import { ChannelObject } from '../../Types';
+import { InstructionOTO } from '../Instruction';
+import { Observable } from 'rxjs';
+import { DataObject } from '../../Object';
+import { FileOption } from '../../Bridge/ConfigTypes';
 export default class LoadFileWork extends InstructionOTO {
     name: string;
     currentConfig: FileOption;

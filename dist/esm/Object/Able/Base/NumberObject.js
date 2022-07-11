@@ -18,6 +18,9 @@ let _NumberObject = _NumberObject_1 = class _NumberObject extends NumberWrapper 
         super(value);
         this._value = value;
     }
+    get [Symbol.toStringTag]() {
+        return super[Symbol.toStringTag];
+    }
     valueOf() {
         return this._value;
     }

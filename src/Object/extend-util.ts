@@ -31,7 +31,7 @@ export function createExtendsConstruct<T, TC extends any = any/**暂不生效 */
   @Unit(Enum)
   class KV extends Value.ObjectTarget<T> {
     declare _value: T;
-    constructor(value: T = null) {
+    constructor(value: T = {} as T) {
       super();
       this._value = value ?? ({} as any as T);
     }

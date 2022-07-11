@@ -1,7 +1,7 @@
 import { BaseType, ChannelObject, ChannelValue, WorkType } from "../../Types";
 import {
   Subject,
-  Subscription,
+  Subscription,Observer
 } from "rxjs";
 import { WorkRunOption } from "../../Configs";
 import { v4 as UUID } from "uuid";

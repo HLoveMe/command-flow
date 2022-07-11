@@ -12,6 +12,7 @@ declare type isEqual<X, Y> = [X] extends [Y] ? ([Y] extends [X] ? true : false) 
 export declare namespace Value {
     type NULL = null | undefined;
     interface ValueAble<V> {
+        get [Symbol.toStringTag](): string;
         _value: V;
         valueOf(): V;
     }

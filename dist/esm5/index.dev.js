@@ -329,7 +329,7 @@ class MobileNodejsBridge extends _BasePlatform__WEBPACK_IMPORTED_MODULE_2__.Plat
             loaded: 0,
             data: new ArrayBuffer(0),
             finish: true,
-            file: null,
+            file: undefined,
         }));
     }
 }
@@ -1440,6 +1440,9 @@ let _NumberObject = _NumberObject_1 = class _NumberObject extends NumberWrapper 
         super(value);
         this._value = value;
     }
+    get [Symbol.toStringTag]() {
+        return super[Symbol.toStringTag];
+    }
     valueOf() {
         return this._value;
     }
@@ -2042,7 +2045,7 @@ function createExtendsConstruct(target, exclude = []) {
         }
     });
     let KV = class KV extends _Able__WEBPACK_IMPORTED_MODULE_1__.ObjectTarget {
-        constructor(value = null) {
+        constructor(value = {}) {
             super();
             this._value = value ?? {};
         }
@@ -2349,6 +2352,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isWeb": () => (/* binding */ isWeb)
 /* harmony export */ });
 /* harmony import */ var _tools__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tools */ "./src/Util/tools.ts");
+/* eslint-disable */
 
 var JSRUNEnvirType;
 (function (JSRUNEnvirType) {
@@ -2492,7 +2496,7 @@ if (topThis.process && (0,_tools__WEBPACK_IMPORTED_MODULE_0__.getObjectType)(top
     currentEnir = JSRUNEnvirType.NODE_PC;
 }
 else {
-    const typeName = getJSEnvironment().name;
+    const typeName = getJSEnvironment()?.name;
     switch (typeName) {
         case EnvirType.WINDOWS:
             currentEnir = JSRUNEnvirType.WEB_PC;
@@ -2560,7 +2564,7 @@ __webpack_require__.r(__webpack_exports__);
 function unpackValue(value) {
     if (!!value === false)
         return '';
-    return value._value.value.valueOf();
+    return value?._value.value.valueOf();
 }
 /**
  * 组合包装
@@ -2803,13 +2807,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class FetchWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO {
-    name = "FetchWork";
-    _getInitOption(input, baseOption) {
+    name = 'FetchWork';
+    _getInitOption(input, baseOption = {}) {
         const initParams = input.valueOf();
         const { url, method, timeout, data } = initParams;
         const request = {
             url,
-            method: initParams.method || baseOption.method || "GET",
+            method: initParams.method || baseOption.method || 'GET',
             timeout: timeout || baseOption.timeout || 10000,
             headers: {
                 ...(baseOption.headers || {}),
@@ -2817,8 +2821,9 @@ class FetchWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO
             },
         };
         request.data = data;
-        if (method.toLocaleUpperCase() === "GET") {
-            request.headers['Content-Type'] = request.headers['Content-Type'] || 'application/json';
+        if (method && method.toLocaleUpperCase() === 'GET') {
+            request.headers['Content-Type'] =
+                request.headers['Content-Type'] || 'application/json';
         }
         request.timeoutErrorMessage = '请求超时';
         return request;
@@ -2827,11 +2832,13 @@ class FetchWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO
         const that = this;
         const options = this._getInitOption(input._value.value, baseOption);
         return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscriber) => {
-            const fetchSub = that.context.platform.fetch(options)
+            const fetchSub = that.context.platform
+                .fetch(options)
                 .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.tap)((result) => {
                 const { data } = result.valueOf();
                 this.logMsg(`[FetchWork][load:data]${data}`, input);
-            })).subscribe({
+            }))
+                .subscribe({
                 next: (data) => {
                     const result = data.valueOf();
                     if (result.error) {
@@ -2852,7 +2859,7 @@ class FetchWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO
                 unsubscribe: () => {
                     subscriber.unsubscribe();
                     fetchSub.unsubscribe();
-                }
+                },
             };
         });
     }
@@ -2892,7 +2899,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LoadFileWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO {
-    name = "LoadFileWork";
+    name = 'LoadFileWork';
     currentConfig = { type: _Bridge_ConfigTypes__WEBPACK_IMPORTED_MODULE_4__.FileType.All };
     constructor(config) {
         super();
@@ -2900,12 +2907,13 @@ class LoadFileWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.Instruction
     }
     run(input, option) {
         const that = this;
-        const runOption = { ...(option), ...(this.currentConfig) };
+        const runOption = { ...option, ...this.currentConfig };
         return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscriber) => {
             const target = (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_6__.unpackValue)(input);
             const sub = that.context.platform
                 .loadFile(target, runOption)
-                .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.tap)((obj) => {
+                .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.tap)((data) => {
+                const obj = data;
                 const { loaded, total, finish } = obj.valueOf();
                 this.logMsg(`加载进度[load:progress]---：${loaded}/${total} 是否完成：${finish}`, input);
             }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.takeLast)(1))
@@ -2915,7 +2923,7 @@ class LoadFileWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.Instruction
                     subscriber.next(new _Object__WEBPACK_IMPORTED_MODULE_2__.ObjectTarget({
                         ...input._value,
                         value: new _Object__WEBPACK_IMPORTED_MODULE_2__.DataObject(data),
-                        option: { file }
+                        option: { file },
                     }));
                     subscriber.complete();
                 },
@@ -3074,6 +3082,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/Equipment.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
+/* harmony import */ var _Util_tools__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Util/tools */ "./src/Util/tools.ts");
+
 
 
 
@@ -3091,14 +3101,16 @@ function handleEvalCommand(template, params, config, runOption) {
     if (typeof input === 'string') {
         const placeholder = config['*'];
         if (placeholder) {
-            runCommand = runCommand.replaceAll(placeholder, input);
+            const reg = new RegExp(placeholder, 'g');
+            runCommand = runCommand.replace(reg, input);
         }
     }
     else {
-        Object.keys(config).forEach(key => {
+        Object.keys(config).forEach((key) => {
             const placeholder = config[key];
+            const reg = new RegExp(placeholder, 'g');
             const value = input[key];
-            runCommand = runCommand.replaceAll(placeholder, value);
+            runCommand = runCommand.replace(reg, value);
         });
     }
     return runCommand;
@@ -3128,14 +3140,14 @@ function handleEvalCommand(template, params, config, runOption) {
  */
 class RunCommandWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO {
     template = '';
-    name = "RunCommandWork";
+    name = 'RunCommandWork';
     paramsConfig = {};
-    callBack = null;
+    callBack = _Util_tools__WEBPACK_IMPORTED_MODULE_4__.noop;
     constructor(...args) {
         super();
         if (typeof args[0] === 'string') {
             const template = args[0] || '$I$';
-            const paramsConfig = args[1] || { "*": "$I$" };
+            const paramsConfig = args[1] || { '*': '$I$' };
             this.template = template;
             this.paramsConfig = paramsConfig;
         }
@@ -3157,10 +3169,10 @@ class RunCommandWork extends _Instruction__WEBPACK_IMPORTED_MODULE_0__.Instructi
                 .subscribe({
                 next: (info) => {
                     this.logMsg(`执行command：${info.error ? '失败' : '成功'}。结果：${info.result}`, command);
-                    subscriber.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.wrapperValue)(command, !!(info.error ? undefined : info.result)));
+                    subscriber.next((0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.wrapperValue)(command, (info.error ? undefined : info.result)));
                 },
                 complete: () => subscriber.complete(),
-                error: (err) => subscriber.error(err)
+                error: (err) => subscriber.error(err),
             });
             return {
                 unsubscribe: () => {
@@ -3316,17 +3328,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "InstructionOTM": () => (/* binding */ InstructionOTM),
 /* harmony export */   "InstructionOTO": () => (/* binding */ InstructionOTO)
 /* harmony export */ });
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "rxjs");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Util/Equipment */ "./src/Util/Equipment.ts");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid */ "uuid");
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _WorkUnit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./WorkUnit */ "./src/Works/WorkUnit.ts");
-/* harmony import */ var _Object__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Object */ "./src/Object/index.ts");
+/* harmony import */ var _Object__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Object */ "./src/Object/index.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Util/Equipment */ "./src/Util/Equipment.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! uuid */ "uuid");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _WorkUnit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./WorkUnit */ "./src/Works/WorkUnit.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
 /* harmony import */ var _Util_tools__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Util/tools */ "./src/Util/tools.ts");
+
 
 
 
@@ -3340,8 +3353,8 @@ __webpack_require__.r(__webpack_exports__);
  * 一次输入--->多次输出 InstructionOTM
  * n次输入---->m次输出 InstructionMTM
  */
-class Instruction extends rxjs__WEBPACK_IMPORTED_MODULE_0__.Subject {
-    name = "Instruction";
+class Instruction extends rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject {
+    name = 'Instruction';
     static _id = 0;
     id = Instruction._id++;
     uuid;
@@ -3354,7 +3367,7 @@ class Instruction extends rxjs__WEBPACK_IMPORTED_MODULE_0__.Subject {
     config = { development: true };
     constructor() {
         super();
-        this.uuid = (0,uuid__WEBPACK_IMPORTED_MODULE_3__.v4)();
+        this.uuid = (0,uuid__WEBPACK_IMPORTED_MODULE_4__.v4)();
     }
     // 连接上下通道
     prepare(before, next) {
@@ -3368,17 +3381,15 @@ class Instruction extends rxjs__WEBPACK_IMPORTED_MODULE_0__.Subject {
     _connectChannel() {
         const that = this;
         // // 处理数据
-        const sub2 = this
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.tap)((value) => {
+        const sub2 = this.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.tap)((value) => {
             this.config?.development &&
                 that.context?.sendLog({
                     work: [that],
                     content: this.context,
-                    desc: "[Work:preRun]->接受到数据",
+                    desc: '[Work:preRun]->接受到数据',
                     value: value,
                 });
-        }))
-            .subscribe({
+        })).subscribe({
             complete: () => { },
             error: (error) => that.error(error),
             next: (value) => that._run(value),
@@ -3399,17 +3410,19 @@ class Instruction extends rxjs__WEBPACK_IMPORTED_MODULE_0__.Subject {
         value = this.nextValue(value) || value;
         const that = this;
         const nextOption = (this.config?.workConfig || {})[this.name] || {};
-        const execFunc = (0,_Util_Equipment__WEBPACK_IMPORTED_MODULE_1__.PlatformSelect)({
-            web: () => (that.web_run ?? (that.run || _Util_tools__WEBPACK_IMPORTED_MODULE_7__.noop)).bind(that)(value, nextOption),
-            node: () => (that.node_run ?? (that.run || _Util_tools__WEBPACK_IMPORTED_MODULE_7__.noop)).bind(that)(value, nextOption),
-            other: () => ((that.run || _Util_tools__WEBPACK_IMPORTED_MODULE_7__.noop)).bind(that)(value, nextOption)
+        const execFunc = (0,_Util_Equipment__WEBPACK_IMPORTED_MODULE_2__.PlatformSelect)({
+            web: () => (that.web_run ??
+                (that.run || _Util_tools__WEBPACK_IMPORTED_MODULE_7__.noop)).bind(that)(value, nextOption),
+            node: () => (that.node_run ??
+                (that.run || _Util_tools__WEBPACK_IMPORTED_MODULE_7__.noop)).bind(that)(value, nextOption),
+            other: () => (that.run || _Util_tools__WEBPACK_IMPORTED_MODULE_7__.noop).bind(that)(value, nextOption),
         });
-        sendLog("[Work][Func:run]->入口", value);
-        const uuid = (0,uuid__WEBPACK_IMPORTED_MODULE_3__.v4)();
+        sendLog('[Work][Func:run]->入口', value);
+        const uuid = (0,uuid__WEBPACK_IMPORTED_MODULE_4__.v4)();
         const runSub = execFunc(value)
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.tap)(function (_value) {
-            sendLog("[Work][Func:run]->结果", _value);
-        }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.observeOn)(rxjs__WEBPACK_IMPORTED_MODULE_0__.asyncScheduler))
+            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.tap)(function (_value) {
+            sendLog('[Work][Func:run]->结果', _value);
+        }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.observeOn)(rxjs__WEBPACK_IMPORTED_MODULE_1__.asyncScheduler))
             .subscribe({
             complete: () => {
                 const unit = that.runSubscriptions.get(uuid);
@@ -3417,21 +3430,21 @@ class Instruction extends rxjs__WEBPACK_IMPORTED_MODULE_0__.Subject {
                 that.runSubscriptions.delete(uuid);
             },
             error: (err) => {
-                sendLog("[Work][Func:run]->执行错误", value, err);
-                that.completeOneLoop(value, null, false);
+                sendLog('[Work][Func:run]->执行错误', value, err);
+                that.completeOneLoop(value, new _Object__WEBPACK_IMPORTED_MODULE_0__.NULLObject(), false);
             },
             next: (res) => {
-                sendLog("[Work][Func:run]->将执行下一个Work", res);
+                sendLog('[Work][Func:run]->将执行下一个Work', res);
                 that.completeOneLoop(value, res, true);
                 that.nextWork?.next(res);
             },
         });
-        const unit = new _WorkUnit__WEBPACK_IMPORTED_MODULE_4__.WorkUnit(that.context, that, runSub, uuid);
+        const unit = new _WorkUnit__WEBPACK_IMPORTED_MODULE_5__.WorkUnit(that.context, that, runSub, uuid);
         this.runSubscriptions.set(unit.uuid, unit);
     }
     stopWork() {
         const that = this;
-        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable((subscribe) => {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscribe) => {
             that.runSubscriptions.forEach((value) => {
                 value?.sub.unsubscribe();
             });
@@ -3452,9 +3465,9 @@ class Instruction extends rxjs__WEBPACK_IMPORTED_MODULE_0__.Subject {
             this.context.sendLog({
                 work: [this],
                 content: this.context,
-                desc: "[Work:preRun]-接受上一个消息错误",
+                desc: '[Work:preRun]-接受上一个消息错误',
                 date: new Date(),
-                value: new _Object__WEBPACK_IMPORTED_MODULE_5__.StringObject(err.message),
+                value: new _Object__WEBPACK_IMPORTED_MODULE_0__.StringObject(err.message),
             });
     }
     addVariable(name, value) {
@@ -3478,14 +3491,16 @@ class Instruction extends rxjs__WEBPACK_IMPORTED_MODULE_0__.Subject {
             this.context.sendLog({
                 work: [this],
                 content: this.context,
-                desc: this.toString() + " 已经关闭",
+                desc: this.toString() + ' 已经关闭',
                 value: (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_6__.wrapperValue)(value, null),
             });
         }
     }
     // 声明周期
     // 处理输入的值
-    nextValue(input) { return input; }
+    nextValue(input) {
+        return input;
+    }
     completeOneLoop(input, toValue, success) { }
     // 基础
     toString() {
@@ -3495,7 +3510,7 @@ class Instruction extends rxjs__WEBPACK_IMPORTED_MODULE_0__.Subject {
         return this.__proto__.isAble();
     }
     static isAble() {
-        return _Util_Equipment__WEBPACK_IMPORTED_MODULE_1__.isJS;
+        return _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__.isJS;
     }
 }
 class InstructionOTO extends Instruction {
@@ -3504,7 +3519,7 @@ class InstructionOTO extends Instruction {
     }
     completeOneLoop(input, toValue, success) { }
     run(input) {
-        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable((subscriber) => {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscriber) => {
             subscriber.next(input);
             subscriber.complete();
             return {
@@ -3516,11 +3531,13 @@ class InstructionOTO extends Instruction {
 class InstructionOTM extends Instruction {
     // 声明可以进行配置的属性 todo
     static OPTION;
-    name = "MultipleInstruction";
-    nextValue(input) { return input; }
+    name = 'MultipleInstruction';
+    nextValue(input) {
+        return input;
+    }
     completeOneLoop(input, next, success) { }
     run(input) {
-        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable((subscriber) => {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscriber) => {
             // subscriber.next(input);
             // 输出多次
             subscriber.next(input);
@@ -3534,11 +3551,13 @@ class InstructionOTM extends Instruction {
 class InstructionMTM extends Instruction {
     // 声明可以进行配置的属性 todo
     static OPTION;
-    name = "MultipleInstruction";
-    nextValue(input) { return input; }
+    name = 'MultipleInstruction';
+    nextValue(input) {
+        return input;
+    }
     completeOneLoop(input, next, success) { }
     run(input) {
-        return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable((subscriber) => {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable((subscriber) => {
             // subscriber.next(input);
             // 输出多次
             subscriber.next(input);

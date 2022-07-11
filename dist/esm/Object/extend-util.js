@@ -32,7 +32,7 @@ export function createExtendsConstruct(target, exclude = []) {
         }
     });
     let KV = class KV extends Value.ObjectTarget {
-        constructor(value = null) {
+        constructor(value = {}) {
             super();
             this._value = value ?? {};
         }

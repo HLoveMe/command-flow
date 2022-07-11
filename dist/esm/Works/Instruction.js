@@ -1,18 +1,19 @@
-import { Subject, Observable, asyncScheduler, } from "rxjs";
-import { isJS, PlatformSelect, } from "../Util/Equipment";
-import { observeOn, tap } from "rxjs/operators";
-import { v4 as UUID } from "uuid";
-import { WorkUnit } from "./WorkUnit";
-import { StringObject } from "../Object";
-import { wrapperValue } from "../Util/channel-value-util";
-import { noop } from "../Util/tools";
+import { NULLObject } from '../Object';
+import { Subject, Observable, asyncScheduler, } from 'rxjs';
+import { isJS, PlatformSelect } from '../Util/Equipment';
+import { observeOn, tap } from 'rxjs/operators';
+import { v4 as UUID } from 'uuid';
+import { WorkUnit } from './WorkUnit';
+import { StringObject } from '../Object';
+import { wrapperValue } from '../Util/channel-value-util';
+import { noop } from '../Util/tools';
 /**
  * 一次输入--->一次输出 InstructionOTO
  * 一次输入--->多次输出 InstructionOTM
  * n次输入---->m次输出 InstructionMTM
  */
 export class Instruction extends Subject {
-    name = "Instruction";
+    name = 'Instruction';
     static _id = 0;
     id = Instruction._id++;
     uuid;
@@ -39,17 +40,15 @@ export class Instruction extends Subject {
     _connectChannel() {
         const that = this;
         // // 处理数据
-        const sub2 = this
-            .pipe(tap((value) => {
+        const sub2 = this.pipe(tap((value) => {
             this.config?.development &&
                 that.context?.sendLog({
                     work: [that],
                     content: this.context,
-                    desc: "[Work:preRun]->接受到数据",
+                    desc: '[Work:preRun]->接受到数据',
                     value: value,
                 });
-        }))
-            .subscribe({
+        })).subscribe({
             complete: () => { },
             error: (error) => that.error(error),
             next: (value) => that._run(value),
@@ -71,15 +70,17 @@ export class Instruction extends Subject {
         const that = this;
         const nextOption = (this.config?.workConfig || {})[this.name] || {};
         const execFunc = PlatformSelect({
-            web: () => (that.web_run ?? (that.run || noop)).bind(that)(value, nextOption),
-            node: () => (that.node_run ?? (that.run || noop)).bind(that)(value, nextOption),
-            other: () => ((that.run || noop)).bind(that)(value, nextOption)
+            web: () => (that.web_run ??
+                (that.run || noop)).bind(that)(value, nextOption),
+            node: () => (that.node_run ??
+                (that.run || noop)).bind(that)(value, nextOption),
+            other: () => (that.run || noop).bind(that)(value, nextOption),
         });
-        sendLog("[Work][Func:run]->入口", value);
+        sendLog('[Work][Func:run]->入口', value);
         const uuid = UUID();
         const runSub = execFunc(value)
             .pipe(tap(function (_value) {
-            sendLog("[Work][Func:run]->结果", _value);
+            sendLog('[Work][Func:run]->结果', _value);
         }), observeOn(asyncScheduler))
             .subscribe({
             complete: () => {
@@ -88,11 +89,11 @@ export class Instruction extends Subject {
                 that.runSubscriptions.delete(uuid);
             },
             error: (err) => {
-                sendLog("[Work][Func:run]->执行错误", value, err);
-                that.completeOneLoop(value, null, false);
+                sendLog('[Work][Func:run]->执行错误', value, err);
+                that.completeOneLoop(value, new NULLObject(), false);
             },
             next: (res) => {
-                sendLog("[Work][Func:run]->将执行下一个Work", res);
+                sendLog('[Work][Func:run]->将执行下一个Work', res);
                 that.completeOneLoop(value, res, true);
                 that.nextWork?.next(res);
             },
@@ -123,7 +124,7 @@ export class Instruction extends Subject {
             this.context.sendLog({
                 work: [this],
                 content: this.context,
-                desc: "[Work:preRun]-接受上一个消息错误",
+                desc: '[Work:preRun]-接受上一个消息错误',
                 date: new Date(),
                 value: new StringObject(err.message),
             });
@@ -149,14 +150,16 @@ export class Instruction extends Subject {
             this.context.sendLog({
                 work: [this],
                 content: this.context,
-                desc: this.toString() + " 已经关闭",
+                desc: this.toString() + ' 已经关闭',
                 value: wrapperValue(value, null),
             });
         }
     }
     // 声明周期
     // 处理输入的值
-    nextValue(input) { return input; }
+    nextValue(input) {
+        return input;
+    }
     completeOneLoop(input, toValue, success) { }
     // 基础
     toString() {
@@ -187,8 +190,10 @@ export class InstructionOTO extends Instruction {
 export class InstructionOTM extends Instruction {
     // 声明可以进行配置的属性 todo
     static OPTION;
-    name = "MultipleInstruction";
-    nextValue(input) { return input; }
+    name = 'MultipleInstruction';
+    nextValue(input) {
+        return input;
+    }
     completeOneLoop(input, next, success) { }
     run(input) {
         return new Observable((subscriber) => {
@@ -205,8 +210,10 @@ export class InstructionOTM extends Instruction {
 export class InstructionMTM extends Instruction {
     // 声明可以进行配置的属性 todo
     static OPTION;
-    name = "MultipleInstruction";
-    nextValue(input) { return input; }
+    name = 'MultipleInstruction';
+    nextValue(input) {
+        return input;
+    }
     completeOneLoop(input, next, success) { }
     run(input) {
         return new Observable((subscriber) => {

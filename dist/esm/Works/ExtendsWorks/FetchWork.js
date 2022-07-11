@@ -1,16 +1,16 @@
-import { InstructionOTO } from "../Instruction";
-import { Observable } from "rxjs";
-import { isJS } from "../../Util/Equipment";
-import { ObjectTarget } from "../..";
-import { tap } from "rxjs/operators";
+import { InstructionOTO } from '../Instruction';
+import { Observable } from 'rxjs';
+import { isJS } from '../../Util/Equipment';
+import { ObjectTarget } from '../..';
+import { tap } from 'rxjs/operators';
 export default class FetchWork extends InstructionOTO {
-    name = "FetchWork";
-    _getInitOption(input, baseOption) {
+    name = 'FetchWork';
+    _getInitOption(input, baseOption = {}) {
         const initParams = input.valueOf();
         const { url, method, timeout, data } = initParams;
         const request = {
             url,
-            method: initParams.method || baseOption.method || "GET",
+            method: initParams.method || baseOption.method || 'GET',
             timeout: timeout || baseOption.timeout || 10000,
             headers: {
                 ...(baseOption.headers || {}),
@@ -18,8 +18,9 @@ export default class FetchWork extends InstructionOTO {
             },
         };
         request.data = data;
-        if (method.toLocaleUpperCase() === "GET") {
-            request.headers['Content-Type'] = request.headers['Content-Type'] || 'application/json';
+        if (method && method.toLocaleUpperCase() === 'GET') {
+            request.headers['Content-Type'] =
+                request.headers['Content-Type'] || 'application/json';
         }
         request.timeoutErrorMessage = '请求超时';
         return request;
@@ -28,11 +29,13 @@ export default class FetchWork extends InstructionOTO {
         const that = this;
         const options = this._getInitOption(input._value.value, baseOption);
         return new Observable((subscriber) => {
-            const fetchSub = that.context.platform.fetch(options)
+            const fetchSub = that.context.platform
+                .fetch(options)
                 .pipe(tap((result) => {
                 const { data } = result.valueOf();
                 this.logMsg(`[FetchWork][load:data]${data}`, input);
-            })).subscribe({
+            }))
+                .subscribe({
                 next: (data) => {
                     const result = data.valueOf();
                     if (result.error) {
@@ -53,7 +56,7 @@ export default class FetchWork extends InstructionOTO {
                 unsubscribe: () => {
                     subscriber.unsubscribe();
                     fetchSub.unsubscribe();
-                }
+                },
             };
         });
     }

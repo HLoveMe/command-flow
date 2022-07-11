@@ -99,6 +99,8 @@ class RunResultShow extends InstructionOTO {
     return new Observable((subscriber) => {
       const value = unpackValue(input);
       result.value[this.index] = value == this.value;
+      console.log("first",input,value,result.value)
+      debugger
       subscriber.complete();
       return {
         unsubscribe: () => subscriber.unsubscribe(),

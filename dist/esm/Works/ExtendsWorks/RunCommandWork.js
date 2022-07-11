@@ -1,7 +1,8 @@
-import { InstructionOTO } from "../Instruction";
-import { Observable } from "rxjs";
-import { isJS } from "../../Util/Equipment";
-import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
+import { InstructionOTO } from '../Instruction';
+import { Observable } from 'rxjs';
+import { isJS } from '../../Util/Equipment';
+import { unpackValue, wrapperValue } from '../../Util/channel-value-util';
+import { noop } from '../../Util/tools';
 /**
  * "1 + $I$ "
  * @param template
@@ -15,14 +16,16 @@ function handleEvalCommand(template, params, config, runOption) {
     if (typeof input === 'string') {
         const placeholder = config['*'];
         if (placeholder) {
-            runCommand = runCommand.replaceAll(placeholder, input);
+            const reg = new RegExp(placeholder, 'g');
+            runCommand = runCommand.replace(reg, input);
         }
     }
     else {
-        Object.keys(config).forEach(key => {
+        Object.keys(config).forEach((key) => {
             const placeholder = config[key];
+            const reg = new RegExp(placeholder, 'g');
             const value = input[key];
-            runCommand = runCommand.replaceAll(placeholder, value);
+            runCommand = runCommand.replace(reg, value);
         });
     }
     return runCommand;
@@ -52,14 +55,14 @@ function handleEvalCommand(template, params, config, runOption) {
  */
 export default class RunCommandWork extends InstructionOTO {
     template = '';
-    name = "RunCommandWork";
+    name = 'RunCommandWork';
     paramsConfig = {};
-    callBack = null;
+    callBack = noop;
     constructor(...args) {
         super();
         if (typeof args[0] === 'string') {
             const template = args[0] || '$I$';
-            const paramsConfig = args[1] || { "*": "$I$" };
+            const paramsConfig = args[1] || { '*': '$I$' };
             this.template = template;
             this.paramsConfig = paramsConfig;
         }
@@ -81,10 +84,10 @@ export default class RunCommandWork extends InstructionOTO {
                 .subscribe({
                 next: (info) => {
                     this.logMsg(`执行command：${info.error ? '失败' : '成功'}。结果：${info.result}`, command);
-                    subscriber.next(wrapperValue(command, !!(info.error ? undefined : info.result)));
+                    subscriber.next(wrapperValue(command, (info.error ? undefined : info.result)));
                 },
                 complete: () => subscriber.complete(),
-                error: (err) => subscriber.error(err)
+                error: (err) => subscriber.error(err),
             });
             return {
                 unsubscribe: () => {

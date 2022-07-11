@@ -8,7 +8,7 @@ const ConfigTypes_1 = require("../../Bridge/ConfigTypes");
 const operators_1 = require("rxjs/operators");
 const channel_value_util_1 = require("../../Util/channel-value-util");
 class LoadFileWork extends Instruction_1.InstructionOTO {
-    name = "LoadFileWork";
+    name = 'LoadFileWork';
     currentConfig = { type: ConfigTypes_1.FileType.All };
     constructor(config) {
         super();
@@ -16,12 +16,13 @@ class LoadFileWork extends Instruction_1.InstructionOTO {
     }
     run(input, option) {
         const that = this;
-        const runOption = { ...(option), ...(this.currentConfig) };
+        const runOption = { ...option, ...this.currentConfig };
         return new rxjs_1.Observable((subscriber) => {
             const target = (0, channel_value_util_1.unpackValue)(input);
             const sub = that.context.platform
                 .loadFile(target, runOption)
-                .pipe((0, operators_1.tap)((obj) => {
+                .pipe((0, operators_1.tap)((data) => {
+                const obj = data;
                 const { loaded, total, finish } = obj.valueOf();
                 this.logMsg(`加载进度[load:progress]---：${loaded}/${total} 是否完成：${finish}`, input);
             }), (0, operators_1.takeLast)(1))
@@ -31,7 +32,7 @@ class LoadFileWork extends Instruction_1.InstructionOTO {
                     subscriber.next(new Object_1.ObjectTarget({
                         ...input._value,
                         value: new Object_1.DataObject(data),
-                        option: { file }
+                        option: { file },
                     }));
                     subscriber.complete();
                 },

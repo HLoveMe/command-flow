@@ -8,7 +8,7 @@ import { decide } from '../Object/valueUtil';
 export function unpackValue(value) {
     if (!!value === false)
         return '';
-    return value._value.value.valueOf();
+    return value?._value.value.valueOf();
 }
 /**
  * 组合包装

@@ -14,7 +14,7 @@ class MobileNodejsBridge extends BasePlatform_1.PlatformBridge {
             loaded: 0,
             data: new ArrayBuffer(0),
             finish: true,
-            file: null,
+            file: undefined,
         }));
     }
 }

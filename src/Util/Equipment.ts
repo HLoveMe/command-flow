@@ -1,5 +1,5 @@
+/* eslint-disable */
 import { getObjectType } from './tools';
-
 export type PlatformOSType = 'web' | 'node' | 'other';
 enum JSRUNEnvirType {
   NODE_PC = 10,
@@ -65,7 +65,7 @@ export function getJSEnvironment() {
       if (pf.indexOf('Win') != -1) {
         // 说明当前是Windows操作系统
         var rVersion = /Windows NT (\d+).(\d)/i;
-        var uaResult: any[] = userAgent.match(rVersion);
+        var uaResult:any = userAgent.match(rVersion);
         var sVersionStr = '';
         if (uaResult[1] == '6') {
           if (uaResult[2] == 1) {
@@ -137,7 +137,7 @@ var currentEnir: JSRUNEnvirType;
 if (topThis.process && getObjectType(topThis.process) === '[object process]') {
   currentEnir = JSRUNEnvirType.NODE_PC;
 } else {
-  const typeName = getJSEnvironment().name;
+  const typeName = getJSEnvironment()?.name;
   switch (typeName) {
     case EnvirType.WINDOWS:
       currentEnir = JSRUNEnvirType.WEB_PC;

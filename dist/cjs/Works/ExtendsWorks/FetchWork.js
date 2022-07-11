@@ -6,13 +6,13 @@ const Equipment_1 = require("../../Util/Equipment");
 const __1 = require("../..");
 const operators_1 = require("rxjs/operators");
 class FetchWork extends Instruction_1.InstructionOTO {
-    name = "FetchWork";
-    _getInitOption(input, baseOption) {
+    name = 'FetchWork';
+    _getInitOption(input, baseOption = {}) {
         const initParams = input.valueOf();
         const { url, method, timeout, data } = initParams;
         const request = {
             url,
-            method: initParams.method || baseOption.method || "GET",
+            method: initParams.method || baseOption.method || 'GET',
             timeout: timeout || baseOption.timeout || 10000,
             headers: {
                 ...(baseOption.headers || {}),
@@ -20,8 +20,9 @@ class FetchWork extends Instruction_1.InstructionOTO {
             },
         };
         request.data = data;
-        if (method.toLocaleUpperCase() === "GET") {
-            request.headers['Content-Type'] = request.headers['Content-Type'] || 'application/json';
+        if (method && method.toLocaleUpperCase() === 'GET') {
+            request.headers['Content-Type'] =
+                request.headers['Content-Type'] || 'application/json';
         }
         request.timeoutErrorMessage = '请求超时';
         return request;
@@ -30,11 +31,13 @@ class FetchWork extends Instruction_1.InstructionOTO {
         const that = this;
         const options = this._getInitOption(input._value.value, baseOption);
         return new rxjs_1.Observable((subscriber) => {
-            const fetchSub = that.context.platform.fetch(options)
+            const fetchSub = that.context.platform
+                .fetch(options)
                 .pipe((0, operators_1.tap)((result) => {
                 const { data } = result.valueOf();
                 this.logMsg(`[FetchWork][load:data]${data}`, input);
-            })).subscribe({
+            }))
+                .subscribe({
                 next: (data) => {
                     const result = data.valueOf();
                     if (result.error) {
@@ -55,7 +58,7 @@ class FetchWork extends Instruction_1.InstructionOTO {
                 unsubscribe: () => {
                     subscriber.unsubscribe();
                     fetchSub.unsubscribe();
-                }
+                },
             };
         });
     }

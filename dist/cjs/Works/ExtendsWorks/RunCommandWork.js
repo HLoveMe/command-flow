@@ -4,6 +4,7 @@ const Instruction_1 = require("../Instruction");
 const rxjs_1 = require("rxjs");
 const Equipment_1 = require("../../Util/Equipment");
 const channel_value_util_1 = require("../../Util/channel-value-util");
+const tools_1 = require("../../Util/tools");
 /**
  * "1 + $I$ "
  * @param template
@@ -17,14 +18,16 @@ function handleEvalCommand(template, params, config, runOption) {
     if (typeof input === 'string') {
         const placeholder = config['*'];
         if (placeholder) {
-            runCommand = runCommand.replaceAll(placeholder, input);
+            const reg = new RegExp(placeholder, 'g');
+            runCommand = runCommand.replace(reg, input);
         }
     }
     else {
-        Object.keys(config).forEach(key => {
+        Object.keys(config).forEach((key) => {
             const placeholder = config[key];
+            const reg = new RegExp(placeholder, 'g');
             const value = input[key];
-            runCommand = runCommand.replaceAll(placeholder, value);
+            runCommand = runCommand.replace(reg, value);
         });
     }
     return runCommand;
@@ -54,14 +57,14 @@ function handleEvalCommand(template, params, config, runOption) {
  */
 class RunCommandWork extends Instruction_1.InstructionOTO {
     template = '';
-    name = "RunCommandWork";
+    name = 'RunCommandWork';
     paramsConfig = {};
-    callBack = null;
+    callBack = tools_1.noop;
     constructor(...args) {
         super();
         if (typeof args[0] === 'string') {
             const template = args[0] || '$I$';
-            const paramsConfig = args[1] || { "*": "$I$" };
+            const paramsConfig = args[1] || { '*': '$I$' };
             this.template = template;
             this.paramsConfig = paramsConfig;
         }
@@ -83,10 +86,10 @@ class RunCommandWork extends Instruction_1.InstructionOTO {
                 .subscribe({
                 next: (info) => {
                     this.logMsg(`执行command：${info.error ? '失败' : '成功'}。结果：${info.result}`, command);
-                    subscriber.next((0, channel_value_util_1.wrapperValue)(command, !!(info.error ? undefined : info.result)));
+                    subscriber.next((0, channel_value_util_1.wrapperValue)(command, (info.error ? undefined : info.result)));
                 },
                 complete: () => subscriber.complete(),
-                error: (err) => subscriber.error(err)
+                error: (err) => subscriber.error(err),
             });
             return {
                 unsubscribe: () => {
