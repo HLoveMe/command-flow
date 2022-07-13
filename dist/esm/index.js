@@ -13,5 +13,4 @@ import { IntervalWork, TimeoutWork, DelayIntervalWork } from "./Works/ExtendsWor
 import { unpackValue, wrapperValue } from './Util/channel-value-util';
 import { isAbleType, decide } from './Object/valueUtil';
 export { ObjectTarget, ArrayObject, MapObject, SetObject, NumberObject, StringObject, BooleanObject, DateObject, DataObject, NULLObject, Context, WorkType, ControlFlow, InstructionMTM, InstructionOTM, InstructionOTO, Base64DecodeWork, Base64EnCodeWork, LoadFileWork, OpenURLWork, QRCodeWork, RunCommandWork, IntervalWork, TimeoutWork, DelayIntervalWork, FetchWork, unpackValue, wrapperValue, isAbleType, decide, createExtendsConstruct, createExtendsInstance };
-// 1
 //# sourceMappingURL=index.js.map

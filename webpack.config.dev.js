@@ -22,25 +22,25 @@ module.exports = {
       use: {
         loader: "babel-loader",
         options: {
+          presets: [
+            [
+              "@babel/preset-env", {
+                useBuiltIns: "usage",
+              }
+            ]
+          ],
           "plugins": [
             [
               "@babel/plugin-transform-runtime",
               {
                 "helpers": true,
-                "corejs": true,
+                "corejs": 3,
                 "regenerator": true,
                 "useESModules": false,
                 "absoluteRuntime": false,
               }
             ]
-          ],
-          // presets: [
-          //   [
-          //     "@babel/preset-env", {
-          //       useBuiltIns: "usage",
-          //     }
-          //   ]
-          // ]
+          ]
         }
       },
     },]

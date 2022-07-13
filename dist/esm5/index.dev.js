@@ -40,12 +40,6 @@ var SupportContentType;
     SupportContentType["JSON"] = "application/json";
     SupportContentType["TEXT"] = "text/plain";
 })(SupportContentType || (SupportContentType = {}));
-// export interface BasePlatformBridgeAble extends PlatformBridgeAble { }
-// export interface WebBridgeAble extends BasePlatformBridgeAble { }
-// export interface NodejsBridgeAble extends BasePlatformBridgeAble { }
-// export interface MobilePlatformBridgeAble extends PlatformBridgeAble { }
-// export interface MobileWebBridgeAble extends MobilePlatformBridgeAble { }
-// export interface MobileNodejsBridgeAble extends MobilePlatformBridgeAble { }
 
 
 /***/ }),
@@ -56,7 +50,6 @@ var SupportContentType;
   \****************************************/
 /***/ (() => {
 
-// import './Fetch/index'
 
 
 /***/ }),
@@ -107,6 +100,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PlatformBridge": () => (/* binding */ PlatformBridge)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "rxjs");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Object__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Object */ "./src/Object/index.ts");
@@ -115,28 +109,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "axios");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Hardware__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Hardware */ "./src/Bridge/Platform/Hardware.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
 
 
-var PlatformBridge = /** @class */ (function (_super) {
-    __extends(PlatformBridge, _super);
+
+var PlatformBridge = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__extends)(PlatformBridge, _super);
     function PlatformBridge() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -151,7 +131,6 @@ var PlatformBridge = /** @class */ (function (_super) {
             var moduleCount = qrCode.getModuleCount();
             var cellSize = (width - margin * 2) / moduleCount;
             var base64 = qrCode.createDataURL(cellSize, margin);
-            // const base64 = qrcode.createDataURL(cellSize, margin).replace('data:image/gif;base64', 'data:image/png;base64');
             sub.next(new _Object__WEBPACK_IMPORTED_MODULE_1__.StringObject(base64));
             sub.complete();
             return {
@@ -242,7 +221,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "HardwareBase": () => (/* binding */ HardwareBase)
 /* harmony export */ });
-var HardwareBase = /** @class */ (function () {
+var HardwareBase = (function () {
     function HardwareBase() {
     }
     HardwareBase.prototype.takePhoto = function (option) {
@@ -338,30 +317,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MobileNodejsBridge": () => (/* binding */ MobileNodejsBridge)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "rxjs");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Object__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Object */ "./src/Object/index.ts");
 /* harmony import */ var _BasePlatform__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../BasePlatform */ "./src/Bridge/Platform/BasePlatform.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
-var MobileNodejsBridge = /** @class */ (function (_super) {
-    __extends(MobileNodejsBridge, _super);
+
+var MobileNodejsBridge = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__extends)(MobileNodejsBridge, _super);
     function MobileNodejsBridge() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -395,25 +361,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PCNodejsBridge": () => (/* binding */ PCNodejsBridge)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _BasePlatform__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../BasePlatform */ "./src/Bridge/Platform/BasePlatform.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
-var PCNodejsBridge = /** @class */ (function (_super) {
-    __extends(PCNodejsBridge, _super);
+
+var PCNodejsBridge = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(PCNodejsBridge, _super);
     function PCNodejsBridge() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -435,25 +388,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MobileWebBridge": () => (/* binding */ MobileWebBridge)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _WebBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WebBase */ "./src/Bridge/Platform/Web/WebBase.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
-var MobileWebBridge = /** @class */ (function (_super) {
-    __extends(MobileWebBridge, _super);
+
+var MobileWebBridge = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(MobileWebBridge, _super);
     function MobileWebBridge() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -475,25 +415,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PCWebBridge": () => (/* binding */ PCWebBridge)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _WebBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WebBase */ "./src/Bridge/Platform/Web/WebBase.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
-var PCWebBridge = /** @class */ (function (_super) {
-    __extends(PCWebBridge, _super);
+
+var PCWebBridge = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(PCWebBridge, _super);
     function PCWebBridge() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -515,30 +442,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "WebBridge": () => (/* binding */ WebBridge)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "rxjs");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Object__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Object */ "./src/Object/index.ts");
 /* harmony import */ var _BasePlatform__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../BasePlatform */ "./src/Bridge/Platform/BasePlatform.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
-var WebBridge = /** @class */ (function (_super) {
-    __extends(WebBridge, _super);
+
+var WebBridge = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__extends)(WebBridge, _super);
     function WebBridge() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -546,16 +460,9 @@ var WebBridge = /** @class */ (function (_super) {
         var result = window.open(url, "__blank");
         return (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.of)(new _Object__WEBPACK_IMPORTED_MODULE_1__.BooleanObject(result !== null));
     };
-    /**
-     * 打开文件路径
-     * @param url
-     * @param option
-     * @returns
-     */
     WebBridge.prototype.loadFile = function (url, option) {
         return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable(function (subscriber) {
             var input = document.createElement("input");
-            //input.value = url.toString();
             input.type = "file";
             input.id = "_temp_input_select";
             input.accept = (option === null || option === void 0 ? void 0 : option.type) || "*";
@@ -612,9 +519,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Bridge_ConfigTypes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Bridge/ConfigTypes */ "./src/Bridge/ConfigTypes.ts");
 
-/**
- * 默认的配置
- */
 var DefaultRunConfig = {
     development: true,
     environment: {},
@@ -650,6 +554,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Context": () => (/* binding */ Context)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _Types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Types */ "./src/Types.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
@@ -660,42 +565,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Object_valueUtil__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Object/valueUtil */ "./src/Object/valueUtil.ts");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__);
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 
 
 
@@ -704,26 +573,15 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
-var Context = /** @class */ (function () {
+
+var Context = (function () {
     function Context(runOptions) {
         var _this = this;
         this.status = _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.INIT;
         this.platform = _Bridge_Index__WEBPACK_IMPORTED_MODULE_4__["default"];
-        /**
-         * 上下文变量
-         */
         this.runConstant = new Map();
-        /**
-         * 所有work
-         */
         this.works = [];
-        /**
-         * 消息传输通道
-         */
         this.msgChannel = new rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject();
-        /**
-         * 需要销毁的Subscription
-         */
         this.pools = [];
         this.runOptions = (runOptions || _Configs__WEBPACK_IMPORTED_MODULE_2__.DefaultRunConfig);
         var sub = this.msgChannel.subscribe({
@@ -733,12 +591,6 @@ var Context = /** @class */ (function () {
         this.pools.push(sub);
         this.addWork(new _Works_ExtendsWorks_BeginWork__WEBPACK_IMPORTED_MODULE_5__.BeginWork());
     }
-    /**
-     * 增加上下文变量
-     * @param from
-     * @param name
-     * @param value
-     */
     Context.prototype.addVariable = function (from, name, value) {
         var w_map = this.runConstant.get(from.uuid);
         !w_map && this.runConstant.set(from.uuid, new Map());
@@ -795,19 +647,19 @@ var Context = /** @class */ (function () {
         works.forEach(this.addWork);
     };
     Context.prototype.prepareWorks = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__awaiter)(this, void 0, void 0, function () {
+            return (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__generator)(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (this.status !== _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.INIT) {
-                            return [2 /*return*/, this.sendLog({
+                            return [2, this.sendLog({
                                     content: this,
                                     work: [],
                                     desc: '[content][Func:prepareWorks][context status is not init]',
                                     value: new _Object__WEBPACK_IMPORTED_MODULE_3__.BooleanObject(false),
                                 })];
                         }
-                        return [4 /*yield*/, Promise.all(this.works.map(function ($1, index, source) {
+                        return [4, Promise.all(this.works.map(function ($1, index, source) {
                                 var before = source[index - 1];
                                 var after = source[index + 1];
                                 return $1.prepare(before, after);
@@ -815,7 +667,7 @@ var Context = /** @class */ (function () {
                     case 1:
                         _a.sent();
                         this.status = _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.READY;
-                        return [2 /*return*/];
+                        return [2];
                 }
             });
         });
@@ -835,10 +687,6 @@ var Context = /** @class */ (function () {
         }
         this.status = _Types__WEBPACK_IMPORTED_MODULE_0__.WorkType.WorkRunStatus.RUNNING;
     };
-    /**
-     * 停止执行
-     * 关闭
-     */
     Context.prototype.stopWorkChain = function () {
         var _this = this;
         var that = this;
@@ -861,7 +709,6 @@ var Context = /** @class */ (function () {
                     resolve(isSuccess);
                 },
                 error: function (error) {
-                    // 关闭报错
                     reject(error);
                 },
                 complete: function () {
@@ -900,238 +747,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ArrayObject": () => (/* binding */ ArrayObject)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _extend_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../extend-util */ "./src/Object/extend-util.ts");
 /* harmony import */ var _valueUtil__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
-// import { ControlFlow } from '../Control';
-// import {
-//   onlyDeclaration, Unit
-// } from '../../util';
-// import { ObjectTarget } from './ObjectTarget';
-// import { NumberObject } from './NumberObject';
-// import { StringObject } from './StringObject';
-// import { BooleanObject } from './BooleanObject';
-// import { decide } from '../../valueUtil';
-// import { Value } from "../../../Object";
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-// @Unit(ControlFlow.ArrayEnum, 'execArray')
-// export class ArrayObject<T>
-//   extends ObjectTarget<Array<T>>
-//   implements Value.ArrayAble<T>, ControlFlow.CollectionArray<T>
-// {
-//   declare _value: Array<T>;
-//   constructor(...values: Array<Array<T> | number>) {
-//     const first = values[0];
-//     const firstIsArray = first instanceof Array;
-//     var init: any = null;
-//     if (firstIsArray && values.length === 1) {
-//       init = first;
-//     } else {
-//       init = new Array(...values);
-//     }
-//     super(init);
-//     this._value = init;
-//   }
-//   len(): number {
-//     return this._value.length;
-//   }
-//   first(): T {
-//     return this[0];
-//   }
-//   last(): T {
-//     return this[this._value.length - 1];
-//   }
-//   // @attribute()@Params('index')
-//   valueOfIndex(index: number): T {
-//     return this[index];
-//   }
-//   valueOf(): Array<T> {
-//     return this._value;
-//   }
-//   merge(target: ArrayObject<T>): ArrayObject<T> {
-//     return new ArrayObject([...this._value, ...target._value]);
-//   }
-//   @onlyDeclaration
-//   execArray(key: ControlFlow.ArrayEnum, ...args: any[]): any {
-//     return null as any;
-//   }
-//   // array function
-//   @onlyDeclaration
-//   concat(...items: (T | ArrayObject<T>)[]): ArrayObject<T> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   copyWithin(target: number, start: number, end?: number): ArrayObject<T> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   fill(value: number, start?: number, end?: number): this {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   find(
-//     predicate: (value: number, index: number, obj: Uint8Array) => boolean,
-//     thisArg?: any
-//   ): Value.Mixins<Value.ObjectAble<T>> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   findIndex(
-//     predicate: (value: number, index: number, obj: Uint8Array) => boolean,
-//     thisArg?: any
-//   ): NumberObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   lastIndexOf(searchElement: number, fromIndex?: number): NumberObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   pop(): ObjectTarget<T> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   push(...items: T[]): NumberObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   reverse(): ArrayObject<T> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   shift(): Value.Mixins {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   unshift(...items: T[]): NumberObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   slice(start?: number, end?: number): ArrayObject<T> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   sort(compareFn?: (a: number, b: number) => number): this {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   splice(start: number, deleteCount?: number, ...items: any[]): ArrayObject<T> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   includes(searchElement: T, fromIndex?: number): BooleanObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   indexOf(searchElement: T, fromIndex?: number): NumberObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   join(separator?: string): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   entries(): ObjectTarget<IterableIterator<[T, T]>> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   values(): ObjectTarget<IterableIterator<T>> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   keys(): ObjectTarget<IterableIterator<T>> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   forEach(
-//     callbackfn: (value: T, index: number, array: readonly T[]) => void,
-//     thisArg?: any
-//   ): void {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   filter<S extends T>(
-//     predicate: (value: T, index: number, array: readonly T[]) => value is S,
-//     thisArg?: any
-//   ): ArrayObject<T> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   map<U>(
-//     callbackfn: (value: T, index: number, array: T[]) => U,
-//     thisArg?: any
-//   ): ArrayObject<U> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   every<S extends T>(
-//     predicate: (value: T, index: number, array: T[]) => value is S,
-//     thisArg?: any
-//   ): BooleanObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   some(
-//     predicate: (value: T, index: number, array: T[]) => unknown,
-//     thisArg?: any
-//   ): BooleanObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   reduce(
-//     callbackfn: (
-//       previousValue: T,
-//       currentValue: T,
-//       currentIndex: number,
-//       array: T[]
-//     ) => T,
-//     initialValue?: T
-//   ): ArrayObject<T> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   reduceRight(
-//     callbackfn: (
-//       previousValue: T,
-//       currentValue: T,
-//       currentIndex: number,
-//       array: T[]
-//     ) => T,
-//     initialValue?: T
-//   ): ArrayObject<T> {
-//     return null as any;
-//   }
-//   get length(): NumberObject {
-//     return decide(this._value.length) as NumberObject;
-//   }
-// }
+
 
 
 var ArrayWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(Array, ['length']);
-var _ArrayObject = /** @class */ (function (_super) {
-    __extends(_ArrayObject, _super);
+var _ArrayObject = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__extends)(_ArrayObject, _super);
     function _ArrayObject() {
         var values = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -1145,7 +769,7 @@ var _ArrayObject = /** @class */ (function (_super) {
             init = first;
         }
         else {
-            init = new (Array.bind.apply(Array, __spreadArray([void 0], values, false)))();
+            init = new (Array.bind.apply(Array, (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__spreadArray)([void 0], (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__read)(values), false)))();
         }
         _this = _super.call(this, init) || this;
         _this._value = init;
@@ -1192,25 +816,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "BooleanObject": () => (/* binding */ BooleanObject)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _ObjectTarget__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
-var BooleanObject = /** @class */ (function (_super) {
-    __extends(BooleanObject, _super);
+
+var BooleanObject = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(BooleanObject, _super);
     function BooleanObject(value) {
         if (value === void 0) { value = false; }
         var _this = _super.call(this, value) || this;
@@ -1238,25 +849,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DataObject": () => (/* binding */ DataObject)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _ObjectTarget__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
-var DataObject = /** @class */ (function (_super) {
-    __extends(DataObject, _super);
+
+var DataObject = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(DataObject, _super);
     function DataObject(value) {
         if (value === void 0) { value = new ArrayBuffer(0); }
         var _this = _super.call(this, value) || this;
@@ -1266,7 +864,6 @@ var DataObject = /** @class */ (function (_super) {
     DataObject.prototype.data = function () {
         return this.valueOf();
     };
-    // @attribute()
     DataObject.prototype.valueOf = function () {
         return this._value;
     };
@@ -1288,229 +885,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DateObject": () => (/* binding */ DateObject)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _extend_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../extend-util */ "./src/Object/extend-util.ts");
 /* harmony import */ var _valueUtil__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
-// import { ControlFlow } from '../Control';
-// import { Value } from '../../../Object';
-// import { ObjectTarget } from './ObjectTarget';
-// import { StringObject } from './StringObject';
-// import { NumberObject } from './NumberObject';
-// import { Unit, onlyDeclaration } from '../../util';
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-// @Unit(ControlFlow.DateEnum)
-// export class DateObject extends ObjectTarget<Date>
-//   implements Value.DateAble, ControlFlow.DateFunction, ControlFlow.ObjectDate {
-//   declare _value: Date;
-//   constructor(value: Date = new Date()) {
-//     super(value);
-//     this._value = value;
-//   }
-//   // @attribute()
-//   timestamp(): number {
-//     return this.valueOf().getTime();
-//   }
-//   // @attribute()
-//   valueOf(): Date {
-//     return new Date(this._value);
-//   }
-//   @onlyDeclaration
-//   execFunction(key: ControlFlow.DateEnum, ...args: any[]) {
-//     throw new Error('Method not implemented.');
-//   }
-//   @onlyDeclaration
-//   toDateString(): StringObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   toTimeString(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   toLocaleString(): StringObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   toLocaleDateString(): StringObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   toLocaleTimeString(): StringObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getTime(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getFullYear(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getUTCFullYear(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getMonth(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getUTCMonth(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getDate(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getUTCDate(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getDay(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getUTCDay(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getHours(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getUTCHours(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getMinutes(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getUTCMinutes(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getSeconds(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getUTCSeconds(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getMilliseconds(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getUTCMilliseconds(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   getTimezoneOffset(): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setTime(time: number): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setMilliseconds(ms: number): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setUTCMilliseconds(ms: number): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setSeconds(sec: number, ms?: number): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setUTCSeconds(sec: number, ms?: number): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setMinutes(min: number, sec?: number, ms?: number): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setUTCMinutes(min: number, sec?: number, ms?: number): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setHours(
-//     hours: number,
-//     min?: number,
-//     sec?: number,
-//     ms?: number
-//   ): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setUTCHours(
-//     hours: number,
-//     min?: number,
-//     sec?: number,
-//     ms?: number
-//   ): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setDate(date: number): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setUTCDate(date: number): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setMonth(month: number, date?: number): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setUTCMonth(month: number, date?: number): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setFullYear(year: number, month?: number, date?: number): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   setUTCFullYear(year: number, month?: number, date?: number): NumberObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   toUTCString(): StringObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   toISOString(): StringObject {
-//     return null as any
-//   }
-//   @onlyDeclaration
-//   toJSON(key?: any): StringObject {
-//     return null as any
-//   }
-// }
+
 
 
 var DateWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(Date);
-var _DateObject = /** @class */ (function (_super) {
-    __extends(_DateObject, _super);
+var _DateObject = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__extends)(_DateObject, _super);
     function _DateObject(value) {
         if (value === void 0) { value = new Date(); }
         var _this = _super.call(this, value) || this;
@@ -1545,105 +928,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MapObject": () => (/* binding */ MapObject)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _extend_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../extend-util */ "./src/Object/extend-util.ts");
 /* harmony import */ var _valueUtil__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
-// import { ControlFlow } from '../Control';
-// import { onlyDeclaration, Unit } from '../../util';
-// import { BaseType } from '../../../Types';
-// import { Value } from '../../../Object'
-// import { ObjectTarget } from './ObjectTarget';
-// import { decide } from '../../valueUtil';
-// import { NumberObject } from './NumberObject';
-// // @MapUint
-// @Unit(ControlFlow.MapEnum)
-// export class MapObject<T, U>
-//   extends ObjectTarget<Map<T, U>>
-//   implements Value.MapAble<T, U>, ControlFlow.CollectionMap<T, U>
-// {
-//   declare _value: Map<T, U>;
-//   constructor(value: Map<T, U> = new Map()) {
-//     super(value);
-//     this._value = new Map(value);
-//   }
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-//   // @attribute()
-//   len(): number {
-//     return this._value.size;
-//   }
-//   valueOf(): Map<T, U> {
-//     return this._value;
-//   }
-//   merge(target: MapObject<T, U>): MapObject<T, U> {
-//     const newMap = new Map<T, U>(this._value);
-//     target._value.forEach(($1, key) => newMap.set(key, $1));
-//     return new MapObject(newMap);
-//   }
-//   @onlyDeclaration
-//   execFunction(key: ControlFlow.MapEnum, ...args: any[]): U | void {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   get(key: string): U | void {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   set(key: string, value: BaseType): void {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   has(key: string): Value.BooleanAble {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   delete(key: string): Value.BooleanAble {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   clear(): void {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   entries(): Value.ObjectAble<IterableIterator<[T, U]>> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   forEach(
-//     callback: (value: U, key: T, map: Map<T, U>) => void,
-//     thisArg?: any
-//   ): void {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   values(): Value.ObjectAble<IterableIterator<U>> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   keys(): Value.ObjectAble<IterableIterator<T>> {
-//     return null as any;
-//   }
-//   get size(): Value.NumberAble {
-//     return decide(this._value.size) as NumberObject;
-//   }
-// }
+
 
 
 var MapWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(Map, ['size']);
-var _MapObject = /** @class */ (function (_super) {
-    __extends(_MapObject, _super);
+var _MapObject = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__extends)(_MapObject, _super);
     function _MapObject() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -1679,32 +972,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NULLObject": () => (/* binding */ NULLObject)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _ObjectTarget__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ObjectTarget */ "./src/Object/Able/Base/ObjectTarget.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
-var NULLObject = /** @class */ (function (_super) {
-    __extends(NULLObject, _super);
+
+var NULLObject = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(NULLObject, _super);
     function NULLObject(value) {
         if (value === void 0) { value = null; }
         var _this = _super.call(this, value) || this;
         _this._value = value;
         return _this;
     }
-    // @attribute()
     NULLObject.prototype.valueOf = function () {
         return this._value;
     };
@@ -1738,39 +1017,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NumberObject": () => (/* binding */ NumberObject)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../util */ "./src/Object/util.ts");
 /* harmony import */ var _BooleanObject__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BooleanObject */ "./src/Object/Able/Base/BooleanObject.ts");
 /* harmony import */ var _extend_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../extend-util */ "./src/Object/extend-util.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+
 
 
 
 var NumberWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_2__.createExtendsConstruct)(Number);
-var _NumberObject = /** @class */ (function (_super) {
-    __extends(_NumberObject, _super);
+var _NumberObject = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__extends)(_NumberObject, _super);
     function _NumberObject(value) {
         if (value === void 0) { value = 1; }
         var _this = _super.call(this, value) || this;
@@ -1825,22 +1082,22 @@ var _NumberObject = /** @class */ (function (_super) {
         return new _NumberObject_1(target._value === 0 ? Infinity : this._value / target._value);
     };
     var _NumberObject_1;
-    __decorate([
+    (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
         _util__WEBPACK_IMPORTED_MODULE_0__.onlyDeclaration,
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [String, Object]),
-        __metadata("design:returntype", _BooleanObject__WEBPACK_IMPORTED_MODULE_1__.BooleanObject)
+        (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__metadata)("design:type", Function),
+        (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__metadata)("design:paramtypes", [String, Object]),
+        (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__metadata)("design:returntype", _BooleanObject__WEBPACK_IMPORTED_MODULE_1__.BooleanObject)
     ], _NumberObject.prototype, "compare", null);
-    __decorate([
+    (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
         _util__WEBPACK_IMPORTED_MODULE_0__.onlyDeclaration,
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [String, Object]),
-        __metadata("design:returntype", _NumberObject)
+        (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__metadata)("design:type", Function),
+        (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__metadata)("design:paramtypes", [String, Object]),
+        (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__metadata)("design:returntype", _NumberObject)
     ], _NumberObject.prototype, "calc", null);
-    _NumberObject = _NumberObject_1 = __decorate([
+    _NumberObject = _NumberObject_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
         _util__WEBPACK_IMPORTED_MODULE_0__.CalcUnit,
         _util__WEBPACK_IMPORTED_MODULE_0__.CompareUnit,
-        __metadata("design:paramtypes", [Number])
+        (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__metadata)("design:paramtypes", [Number])
     ], _NumberObject);
     return _NumberObject;
 }(NumberWrapper));
@@ -1861,7 +1118,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ObjectTarget": () => (/* binding */ ObjectTarget)
 /* harmony export */ });
-var ObjectTarget = /** @class */ (function () {
+var ObjectTarget = (function () {
     function ObjectTarget(value) {
         if (value === void 0) { value = {}; }
         this._value = value;
@@ -1903,105 +1160,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SetObject": () => (/* binding */ SetObject)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _extend_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../extend-util */ "./src/Object/extend-util.ts");
 /* harmony import */ var _valueUtil__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
-// import { ControlFlow } from '../Control';
-// import { onlyDeclaration, Unit } from '../../util';
-// import { Value } from '../../../Object';
-// import { ObjectTarget } from './ObjectTarget';
-// import { NumberObject } from './NumberObject';
-// import { decide } from '../../valueUtil';
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-// @Unit(ControlFlow.SetEnum)
-// export class SetObject<T>
-//   extends ObjectTarget<Set<T>>
-//   implements Value.SetAble<T>, ControlFlow.CollectionSet<T>
-// {
-//   constructor(value?: Set<T> | Array<T>) {
-//     const init = !!value
-//       ? Array.isArray(value)
-//         ? new Set(value)
-//         : value
-//       : new Set<T>();
-//     super(init);
-//     this._value = init;
-//   }
-//   // @attribute()
-//   len(): number {
-//     return this._value.size;
-//   }
-//   valueOf(): Set<T> {
-//     return this._value;
-//   }
-//   merge(target: SetObject<T>): SetObject<T> {
-//     const newSet = new Set<T>();
-//     this._value.forEach(($1) => newSet.add($1));
-//     target.forEach(($1) => newSet.add($1));
-//     new Set().keys;
-//     return new SetObject(newSet);
-//   }
-//   @onlyDeclaration
-//   execFunction(key: ControlFlow.SetEnum, ...args: any[]): any {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   has(value: T): Value.BooleanAble {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   add(value: T): this {
-//     return this;
-//   }
-//   @onlyDeclaration
-//   delete(value: T): Value.BooleanAble {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   clear(): void {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   forEach(
-//     callbackfn: (value: T, value2: T, set: Set<T>) => void,
-//     thisArg?: any
-//   ): void {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   entries(): Value.ObjectAble<IterableIterator<[T, T]>> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   values(): Value.ObjectAble<IterableIterator<T>> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   keys(): Value.ObjectAble<IterableIterator<T>> {
-//     return null as any;
-//   }
-//   get size(): Value.NumberAble {
-//     return decide(this._value.size) as NumberObject;
-//   }
-// }
+
 
 
 var SetWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(Set, ['size']);
-var _SetObject = /** @class */ (function (_super) {
-    __extends(_SetObject, _super);
+var _SetObject = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__extends)(_SetObject, _super);
     function _SetObject(source) {
         var _this = _super.call(this) || this;
         _this._value = new Set(source);
@@ -2039,251 +1206,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "StringObject": () => (/* binding */ StringObject)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _extend_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../extend-util */ "./src/Object/extend-util.ts");
 /* harmony import */ var _valueUtil__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../valueUtil */ "./src/Object/valueUtil.ts");
-// import { ControlFlow } from '../Control';
-// import { Value } from '../../../Object';
-// import { ObjectTarget } from './ObjectTarget';
-// import { onlyDeclaration, Unit } from '../../util';
-// import { NumberObjectAble, NumberObject } from './NumberObject';
-// import { BooleanObject } from './BooleanObject'
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-// @Unit(ControlFlow.StringEnum)
-// export class StringObject
-//   extends ObjectTarget<string>
-//   implements Value.StringAble, ControlFlow.ObjectString {
-//   static type: string;
-//   declare _value: string;
-//   constructor(value: string = '') {
-//     super(value);
-//     this._value = value;
-//   }
-//   // @attribute()
-//   valueOf(): string {
-//     return this._value;
-//   }
-//   @onlyDeclaration
-//   execFunction(key: ControlFlow.StringEnum, ...args: any[]) {
-//     // throw new Error('Method not implemented.');
-//     return null as any;
-//   }
-//   get length(): NumberObjectAble {
-//     return new NumberObject(this._value.length);
-//   }
-//   @onlyDeclaration
-//   anchor(name: string): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   big(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   blink(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   bold(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   charAt(pos: number): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   charCodeAt(index: number): NumberObjectAble {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   codePointAt(pos: number): Value.Mixins<Value.NumberAble> {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   concat(...args: string[]): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   endsWith(searchString: string, endPosition?: number): BooleanObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   fixed(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   fontcolor(color: string): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   fontsize(size: number): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   includes(searchString: string, position?: number): BooleanObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   indexOf(searchString: string, position?: number): NumberObjectAble {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   italics(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   lastIndexOf(searchString: string, position?: number): NumberObjectAble {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   link(url: string): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   localeCompare(that: string): NumberObjectAble {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   match(regexp: RegExp): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   matchAll(regexp: RegExp): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   normalize(form?: string): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   padEnd(targetLength: number, padString?: string): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   padStart(targetLength: number, padString?: string): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   repeat(count: number): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   replace(
-//     searchValue: string | RegExp,
-//     replaceValue: string | ((substring: string, ...args: any[]) => string)
-//   ): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   replaceAll(
-//     searchValue: string | RegExp,
-//     replaceValue: string | ((substring: string, ...args: any[]) => string)
-//   ): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   search(regexp: RegExp): NumberObjectAble {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   slice(start: number, end?: number): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   small(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   split(separator?: string | RegExp, limit?: number): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   strike(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   sub(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   substr(start: number, length?: number): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   substring(start: number, end?: number): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   toLocaleLowerCase(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   toLocaleUpperCase(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   toLowerCase(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   toUpperCase(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   trim(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   trimLeft(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   trimRight(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   toString(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   sup(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   startsWith(searchString: string, position?: number): BooleanObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   trimStart(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   trimEnd(): StringObject {
-//     return null as any;
-//   }
-//   @onlyDeclaration
-//   at(index: number): StringObject {
-//     return null as any;
-//   }
-// }
+
 
 
 var StringWrapper = (0,_extend_util__WEBPACK_IMPORTED_MODULE_0__.createExtendsConstruct)(String, ['length']);
-var _StringObject = /** @class */ (function (_super) {
-    __extends(_StringObject, _super);
+var _StringObject = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__extends)(_StringObject, _super);
     function _StringObject(value) {
         var _this = _super.call(this) || this;
         _this._value = value;
@@ -2320,7 +1251,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var ControlFlow;
 (function (ControlFlow) {
-    // 比较属性 compare
     var CompareEnum;
     (function (CompareEnum) {
         CompareEnum["More"] = "more";
@@ -2329,7 +1259,6 @@ var ControlFlow;
         CompareEnum["MoreEqual"] = "moreEqual";
         CompareEnum["LessEqual"] = "lessEqual";
     })(CompareEnum = ControlFlow.CompareEnum || (ControlFlow.CompareEnum = {}));
-    // 计算属性
     var CalcEnum;
     (function (CalcEnum) {
         CalcEnum["Plus"] = "plus";
@@ -2386,7 +1315,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// import { MixinsObject } from './Targets/Mixins'
 
 
 
@@ -2404,53 +1332,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "createExtendsConstruct": () => (/* binding */ createExtendsConstruct),
 /* harmony export */   "createExtendsInstance": () => (/* binding */ createExtendsInstance)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ "./src/Object/util.ts");
 /* harmony import */ var _Able__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Able */ "./src/Object/Able/index.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
+
 
 
 var ExtendsMap;
-/***
-  创建新的包装对象
-
-  type PromiseWrapper = ValueExtends.ExtendsType<Promise<number>>
-  const PromiseConstruct = createExtendsConstruct(Promise<number>)
-  const instance: PromiseWrapper = Reflect.construct(PromiseConstruct, [(res, rej) => { res(111)}])
-  instance.then(()=>{})
-
- */
 function createExtendsConstruct(target, exclude) {
     if (exclude === void 0) { exclude = []; }
     if (!ExtendsMap)
@@ -2458,43 +1346,29 @@ function createExtendsConstruct(target, exclude) {
     if (ExtendsMap.has(target))
         return ExtendsMap.get(target);
     var Enum = {};
-    exclude = __spreadArray(__spreadArray([], exclude, true), ['constructor', 'valueOf'], false);
+    exclude = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__spreadArray)((0,tslib__WEBPACK_IMPORTED_MODULE_2__.__spreadArray)([], (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__read)(exclude), false), ['constructor', 'valueOf'], false);
     Object.keys(Object.getOwnPropertyDescriptors(target.prototype)).forEach(function ($1) {
         if (!exclude.includes($1) && typeof $1 !== 'symbol') {
             Enum[$1] = $1;
         }
     });
-    var KV = /** @class */ (function (_super) {
-        __extends(KV, _super);
+    var KV = (function (_super) {
+        (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__extends)(KV, _super);
         function KV(value) {
             if (value === void 0) { value = {}; }
             var _this = _super.call(this) || this;
             _this._value = value !== null && value !== void 0 ? value : {};
             return _this;
         }
-        KV = __decorate([
+        KV = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
             (0,_util__WEBPACK_IMPORTED_MODULE_0__.Unit)(Enum),
-            __metadata("design:paramtypes", [Object])
+            (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__metadata)("design:paramtypes", [Object])
         ], KV);
         return KV;
     }(_Able__WEBPACK_IMPORTED_MODULE_1__.ObjectTarget));
     ExtendsMap.set(target, KV);
     return KV;
 }
-/**
- * @param target  Date
- * @param construct ['2021-06-23']
- * @param exclude
- * @returns
- *
- *
-  简化 createExtendsConstruct
-
-  type PromiseWrapper = ValueExtends.ExtendsType<Promise<number>>
-  const aa: PromiseWrapper = createExtendsInstance<Promise<number>>(Promise, [(res, rej) => { setTimeout(() => res(111), 2000) }])
-  aa.then(res => { })
-
- */
 function createExtendsInstance(target, construct, exclude) {
     if (exclude === void 0) { exclude = []; }
     var DateDome = createExtendsConstruct(target, exclude);
@@ -2564,37 +1438,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "onlyDeclaration": () => (/* binding */ onlyDeclaration),
 /* harmony export */   "onlyDeclarationTag": () => (/* binding */ onlyDeclarationTag)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _Able__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Able */ "./src/Object/Able/index.ts");
 /* harmony import */ var _Able_Control__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Able/Control */ "./src/Object/Able/Control.ts");
 /* harmony import */ var _valueUtil__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./valueUtil */ "./src/Object/valueUtil.ts");
 
 
 
+
 var onlyDeclarationTag = 'onlyDeclaration';
-// export function attribute() {
-//   return function ($1: any, $2: string, descriptor: PropertyDescriptor) {
-//     ($1.constructor.attributes as Set<string>).add($2);
-//   };
-// }
-// export function Params(params: any) {
-//   return function (target: any, methodName: any, paramsIndex: any) {
-//     !target.$Meta && (target.$Meta = {});
-//     !target.$Meta[methodName] && (target.$Meta[methodName] = {});
-//     target.$Meta[methodName][paramsIndex] = params;
-//   };
-// }
-// export class ObjectManager {
-//   static types: Set<string> = new Set();
-// }
-// export function DefaultValue(value: string) {
-//   return function (target: any, propertyName: string) {
-//     target[propertyName] = value;
-//     ObjectManager.types.add(value);
-//   };
-// }
-/**
- * 声明 方式无效 仅仅作为标记
- */
 function onlyDeclaration(target, name, dec) {
     dec.value.declaration = onlyDeclarationTag;
 }
@@ -2653,7 +1505,7 @@ function Unit(target) {
                     var execFunc = value[key];
                     var result;
                     if (typeof execFunc === 'function') {
-                        result = execFunc.bind(value).apply(void 0, args);
+                        result = execFunc.bind(value).apply(void 0, (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__spreadArray)([], (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__read)(args), false));
                     }
                     else
                         result = value;
@@ -2671,7 +1523,7 @@ function Unit(target) {
                 }
                 var execFunc = (_a = host.prototype[type]) === null || _a === void 0 ? void 0 : _a.bind(this);
                 if (execFunc && typeof execFunc === 'function')
-                    return execFunc.apply(void 0, args);
+                    return execFunc.apply(void 0, (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__spreadArray)([], (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__read)(args), false));
                 return false;
             };
     };
@@ -2694,7 +1546,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Able__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Able */ "./src/Object/Able/index.ts");
 
-// type Detail<T> = ValueExtends.IsValue<T> extends true ? T : ValueExtends.GetDeepAchieve<T>
 var ObjectMap = null;
 var init = function () {
     if (ObjectMap === null) {
@@ -2720,13 +1571,6 @@ var isAbleType = function (value) {
     init();
     return Object.prototype.toString.call(value) === '[object flow-object]';
 };
-/**
- * 将js 数据转为 BaseType
- * 如果是BaseType类型 将不会包装。见[force]
- * @param value
- * @param force 是否强制包装
- * @returns
- */
 function decide(value, force) {
     if (force === void 0) { force = false; }
     init();
@@ -2760,9 +1604,7 @@ var WorkType;
     var WorkRunStatus;
     (function (WorkRunStatus) {
         WorkRunStatus[WorkRunStatus["INIT"] = 0] = "INIT";
-        // FROZEN,//冻结状态
         WorkRunStatus[WorkRunStatus["READY"] = 1] = "READY";
-        // PRE_RUN,//预运行状态 已经初始化
         WorkRunStatus[WorkRunStatus["RUNNING"] = 2] = "RUNNING";
         WorkRunStatus[WorkRunStatus["COMPLETE"] = 3] = "COMPLETE";
     })(WorkRunStatus = WorkType.WorkRunStatus || (WorkType.WorkRunStatus = {}));
@@ -2793,7 +1635,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _tools__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tools */ "./src/Util/tools.ts");
 var _a;
-/* eslint-disable */
 
 var JSRUNEnvirType;
 (function (JSRUNEnvirType) {
@@ -2803,39 +1644,15 @@ var JSRUNEnvirType;
     JSRUNEnvirType[JSRUNEnvirType["OTHER"] = 100] = "OTHER";
 })(JSRUNEnvirType || (JSRUNEnvirType = {}));
 var EnvirType = {
-    /**
-     * WIndow 浏览器 运行环境
-     */
     WINDOWS: 'win',
-    /**
-     * MAC 浏览器 运行环境
-     */
     MACINTOSH: 'mac',
-    /***
-     * Linux 浏览器 运行环境
-     */
     LINUX: 'linux',
-    /***
-     * ios 浏览器  运行环境
-     */
     IOS: 'iOS',
-    /**
-     * 安卓 浏览器 运行环境
-     */
     ANDROID: 'Android',
-    /**
-     * 黑莓 运行环境
-     */
     BLACKBERRY: 'bb',
-    /***
-     * Win iphone 运行环境
-     */
     WINDOWS_PHONE: 'winphone',
     Other: 'other',
 };
-/**
- * 是否为 rn 代码
- */
 function isReactNative() {
     var GLOBAL;
     try {
@@ -2855,16 +1672,15 @@ function getJSEnvironment() {
         var getDesktopOS = function () {
             var pf = navigator.platform;
             if (pf.indexOf('Win') != -1) {
-                // 说明当前是Windows操作系统
                 var rVersion = /Windows NT (\d+).(\d)/i;
                 var uaResult = userAgent.match(rVersion);
                 var sVersionStr = '';
                 if (uaResult[1] == '6') {
                     if (uaResult[2] == 1) {
-                        sVersionStr = '7'; // 说明当前运行在Windows 7 中
+                        sVersionStr = '7';
                     }
                     else if (uaResult[2] > 1) {
-                        sVersionStr = '8'; // 说明当前运行在Windows 8 中
+                        sVersionStr = '8';
                     }
                 }
                 else {
@@ -2873,21 +1689,20 @@ function getJSEnvironment() {
                 return { name: EnvirType.WINDOWS, versionStr: sVersionStr };
             }
             else if (pf.indexOf('Mac') != -1) {
-                return { name: EnvirType.MACINTOSH, versionStr: '' }; // Macintosh操作系统
+                return { name: EnvirType.MACINTOSH, versionStr: '' };
             }
             else if (pf.indexOf('Linux') != -1) {
-                return { name: EnvirType.LINUX, versionStr: '' }; // 说明当前运行在Linux操作系统
+                return { name: EnvirType.LINUX, versionStr: '' };
             }
             return null;
         };
-        platform = /Windows Phone (?:OS )?([\d.]*)/; // windows phone的正则表达式
+        platform = /Windows Phone (?:OS )?([\d.]*)/;
         result = userAgent.match(platform);
         if (result) {
             return { name: EnvirType.WINDOWS_PHONE, versionStr: result[1] };
         }
-        // BlackBerry 10
         if (userAgent.indexOf('(BB10;') > 0) {
-            platform = /\sVersion\/([\d.]+)\s/; // BlackBerry的regular expression
+            platform = /\sVersion\/([\d.]+)\s/;
             result = userAgent.match(platform);
             if (result) {
                 return { name: EnvirType.BLACKBERRY, versionStr: result[1] };
@@ -2896,7 +1711,6 @@ function getJSEnvironment() {
                 return { name: EnvirType.BLACKBERRY, versionStr: '10' };
             }
         }
-        // iOS, Android, BlackBerry 6.0+:
         platform =
             /\(([a-zA-Z ]+);\s(?:[U]?[;]?)([\D]+)((?:[\d._]*))(?:.*[\)][^\d]*)([\d.]*)\s/;
         result = userAgent.match(platform);
@@ -2905,17 +1719,16 @@ function getJSEnvironment() {
             var bbDevices = /PlayBook|BlackBerry/;
             if (result[0].match(appleDevices)) {
                 result[3] = result[3].replace(/_/g, '.');
-                return { name: EnvirType.IOS, versionStr: result[3] }; // iOS操作系统
+                return { name: EnvirType.IOS, versionStr: result[3] };
             }
             else if (result[2].match(/Android/)) {
                 result[2] = result[2].replace(/\s/g, '');
-                return { name: EnvirType.ANDROID, versionStr: result[3] }; // Android操作系统
+                return { name: EnvirType.ANDROID, versionStr: result[3] };
             }
             else if (result[0].match(bbDevices)) {
-                return { name: EnvirType.BLACKBERRY, versionStr: result[4] }; // Blackberry
+                return { name: EnvirType.BLACKBERRY, versionStr: result[4] };
             }
         }
-        //Android平台上的Firefox浏览器
         platform = /\((Android)[\s]?([\d][.\d]*)?;.*Firefox\/[\d][.\d]*/;
         result = userAgent.match(platform);
         if (result) {
@@ -2924,7 +1737,6 @@ function getJSEnvironment() {
                 versionStr: result.length == 3 ? result[2] : '',
             };
         }
-        // Desktop
         return getDesktopOS();
     }
     else {
@@ -2993,41 +1805,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "unpackValue": () => (/* binding */ unpackValue),
 /* harmony export */   "wrapperValue": () => (/* binding */ wrapperValue)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! .. */ "./src/index.ts");
 /* harmony import */ var _Object_valueUtil__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Object/valueUtil */ "./src/Object/valueUtil.ts");
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 
 
-/**
- * 解包
- * @param value
- * @returns
- */
+
 function unpackValue(value) {
     if (!!value === false)
         return '';
     return (value === null || value === void 0 ? void 0 : value._value).value.valueOf();
 }
-/**
- * 组合包装
- * @param input
- * @param value
- * @returns
- * wrapperValue(null,string) = wrapperValue<string>(null,StringObject) => ChannelObject<StringObject>
- */
 function wrapperValue(input, value) {
     var nextValue = (0,_Object_valueUtil__WEBPACK_IMPORTED_MODULE_1__.decide)(value);
-    return new ___WEBPACK_IMPORTED_MODULE_0__.ObjectTarget(__assign(__assign({}, input._value), { value: nextValue }));
+    return new ___WEBPACK_IMPORTED_MODULE_0__.ObjectTarget((0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, input._value), { value: nextValue }));
 }
 
 
@@ -3047,27 +1838,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "noop": () => (/* binding */ noop),
 /* harmony export */   "replaceAll": () => (/* binding */ replaceAll)
 /* harmony export */ });
-/*
- * @Author:
- * @Date: 2022-06-08 19:31:16
- * @Last Modified by: zihao.zhu
- * @Last Modified time: 2022-07-11 16:38:59
- * @desc : undefined
- */
 var isURL = function (url) {
-    var strRegex = '^((https|http|ftp)://)?' + //(https或http或ftp):// 可有可无
-        "(([\\w_!~*'()\\.&=+$%-]+: )?[\\w_!~*'()\\.&=+$%-]+@)?" + //ftp的user@  可有可无
-        '(([0-9]{1,3}\\.){3}[0-9]{1,3}' + // IP形式的URL- 3位数字.3位数字.3位数字.3位数字
-        '|' + // 允许IP和DOMAIN（域名）
-        '(localhost)|' + //匹配localhost
-        "([\\w_!~*'()-]+\\.)*" + // 域名- 至少一个[英文或数字_!~*\'()-]加上.
-        '\\w+\\.' + // 一级域名 -英文或数字  加上.
-        '[a-zA-Z]{1,6})' + // 顶级域名- 1-6位英文
-        '(:[0-9]{1,5})?' + // 端口- :80 ,1-5位数字
-        '((/?)|' + // url无参数结尾 - 斜杆或这没有
-        "(/[\\w_!~*'()\\.;?:@&=+$,%#-]+)+/?)$"; //请求参数结尾- 英文或数字和[]内的各种字符
-    var re = new RegExp(strRegex, 'i'); //i不区分大小写
-    //将url做uri转码后再匹配，解除请求参数中的中文和空字符影响
+    var strRegex = '^((https|http|ftp)://)?' +
+        "(([\\w_!~*'()\\.&=+$%-]+: )?[\\w_!~*'()\\.&=+$%-]+@)?" +
+        '(([0-9]{1,3}\\.){3}[0-9]{1,3}' +
+        '|' +
+        '(localhost)|' +
+        "([\\w_!~*'()-]+\\.)*" +
+        '\\w+\\.' +
+        '[a-zA-Z]{1,6})' +
+        '(:[0-9]{1,5})?' +
+        '((/?)|' +
+        "(/[\\w_!~*'()\\.;?:@&=+$,%#-]+)+/?)$";
+    var re = new RegExp(strRegex, 'i');
     if (re.test(encodeURI(url))) {
         return true;
     }
@@ -3078,13 +1861,6 @@ var isURL = function (url) {
 var isWindowFilePath = function (url) {
     return url.startsWith('file://');
 };
-/**
- *
- * @param source String.prototype.replaceAll
- * @param string
- * @param replaceValue
- * @returns
- */
 var replaceAll = function (source, string, replaceValue) {
     if (source.indexOf(string) >= 0) {
         source = source.replace(string, replaceValue);
@@ -3112,6 +1888,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "Base64DecodeWork": () => (/* binding */ Base64DecodeWork),
 /* harmony export */   "Base64EnCodeWork": () => (/* binding */ Base64EnCodeWork)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var js_base64__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-base64 */ "js-base64");
 /* harmony import */ var js_base64__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_base64__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Instruction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
@@ -3119,29 +1896,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/Equipment.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
 
 
-//编码
-var Base64EnCodeWork = /** @class */ (function (_super) {
-    __extends(Base64EnCodeWork, _super);
+
+var Base64EnCodeWork = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__extends)(Base64EnCodeWork, _super);
     function Base64EnCodeWork() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = "Base64EnCodeWork";
@@ -3167,9 +1929,8 @@ var Base64EnCodeWork = /** @class */ (function (_super) {
     };
     return Base64EnCodeWork;
 }(_Instruction__WEBPACK_IMPORTED_MODULE_1__.InstructionMTM));
-//解码
-var Base64DecodeWork = /** @class */ (function (_super) {
-    __extends(Base64DecodeWork, _super);
+var Base64DecodeWork = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__extends)(Base64DecodeWork, _super);
     function Base64DecodeWork() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = "Base64DecodeWork";
@@ -3211,64 +1972,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "BeginWork": () => (/* binding */ BeginWork)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "uuid");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Instruction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
 /* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/Equipment.ts");
 /* harmony import */ var _Object__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Object */ "./src/Object/index.ts");
 /* harmony import */ var _Object_valueUtil__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Object/valueUtil */ "./src/Object/valueUtil.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
 
 
-var BeginWork = /** @class */ (function (_super) {
-    __extends(BeginWork, _super);
+
+var BeginWork = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__extends)(BeginWork, _super);
     function BeginWork() {
         var _this = _super.call(this) || this;
         _this.name = "BeginWork";
         _this.uuid = (0,uuid__WEBPACK_IMPORTED_MODULE_0__.v4)();
         return _this;
     }
-    // // 处理上一个的传入
-    // _connectChannel() {
-    //   const that = this;
-    //   // 处理启动指令 仅仅头部work会触发
-    //   var sub1: Subscription =
-    //     this.inputSubject
-    //       .pipe(
-    //         take(Infinity)
-    //       ).subscribe({
-    //         next: (value: BaseType) => that._run(value),
-    //         error: (error) => that.error(error),
-    //         complete: null,
-    //       })
-    //   this.inputSubscription = sub1;
-    //   this.pools.push(sub1);
-    // }
-    // _run(input?: BaseType, initOption?: any): void {
-    //   // this.nextWork?.next(input);
-    //   this.nextWork.next(input);
-    // }
-    /**
-     * 运行 头部
-     * @param value
-     */
     BeginWork.prototype.startRun = function (value, runId) {
         var id = runId !== null && runId !== void 0 ? runId : (0,uuid__WEBPACK_IMPORTED_MODULE_0__.v4)();
         this.nextWork.next(new _Object__WEBPACK_IMPORTED_MODULE_3__.ObjectTarget({
@@ -3300,6 +2024,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _Instruction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
@@ -3307,39 +2032,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../.. */ "./src/index.ts");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__);
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 
 
 
 
 
-var FetchWork = /** @class */ (function (_super) {
-    __extends(FetchWork, _super);
+
+var FetchWork = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__extends)(FetchWork, _super);
     function FetchWork() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = 'FetchWork';
@@ -3353,7 +2053,7 @@ var FetchWork = /** @class */ (function (_super) {
             url: url,
             method: initParams.method || baseOption.method || 'GET',
             timeout: timeout || baseOption.timeout || 10000,
-            headers: __assign(__assign({}, (baseOption.headers || {})), (initParams.headers || {})),
+            headers: (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_5__.__assign)({}, (baseOption.headers || {})), (initParams.headers || {})),
         };
         request.data = data;
         if (method && method.toLocaleUpperCase() === 'GET') {
@@ -3381,7 +2081,7 @@ var FetchWork = /** @class */ (function (_super) {
                         subscriber.error(result.error);
                     }
                     else {
-                        subscriber.next(new ___WEBPACK_IMPORTED_MODULE_3__.ObjectTarget(__assign(__assign({}, input._value), { value: result.data })));
+                        subscriber.next(new ___WEBPACK_IMPORTED_MODULE_3__.ObjectTarget((0,tslib__WEBPACK_IMPORTED_MODULE_5__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_5__.__assign)({}, input._value), { value: result.data })));
                         subscriber.complete();
                     }
                 },
@@ -3417,6 +2117,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _Instruction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
@@ -3426,32 +2127,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 
 
 
@@ -3459,8 +2134,9 @@ var __assign = (undefined && undefined.__assign) || function () {
 
 
 
-var LoadFileWork = /** @class */ (function (_super) {
-    __extends(LoadFileWork, _super);
+
+var LoadFileWork = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__extends)(LoadFileWork, _super);
     function LoadFileWork(config) {
         var _this = _super.call(this) || this;
         _this.name = 'LoadFileWork';
@@ -3471,7 +2147,7 @@ var LoadFileWork = /** @class */ (function (_super) {
     LoadFileWork.prototype.run = function (input, option) {
         var _this = this;
         var that = this;
-        var runOption = __assign(__assign({}, option), this.currentConfig);
+        var runOption = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_7__.__assign)({}, option), this.currentConfig);
         return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable(function (subscriber) {
             var target = (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_6__.unpackValue)(input);
             var sub = that.context.platform
@@ -3484,7 +2160,7 @@ var LoadFileWork = /** @class */ (function (_super) {
                 .subscribe({
                 next: function (obj) {
                     var _a = obj.valueOf(), data = _a.data, file = _a.file;
-                    subscriber.next(new _Object__WEBPACK_IMPORTED_MODULE_2__.ObjectTarget(__assign(__assign({}, input._value), { value: new _Object__WEBPACK_IMPORTED_MODULE_2__.DataObject(data), option: { file: file } })));
+                    subscriber.next(new _Object__WEBPACK_IMPORTED_MODULE_2__.ObjectTarget((0,tslib__WEBPACK_IMPORTED_MODULE_7__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_7__.__assign)({}, input._value), { value: new _Object__WEBPACK_IMPORTED_MODULE_2__.DataObject(data), option: { file: file } })));
                     subscriber.complete();
                 },
                 complete: function () { return subscriber.complete(); },
@@ -3519,42 +2195,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _Instruction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Object__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Object */ "./src/Object/index.ts");
 /* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/Equipment.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
 
 
-/**
- * 打开路径
- * http://www.baidu.com
- * node window: file:///C:/Users/Administrator    file:///C:/Users/Administrator/Desktop/116513f379bd664b7cfe5b3b40f5737d.jpg
- *
- * node:可以打开文件 网页
- * web:只能代开网页
- */
-var OpenURLWork = /** @class */ (function (_super) {
-    __extends(OpenURLWork, _super);
+
+var OpenURLWork = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__extends)(OpenURLWork, _super);
     function OpenURLWork() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = "OpenURLWork";
@@ -3600,37 +2255,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "QRCodeWork": () => (/* binding */ QRCodeWork)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _Instruction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/Equipment.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
 
-/**
- * 字符串生产QRcode base64
- * input => StringObject
- * output => StringObject
- */
-var QRCodeWork = /** @class */ (function (_super) {
-    __extends(QRCodeWork, _super);
+
+var QRCodeWork = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__extends)(QRCodeWork, _super);
     function QRCodeWork() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = "QRCodeWork";
@@ -3662,7 +2299,6 @@ var QRCodeWork = /** @class */ (function (_super) {
     };
     QRCodeWork.isAble = function () {
         return _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__.isJS;
-        // return isNode || isWeb || isRN
     };
     return QRCodeWork;
 }(_Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO));
@@ -3682,39 +2318,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _Instruction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Util/Equipment */ "./src/Util/Equipment.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
 /* harmony import */ var _Util_tools__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Util/tools */ "./src/Util/tools.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
 
 
-/**
- * "1 + $I$ "
- * @param template
- * @param input
- * @param option
- * @returns
- */
+
 function handleEvalCommand(template, params, config, runOption) {
     var input = (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__.unpackValue)(params);
     var runCommand = template;
@@ -3733,31 +2349,8 @@ function handleEvalCommand(template, params, config, runOption) {
     }
     return runCommand;
 }
-/**
- * 默认：
- * run javascript
- *
- * node:指定
- *  = "#javascript#console.log('hello world')"
- *  = "#shell#echo hello world"
- *
- *  lastWork-output-value:1000
- *  new RunCommandWork('$I$ + 1') === new RunCommandWork('$I$ + 1',{'*':'$I$ '})
- *  ===>run "1000 + 1"
- *  ==================================
- *
- *  lastWork-output-value:{A:1000,B:2}
- *  new RunCommandWork('$X$ + 20 * $Y$',{'A':'$X$,'B':'$Y$' '})
- *  ===> "1000 + 20 * 2"
- *  ===================================
- *
- *  lastWork-output-value:{A:1000,B:2}
- *  new RunCommandWork((params:{A:1000,B:2})=>{
- *     return `${A} * 2 + ${B}`
- *  })
- */
-var RunCommandWork = /** @class */ (function (_super) {
-    __extends(RunCommandWork, _super);
+var RunCommandWork = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__extends)(RunCommandWork, _super);
     function RunCommandWork() {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -3809,7 +2402,6 @@ var RunCommandWork = /** @class */ (function (_super) {
     };
     RunCommandWork.isAble = function () {
         return _Util_Equipment__WEBPACK_IMPORTED_MODULE_2__.isJS;
-        // return isNode || isWeb || isRN || isElectron
     };
     return RunCommandWork;
 }(_Instruction__WEBPACK_IMPORTED_MODULE_0__.InstructionOTO));
@@ -3831,6 +2423,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "IntervalWork": () => (/* binding */ IntervalWork),
 /* harmony export */   "TimeoutWork": () => (/* binding */ TimeoutWork)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "rxjs");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "rxjs/operators");
@@ -3838,29 +2431,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Object_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Object/index */ "./src/Object/index.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
 /* harmony import */ var _Instruction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Instruction */ "./src/Works/Instruction.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
 
 
-// 一直发
-var IntervalWork = /** @class */ (function (_super) {
-    __extends(IntervalWork, _super);
+
+var IntervalWork = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__extends)(IntervalWork, _super);
     function IntervalWork(interval, max, notifier) {
         if (max === void 0) { max = Infinity; }
         var _this = _super.call(this) || this;
@@ -3890,9 +2468,8 @@ var IntervalWork = /** @class */ (function (_super) {
     };
     return IntervalWork;
 }(_Instruction__WEBPACK_IMPORTED_MODULE_4__.InstructionOTM));
-// 定时发
-var TimeoutWork = /** @class */ (function (_super) {
-    __extends(TimeoutWork, _super);
+var TimeoutWork = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__extends)(TimeoutWork, _super);
     function TimeoutWork(interval) {
         var _this = _super.call(this) || this;
         _this.name = "TimeoutWork";
@@ -3921,9 +2498,8 @@ var TimeoutWork = /** @class */ (function (_super) {
     };
     return TimeoutWork;
 }(_Instruction__WEBPACK_IMPORTED_MODULE_4__.InstructionOTO));
-// 延迟 然后一直发
-var DelayIntervalWork = /** @class */ (function (_super) {
-    __extends(DelayIntervalWork, _super);
+var DelayIntervalWork = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__extends)(DelayIntervalWork, _super);
     function DelayIntervalWork(delay, interval, max, notifier) {
         if (delay === void 0) { delay = 0; }
         if (interval === void 0) { interval = 1000; }
@@ -3977,6 +2553,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "InstructionOTM": () => (/* binding */ InstructionOTM),
 /* harmony export */   "InstructionOTO": () => (/* binding */ InstructionOTO)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _Object__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Object */ "./src/Object/index.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "rxjs");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
@@ -3988,21 +2565,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _WorkUnit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./WorkUnit */ "./src/Works/WorkUnit.ts");
 /* harmony import */ var _Util_channel_value_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Util/channel-value-util */ "./src/Util/channel-value-util.ts");
 /* harmony import */ var _Util_tools__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Util/tools */ "./src/Util/tools.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
@@ -4012,25 +2574,19 @@ var __extends = (undefined && undefined.__extends) || (function () {
 
 
 
-/**
- * 一次输入--->一次输出 InstructionOTO
- * 一次输入--->多次输出 InstructionOTM
- * n次输入---->m次输出 InstructionMTM
- */
-var Instruction = /** @class */ (function (_super) {
-    __extends(Instruction, _super);
+
+var Instruction = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__extends)(Instruction, _super);
     function Instruction() {
         var _this = _super.call(this) || this;
         _this.name = 'Instruction';
         _this.id = Instruction._id++;
         _this.runSubscriptions = new Map();
-        _this.pools = []; // 订阅自己的
-        // 运行配置 config:OPTION todo
+        _this.pools = [];
         _this.config = { development: true };
         _this.uuid = (0,uuid__WEBPACK_IMPORTED_MODULE_4__.v4)();
         return _this;
     }
-    // 连接上下通道
     Instruction.prototype.prepare = function (before, next) {
         var _a;
         this.beforeWork = before;
@@ -4039,11 +2595,9 @@ var Instruction = /** @class */ (function (_super) {
         this._connectChannel();
         return Promise.resolve();
     };
-    // 处理上一个的传入
     Instruction.prototype._connectChannel = function () {
         var _this = this;
         var that = this;
-        // // 处理数据
         var sub2 = this.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.tap)(function (value) {
             var _a, _b;
             ((_a = _this.config) === null || _a === void 0 ? void 0 : _a.development) &&
@@ -4157,7 +2711,6 @@ var Instruction = /** @class */ (function (_super) {
                 value: (0,_Util_channel_value_util__WEBPACK_IMPORTED_MODULE_6__.wrapperValue)(input, null),
             }));
     };
-    //重写
     Instruction.prototype.next = function (value) {
         if (this.closed === false) {
             _super.prototype.next.call(this, value);
@@ -4171,13 +2724,10 @@ var Instruction = /** @class */ (function (_super) {
             });
         }
     };
-    // 声明周期
-    // 处理输入的值
     Instruction.prototype.nextValue = function (input) {
         return input;
     };
     Instruction.prototype.completeOneLoop = function (input, toValue, success) { };
-    // 基础
     Instruction.prototype.toString = function () {
         return "[".concat(this.name, ":").concat(this.id, "]");
     };
@@ -4191,8 +2741,8 @@ var Instruction = /** @class */ (function (_super) {
     return Instruction;
 }(rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject));
 
-var InstructionOTO = /** @class */ (function (_super) {
-    __extends(InstructionOTO, _super);
+var InstructionOTO = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__extends)(InstructionOTO, _super);
     function InstructionOTO() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -4212,8 +2762,8 @@ var InstructionOTO = /** @class */ (function (_super) {
     return InstructionOTO;
 }(Instruction));
 
-var InstructionOTM = /** @class */ (function (_super) {
-    __extends(InstructionOTM, _super);
+var InstructionOTM = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__extends)(InstructionOTM, _super);
     function InstructionOTM() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = 'MultipleInstruction';
@@ -4225,8 +2775,6 @@ var InstructionOTM = /** @class */ (function (_super) {
     InstructionOTM.prototype.completeOneLoop = function (input, next, success) { };
     InstructionOTM.prototype.run = function (input) {
         return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable(function (subscriber) {
-            // subscriber.next(input);
-            // 输出多次
             subscriber.next(input);
             subscriber.complete();
             return {
@@ -4237,8 +2785,8 @@ var InstructionOTM = /** @class */ (function (_super) {
     return InstructionOTM;
 }(Instruction));
 
-var InstructionMTM = /** @class */ (function (_super) {
-    __extends(InstructionMTM, _super);
+var InstructionMTM = (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__extends)(InstructionMTM, _super);
     function InstructionMTM() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = 'MultipleInstruction';
@@ -4250,8 +2798,6 @@ var InstructionMTM = /** @class */ (function (_super) {
     InstructionMTM.prototype.completeOneLoop = function (input, next, success) { };
     InstructionMTM.prototype.run = function (input) {
         return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable(function (subscriber) {
-            // subscriber.next(input);
-            // 输出多次
             subscriber.next(input);
             subscriber.complete();
             return {
@@ -4280,7 +2826,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "uuid");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
 
-var WorkUnit = /** @class */ (function () {
+var WorkUnit = (function () {
     function WorkUnit(context, work, sub, uuid) {
         this.context = context;
         this.work = work;
@@ -4365,10 +2911,293 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// 1
-new Promise(function (a) {
-    a(1);
+
+
+/***/ }),
+
+/***/ "./node_modules/tslib/tslib.es6.js":
+/*!*****************************************!*\
+  !*** ./node_modules/tslib/tslib.es6.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "__assign": () => (/* binding */ __assign),
+/* harmony export */   "__asyncDelegator": () => (/* binding */ __asyncDelegator),
+/* harmony export */   "__asyncGenerator": () => (/* binding */ __asyncGenerator),
+/* harmony export */   "__asyncValues": () => (/* binding */ __asyncValues),
+/* harmony export */   "__await": () => (/* binding */ __await),
+/* harmony export */   "__awaiter": () => (/* binding */ __awaiter),
+/* harmony export */   "__classPrivateFieldGet": () => (/* binding */ __classPrivateFieldGet),
+/* harmony export */   "__classPrivateFieldIn": () => (/* binding */ __classPrivateFieldIn),
+/* harmony export */   "__classPrivateFieldSet": () => (/* binding */ __classPrivateFieldSet),
+/* harmony export */   "__createBinding": () => (/* binding */ __createBinding),
+/* harmony export */   "__decorate": () => (/* binding */ __decorate),
+/* harmony export */   "__exportStar": () => (/* binding */ __exportStar),
+/* harmony export */   "__extends": () => (/* binding */ __extends),
+/* harmony export */   "__generator": () => (/* binding */ __generator),
+/* harmony export */   "__importDefault": () => (/* binding */ __importDefault),
+/* harmony export */   "__importStar": () => (/* binding */ __importStar),
+/* harmony export */   "__makeTemplateObject": () => (/* binding */ __makeTemplateObject),
+/* harmony export */   "__metadata": () => (/* binding */ __metadata),
+/* harmony export */   "__param": () => (/* binding */ __param),
+/* harmony export */   "__read": () => (/* binding */ __read),
+/* harmony export */   "__rest": () => (/* binding */ __rest),
+/* harmony export */   "__spread": () => (/* binding */ __spread),
+/* harmony export */   "__spreadArray": () => (/* binding */ __spreadArray),
+/* harmony export */   "__spreadArrays": () => (/* binding */ __spreadArrays),
+/* harmony export */   "__values": () => (/* binding */ __values)
+/* harmony export */ });
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    if (typeof b !== "function" && b !== null)
+        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    }
+    return __assign.apply(this, arguments);
+}
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+}
+
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+var __createBinding = Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
 });
+
+function __exportStar(m, o) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
+}
+
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+/** @deprecated */
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+
+/** @deprecated */
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+}
+
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+}
+
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+    function fulfill(value) { resume("next", value); }
+    function reject(value) { resume("throw", value); }
+    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+var __setModuleDefault = Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+};
+
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+}
+
+function __importDefault(mod) {
+    return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+}
+
+function __classPrivateFieldIn(state, receiver) {
+    if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function")) throw new TypeError("Cannot use 'in' operator on non-object");
+    return typeof state === "function" ? receiver === state : state.has(receiver);
+}
 
 
 /***/ }),

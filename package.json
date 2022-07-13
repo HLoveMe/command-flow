@@ -2,18 +2,18 @@
   "name": "command-flow",
   "version": "1.0.3",
   "main": "./dist/cjs/index.js",
-  "module":"./dist/esm5/index.prod.js",
+  "module": "./dist/esm5/index.prod.js",
   "scripts": {
-    "pre_build":"npm run pre_web && npm run pre_node",
+    "pre_build": "npm run pre_web && npm run pre_node",
     "pre_web": "node ./build-pre.js 0 ",
     "pre_node": "node ./build-pre.js 1 ",
     "build_dev_web": "npm run pre_web && webpack --config webpack.config.dev.js",
     "build_prod_web": "npm run pre_web &&  webpack --config webpack.config.prod.js",
-    "build_web_esnext":"tsc -p tsconfig.esm.next.json",
+    "build_web_esnext": "tsc -p tsconfig.esm.next.json",
     "build_web": "npm run pre_web && webpack --config webpack.config.dev.js &&  webpack --config webpack.config.prod.js && npm run build_web_esnext",
     "build_node": "npm run pre_node &&  tsc -p tsconfig.node.json",
-    "types":"tsc -p ./tsconfig.types.json",
-    "build":"npm run build_web && npm run build_node && npm run types",
+    "types": "tsc -p ./tsconfig.types.json",
+    "build": "npm run build_web && npm run build_node && npm run types",
     "web_serve": "vite"
   },
   "repository": {
@@ -35,16 +35,16 @@
   "bugs": {
     "url": "https://github.com/HLoveMe/command-flow/issues"
   },
-  "exports":{
+  "exports": {
     ".": {
-      "node":"./dist/cjs/index.js",
-      "require":"./dist/cjs/index.js",
-      "es2015":"./dist/esm/index.js",
+      "node": "./dist/cjs/index.js",
+      "require": "./dist/cjs/index.js",
+      "es2015": "./dist/esm/index.js",
       "default": "./index.js",
       "types": "./index.d.ts"
     }
   },
-  "files":[
+  "files": [
     "index.js",
     "index.d.ts",
     "dist",
