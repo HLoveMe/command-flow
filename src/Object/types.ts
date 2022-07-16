@@ -6,7 +6,6 @@ import { ArrayObjectAble } from './Able/Base/ArrayObject';
 import { BooleanObject } from './Able/Base/BooleanObject';
 import { DataObject } from './Able/Base/DataObject';
 import { DateObjectAble } from './Able/Base/DateObject';
-import { NULLObject } from './Able/Base/NULLObject';
 import { ObjectTarget } from './Able/Base/ObjectTarget';
 
 type isEqual<X, Y> = [X] extends [Y] ? ([Y] extends [X] ? true : false) : false;
@@ -114,7 +113,7 @@ export namespace ValueExtends {
     : false;
   // string ===> Value.StringAble
   export type Wrapper<T> = T extends null | undefined
-    ? NULLObject
+    ? Value.NUllAble
     : T extends number
     ? Value.NumberAble
     : T extends string
@@ -137,7 +136,7 @@ export namespace ValueExtends {
   export type GetAchieve<T> = T extends ObjectTarget<any>
     ? T
     : T extends Value.NUllAble
-    ? NULLObject
+    ? Value.NUllAble
     : T extends Value.NumberAble
     ? NumberObjectAble
     : T extends Value.StringAble
