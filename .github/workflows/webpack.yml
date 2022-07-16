@@ -17,13 +17,22 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build
+    - name: Install
       run: |
         npm install
-        npm run build
-  Publish:
-    runs-on: ubuntu-latest
-    steps:
+        
+    - name: build_web
+      run: |
+        npm run build_web
+        
+    - name: build_node
+      run: |
+        npm run build_node
+        
+    - name: build_types
+      run: |
+        npm run types
+        
     - name: Publish
       run: |
         npm publish
