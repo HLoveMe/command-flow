@@ -1,6 +1,7 @@
 {
   "name": "command-flow",
-  "version": "1.0.3",
+  "version": "1.0.4@beat-01",
+  "description": "命令链",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm5/index.prod.js",
   "scripts": {
@@ -57,7 +58,6 @@
     "@babel/plugin-proposal-optional-chaining": "^7.16.7",
     "@babel/plugin-transform-runtime": "^7.18.5",
     "@babel/preset-env": "^7.18.2",
-    "@babel/preset-set-env": "^7.16.11",
     "@babel/preset-typescript": "^7.17.12",
     "@babel/runtime": "^7.18.3",
     "@babel/polyfill": "^7.12.1",
