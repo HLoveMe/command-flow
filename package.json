@@ -1,6 +1,6 @@
 {
   "name": "command-flow",
-  "version": "1.0.4@beat-01",
+  "version": "1.0.4",
   "description": "命令链",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm5/index.prod.js",
