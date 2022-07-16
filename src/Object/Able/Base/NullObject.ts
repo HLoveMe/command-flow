@@ -1,5 +1,5 @@
 // import { attribute, DefaultValue } from '../../util';
-import { Value } from '../..';
+import { Value } from '../../types';
 import { ObjectTarget } from './ObjectTarget';
 
 export class NULLObject
