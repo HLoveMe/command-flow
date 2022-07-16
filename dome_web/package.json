@@ -8,8 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.25",
-    "command-flow": "git+https://github.com/HLoveMe/command-flow.git"
+    "command-flow": "git+https://github.com/HLoveMe/command-flow.git",
+    "vue": "^3.2.25"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3",
