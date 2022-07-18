@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite --force",
     "build": "vue-tsc --noEmit && vite build",
+    "copy":"node copy.js",
     "preview": "vite preview"
   },
   "dependencies": {
