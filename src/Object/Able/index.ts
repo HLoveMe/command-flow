@@ -8,8 +8,8 @@ import { StringObject } from "./Base/StringObject";
 import { BooleanObject } from "./Base/BooleanObject";
 import { DateObject, DateObjectAble } from "./Base/DateObject";
 import { DataObject } from "./Base/DataObject";
-import { NULLObject } from './Base/NULLObject'
-import { createExtendsConstruct, createExtendsInstance } from '../extend-util'
+import { NULLObject } from "./Base/MixinsObject"
+import { createExtendsConstruct, createExtendsInstance } from "../extend-util"
 // import { MixinsObject } from './Targets/Mixins'
 
 export {
