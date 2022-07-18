@@ -48,9 +48,9 @@ export namespace WorkType {
   }
   export interface WorkStatus<T extends BaseType = BaseType> {
     content?: ContextImpl;
-    work?: Work[];
+    work: Work[];
     desc?: any;
-    value?: T | ChannelValue<T>;
+    value?: T | ChannelValue<T> | null;
     date?: Date;
     error?: Error;
   }

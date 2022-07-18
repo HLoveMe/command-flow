@@ -9,7 +9,7 @@ import { takeLast, tap } from 'rxjs/operators';
 import { unpackValue } from '../../Util/channel-value-util';
 
 export default class LoadFileWork extends InstructionOTO {
-  name: string = 'LoadFileWork';
+  static NAME: string = 'LoadFileWork';
   currentConfig: FileOption = { type: FileType.All };
   constructor(config?: FileOption) {
     super();

@@ -34,7 +34,7 @@ export class Instruction
   implements WorkType.Work, EnvironmentAble
 {
   declare observers: Observer<BaseType>[];
-  name: string = 'Instruction';
+  static NAME: string = 'Instruction';
   static _id: number = 0;
   id: number = Instruction._id++;
   uuid: WorkType.WorkUUID;
@@ -56,6 +56,10 @@ export class Instruction
     this.config = this.context?.runOptions || ({} as ContextRunOption);
     this._connectChannel();
     return Promise.resolve();
+  }
+
+  get name():string{
+    return this.constructor.name
   }
 
   // 处理上一个的传入
@@ -235,7 +239,7 @@ export class InstructionOTO extends Instruction {
 export class InstructionOTM extends Instruction {
   // 声明可以进行配置的属性 todo
   static OPTION: WorkRunOption;
-  name: string = 'MultipleInstruction';
+  static NAME: string = 'MultipleInstruction';
   nextValue(input: ChannelObject): ChannelObject {
     return input;
   }
@@ -260,7 +264,7 @@ export class InstructionOTM extends Instruction {
 export class InstructionMTM extends Instruction {
   // 声明可以进行配置的属性 todo
   static OPTION: WorkRunOption;
-  name: string = 'MultipleInstruction';
+  static NAME: string = 'MultipleInstruction';
 
   nextValue(input: ChannelObject): ChannelObject {
     return input;

@@ -64,7 +64,7 @@ export class Context implements ContextImpl {
   addVariable(from: WorkType.Work, name: string, value: BaseType): void {
     const w_map = this.runConstant.get(from.uuid);
     !w_map && this.runConstant.set(from.uuid, new Map());
-    this.runConstant.get(from.uuid).set(name, value);
+    this.runConstant.get(from.uuid)?.set(name, value);
   }
   workMessage(input: WorkType.WorkStatus) {
     console.log('msgChannel', input);
@@ -81,7 +81,7 @@ export class Context implements ContextImpl {
   sendLog(status: WorkType.WorkStatus) {
     const log = {
       date: new Date(),
-      work: status.work.filter(($1) => $1?.name),
+      work: status.work.filter(($1) => $1.name) ?? null,
       desc: status.desc,
       value: status.value,
       error: status.error,

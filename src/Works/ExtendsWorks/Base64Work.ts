@@ -10,7 +10,7 @@ import { StringObjectAble } from "../../Object/Able/Base/StringObject";
 
 //编码
 class Base64EnCodeWork extends InstructionMTM {
-  name: string = "Base64EnCodeWork";
+  static NAME: string = "Base64EnCodeWork";
 
   run(input: ChannelObject): Observable<ChannelObject> {
     return new Observable((subscriber: Subscriber<ChannelObject<StringObjectAble>>) => {
@@ -32,7 +32,7 @@ class Base64EnCodeWork extends InstructionMTM {
 }
 //解码
 class Base64DecodeWork extends InstructionMTM {
-  name: string = "Base64DecodeWork";
+  static NAME: string = "Base64DecodeWork";
 
   run(input: ChannelObject): Observable<ChannelObject> {
     return new Observable((subscriber: Subscriber<ChannelObject<StringObjectAble>>) => {

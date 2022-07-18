@@ -9,7 +9,7 @@ import { ObjectTarget } from '../..';
 import { AxiosRequestConfig } from 'axios';
 import { tap } from 'rxjs/operators';
 export default class FetchWork extends InstructionOTO {
-  name: string = 'FetchWork';
+  static NAME: string = 'FetchWork';
 
   _getInitOption(
     input: Value.ObjectAble<RequestParamsInit>,

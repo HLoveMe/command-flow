@@ -68,7 +68,7 @@ function handleEvalCommand(
  */
 export default class RunCommandWork extends InstructionOTO {
   template: string = '';
-  name: string = 'RunCommandWork';
+  static NAME: string = 'RunCommandWork';
   paramsConfig: CommandParams = {};
   callBack?: HandleEvalCommand = undefined;
   constructor(...args: any[]) {

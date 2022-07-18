@@ -7,7 +7,7 @@ import { InstructionOTM, InstructionOTO } from "../Instruction"
 
 // 一直发
 class IntervalWork extends InstructionOTM {
-  name = "IntervalWork"
+  static NAME = "IntervalWork"
   intervalTime: number;
   maxCount: number;
   notifier: Observable<any>;
@@ -42,7 +42,7 @@ class IntervalWork extends InstructionOTM {
 
 // 定时发
 class TimeoutWork extends InstructionOTO {
-  name = "TimeoutWork"
+  static NAME = "TimeoutWork"
   intervalTime: number;
   constructor(interval: number,) {
     super()
@@ -75,7 +75,7 @@ class TimeoutWork extends InstructionOTO {
 
 // 延迟 然后一直发
 class DelayIntervalWork extends InstructionOTM {
-  name = 'DelayIntervalWork'
+  static NAME = 'DelayIntervalWork'
   intervalTime: number;
   maxCount: number;
   delayTime: number;
