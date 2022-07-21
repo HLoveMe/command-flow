@@ -57,10 +57,12 @@ export class WebBridge extends PlatformBridge {
               file,
             })
           );
+          document.body.removeChild(input)
           subscriber.complete();
         };
         reader.onerror = (ev: ProgressEvent<FileReader>) => {
           subscriber.error(ev);
+          document.body.removeChild(input)
         };
         reader.readAsArrayBuffer(file);
       });
