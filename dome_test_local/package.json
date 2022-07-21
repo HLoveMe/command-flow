@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "vite --force",
     "build": "vue-tsc --noEmit && vite build",
-    "copy":"node copy.js",
+    "copy": "node copy.js",
     "preview": "vite preview"
   },
   "dependencies": {
+    "safe-chain-object": "^1.0.4",
     "vue": "^3.2.25"
   },
   "devDependencies": {

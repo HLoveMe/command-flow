@@ -36,3 +36,4 @@ function cpSync(source, destination) {
   else fs.cpSync(source, destination, { force: true, recursive: true })
 }
 cpSync(path.join(__dirname, '../dist'), path.join(__dirname, "", 'src', "command",'dist'))
+cpSync(path.join(__dirname, '../src'), path.join(__dirname, "", 'src', "command",'src'))

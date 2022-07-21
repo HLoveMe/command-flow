@@ -3,3 +3,4 @@ node_modules
 source
 src_dome
 dist
+*/**/src/command

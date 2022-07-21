@@ -25,8 +25,8 @@
       ></RunGroup>
       <RunResult
         v-if="logInfo.size >= 1"
-        :desc="'--'"
-        :expect="'=='"
+        :desc="'展示结果'"
+        :expect="resultRef"
         :success="result"
       ></RunResult>
     </div>
@@ -42,7 +42,10 @@ import {
   Base64EnCodeWork,
   FetchWork,
   wrapperValue,
-} from '@/command';
+InstructionOTO,
+unpackValue,
+} from 'command-flow';
+import { Observable } from 'rxjs';
 import { ref } from 'vue';
 import RunGroup from './RunGroup.vue';
 import RunResult from './RunResult.vue';
@@ -57,6 +60,7 @@ interface WorkStatus {
 const result = ref<boolean>(false);
 const codeRef = ref<HTMLDivElement>({} as any);
 const logInfo = ref<Map<string, Array<any>>>(new Map());
+const resultRef = ref<string>('');
 const disabled = ref<boolean>(false);
 const getContext = () => {
   const context = new Context();
@@ -87,12 +91,31 @@ const getContext = () => {
   });
   return context;
 };
+
+class ShowResult extends InstructionOTO {
+  name = 'ShowResult';
+
+  run(input: any): Observable<any> {
+    return new Observable((subscriber) => {
+      const value = unpackValue(input);
+      resultRef.value = `测试Fetch结果为:${JSON.stringify(value)}`
+      result.value = true;
+      subscriber.complete();
+      return {
+        unsubscribe: () => subscriber.unsubscribe(),
+      };
+    });
+  }
+}
+
 const clearLog = () => {
   logInfo.value.clear();
 };
 async function codeDome() {
   const context = new Context();
   context.addWork(new FetchWork());
+  context.addWork(new ShowResult());
+
   await context.prepareWorks();
   context.dispatch('http://localhost:3000');
 }
@@ -103,15 +126,16 @@ const reRun = () => {
 const startBegin = async () => {
   const context = getContext();
   context.addWork(new FetchWork());
+  context.addWork(new ShowResult());
   await context.prepareWorks();
   context.dispatch({
     method: 'get',
     timeout: 10000,
     data: null,
     headers: {
-      'Content-Type': 'text/plain',
+     
     },
-    url: 'http://localhost:3000/',
+    url: `${window.location.origin}/test`,
   });
 };
 const showCode = () => {
