@@ -44,7 +44,7 @@ import {
   wrapperValue,
 InstructionOTO,
 unpackValue,
-} from 'command-flow';
+} from '@/command';
 import { Observable } from 'rxjs';
 import { ref } from 'vue';
 import RunGroup from './RunGroup.vue';

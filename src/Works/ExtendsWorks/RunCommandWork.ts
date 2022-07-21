@@ -5,7 +5,7 @@ import { CommandStatus } from '../../Bridge/ConfigTypes';
 import { ChannelObject, ContextImpl, BaseType } from '../../Types';
 import { BooleanObject, ObjectTarget } from '../../Object';
 import { unpackValue, wrapperValue } from '../../Util/channel-value-util';
-import { RunCommandWorkConfig } from '../../Configs';
+import { RunCommandWorkConfig } from '../../Configs/types';
 import { noop, replaceAll } from '../../Util/tools';
 
 type CommandParams = { [key: string]: string };

@@ -1,6 +1,6 @@
 import { PartialObserver, Observable, Subject, Subscription } from 'rxjs';
 import { Value } from './Object'
-import { ContextRunOption } from './Configs';
+import { ContextRunOption } from './Configs/types';
 import { PlatformBridgeAble } from './Bridge/ConfigTypes';
 
 export type BaseType<T extends any = any, U extends any = any> =
@@ -75,8 +75,10 @@ export namespace WorkType {
     startRun(value: BaseType, runId?: string): void;
   }
   export interface WorkConfig {
-    //根据该属性 控制Work 工作流程
-    config: ConfigInfo;
+    // 整个Work的配置
+    runOption: ConfigInfo;
+    //当前运行的配置
+    getCurrentConfig():any;
   }
   export interface WorkUnitImpl {
     context?: ContextImpl;

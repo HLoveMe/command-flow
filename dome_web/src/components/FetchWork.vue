@@ -42,8 +42,8 @@ import {
   Base64EnCodeWork,
   FetchWork,
   wrapperValue,
-InstructionOTO,
-unpackValue,
+  InstructionOTO,
+  unpackValue,
 } from 'command-flow';
 import { Observable } from 'rxjs';
 import { ref } from 'vue';
@@ -65,7 +65,7 @@ const disabled = ref<boolean>(false);
 const getContext = () => {
   const context = new Context();
   context.addWorkLog({
-    next: (log:WorkStatus |any) => {
+    next: (log: WorkStatus | any) => {
       const {
         desc,
         value: { _value },
@@ -98,7 +98,7 @@ class ShowResult extends InstructionOTO {
   run(input: any): Observable<any> {
     return new Observable((subscriber) => {
       const value = unpackValue(input);
-      resultRef.value = `proxy测试Fetch结果为:${JSON.stringify(value)}`
+      resultRef.value = `proxy测试Fetch结果为:${JSON.stringify(value)}`;
       result.value = true;
       subscriber.complete();
       return {
@@ -132,9 +132,7 @@ const startBegin = async () => {
     method: 'get',
     timeout: 10000,
     data: null,
-    headers: {
-     
-    },
+    headers: {},
     url: `${window.location.origin}/test`,
   });
 };

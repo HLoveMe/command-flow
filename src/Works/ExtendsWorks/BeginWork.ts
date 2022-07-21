@@ -3,7 +3,7 @@ import {
   Subject,
   Subscription,Observer
 } from "rxjs";
-import { WorkRunOption } from "../../Configs";
+import { WorkRunOption } from "../../Configs/types";
 import { v4 as UUID } from "uuid";
 import { EnvironmentAble } from "../../Util/EvalEquipment";
 import { InstructionOTO } from "../Instruction";

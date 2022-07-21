@@ -10,7 +10,9 @@ import { AxiosRequestConfig } from 'axios';
 import { tap } from 'rxjs/operators';
 export default class FetchWork extends InstructionOTO {
   static NAME: string = 'FetchWork';
-
+  constructor(runConfig?: RequestParamsInit){
+    super(runConfig)
+  }
   _getInitOption(
     input: Value.ObjectAble<RequestParamsInit>,
     baseOption: RequestParamsInit = {} as RequestParamsInit

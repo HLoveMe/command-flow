@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "target": "es2015",
-    "module":"esnext"
+    "module":"esnext",
+    "allowJs": true,
+    "moduleResolution": "node"
   },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "**/*.d.ts", "src/**/*", "test.ts"],
+  "exclude": ["node_modules","src/**/*.ignore.node.ts","src/**/*.ignore.web.ts"]
 }

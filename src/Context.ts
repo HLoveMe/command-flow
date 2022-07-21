@@ -13,7 +13,8 @@ import {
   Subject,
   Subscription,
 } from 'rxjs';
-import { ContextRunOption, DefaultRunConfig } from './Configs';
+import { ContextRunOption } from './Configs/types';
+import { DefaultRunConfig } from './Configs';
 import { BooleanObject, ObjectTarget } from './Object';
 import Platform from './Bridge/Index';
 import { Value } from './Object';

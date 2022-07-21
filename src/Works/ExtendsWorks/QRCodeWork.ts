@@ -14,6 +14,9 @@ import { StringObjectAble } from "../../Object/Able/Base/StringObject";
  */
 class QRCodeWork extends InstructionOTO {
   static NAME: string = "QRCodeWork";
+  constructor(runConfig?: QRcodeOption){
+    super(runConfig)
+  }
   run(input: ChannelObject, option?: QRcodeOption): Observable<ChannelObject<StringObjectAble>> {
     const that = this;
     return new Observable((subscriber: Subscriber<ChannelObject<StringObjectAble>>) => {

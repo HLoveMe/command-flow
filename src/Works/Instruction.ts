@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   BaseType,
   ContextImpl,
@@ -15,7 +16,7 @@ import {
   Observer,
 } from 'rxjs';
 import { isJS, PlatformSelect } from '../Util/Equipment';
-import { ContextRunOption, WorkRunOption } from '../Configs';
+import { ContextRunOption, WorkRunOption } from '../Configs/types';
 import { observeOn, tap } from 'rxjs/operators';
 import { v4 as UUID } from 'uuid';
 import { WorkUnit } from './WorkUnit';
@@ -43,23 +44,30 @@ export class Instruction
   context: ContextImpl;
   runSubscriptions: Map<string, WorkUnit> = new Map();
   pools: Subscription[] = []; // 订阅自己的
-  // 运行配置 config:OPTION todo
-  config: ContextRunOption = { development: true };
-  constructor() {
+  runOption: ContextRunOption = { development: true };
+  runConfig?: any;
+  constructor(runConfig?: any) {
     super();
     this.uuid = UUID();
+    this.runConfig = runConfig || {};
   }
   // 连接上下通道
   prepare(before?: WorkType.Work, next?: WorkType.Work): Promise<void> {
     this.beforeWork = before;
     this.nextWork = next;
-    this.config = this.context?.runOptions || ({} as ContextRunOption);
+    // if(Object.keys(this.c))
+    this.runOption = this.context?.runOptions || ({} as ContextRunOption);
     this._connectChannel();
     return Promise.resolve();
   }
 
-  get name():string{
-    return this.constructor.name
+  get name(): string {
+    return this.constructor.name;
+  }
+
+  getCurrentConfig() {
+    const defaultOption = (this.runOption?.workConfig || {})[this.name] || {};
+    return _.merge(_.cloneDeep(defaultOption), this.runConfig);
   }
 
   // 处理上一个的传入
@@ -68,7 +76,7 @@ export class Instruction
     // // 处理数据
     const sub2: Subscription = this.pipe(
       tap((value) => {
-        this.config?.development &&
+        this.runOption?.development &&
           that.context?.sendLog({
             work: [that],
             content: this.context,
@@ -85,8 +93,9 @@ export class Instruction
   }
 
   _run(value: ChannelObject) {
+    const that = this;
     const sendLog = (desc: string, _value?: ChannelObject, _error?: Error) => {
-      that.config?.development &&
+      that.runOption?.development &&
         that.context?.sendLog({
           work: [that],
           content: this.context,
@@ -96,8 +105,7 @@ export class Instruction
         });
     };
     value = this.nextValue(value) || value;
-    const that = this;
-    const nextOption = (this.config?.workConfig || {})[this.name] || {};
+    const nextOption = this.getCurrentConfig();
     const execFunc: WorkType.WorkFunction = PlatformSelect({
       web: () =>
         (
@@ -174,7 +182,7 @@ export class Instruction
     this.context && this.context.addVariable(this, name, value);
   }
   logMsg(msg: string, input: ChannelObject): void {
-    this.config?.development &&
+    this.runOption?.development &&
       this.context?.sendLog({
         work: [this],
         content: this.context,

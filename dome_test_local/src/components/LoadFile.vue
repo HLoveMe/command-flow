@@ -104,7 +104,7 @@ const clearLog = () => {
 };
 async function codeDome() {
   const context = new Context();
-  context.addWork(new LoadFileWork());
+  context.addWork(new LoadFileWork({type:"image/*"}));
   context.addWork(new ShowFileContext());
   await context.prepareWorks();
   context.dispatch();
@@ -115,7 +115,7 @@ const reRun = () => {
 };
 const startBegin = async () => {
   const context = getContext();
-  context.addWork(new LoadFileWork());
+  context.addWork(new LoadFileWork({type:"image/*"}));
   context.addWork(new ShowFileContext());
   await context.prepareWorks();
   context.dispatch();
