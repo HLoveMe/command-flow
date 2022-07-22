@@ -1,12 +1,5 @@
 import _ from 'lodash';
-import {
-  BaseType,
-  ContextImpl,
-  WorkType,
-  ChannelObject,
-  ChannelValue,
-} from '../Types';
-import { NULLObject, Value } from '../Object';
+import { BaseType, ContextImpl, WorkType, ChannelObject } from '../Types';
 import {
   Subject,
   Subscription,
@@ -58,7 +51,9 @@ export class Instruction
     // if(Object.keys(this.c))
     this.runOption = this.context?.runOptions || ({} as ContextRunOption);
     this._connectChannel();
-    return Promise.resolve();
+    return Promise.resolve().then(() => {
+      this.didPrepare && this.didPrepare(this.context, this);
+    });
   }
 
   get name(): string {
@@ -92,37 +87,41 @@ export class Instruction
     this.pools.push(sub2);
   }
 
-  _run(value: ChannelObject) {
+  _run(signal: ChannelObject) {
     const that = this;
+    const newValue =
+      (this.onReceiveSignal
+        ? this.onReceiveSignal(this.context, this, signal)
+        : null) || signal;
     const sendLog = (desc: string, _value?: ChannelObject, _error?: Error) => {
       that.runOption?.development &&
         that.context?.sendLog({
           work: [that],
           content: this.context,
           desc: desc,
-          value: _value || value,
+          value: _value || newValue,
           error: _error,
         });
     };
-    value = this.nextValue(value) || value;
+
     const nextOption = this.getCurrentConfig();
     const execFunc: WorkType.WorkFunction = PlatformSelect({
       web: () =>
         (
           (that as WorkType.Work).web_run ??
           ((that as WorkType.Work).run || noop)
-        ).bind(that)(value, nextOption),
+        ).bind(that)(newValue, nextOption),
       node: () =>
         (
           (that as WorkType.Work).node_run ??
           ((that as WorkType.Work).run || noop)
-        ).bind(that)(value, nextOption),
+        ).bind(that)(newValue, nextOption),
       other: () =>
-        ((that as WorkType.Work).run || noop).bind(that)(value, nextOption),
+        ((that as WorkType.Work).run || noop).bind(that)(newValue, nextOption),
     });
-    sendLog('[Work][Func:run]->入口', value);
+    sendLog('[Work][Func:run]->入口', newValue);
     const uuid = UUID();
-    const runSub: Subscription = execFunc(value)
+    const runSub: Subscription = execFunc(newValue)
       .pipe(
         tap(function (_value: ChannelObject) {
           sendLog('[Work][Func:run]->结果', _value);
@@ -134,14 +133,18 @@ export class Instruction
           const unit = that.runSubscriptions.get(uuid);
           unit?.sub.unsubscribe();
           that.runSubscriptions.delete(uuid);
+          that.onChainComplete &&
+            that.onChainComplete(that.context, that, signal, newValue);
         },
         error: (err) => {
-          sendLog('[Work][Func:run]->执行错误', value, err);
-          that.completeOneLoop(value, new NULLObject(), false);
+          sendLog('[Work][Func:run]->执行错误', newValue, err);
         },
         next: (res) => {
           sendLog('[Work][Func:run]->将执行下一个Work', res);
-          that.completeOneLoop(value, res as BaseType, true);
+          res =
+            (that.onChainNext
+              ? this.onChainNext(that.context, that, signal, newValue, res)
+              : null) || res;
           that.nextWork?.next(res as BaseType);
         },
       });
@@ -157,6 +160,7 @@ export class Instruction
       });
       subscribe.next(true);
       subscribe.complete();
+      that.onForceFinish && that.onForceFinish(that.context, that);
       return {
         unsubscribe: () => subscribe.unsubscribe(),
       };
@@ -176,7 +180,7 @@ export class Instruction
         desc: '[Work:preRun]-接受上一个消息错误',
         date: new Date(),
         value: new StringObject(err.message),
-        error:err,
+        error: err,
       });
   }
   addVariable(name: string, value: BaseType): void {
@@ -205,12 +209,34 @@ export class Instruction
       });
     }
   }
-  // 声明周期
-  // 处理输入的值
-  nextValue(input: ChannelObject): ChannelObject {
-    return input;
+
+  /*** Loop */
+  didPrepare(context: ContextImpl, work: WorkType.Work) {}
+  onReceiveSignal(
+    context: ContextImpl,
+    work: WorkType.Work,
+    signal: ChannelObject
+  ): ChannelObject | null {
+    return null;
   }
-  completeOneLoop(input: BaseType, toValue: BaseType, success: Boolean) {}
+  onChainNext?(
+    context: ContextImpl,
+    work: WorkType.Work,
+    signal: ChannelObject,
+    reSignal: ChannelObject,
+    next: ChannelObject
+  ): ChannelObject | null {
+    return null;
+  }
+
+  onChainComplete(
+    context: ContextImpl,
+    work: WorkType.Work,
+    signal: ChannelObject,
+    reSignal: ChannelObject
+  ) {}
+
+  onForceFinish(context: ContextImpl, work: WorkType.Work) {}
 
   // 基础
   toString() {
@@ -219,21 +245,12 @@ export class Instruction
   isAble(): Boolean {
     return (this as any).__proto__.isAble();
   }
-
   static isAble() {
     return isJS;
   }
 }
 
 export class InstructionOTO extends Instruction {
-  nextValue(input: ChannelObject): ChannelObject {
-    return input;
-  }
-  completeOneLoop(
-    input: ChannelObject,
-    toValue: ChannelObject,
-    success: Boolean
-  ) {}
   run(input: ChannelObject): Observable<ChannelObject> {
     return new Observable((subscriber) => {
       subscriber.next(input);
@@ -249,14 +266,7 @@ export class InstructionOTM extends Instruction {
   // 声明可以进行配置的属性 todo
   static OPTION: WorkRunOption;
   static NAME: string = 'MultipleInstruction';
-  nextValue(input: ChannelObject): ChannelObject {
-    return input;
-  }
-  completeOneLoop(
-    input: ChannelObject,
-    next: ChannelObject,
-    success: Boolean
-  ) {}
+
   run(input: ChannelObject): Observable<ChannelObject> {
     return new Observable((subscriber) => {
       // subscriber.next(input);
@@ -274,16 +284,6 @@ export class InstructionMTM extends Instruction {
   // 声明可以进行配置的属性 todo
   static OPTION: WorkRunOption;
   static NAME: string = 'MultipleInstruction';
-
-  nextValue(input: ChannelObject): ChannelObject {
-    return input;
-  }
-  completeOneLoop(
-    input: ChannelObject,
-    next: ChannelObject,
-    success: Boolean
-  ) {}
-
   run(input: ChannelObject): Observable<ChannelObject> {
     return new Observable((subscriber) => {
       // subscriber.next(input);
