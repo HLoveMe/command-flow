@@ -8,7 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "command-flow": "git+https://github.com/HLoveMe/command-flow.git",
+    "command-flow": "^1.0.4",
     "vue": "^3.2.25"
   },
   "devDependencies": {

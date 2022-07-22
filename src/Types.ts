@@ -1,7 +1,8 @@
 import { PartialObserver, Observable, Subject, Subscription } from 'rxjs';
-import { Value } from './Object'
-import { ContextRunOption } from './Configs';
+import { Value } from './Object';
+import { ContextRunOption } from './Configs/types';
 import { PlatformBridgeAble } from './Bridge/ConfigTypes';
+import { LogBase, LogInitParams } from './Log/types';
 
 export type BaseType<T extends any = any, U extends any = any> =
   | Value.ObjectAble<T> // ObjectTarget
@@ -48,9 +49,9 @@ export namespace WorkType {
   }
   export interface WorkStatus<T extends BaseType = BaseType> {
     content?: ContextImpl;
-    work?: Work[];
+    work: Work[];
     desc?: any;
-    value?: T | ChannelValue<T>;
+    value?: T | ChannelValue<T> | null;
     date?: Date;
     error?: Error;
   }
@@ -75,8 +76,10 @@ export namespace WorkType {
     startRun(value: BaseType, runId?: string): void;
   }
   export interface WorkConfig {
-    //根据该属性 控制Work 工作流程
-    config: ConfigInfo;
+    // 整个Work的配置
+    runOption: ConfigInfo;
+    //当前运行的配置
+    getCurrentConfig(): any;
   }
   export interface WorkUnitImpl {
     context?: ContextImpl;
@@ -86,9 +89,9 @@ export namespace WorkType {
   }
   export declare interface Work
     extends WorkOperation,
-    WorkContext,
-    WorkChain,
-    WorkConfig {
+      WorkContext,
+      WorkChain,
+      WorkConfig {
     name: string;
     id: number;
     uuid: WorkUUID;
@@ -122,6 +125,7 @@ export declare interface ContextImpl {
   runConstant: Map<WorkType.WorkUUID, WorkType.WorkConstant>;
   works: WorkType.Work[];
   msgChannel: Subject<WorkType.WorkStatus<any>>;
+  log: LogBase;
   pools: Subscription[];
   addWork(work: WorkType.Work): void;
   addWorks(...works: WorkType.Work[]): void;
@@ -138,6 +142,3 @@ export declare interface ContextImpl {
   clear(): void;
   stopWorkChain(): Promise<boolean>;
 }
-
-
-

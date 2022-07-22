@@ -6,10 +6,10 @@ import { MobileWebBridge } from './Platform/Web/Mobile';
 import { PCWebBridge } from './Platform/Web/PC';
 import './Difference/index';
 
-const runConfig = PlatformSelect({
+const runOption = PlatformSelect({
   web: { pc: PCWebBridge, mobile: MobileWebBridge },
   node: { pc: PCNodejsBridge, mobile: MobileNodejsBridge },
 });
-const Target = runConfig[isPC ? 'pc' : 'mobile'];
+const Target = runOption[isPC ? 'pc' : 'mobile'];
 const Platform: PlatformBridge = Reflect.construct(Target, []);
 export default Platform;

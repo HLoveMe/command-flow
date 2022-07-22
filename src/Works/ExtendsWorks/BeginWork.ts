@@ -3,7 +3,7 @@ import {
   Subject,
   Subscription,Observer
 } from "rxjs";
-import { WorkRunOption } from "../../Configs";
+import { WorkRunOption } from "../../Configs/types";
 import { v4 as UUID } from "uuid";
 import { EnvironmentAble } from "../../Util/EvalEquipment";
 import { InstructionOTO } from "../Instruction";
@@ -15,7 +15,7 @@ export class BeginWork
   extends InstructionOTO
   implements WorkType.Work, EnvironmentAble, WorkType.WorkEntrance {
   static OPTION: WorkRunOption;
-  name: string = "BeginWork";
+  static NAME: string = "BeginWork";
   static _id: number = 0;
   // 输入 头部work
   // inputSubject: Subject<BaseType> = new Subject<BaseType>();

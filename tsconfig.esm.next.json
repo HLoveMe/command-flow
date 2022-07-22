@@ -4,6 +4,7 @@
     "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata":true,
+    "allowSyntheticDefaultImports":true,
     "outDir": "dist/esm",
     "sourceMap": true,
     "noImplicitAny": false,

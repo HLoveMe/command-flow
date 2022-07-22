@@ -16,7 +16,7 @@ import { unpackValue, wrapperValue } from "../../Util/channel-value-util";
  * web:只能代开网页
  */
 export default class OpenURLWork extends InstructionOTO {
-  name: string = "OpenURLWork";
+  static NAME: string = "OpenURLWork";
   run(input: ChannelObject, option?: any): Observable<ChannelObject<BooleanObject>> {
     const that = this;
     return new Observable((subscriber: Subscriber<ChannelObject<BooleanObject>>) => {

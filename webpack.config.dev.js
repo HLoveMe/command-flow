@@ -59,7 +59,8 @@ module.exports = {
     'qrcode',
     'qrcode-generator',
     'uuid',
-    'open'
+    'open',
+    'lodash'
   ],
   devtool: 'cheap-module-source-map'
 };

@@ -9,11 +9,9 @@ import { takeLast, tap } from 'rxjs/operators';
 import { unpackValue } from '../../Util/channel-value-util';
 
 export default class LoadFileWork extends InstructionOTO {
-  name: string = 'LoadFileWork';
-  currentConfig: FileOption = { type: FileType.All };
-  constructor(config?: FileOption) {
-    super();
-    this.currentConfig = config || { type: FileType.All };
+  static NAME: string = 'LoadFileWork';
+  constructor(runConfig?: FileOption) {
+    super(runConfig);
   }
 
   run(
@@ -21,12 +19,11 @@ export default class LoadFileWork extends InstructionOTO {
     option?: FileOption
   ): Observable<ChannelObject<DataObject>> {
     const that = this;
-    const runOption = { ...option, ...this.currentConfig };
     return new Observable(
       (subscriber: Subscriber<ChannelObject<DataObject>>) => {
         const target = unpackValue(input);
         const sub = (that.context as ContextImpl).platform
-          .loadFile(target, runOption)
+          .loadFile(target, option)
           .pipe(
             tap((data) => {
               const obj = data as Value.ObjectAble<FileLoadEvent>;
