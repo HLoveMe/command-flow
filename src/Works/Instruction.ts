@@ -176,6 +176,7 @@ export class Instruction
         desc: '[Work:preRun]-接受上一个消息错误',
         date: new Date(),
         value: new StringObject(err.message),
+        error:err,
       });
   }
   addVariable(name: string, value: BaseType): void {

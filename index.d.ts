@@ -491,22 +491,38 @@ declare module 'command-flow' {
     // Work 运行过程中可以配置的选项
     export type RunCommandWorkConfig = { [key: WorkName]: any };
     export type IntervalConfig = { intervalTime: number; max: number };
-    export type DelayIntervalConfig = {intervalTime: number, max: number,delay:number }
-    export type TimeoutConfig = { intervalTime: number }
+    export type DelayIntervalConfig = {
+      intervalTime: number;
+      max: number;
+      delay: number;
+    };
+    export type TimeoutConfig = { intervalTime: number };
     export interface WorkRunOption {
       RunCommandWork: RunCommandWorkConfig;
       QRCodeWork: Bridge.QRcodeOption;
       LoadFileWork: Bridge.FileOption;
       FetchWork: Bridge.RequestParamsInit;
       IntervalWork: IntervalConfig;
-      TimeoutWork:TimeoutConfig;
-      DelayIntervalWork:DelayIntervalConfig;
+      TimeoutWork: TimeoutConfig;
+      DelayIntervalWork: DelayIntervalConfig;
     }
     export interface Environment {}
     export interface ContextRunOption {
       development: boolean;
       environment?: Environment;
       workConfig?: WorkRunOption;
+    }
+  }
+
+  export namespace Log {
+    export type LogInitParams = [
+      { new (context: ContextImpl): LogBase },
+      any[]
+    ];
+
+    export interface LogBase {
+      context: ContextImpl;
+      nextLog(status: WorkType.WorkStatus): void;
     }
   }
 
@@ -818,6 +834,7 @@ declare module 'command-flow' {
     works: WorkType.Work[];
     msgChannel: Subject<WorkType.WorkStatus<any>>;
     pools: Subscription[];
+    constructor(runOptions?: Config.ContextRunOption, log?: Log.LogInitParams);
     addWork(work: WorkType.Work): void;
     addWorks(...works: WorkType.Work[]): void;
     addWorkLog(

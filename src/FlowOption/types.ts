@@ -15,6 +15,11 @@
  */
 
 import { FileOption, QRcodeOption } from '../Bridge/ConfigTypes';
+import {
+  DelayIntervalConfig,
+  IntervalConfig,
+  TimeoutConfig,
+} from '../Configs/types';
 
 interface WorkBoot {
   runConfig?: any;
@@ -31,6 +36,17 @@ interface QRCodeWork extends WorkBoot {
 interface LoadFileWork extends WorkBoot {
   runConfig?: FileOption;
 }
-interface RunCommandWork extends WorkBoot{}
+interface RunCommandWork extends WorkBoot {}
 
-interface IntervalWork extends WorkBoot{}
+interface IntervalWork extends WorkBoot {
+  runConfig?: IntervalConfig;
+}
+
+interface TimeoutWork extends WorkBoot {
+  runConfig?: TimeoutConfig;
+}
+
+interface DelayIntervalWork extends WorkBoot {
+  runConfig?: DelayIntervalConfig;
+}
+

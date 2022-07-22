@@ -22,6 +22,8 @@ import { PlatformBridge } from './Bridge/Platform/BasePlatform';
 import { BeginWork } from './Works/ExtendsWorks/BeginWork';
 import { decide } from './Object/valueUtil';
 import { take } from 'rxjs/operators';
+import { ConsoleLog } from './Log';
+import { LogBase, LogInitParams } from './Log/types';
 
 export class Context implements ContextImpl {
   status: WorkType.WorkRunStatus = WorkType.WorkRunStatus.INIT;
@@ -38,23 +40,27 @@ export class Context implements ContextImpl {
    * 所有work
    */
   works: WorkType.Work[] = [];
+
+  log: LogBase;
   /**
    * 消息传输通道
    */
   msgChannel: Subject<WorkType.WorkStatus> = new Subject();
-  constructor(runOptions?: ContextRunOption) {
-    this.runOptions = (runOptions || DefaultRunConfig) as ContextRunOption;
-    const sub = this.msgChannel.subscribe({
-      next: (value) => this.workMessage(value),
-      error: (error) => this.workError(error),
-    });
-    this.pools.push(sub);
-    this.addWork(new BeginWork());
-  }
+
   /**
    * 需要销毁的Subscription
    */
   pools: Subscription[] = [];
+
+  constructor(
+    runOptions: ContextRunOption = null,
+    log: LogInitParams = [ConsoleLog, []]
+  ) {
+    this.runOptions = (runOptions || DefaultRunConfig) as ContextRunOption;
+    const [LogConstruct, params] = log;
+    this.log = Reflect.construct(LogConstruct, [this, ...params]);
+    this.addWork(new BeginWork());
+  }
 
   /**
    * 增加上下文变量
@@ -67,18 +73,15 @@ export class Context implements ContextImpl {
     !w_map && this.runConstant.set(from.uuid, new Map());
     this.runConstant.get(from.uuid)?.set(name, value);
   }
-  workMessage(input: WorkType.WorkStatus) {
-    console.log('msgChannel', input);
-  }
-  workError(error: Error) {
-    console.log('msgChannelError', error);
-    this.stopWorkChain();
-  }
 
   addWorkLog(tap: PartialObserver<WorkType.WorkStatus>): Subscription {
     return this.msgChannel.subscribe(tap);
   }
 
+  /**
+   * 处理所有work所有消息 包括错误消息
+   * @param status
+   */
   sendLog(status: WorkType.WorkStatus) {
     const log = {
       date: new Date(),
@@ -88,6 +91,11 @@ export class Context implements ContextImpl {
       error: status.error,
     };
     this.msgChannel.next(log as WorkType.WorkStatus);
+    this.log && this.log.nextLog(log);
+    // 错误消息
+    if (status.error && status.error instanceof Error) {
+      this.stopWorkChain();
+    }
   }
 
   addWork(work: WorkType.Work) {
