@@ -249,11 +249,68 @@ declare module 'command-flow' {
       uuid: string;
       sub: Subscription;
     }
+
+    export interface WorkLoop {
+      /***
+       * 完成准备工作，已经接收到上下Work链
+       */
+      didPrepare?(context: ContextImpl, work: Work): void;
+
+      /**
+       * 接收到上面一个传递过来的值
+       * 可以修改信号值
+       * @param context
+       * @param signal 接受至上一个的信号
+       * @return 将会替代 signal
+       */
+      onReceiveSignal?(
+        context: ContextImpl,
+        work: Work,
+        signal: ChannelObject
+      ): ChannelObject | null;
+
+      /**
+       * 执行完work一次逻辑，将信号执行下一个work。可能会被执行很多次
+       * @param context
+       * @param signal 原始信号
+       * @reSignal onReceiveSignal处理完成后的信号
+       * @param next 传递给下一个的信号
+       * @return 将会替代 signal
+       */
+      onChainNext?(
+        context: ContextImpl,
+        work: Work,
+        signal: ChannelObject,
+        reSignal: ChannelObject,
+        next: ChannelObject
+      ): ChannelObject | null;
+
+      /**
+       * 一次信号输出，该work 执行完成
+       * @param context
+       * @param work
+       * @signal 接受的原始信号
+       * @reSignal onReceiveSignal处理完成后的信号
+       */
+      onChainComplete?(
+        context: ContextImpl,
+        work: Work,
+        signal: ChannelObject,
+        reSignal: ChannelObject
+      ): void;
+
+      /***
+       * 被强制中断
+       */
+      onForceFinish?(context: ContextImpl, work: Work): void;
+    }
+
     export interface Work
       extends WorkOperation,
         WorkContext,
         WorkChain,
-        WorkConfig {
+        WorkConfig,
+        WorkLoop {
       name: string;
       id: number;
       uuid: WorkUUID;
@@ -270,17 +327,28 @@ declare module 'command-flow' {
       stopWork(): Observable<Boolean>;
       clear(): void;
       addVariable(name: string, value: BaseType): void;
-      error(err: Error): void;
-      logMsg(msg: string, inputValue: ChannelObject): void;
-      // 节点
-      // 收到一个消息
-      nextValue(input: BaseType): BaseType;
-      //完成一次 [输入->输出]
-      completeOneLoop(
-        input: BaseType,
-        toValue: BaseType,
-        success: Boolean
+      logMsg(msg: string, inputValue: ChannelObject,error?:Error): void;
+      // Loop
+      didPrepare(context: ContextImpl, work: WorkType.Work): void;
+      onReceiveSignal(
+        context: ContextImpl,
+        work: WorkType.Work,
+        signal: ChannelObject
+      ): ChannelObject | null;
+      onChainNext?(
+        context: ContextImpl,
+        work: WorkType.Work,
+        signal: ChannelObject,
+        reSignal: ChannelObject,
+        next: ChannelObject
+      ): ChannelObject | null;
+      onChainComplete(
+        context: ContextImpl,
+        work: WorkType.Work,
+        signal: ChannelObject,
+        reSignal: ChannelObject
       ): void;
+      onForceFinish(context: ContextImpl, work: WorkType.Work): void;
     }
   }
   export namespace Bridge {

@@ -60,8 +60,6 @@ export class BeginWork
     );
   }
 
-  completeOneLoop() { }
-
   static isAble() {
     return isJS;
   }
