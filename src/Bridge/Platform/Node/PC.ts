@@ -16,14 +16,14 @@ import * as process from 'child_process';
 export class PCNodejsBridge extends PlatformBridge {
   open(url: string): Observable<BooleanObject> {
     return new Observable((subscriber) => {
-      nodeOpen(url, { wait: true }).then($1 => {
+      nodeOpen(url, { wait: true }).then(($1) => {
         subscriber.next(new BooleanObject(true));
         subscriber.complete();
-      })
+      });
       return {
         unsubscribe: () => subscriber.unsubscribe(),
-      }
-    })
+      };
+    });
   }
 
   loadFile(
@@ -31,11 +31,12 @@ export class PCNodejsBridge extends PlatformBridge {
     option?: FileOption
   ): Observable<Value.ObjectAble<FileLoadEvent>> {
     return new Observable((subscriber) => {
-      const stat = fs.lstatSync(url as unknown as fs.PathLike);
       const subs: Subscription[] = [];
       if (!fs.existsSync(url as unknown as fs.PathLike)) {
-        subscriber.error(new Error(`${url.toString()} is not exists`));
-      } else if (stat.isDirectory()) {
+        return subscriber.error(new Error(`${url.toString()} is invalid path`));
+      }
+      const stat = fs.lstatSync(url as unknown as fs.PathLike);
+      if (stat.isDirectory()) {
         subscriber.error(new Error(`${url.toString()} is not file`));
       } else {
         const rs = fs.createReadStream(url as unknown as fs.PathLike);
@@ -53,8 +54,12 @@ export class PCNodejsBridge extends PlatformBridge {
               })
             );
           },
-          complete: () => { },
-          error: (err) => { }
+          complete: () => {
+            subscriber.complete()
+          },
+          error: (err) => {
+            subscriber.error(err);
+          },
         });
         const sub2 = fromEvent(rs, 'end').subscribe({
           next: () => {

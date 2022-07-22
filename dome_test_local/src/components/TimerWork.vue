@@ -134,7 +134,7 @@ const startBegin = async () => {
   // 1s后运行一次
   async function timeout() {
     const context = getContext();
-    context.addWork(new TimeoutWork(undefined));
+    context.addWork(new TimeoutWork());
     context.addWork(new ShowTimerWork(1, 0));
     await context.prepareWorks();
     context.dispatch();
@@ -144,9 +144,9 @@ const startBegin = async () => {
     const context = getContext();
     //5.5s后停止运行
     context.addWork(
-      new IntervalWork(
-        undefined,
-        1000,
+      new IntervalWork({
+        max:1000
+      },
         from(
           new Promise((res) => {
             setTimeout(() => res(1), 5500);
@@ -161,7 +161,7 @@ const startBegin = async () => {
   }
   async function timer() {
     const context = getContext();
-    context.addWork(new DelayIntervalWork(undefined, undefined, 3));
+    context.addWork(new DelayIntervalWork({max:3}));
     context.addWork(new ShowTimerWork(3, 2));
     await context.prepareWorks();
     context.dispatch();

@@ -283,7 +283,6 @@ declare module 'command-flow' {
       ): void;
     }
   }
-
   export namespace Bridge {
     export interface RunTimeInfo {
       name: string;
@@ -296,6 +295,56 @@ declare module 'command-flow' {
       status: boolean;
       error?: Error;
       result?: string;
+    }
+
+    export interface QRcodeOption {
+      type: TypeNumber;
+      Level: ErrorCorrectionLevel;
+      SideLength: number;
+    }
+
+    export enum FileType {
+      Audio = 'audio/*',
+      Video = 'video/*',
+      HTML = 'text/html',
+      Txt = 'text/plain',
+      Image = 'image/*',
+      Csv = '.csv',
+      Pdf = 'application/pdf',
+      Word = 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/msword，application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      All = '*',
+    }
+    export interface FileOption {
+      type: FileType;
+    }
+    export interface FileLoadEvent {
+      total: number;
+      loaded: number;
+      data: ArrayBuffer;
+      finish: boolean;
+      file?: File;
+    }
+
+    export interface RequestTimeOut {
+      timeout: number;
+    }
+    export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'OPTIONS' | 'DELETE';
+    export interface RequestParamsInit {
+      headers?: { [key: string]: any };
+      method?: RequestMethod;
+      timeout?: number;
+      data?: any;
+      url: string;
+    }
+    export type RequestParams = AxiosRequestConfig;
+    export enum SupportContentType {
+      JSON = 'application/json',
+      TEXT = 'text/plain',
+    }
+    export interface ResponseContent {
+      error?: Error;
+      data?: any;
+      response: AxiosResponse;
     }
 
     /**
@@ -415,20 +464,20 @@ declare module 'command-flow' {
       //文件相关
       loadFile(
         url: PathLike,
-        option?: Config.FileOption
-      ): Observable<Value.ObjectAble<Config.FileLoadEvent>>;
+        option?: FileOption
+      ): Observable<Value.ObjectAble<FileLoadEvent>>;
 
       // 工具
       createQrCode(
         context: String,
-        option?: Config.QRcodeOption
+        option?: QRcodeOption
       ): Observable<StringObject>;
 
       // 网络
       // 仅仅支持json/txt
       fetch(
         req: AxiosRequestConfig
-      ): Observable<Value.ObjectAble<Config.ResponseContent>>;
+      ): Observable<Value.ObjectAble<ResponseContent>>;
     }
   }
   export namespace Environment {
@@ -439,62 +488,19 @@ declare module 'command-flow' {
 
   export namespace Config {
     type WorkName = string;
-    export interface QRcodeOption {
-      type: TypeNumber;
-      Level: ErrorCorrectionLevel;
-      SideLength: number;
-    }
-
-    export enum FileType {
-      Audio = 'audio/*',
-      Video = 'video/*',
-      HTML = 'text/html',
-      Txt = 'text/plain',
-      Image = 'image/*',
-      Csv = '.csv',
-      Pdf = 'application/pdf',
-      Word = 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/msword，application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      All = '*',
-    }
-    export interface FileOption {
-      type: FileType;
-    }
-    export interface FileLoadEvent {
-      total: number;
-      loaded: number;
-      data: ArrayBuffer;
-      finish: boolean;
-      file?: File;
-    }
-
-    export interface RequestTimeOut {
-      timeout: number;
-    }
-    export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'OPTIONS' | 'DELETE';
-    export interface RequestParamsInit {
-      headers?: { [key: string]: any };
-      method?: RequestMethod;
-      timeout?: number;
-      data?: any;
-      url: string;
-    }
-    export type RequestParams = AxiosRequestConfig;
-    export enum SupportContentType {
-      JSON = 'application/json',
-      TEXT = 'text/plain',
-    }
-    export interface ResponseContent {
-      error?: Error;
-      data?: any;
-      response: AxiosResponse;
-    }
     // Work 运行过程中可以配置的选项
     export type RunCommandWorkConfig = { [key: WorkName]: any };
+    export type IntervalConfig = { intervalTime: number; max: number };
+    export type DelayIntervalConfig = {intervalTime: number, max: number,delay:number }
+    export type TimeoutConfig = { intervalTime: number }
     export interface WorkRunOption {
       RunCommandWork: RunCommandWorkConfig;
-      QRCodeWork: QRcodeOption;
-      LoadFileWork: FileOption;
-      FetchWork: RequestParamsInit;
+      QRCodeWork: Bridge.QRcodeOption;
+      LoadFileWork: Bridge.FileOption;
+      FetchWork: Bridge.RequestParamsInit;
+      IntervalWork: IntervalConfig;
+      TimeoutWork:TimeoutConfig;
+      DelayIntervalWork:DelayIntervalConfig;
     }
     export interface Environment {}
     export interface ContextRunOption {
@@ -856,27 +862,25 @@ declare module 'command-flow' {
   export class InstructionOTM extends Instruction {}
   export class InstructionOTO extends Instruction {}
   export class TimeoutWork extends InstructionOTO {
-    constructor(interval?: number);
+    constructor(runConfig?: Config.TimeoutConfig);
   }
   export class IntervalWork extends InstructionOTM {
-    constructor(interval?: number, max?: number, notifier?: Observable<any>);
+    constructor(runConfig?: Config.IntervalConfig, notifier?: Observable<any>);
   }
   export class DelayIntervalWork extends InstructionOTM {
     constructor(
-      delay?: number,
-      interval?: number,
-      max?: number,
+      runConfig?: Config.DelayIntervalConfig,
       notifier?: Observable<any>
     );
   }
   export class Base64EnCodeWork extends InstructionMTM {}
   export class Base64DecodeWork extends InstructionMTM {}
   export class LoadFileWork extends InstructionOTO {
-    constructor(config?: Config.FileOption);
+    constructor(config?: Bridge.FileOption);
   }
   export class OpenURLWork extends InstructionOTO {}
   export class QRCodeWork extends InstructionOTO {
-    constructor(config?: Config.QRcodeOption);
+    constructor(config?: Bridge.QRcodeOption);
   }
 
   export type HandleEvalCommand = (
@@ -888,7 +892,7 @@ declare module 'command-flow' {
     constructor(buildCommand?: HandleEvalCommand);
   }
   export class FetchWork extends InstructionOTO {
-    constructor(runConfig?: Config.RequestParamsInit);
+    constructor(runConfig?: Bridge.RequestParamsInit);
   }
 
   export class ObjectTarget<T> implements Value.ObjectAble<T> {
