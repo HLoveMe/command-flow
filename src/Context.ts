@@ -17,7 +17,6 @@ import { ContextRunOption } from './Configs/types';
 import { DefaultRunConfig } from './Configs';
 import { BooleanObject, ObjectTarget } from './Object';
 import Platform from './Bridge/Index';
-import { Value } from './Object';
 import { PlatformBridge } from './Bridge/Platform/BasePlatform';
 import { BeginWork } from './Works/ExtendsWorks/BeginWork';
 import { decide } from './Object/valueUtil';
@@ -147,6 +146,7 @@ export class Context implements ContextImpl {
       )
     );
     this.status = WorkType.WorkRunStatus.READY;
+    return void 0
   }
 
   dispatch(input?: any | BaseType) {

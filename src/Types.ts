@@ -165,8 +165,7 @@ export namespace WorkType {
     stopWork(): Observable<Boolean>;
     clear(): void;
     addVariable(name: string, value: BaseType): void;
-    error(err: Error): void;
-    logMsg(msg: string, inputValue: ChannelObject): void;
+    logMsg(msg: string, inputValue?: ChannelObject,error?:Error|null): void;
   }
 }
 

@@ -327,8 +327,7 @@ declare module 'command-flow' {
       stopWork(): Observable<Boolean>;
       clear(): void;
       addVariable(name: string, value: BaseType): void;
-      error(err: Error): void;
-      logMsg(msg: string, inputValue: ChannelObject): void;
+      logMsg(msg: string, inputValue: ChannelObject,error?:Error): void;
       // Loop
       didPrepare(context: ContextImpl, work: WorkType.Work): void;
       onReceiveSignal(

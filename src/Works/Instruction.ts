@@ -14,8 +14,8 @@ import { observeOn, tap } from 'rxjs/operators';
 import { v4 as UUID } from 'uuid';
 import { WorkUnit } from './WorkUnit';
 import { EnvironmentAble } from '../Util/EvalEquipment';
-import { StringObject } from '../Object';
-import { wrapperValue } from '../Util/channel-value-util';
+import { NULLObject, StringObject } from '../Object';
+import { emptyChannelValue, wrapperValue } from '../Util/channel-value-util';
 import { noop } from '../Util/tools';
 
 /**
@@ -81,7 +81,8 @@ export class Instruction
       })
     ).subscribe({
       complete: () => {},
-      error: (error) => that.error(error),
+      error: (error) =>
+        that.logMsg('[next][接受上一个work信号错误]', null, error),
       next: (value: BaseType) => that._run(value as ChannelObject),
     });
     this.pools.push(sub2);
@@ -93,16 +94,6 @@ export class Instruction
       (this.onReceiveSignal
         ? this.onReceiveSignal(this.context, this, signal)
         : null) || signal;
-    const sendLog = (desc: string, _value?: ChannelObject, _error?: Error) => {
-      that.runOption?.development &&
-        that.context?.sendLog({
-          work: [that],
-          content: this.context,
-          desc: desc,
-          value: _value || newValue,
-          error: _error,
-        });
-    };
 
     const nextOption = this.getCurrentConfig();
     const execFunc: WorkType.WorkFunction = PlatformSelect({
@@ -119,12 +110,12 @@ export class Instruction
       other: () =>
         ((that as WorkType.Work).run || noop).bind(that)(newValue, nextOption),
     });
-    sendLog('[Work][Func:run]->入口', newValue);
+    that.logMsg('[Work][Func:run]->入口', newValue);
     const uuid = UUID();
     const runSub: Subscription = execFunc(newValue)
       .pipe(
         tap(function (_value: ChannelObject) {
-          sendLog('[Work][Func:run]->结果', _value);
+          that.logMsg('[Work][Func:run]->结果', _value);
         }),
         observeOn(asyncScheduler)
       )
@@ -137,10 +128,10 @@ export class Instruction
             that.onChainComplete(that.context, that, signal, newValue);
         },
         error: (err) => {
-          sendLog('[Work][Func:run]->执行错误', newValue, err);
+          that.logMsg('[Work][Func:run]->执行错误', newValue, err);
         },
         next: (res) => {
-          sendLog('[Work][Func:run]->将执行下一个Work', res);
+          that.logMsg('[Work][Func:run]->将执行下一个Work', res);
           res =
             (that.onChainNext
               ? this.onChainNext(that.context, that, signal, newValue, res)
@@ -171,28 +162,19 @@ export class Instruction
     this.pools.length = 0;
     this.unsubscribe();
   }
-
-  error(err: Error): void {
-    this.context &&
-      this.context.sendLog({
-        work: [this],
-        content: this.context,
-        desc: '[Work:preRun]-接受上一个消息错误',
-        date: new Date(),
-        value: new StringObject(err.message),
-        error: err,
-      });
-  }
+  
   addVariable(name: string, value: BaseType): void {
     this.context && this.context.addVariable(this, name, value);
   }
-  logMsg(msg: string, input: ChannelObject): void {
+  logMsg(msg: string, input?: ChannelObject, error?: Error | null): void {
     this.runOption?.development &&
       this.context?.sendLog({
+        date: new Date(),
         work: [this],
         content: this.context,
         desc: msg,
-        value: wrapperValue(input, null),
+        value: input ?? emptyChannelValue(),
+        error,
       });
   }
 
