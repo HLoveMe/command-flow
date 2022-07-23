@@ -1,3 +1,4 @@
+import { PathLike } from 'fs';
 import { ContextImpl, WorkType } from '../../Types';
 import { LogBase } from '../types'
 export class FileLog implements LogBase{

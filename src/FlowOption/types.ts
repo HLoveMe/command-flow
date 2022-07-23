@@ -16,37 +16,48 @@
 
 import { FileOption, QRcodeOption } from '../Bridge/ConfigTypes';
 import {
+  ContextRunOption,
   DelayIntervalConfig,
   IntervalConfig,
   TimeoutConfig,
 } from '../Configs/types';
+import { LogBase } from '../Log/types';
 
-interface WorkBoot {
-  runConfig?: any;
-}
+export type Base64DecodeWork = [runConfig?: any];
+export type Base64EnCodeWork = [runConfig?: any];
+export type OpenURLWork = [runConfig?: any];
+export type QRCodeWork = [runConfig?: QRcodeOption];
 
-interface Base64DecodeWork extends WorkBoot {}
+export type LoadFileWork = [runConfig?: FileOption];
+export type RunCommandWork = [
+  command: string,
+  runMap?: { [key in string]: string }
+];
 
-interface Base64EnCodeWork extends WorkBoot {}
-interface OpenURLWork extends WorkBoot {}
-interface QRCodeWork extends WorkBoot {
-  runConfig?: QRcodeOption;
-}
+export type IntervalWork = [runConfig?: IntervalConfig];
 
-interface LoadFileWork extends WorkBoot {
-  runConfig?: FileOption;
-}
-interface RunCommandWork extends WorkBoot {}
+export type TimeoutWork = [runConfig?: TimeoutConfig];
 
-interface IntervalWork extends WorkBoot {
-  runConfig?: IntervalConfig;
-}
+export type DelayIntervalWork = [runConfig?: DelayIntervalConfig];
 
-interface TimeoutWork extends WorkBoot {
-  runConfig?: TimeoutConfig;
-}
+type WorkConfig =
+  | DelayIntervalWork
+  | TimeoutWork
+  | IntervalWork
+  | RunCommandWork
+  | LoadFileWork
+  | QRCodeWork
+  | OpenURLWork
+  | Base64DecodeWork
+  | Base64EnCodeWork;
 
-interface DelayIntervalWork extends WorkBoot {
-  runConfig?: DelayIntervalConfig;
-}
+type WorkConfigCreate = [string, WorkConfig];
 
+type RUNSetting = {
+  runOptions?: ContextRunOption;
+  log?: LogBase;
+  works: WorkConfigCreate[];
+  initSignal?: any;
+};
+
+export { RUNSetting };
