@@ -1,3 +1,4 @@
+import { cloneDeep, merge } from 'lodash';
 import {
   WorkType,
   BaseType,
@@ -55,7 +56,10 @@ export class Context implements ContextImpl {
     runOptions: ContextRunOption = null,
     log: LogInitParams = [ConsoleLog, []]
   ) {
-    this.runOptions = (runOptions || DefaultRunConfig) as ContextRunOption;
+    this.runOptions = merge(
+      cloneDeep(DefaultRunConfig),
+      runOptions || {}
+    ) as any as ContextRunOption;
     const [LogConstruct, params] = log;
     this.log = Reflect.construct(LogConstruct, [this, ...params]);
     this.addWork(new BeginWork());
@@ -146,7 +150,7 @@ export class Context implements ContextImpl {
       )
     );
     this.status = WorkType.WorkRunStatus.READY;
-    return void 0
+    return void 0;
   }
 
   dispatch(input?: any | BaseType) {

@@ -10,6 +10,15 @@
   },
   "dependencies": {
     "safe-chain-object": "^1.0.4",
+    "@types/axios": "^0.14.0",
+    "axios": "^0.20.0",
+    "js-base64": "^3.4.5",
+    "lodash": "^4.17.21",
+    "open": "^8.3.0",
+    "qrcode": "^1.4.4",
+    "qrcode-generator": "^1.4.4",
+    "rxjs": "^7.5.5",
+    "uuid": "^8.3.2",
     "vue": "^3.2.25"
   },
   "devDependencies": {

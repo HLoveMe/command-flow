@@ -327,7 +327,7 @@ declare module 'command-flow' {
       stopWork(): Observable<Boolean>;
       clear(): void;
       addVariable(name: string, value: BaseType): void;
-      logMsg(msg: string, inputValue: ChannelObject,error?:Error): void;
+      logMsg(msg: string, inputValue: ChannelObject, error?: Error): void;
       // Loop
       didPrepare(context: ContextImpl, work: WorkType.Work): void;
       onReceiveSignal(
@@ -592,6 +592,41 @@ declare module 'command-flow' {
       context: ContextImpl;
       nextLog(status: WorkType.WorkStatus): void;
     }
+  }
+
+  export namespace RunFlow {
+    export type Base64DecodeWork = [runConfig?: any];
+    export type Base64EnCodeWork = [runConfig?: any];
+    export type OpenURLWork = [runConfig?: any];
+    export type QRCodeWork = [runConfig?: Bridge.QRcodeOption];
+    export type LoadFileWork = [runConfig?: Bridge.FileOption];
+    export type RunCommandWork = [
+      command: string,
+      runMap?: {
+        [key in string]: string;
+      }
+    ];
+    export type IntervalWork = [runConfig?: Config.IntervalConfig];
+    export type TimeoutWork = [runConfig?: Config.TimeoutConfig];
+    export type DelayIntervalWork = [runConfig?: Config.DelayIntervalConfig];
+    type WorkConfig =
+      | DelayIntervalWork
+      | TimeoutWork
+      | IntervalWork
+      | RunCommandWork
+      | LoadFileWork
+      | QRCodeWork
+      | OpenURLWork
+      | Base64DecodeWork
+      | Base64EnCodeWork;
+    type WorkConfigCreate = [string, WorkConfig];
+    type RUNSetting = {
+      runOptions?: Config.ContextRunOption;
+      log?: Log.LogBase;
+      works: WorkConfigCreate[];
+      initSignal: any;
+    };
+    export { RUNSetting };
   }
 
   export interface ContextImpl {
@@ -915,11 +950,58 @@ declare module 'command-flow' {
     clear(): void;
     stopWorkChain(): Promise<boolean>;
   }
+
+  export class ConsoleLog implements Log.LogBase{
+    context: ContextImpl;
+    nextLog(status: WorkType.WorkStatus<BaseType>): void;
+  }
+
+  export class FileLog implements Log.LogBase{
+    context: ContextImpl;
+    nextLog(status: WorkType.WorkStatus<BaseType>): void;
+}
+
   export class Instruction
     extends Subject<ChannelObject>
     implements WorkType.Work, Environment.EnvironmentAble
   {
     constructor(runConfig?: any);
+    run?(
+      input: ChannelObject<BaseType>,
+      option?: any
+    ): Observable<ChannelObject<BaseType>>;
+    web_run?(
+      input: ChannelObject<BaseType>,
+      option?: any
+    ): Observable<ChannelObject<BaseType>>;
+    node_run?(
+      input: ChannelObject<BaseType>,
+      option?: any
+    ): Observable<ChannelObject<BaseType>>;
+    electron_run?(
+      input: ChannelObject<BaseType>,
+      option?: any
+    ): Observable<ChannelObject<BaseType>>;
+    didPrepare(context: ContextImpl, work: WorkType.Work): void;
+    onReceiveSignal(
+      context: ContextImpl,
+      work: WorkType.Work,
+      signal: ChannelObject<BaseType>
+    ): ChannelObject<BaseType>;
+    onChainNext?(
+      context: ContextImpl,
+      work: WorkType.Work,
+      signal: ChannelObject<BaseType>,
+      reSignal: ChannelObject<BaseType>,
+      next: ChannelObject<BaseType>
+    ): ChannelObject<BaseType>;
+    onChainComplete(
+      context: ContextImpl,
+      work: WorkType.Work,
+      signal: ChannelObject<BaseType>,
+      reSignal: ChannelObject<BaseType>
+    ): void;
+    onForceFinish(context: ContextImpl, work: WorkType.Work): void;
     observers: any[];
     isAble(): Boolean;
     name: string;
@@ -1510,4 +1592,12 @@ declare module 'command-flow' {
     target: NewableFunction,
     exclude?: string[]
   ): ValueExtends.Constructor<T, TC>;
+
+  export type InstructionConstructor = {
+    new (runConfig?: any, ...args: any[]): Instruction;
+    NAME: string;
+  };
+  export function registerWork(work: InstructionConstructor): void;
+
+  export function runCommandFlow(config:RunFlow.RUNSetting):Promise<void>
 }

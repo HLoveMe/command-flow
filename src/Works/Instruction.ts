@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { cloneDeep, merge } from 'lodash';
 import { BaseType, ContextImpl, WorkType, ChannelObject } from '../Types';
 import {
   Subject,
@@ -19,7 +19,10 @@ import { emptyChannelValue, wrapperValue } from '../Util/channel-value-util';
 import { noop } from '../Util/tools';
 
 /**
- * 一次输入--->一次输出 InstructionOTO
+ * 
+ * 示例
+ * 
+ * 一次输入--->一次输出 InstructionOTO 
  * 一次输入--->多次输出 InstructionOTM
  * n次输入---->m次输出 InstructionMTM
  */
@@ -62,7 +65,7 @@ export class Instruction
 
   getCurrentConfig() {
     const defaultOption = (this.runOption?.workConfig || {})[this.name] || {};
-    return _.merge(_.cloneDeep(defaultOption), this.runConfig);
+    return merge(cloneDeep(defaultOption), this.runConfig);
   }
 
   // 处理上一个的传入
@@ -232,7 +235,11 @@ export class Instruction
   }
 }
 
+/***
+ * 
+ */
 export class InstructionOTO extends Instruction {
+  static NAME: string = 'MultipleInstruction';
   run(input: ChannelObject): Observable<ChannelObject> {
     return new Observable((subscriber) => {
       subscriber.next(input);
@@ -246,9 +253,7 @@ export class InstructionOTO extends Instruction {
 
 export class InstructionOTM extends Instruction {
   // 声明可以进行配置的属性 todo
-  static OPTION: WorkRunOption;
   static NAME: string = 'MultipleInstruction';
-
   run(input: ChannelObject): Observable<ChannelObject> {
     return new Observable((subscriber) => {
       // subscriber.next(input);
@@ -263,8 +268,7 @@ export class InstructionOTM extends Instruction {
 }
 
 export class InstructionMTM extends Instruction {
-  // 声明可以进行配置的属性 todo
-  static OPTION: WorkRunOption;
+  // 声明可以进行配置的属性 todo=
   static NAME: string = 'MultipleInstruction';
   run(input: ChannelObject): Observable<ChannelObject> {
     return new Observable((subscriber) => {

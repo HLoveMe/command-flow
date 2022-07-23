@@ -17,6 +17,7 @@ import { Value } from './Object'
 import { ControlFlow } from "./Object/Able/Control";
 import { Context } from "./Context";
 import {
+  Instruction,
   InstructionMTM,
   InstructionOTM,
   InstructionOTO,
@@ -33,6 +34,9 @@ import RunCommandWork from './Works/ExtendsWorks/RunCommandWork'
 import { IntervalWork, TimeoutWork, DelayIntervalWork } from "./Works/ExtendsWorks/UtilWork";
 import { unpackValue, wrapperValue } from './Util/channel-value-util'
 import { isAbleType, decide } from './Object/valueUtil'
+import { registerWork } from './Works/WorkPools'
+import { runCommandFlow } from './FlowOption/launch'
+import { ConsoleLog,FileLog } from './Log'
 
 export {
   ObjectTarget,
@@ -47,10 +51,13 @@ export {
   NULLObject,
   ContextImpl,
   Context,
+  ConsoleLog,
+  FileLog,
   Value,
   BaseType,
   WorkType,
   ControlFlow,
+  Instruction,
   InstructionMTM,
   InstructionOTM,
   InstructionOTO,
@@ -69,5 +76,7 @@ export {
   isAbleType,
   decide,
   createExtendsConstruct,
-  createExtendsInstance
+  createExtendsInstance,
+  registerWork,
+  runCommandFlow
 };
