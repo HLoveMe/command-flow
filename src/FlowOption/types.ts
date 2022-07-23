@@ -22,17 +22,17 @@ import {
   TimeoutConfig,
 } from '../Configs/types';
 import { LogBase } from '../Log/types';
-
+import { ContextImpl } from '../Types';
+type CommandParams = { [key: string]: string };
 export type Base64DecodeWork = [runConfig?: any];
 export type Base64EnCodeWork = [runConfig?: any];
 export type OpenURLWork = [runConfig?: any];
 export type QRCodeWork = [runConfig?: QRcodeOption];
 
 export type LoadFileWork = [runConfig?: FileOption];
-export type RunCommandWork = [
-  command: string,
-  runMap?: { [key in string]: string }
-];
+export type RunCommandWork =
+  | [command: string, runMap?: { [key in string]: string }]
+  | [(command: string | CommandParams, option: any) => string];
 
 export type IntervalWork = [runConfig?: IntervalConfig];
 
@@ -55,9 +55,9 @@ type WorkConfigCreate = [string, WorkConfig];
 
 type RUNSetting = {
   runOptions?: ContextRunOption;
-  log?: LogBase;
+  log?: { new (context: ContextImpl): LogBase };
   works: WorkConfigCreate[];
-  initSignal?: any;
+  signals: any[];
 };
 
 export { RUNSetting };

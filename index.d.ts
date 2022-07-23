@@ -622,9 +622,9 @@ declare module 'command-flow' {
     type WorkConfigCreate = [string, WorkConfig];
     type RUNSetting = {
       runOptions?: Config.ContextRunOption;
-      log?: Log.LogBase;
+      log?: { new (context: ContextImpl): Log.LogBase };
       works: WorkConfigCreate[];
-      initSignal: any;
+      signals: any[];
     };
     export { RUNSetting };
   }
@@ -951,15 +951,15 @@ declare module 'command-flow' {
     stopWorkChain(): Promise<boolean>;
   }
 
-  export class ConsoleLog implements Log.LogBase{
+  export class ConsoleLog implements Log.LogBase {
     context: ContextImpl;
     nextLog(status: WorkType.WorkStatus<BaseType>): void;
   }
 
-  export class FileLog implements Log.LogBase{
+  export class FileLog implements Log.LogBase {
     context: ContextImpl;
     nextLog(status: WorkType.WorkStatus<BaseType>): void;
-}
+  }
 
   export class Instruction
     extends Subject<ChannelObject>
@@ -1599,5 +1599,7 @@ declare module 'command-flow' {
   };
   export function registerWork(work: InstructionConstructor): void;
 
-  export function runCommandFlow(config:RunFlow.RUNSetting):Promise<void>
+  export function runCommandFlow(
+    config: RunFlow.RUNSetting
+  ): Promise<ContextImpl>;
 }

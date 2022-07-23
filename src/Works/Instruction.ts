@@ -19,10 +19,10 @@ import { emptyChannelValue, wrapperValue } from '../Util/channel-value-util';
 import { noop } from '../Util/tools';
 
 /**
- * 
+ *
  * 示例
- * 
- * 一次输入--->一次输出 InstructionOTO 
+ *
+ * 一次输入--->一次输出 InstructionOTO
  * 一次输入--->多次输出 InstructionOTM
  * n次输入---->m次输出 InstructionMTM
  */
@@ -66,6 +66,10 @@ export class Instruction
   getCurrentConfig() {
     const defaultOption = (this.runOption?.workConfig || {})[this.name] || {};
     return merge(cloneDeep(defaultOption), this.runConfig);
+  }
+
+  runConfigExport() {
+    return this.getCurrentConfig();
   }
 
   // 处理上一个的传入
@@ -165,7 +169,7 @@ export class Instruction
     this.pools.length = 0;
     this.unsubscribe();
   }
-  
+
   addVariable(name: string, value: BaseType): void {
     this.context && this.context.addVariable(this, name, value);
   }
@@ -236,7 +240,7 @@ export class Instruction
 }
 
 /***
- * 
+ *
  */
 export class InstructionOTO extends Instruction {
   static NAME: string = 'MultipleInstruction';

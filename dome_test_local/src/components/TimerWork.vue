@@ -139,6 +139,8 @@ const startBegin = async () => {
     await context.prepareWorks();
     context.dispatch();
     contexts.push(context);
+    
+    console.log(context.showRunSetting(),1111111111111111111111)
   }
   async function interval() {
     const context = getContext();

@@ -3,6 +3,7 @@ import { Value } from './Object';
 import { ContextRunOption } from './Configs/types';
 import { PlatformBridgeAble } from './Bridge/ConfigTypes';
 import { LogBase, LogInitParams } from './Log/types';
+import { RUNSetting } from './FlowOption/types';
 
 export type BaseType<T extends any = any, U extends any = any> =
   | Value.ObjectAble<T> // ObjectTarget
@@ -79,7 +80,9 @@ export namespace WorkType {
     // 整个Work的配置
     runOption: ConfigInfo;
     //当前运行的配置
-    getCurrentConfig(): any;
+    // getCurrentConfig(): any;
+    //配置导出
+    runConfigExport():any;
   }
   export interface WorkUnitImpl {
     context?: ContextImpl;
@@ -192,4 +195,9 @@ export declare interface ContextImpl {
   sendLog(status: WorkType.WorkStatus<BaseType>): void;
   clear(): void;
   stopWorkChain(): Promise<boolean>;
+  
+  /**
+   * 部分可用  对于配置参数有函数的work 无法序列化
+   */
+  showRunSetting():RUNSetting;
 }

@@ -24,6 +24,7 @@ import { decide } from './Object/valueUtil';
 import { take } from 'rxjs/operators';
 import { ConsoleLog } from './Log';
 import { LogBase, LogInitParams } from './Log/types';
+import { RUNSetting } from './FlowOption/types';
 
 export class Context implements ContextImpl {
   status: WorkType.WorkRunStatus = WorkType.WorkRunStatus.INIT;
@@ -63,6 +64,25 @@ export class Context implements ContextImpl {
     const [LogConstruct, params] = log;
     this.log = Reflect.construct(LogConstruct, [this, ...params]);
     this.addWork(new BeginWork());
+  }
+
+  showRunSetting(): RUNSetting {
+    const result = {
+      runOptions: this.runOptions,
+      log: (this.log as Object).constructor,
+      works: [],
+      signals: [],
+    } as RUNSetting;
+    result.signals =
+      (this.works.find(($1) => $1.name === BeginWork.NAME) as BeginWork)
+        .channelSignals || [];
+    result.works = this.works
+      .filter(($1) => $1.name !== BeginWork.NAME)
+      .map(($1) => {
+        const config = $1.runConfigExport();
+        return [$1.name, Array.isArray(config) ? config as any : [config]];
+      });
+    return result;
   }
 
   /**

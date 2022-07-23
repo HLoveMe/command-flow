@@ -83,6 +83,13 @@ export default class RunCommandWork extends InstructionOTO {
     }
   }
 
+  runConfigExport() {
+    if (this.callBack) {
+      console.error(`RunCommandWork 配置 为 function(){} 无法正常序列化。`);
+    }
+    return this.callBack ? [this.callBack] : [this.template, this.paramsConfig];
+  }
+
   run(
     command: ChannelObject,
     option?: RunCommandWorkConfig
