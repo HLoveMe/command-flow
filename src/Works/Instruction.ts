@@ -28,8 +28,7 @@ import { noop } from '../Util/tools';
  */
 export class Instruction
   extends Subject<ChannelObject>
-  implements WorkType.Work, EnvironmentAble
-{
+  implements WorkType.Work, EnvironmentAble {
   declare observers: Observer<BaseType>[];
   static NAME: string = 'Instruction';
   static _id: number = 0;
@@ -87,7 +86,7 @@ export class Instruction
           });
       })
     ).subscribe({
-      complete: () => {},
+      complete: () => { },
       error: (error) =>
         that.logMsg('[next][接受上一个work信号错误]', null, error),
       next: (value: BaseType) => that._run(value as ChannelObject),
@@ -170,8 +169,8 @@ export class Instruction
     this.unsubscribe();
   }
 
-  addVariable(name: string, value: BaseType): void {
-    this.context && this.context.addVariable(this, name, value);
+  addVariable(name: string, value: BaseType): WorkType.Variable {
+    return this.context.addVariable(this, name, value);
   }
   logMsg(msg: string, input?: ChannelObject, error?: Error | null): void {
     this.runOption?.development &&
@@ -198,9 +197,10 @@ export class Instruction
       });
     }
   }
+  // add 
 
   /*** Loop */
-  didPrepare(context: ContextImpl, work: WorkType.Work) {}
+  didPrepare(context: ContextImpl, work: WorkType.Work) { }
   onReceiveSignal(
     context: ContextImpl,
     work: WorkType.Work,
@@ -223,9 +223,9 @@ export class Instruction
     work: WorkType.Work,
     signal: ChannelObject,
     reSignal: ChannelObject
-  ) {}
+  ) { }
 
-  onForceFinish(context: ContextImpl, work: WorkType.Work) {}
+  onForceFinish(context: ContextImpl, work: WorkType.Work) { }
 
   // 基础
   toString() {

@@ -30,11 +30,13 @@ export type ChannelObject<T extends BaseType = BaseType> = Value.ObjectAble<
 export namespace WorkType {
   export declare type ConfigInfo = { [key: string]: any };
 
-  export type WorkUUID = string;
+  export declare type Variable = { workId: WorkUUID, id: UUID, name: string, value: BaseType }
 
+  export declare type UUID = string;
+  export type WorkUUID = string;
   export type WorkConstantKey = string;
 
-  export type WorkConstant = Map<WorkConstantKey, BaseType>;
+  export type WorkConstant = Map<WorkConstantKey, WorkType.Variable>;
 
   export type WorkFunction = (
     input: ChannelObject
@@ -82,7 +84,7 @@ export namespace WorkType {
     //当前运行的配置
     // getCurrentConfig(): any;
     //配置导出
-    runConfigExport():any;
+    runConfigExport(): any;
   }
   export interface WorkUnitImpl {
     context?: ContextImpl;
@@ -148,10 +150,10 @@ export namespace WorkType {
 
   export declare interface Work
     extends WorkOperation,
-      WorkContext,
-      WorkChain,
-      WorkConfig,
-      WorkLoop {
+    WorkContext,
+    WorkChain,
+    WorkConfig,
+    WorkLoop {
     name: string;
     id: number;
     uuid: WorkUUID;
@@ -167,8 +169,8 @@ export namespace WorkType {
     // 关闭Work
     stopWork(): Observable<Boolean>;
     clear(): void;
-    addVariable(name: string, value: BaseType): void;
-    logMsg(msg: string, inputValue?: ChannelObject,error?:Error|null): void;
+    addVariable(name: string, value: BaseType): Variable;
+    logMsg(msg: string, inputValue?: ChannelObject, error?: Error | null): void;
   }
 }
 
@@ -190,14 +192,14 @@ export declare interface ContextImpl {
   prepareWorks(): Promise<void>;
   // 开始运行
   dispatch(input?: any | BaseType): void;
-  //
-  addVariable(from: WorkType.Work, name: string, value: BaseType): void;
+
+  addVariable(from: WorkType.Work, name: string, value: BaseType): WorkType.Variable;
   sendLog(status: WorkType.WorkStatus<BaseType>): void;
   clear(): void;
   stopWorkChain(): Promise<boolean>;
-  
+
   /**
    * 部分可用  对于配置参数有函数的work 无法序列化
    */
-  showRunSetting():RUNSetting;
+  showRunSetting(): RUNSetting;
 }

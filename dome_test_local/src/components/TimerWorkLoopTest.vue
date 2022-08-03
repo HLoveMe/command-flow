@@ -1,35 +1,15 @@
 <template>
   <div class="box">
-    <input
-      type="button"
-      @click="startBegin"
-      :disabled="disabled"
-      value="start"
-    />
+    <input type="button" @click="startBegin" :disabled="disabled" value="start" />
     <input type="button" @click="reRun" :disabled="disabled" value="reRun" />
-    <input
-      type="button"
-      @click="showCode"
-      :disabled="disabled"
-      value="showCode"
-    />
+    <input type="button" @click="showCode" :disabled="disabled" value="showCode" />
     <input type="button" @click="clearLog" :disabled="disabled" value="clear" />
     <input type="button" @click="stopWork" :disabled="disabled" value="stop" />
     <a class="name">TimerWorkLoopTest</a>
     <div class="run-container">
       <div class="code" ref="codeRef"></div>
-      <RunGroup
-        v-for="item in logInfo.keys()"
-        :key="item"
-        :id="item"
-        :items="logInfo.get(item)"
-      ></RunGroup>
-      <RunResult
-        v-if="logInfo.size >= 1"
-        desc=""
-        expect=""
-        :success="true"
-      ></RunResult>
+      <RunGroup v-for="item in logInfo.keys()" :key="item" :id="item" :items="logInfo.get(item)"></RunGroup>
+      <RunResult v-if="logInfo.size >= 1" desc="" expect="" :success="true"></RunResult>
     </div>
   </div>
 </template>
@@ -102,11 +82,11 @@ class TestLoop extends InstructionOTO {
   }
 
   onChainComplete() {
-     (this as any).logMsg('[Work][loop]->onChainComplete', null);
-     (this as any).logMsg('[Work][loop]->----------------完成一次消息输入到输出---------------------', null);
+    (this as any).logMsg('[Work][loop]->onChainComplete', null);
+    (this as any).logMsg('[Work][loop]->----------------完成一次消息输入到输出---------------------', null);
   }
 
-  onForceFinish() {}
+  onForceFinish() { }
 }
 
 const contexts: any[] = []
@@ -114,8 +94,9 @@ const clearLog = () => {
   logInfo.value.clear()
 }
 async function codeDome() {
-  const context = new Context()
-  context.addWork(new TimeoutWork())
+  const context = getContext()
+  context.addWork(new IntervalWork({ max: 3 }))
+  context.addWork(new TestLoop())
   await context.prepareWorks()
   context.dispatch()
 }
@@ -152,16 +133,16 @@ const showCode = () => {
 </script>
 <style scoped lang="less">
 .box {
-  background-image: linear-gradient(
-    180deg,
-    rgb(115 120 129 / 38%) 0%,
-    rgb(159 163 170 / 53%) 100%
-  );
+  background-image: linear-gradient(180deg,
+      rgb(115 120 129 / 38%) 0%,
+      rgb(159 163 170 / 53%) 100%);
   border-radius: 4px;
+
   input {
     padding: 5px;
     margin-right: 10px;
   }
+
   margin-bottom: 20px;
 }
 </style>

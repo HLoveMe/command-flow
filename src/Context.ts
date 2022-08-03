@@ -1,19 +1,12 @@
 import { cloneDeep, merge } from 'lodash';
 import {
-  WorkType,
-  BaseType,
-  ContextImpl,
-  ChannelObject,
-  ChannelValue,
-} from './Types';
-import {
-  zip,
   forkJoin,
   Observable,
   PartialObserver,
   Subject,
   Subscription,
 } from 'rxjs';
+import { v4 as UUID } from 'uuid'
 import { ContextRunOption } from './Configs/types';
 import { DefaultRunConfig } from './Configs';
 import { BooleanObject, ObjectTarget } from './Object';
@@ -25,6 +18,11 @@ import { take } from 'rxjs/operators';
 import { ConsoleLog } from './Log';
 import { LogBase, LogInitParams } from './Log/types';
 import { RUNSetting } from './FlowOption/types';
+import {
+  WorkType,
+  BaseType,
+  ContextImpl
+} from './Types';
 
 export class Context implements ContextImpl {
   status: WorkType.WorkRunStatus = WorkType.WorkRunStatus.INIT;
@@ -91,10 +89,17 @@ export class Context implements ContextImpl {
    * @param name
    * @param value
    */
-  addVariable(from: WorkType.Work, name: string, value: BaseType): void {
+  addVariable(from: WorkType.Work, name: string, value: BaseType): WorkType.Variable {
     const w_map = this.runConstant.get(from.uuid);
     !w_map && this.runConstant.set(from.uuid, new Map());
-    this.runConstant.get(from.uuid)?.set(name, value);
+    const result = {
+      workId: from.uuid,
+      id: UUID(),
+      name,
+      value
+    } as WorkType.Variable
+    this.runConstant.get(from.uuid)?.set(name, result);
+    return result;
   }
 
   addWorkLog(tap: PartialObserver<WorkType.WorkStatus>): Subscription {

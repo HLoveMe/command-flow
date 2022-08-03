@@ -9,8 +9,8 @@
     <GroupCommand></GroupCommand>
     <Timer></Timer>
     <FetchWork></FetchWork>
-    <Operation></Operation>
     <TimerWorkLoopTest></TimerWorkLoopTest>
+    <Operation></Operation>
   </div>
 </template>
 <script setup lang="ts">
