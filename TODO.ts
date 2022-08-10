@@ -12,4 +12,4 @@
 
 // [已完成] 测试上一个work 注册全局变量
 
-// [未完成] Work 存在多个NAME值重复
+//  [已完成] runCommandFlow Work 存在多个NAME值重复 。 不存在这个问题
