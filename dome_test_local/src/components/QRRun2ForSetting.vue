@@ -122,7 +122,7 @@ class Log {
 const startBegin = async () => {
   registerWork(ShowQR)
   await runCommandFlow({
-    initSignal: 'www.baidu.com',
+    signals: ['www.baidu.com'],
     works: [
       ['QRCodeWork', [{SideLength:400}]],
       ['ShowQRHandler', []],
