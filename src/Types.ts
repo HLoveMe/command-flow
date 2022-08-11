@@ -1,9 +1,9 @@
-import { PartialObserver, Observable, Subject, Subscription } from 'rxjs';
-import { Value } from './Object';
-import { ContextRunOption } from './Configs/types';
-import { PlatformBridgeAble } from './Bridge/ConfigTypes';
-import { LogBase, LogInitParams } from './Log/types';
-import { RUNSetting } from './FlowOption/types';
+import { PartialObserver, Observable, Subject, Subscription } from "rxjs";
+import { Value } from "./Object";
+import { ContextRunOption } from "./Configs/types";
+import { PlatformBridgeAble } from "./Bridge/ConfigTypes";
+import { LogBase, LogInitParams } from "./Log/types";
+import { RUNSetting } from "./FlowOption/types";
 
 export type BaseType<T extends any = any, U extends any = any> =
   | Value.ObjectAble<T> // ObjectTarget
@@ -30,13 +30,18 @@ export type ChannelObject<T extends BaseType = BaseType> = Value.ObjectAble<
 export namespace WorkType {
   export declare type ConfigInfo = { [key: string]: any };
 
-  export declare type Variable = { workId: WorkUUID, id: UUID, name: string, value: BaseType }
+  export declare type Variable = {
+    workId: WorkUUID;
+    id: UUID;
+    name: string;
+    value: BaseType;
+  };
 
   export declare type UUID = string;
   export type WorkUUID = string;
-  export type WorkConstantKey = string;
+  export type WorkConstantName = string;
 
-  export type WorkConstant = Map<WorkConstantKey, WorkType.Variable>;
+  export type WorkConstant = Map<WorkConstantName, WorkType.Variable>;
 
   export type WorkFunction = (
     input: ChannelObject
@@ -59,7 +64,7 @@ export namespace WorkType {
     error?: Error;
   }
 
-  type WorkTypes = 'electron_run' | 'web_run' | 'node_run';
+  type WorkTypes = "electron_run" | "web_run" | "node_run";
 
   export type WorkOperation = {
     [P in WorkTypes]?: WorkFunction;
@@ -139,7 +144,7 @@ export namespace WorkType {
       context: ContextImpl,
       work: Work,
       signal: ChannelObject,
-      reSignal: ChannelObject,
+      reSignal: ChannelObject
     ): void;
 
     /***
@@ -150,10 +155,10 @@ export namespace WorkType {
 
   export declare interface Work
     extends WorkOperation,
-    WorkContext,
-    WorkChain,
-    WorkConfig,
-    WorkLoop {
+      WorkContext,
+      WorkChain,
+      WorkConfig,
+      WorkLoop {
     name: string;
     id: number;
     uuid: WorkUUID;
@@ -193,10 +198,27 @@ export declare interface ContextImpl {
   // 开始运行
   dispatch(input?: any | BaseType): void;
 
-  addVariable(from: WorkType.Work, name: string, value: BaseType): WorkType.Variable;
-  sendLog(status: WorkType.WorkStatus<BaseType>): void;
-  clear(): void;
+  // 停止 chain
   stopWorkChain(): Promise<boolean>;
+
+  // 清除sub
+  clear(): void;
+
+  // 日志
+  sendLog(status: WorkType.WorkStatus<BaseType>): void;
+
+  // 增加常量
+  addVariable(
+    from: WorkType.Work,
+    name: string,
+    value: BaseType
+  ): WorkType.Variable;
+
+  // 获取所有属性
+  getAllVariableKeys(): Map<WorkType.WorkUUID, WorkType.WorkConstant>;
+
+  // 获取work指定的属性
+  getWorkVariableKeys(from: WorkType.Work): WorkType.Variable[];
 
   /**
    * 部分可用  对于配置参数有函数的work 无法序列化

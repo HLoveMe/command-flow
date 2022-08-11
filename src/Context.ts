@@ -1,28 +1,24 @@
-import { cloneDeep, merge } from 'lodash';
+import { cloneDeep, merge } from "lodash";
 import {
   forkJoin,
   Observable,
   PartialObserver,
   Subject,
   Subscription,
-} from 'rxjs';
-import { v4 as UUID } from 'uuid'
-import { ContextRunOption } from './Configs/types';
-import { DefaultRunConfig } from './Configs';
-import { BooleanObject, ObjectTarget } from './Object';
-import Platform from './Bridge/Index';
-import { PlatformBridge } from './Bridge/Platform/BasePlatform';
-import { BeginWork } from './Works/ExtendsWorks/BeginWork';
-import { decide } from './Object/valueUtil';
-import { take } from 'rxjs/operators';
-import { ConsoleLog } from './Log';
-import { LogBase, LogInitParams } from './Log/types';
-import { RUNSetting } from './FlowOption/types';
-import {
-  WorkType,
-  BaseType,
-  ContextImpl
-} from './Types';
+} from "rxjs";
+import { v4 as UUID } from "uuid";
+import { ContextRunOption } from "./Configs/types";
+import { DefaultRunConfig } from "./Configs";
+import { BooleanObject, ObjectTarget } from "./Object";
+import Platform from "./Bridge/Index";
+import { PlatformBridge } from "./Bridge/Platform/BasePlatform";
+import { BeginWork } from "./Works/ExtendsWorks/BeginWork";
+import { decide } from "./Object/valueUtil";
+import { take } from "rxjs/operators";
+import { ConsoleLog } from "./Log";
+import { LogBase, LogInitParams } from "./Log/types";
+import { RUNSetting } from "./FlowOption/types";
+import { WorkType, BaseType, ContextImpl } from "./Types";
 
 export class Context implements ContextImpl {
   status: WorkType.WorkRunStatus = WorkType.WorkRunStatus.INIT;
@@ -78,7 +74,7 @@ export class Context implements ContextImpl {
       .filter(($1) => $1.name !== BeginWork.NAME)
       .map(($1) => {
         const config = $1.runConfigExport();
-        return [$1.name, Array.isArray(config) ? config as any : [config]];
+        return [$1.name, Array.isArray(config) ? (config as any) : [config]];
       });
     return result;
   }
@@ -89,16 +85,36 @@ export class Context implements ContextImpl {
    * @param name
    * @param value
    */
-  addVariable(from: WorkType.Work, name: string, value: BaseType): WorkType.Variable {
+  addVariable(
+    from: WorkType.Work,
+    name: string,
+    value: BaseType
+  ): WorkType.Variable {
     const w_map = this.runConstant.get(from.uuid);
     !w_map && this.runConstant.set(from.uuid, new Map());
     const result = {
       workId: from.uuid,
       id: UUID(),
       name,
-      value
-    } as WorkType.Variable
+      value,
+    } as WorkType.Variable;
     this.runConstant.get(from.uuid)?.set(name, result);
+    return result;
+  }
+
+  getAllVariableKeys(): Map<WorkType.WorkUUID, WorkType.WorkConstant> {
+    const result: Map<WorkType.WorkUUID, WorkType.WorkConstant> = new Map();
+    this.runConstant.forEach(
+      ($1: WorkType.WorkConstant, $key1: WorkType.WorkUUID) => {
+        result.set($key1, new Map($1));
+      }
+    );
+    return result;
+  }
+
+  getWorkVariableKeys(from: WorkType.Work): WorkType.Variable[] {
+    const constant: WorkType.WorkConstant = this.runConstant.get(from.uuid);
+    const result = [...constant.values()];
     return result;
   }
 
@@ -131,7 +147,7 @@ export class Context implements ContextImpl {
       (work.constructor as any).isAble &&
       (work.constructor as any).isAble() === false
     ) {
-      const desc = '[content][Func:addWork][work isAble is false]';
+      const desc = "[content][Func:addWork][work isAble is false]";
       return this.sendLog({
         content: this,
         work: [],
@@ -144,7 +160,7 @@ export class Context implements ContextImpl {
       return this.sendLog({
         content: this,
         work: [],
-        desc: '[content][Func:addWork][context status is not init]',
+        desc: "[content][Func:addWork][context status is not init]",
         value: new BooleanObject(false),
       });
     }
@@ -161,7 +177,7 @@ export class Context implements ContextImpl {
       return this.sendLog({
         content: this,
         work: [],
-        desc: '[content][Func:prepareWorks][context status is not init]',
+        desc: "[content][Func:prepareWorks][context status is not init]",
         value: new BooleanObject(false),
       });
     }
@@ -183,7 +199,7 @@ export class Context implements ContextImpl {
       return this.sendLog({
         content: this,
         work: [],
-        desc: '[context][Func:run][run status is not ready  or 已经初始化]',
+        desc: "[context][Func:run][run status is not ready  or 已经初始化]",
         value: new BooleanObject(false),
       });
     }
@@ -199,7 +215,7 @@ export class Context implements ContextImpl {
    * 关闭
    */
   stopWorkChain(): Promise<boolean> {
-    const that = this;
+    const that: ContextImpl = this;
     return new Promise((resolve, reject) => {
       const taskUns: Observable<Boolean>[] = this.works.map(($1) =>
         $1.stopWork()
@@ -225,9 +241,9 @@ export class Context implements ContextImpl {
             this.sendLog({
               content: that,
               work: errors,
-              desc: '[content][Func:stopWorkChain]',
+              desc: "[content][Func:stopWorkChain]",
               value: new ObjectTarget({
-                id: 'stopWorkChain',
+                id: "stopWorkChain",
                 value: decide(isSuccess),
                 option: {},
               }),
