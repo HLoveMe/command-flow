@@ -1,5 +1,5 @@
-import { LogBase } from './types';
-import { ContextImpl, WorkType } from '../Types';
+import { LogBase } from '../types';
+import { ContextImpl, WorkType } from '../../Types';
 export class ConsoleLog implements LogBase {
   context: ContextImpl;
   constructor(context: ContextImpl) {
