@@ -52,92 +52,92 @@ import {
   unpackValue,
   registerWork,
   runCommandFlow,
-} from '@/command'
-import { computed, onMounted, ref } from 'vue'
-import RunGroup from './RunGroup.vue'
-import RunResult from './RunResult.vue'
-import { Observable } from 'rxjs'
+} from "@/command";
+import { computed, onMounted, ref } from "vue";
+import RunGroup from "./RunGroup.vue";
+import RunResult from "./RunResult.vue";
+import { Observable } from "rxjs";
 interface WorkStatus {
-  content?: any
-  work?: any | any[]
-  desc?: any
-  value?: any
-  date?: Date
+  content?: any;
+  work?: any | any[];
+  desc?: any;
+  value?: any;
+  date?: Date;
 }
-const result = ref<boolean>(true)
-const codeRef = ref<HTMLDivElement>({} as any)
-const qrCodeRef = ref<HTMLImageElement>({} as any)
-const logInfo = ref<Map<string, Array<any>>>(new Map())
-const disabled = ref<boolean>(false)
+const result = ref<boolean>(true);
+const codeRef = ref<HTMLDivElement>({} as any);
+const qrCodeRef = ref<HTMLImageElement>({} as any);
+const logInfo = ref<Map<string, Array<any>>>(new Map());
+const disabled = ref<boolean>(false);
 
 class ShowQR extends InstructionOTO {
-  static NAME = 'ShowQRHandler'
+  static NAME = "ShowQRHandler";
   run(input: any): Observable<any> {
     return new Observable((subscriber) => {
-      const value = unpackValue(input)
-      qrCodeRef.value.src = `${value}`
-      subscriber.complete()
+      const value = unpackValue(input);
+      qrCodeRef.value.src = `${value}`;
+      subscriber.complete();
       return {
         unsubscribe: () => subscriber.unsubscribe(),
-      }
-    })
+      };
+    });
   }
 }
 const clearLog = () => {
-  logInfo.value.clear()
-  qrCodeRef.value.src = ''
-}
+  logInfo.value.clear();
+  qrCodeRef.value.src = "";
+};
 
 async function codeDome() {}
 
 const reRun = () => {
-  logInfo.value.clear()
-  startBegin()
-}
+  logInfo.value.clear();
+  startBegin();
+};
 
 class Log {
-  context = null
+  context = null;
   constructor(c: any) {
-    this.context = c
+    this.context = c;
   }
   nextLog(log: WorkStatus) {
     const {
       desc,
       value: { _value },
       work,
-    } = log
-    const id = _value.id
-    const channeLValue = _value.value._value
-    const workName = work.map(($1: any) => $1.name).join('-')
-    const currentRun = logInfo.value.get(id) || []
-    logInfo.value.set(id, currentRun)
+    } = log;
+    const id = _value.id;
+    const channeLValue = _value.value._value;
+    const workName = work.map(($1: any) => $1.name).join("-");
+    const currentRun = logInfo.value.get(id) || [];
+    logInfo.value.set(id, currentRun);
     currentRun.push({
       id,
       workName,
       desc,
       value: channeLValue,
-    })
+    });
   }
 }
 const startBegin = async () => {
-  registerWork(ShowQR)
+  registerWork(ShowQR);
   await runCommandFlow({
-    initSignal: 'www.baidu.com',
+    signals: ["www.baidu.com"],
     works: [
-      ['QRCodeWork', [{SideLength:400}]],
-      ['ShowQRHandler', []],
+      ["QRCodeWork", [{ SideLength: 400 }]],
+      ["ShowQRHandler", []],
     ],
-    log:Log,
-  })
-}
+    log: Log,
+  });
+};
 const showCode = () => {
-  console.log(codeDome.toString())
+  console.log(codeDome.toString());
   if (codeRef.value.innerText.length === 0) {
-    codeRef.value.innerText = `${codeDome.toString()}`
+    codeRef.value.innerText = `${codeDome.toString()}`;
   } else {
-    codeRef.value.innerText = ''
+    codeRef.value.innerText = "";
   }
-}
+};
 </script>
 <style scoped lang="less">
 .box {

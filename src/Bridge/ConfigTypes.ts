@@ -42,13 +42,18 @@ export interface FileLoadEvent {
   loaded: number;
   data: ArrayBuffer;
   finish: boolean;
-  file?: File,
+  file?: File;
 }
 
 export interface RequestTimeOut {
   timeout: number;
 }
-export declare type RequestMethod = "GET" | "POST" | "PUT" | "OPTIONS" | "DELETE";
+export declare type RequestMethod =
+  | "GET"
+  | "POST"
+  | "PUT"
+  | "OPTIONS"
+  | "DELETE";
 export interface RequestParamsInit {
   headers?: { [key: string]: any };
   method?: RequestMethod;
@@ -56,7 +61,7 @@ export interface RequestParamsInit {
   data?: any;
   url: string;
 }
-export type RequestParams = AxiosRequestConfig
+export type RequestParams = AxiosRequestConfig;
 export enum SupportContentType {
   JSON = "application/json",
   TEXT = "text/plain",
@@ -79,8 +84,8 @@ export namespace Hardware {
   // 文件
   // 震动 =>手机
   // 传感器
-  // 调节/获取音量 =>手机 
-  // 调节/获取亮度 =>手机 
+  // 调节/获取音量 =>手机
+  // 调节/获取亮度 =>手机
   // 系统信息
   // 蓝牙状态/开关/发送数据/监听/关闭
   // 语音播放文字
@@ -89,9 +94,9 @@ export namespace Hardware {
     image: DataString;
     error?: Error;
   }
-  export interface TakePhotoOption { }
+  export interface TakePhotoOption {}
 
-  export interface VideoOption { }
+  export interface VideoOption {}
   export interface VideoResponse {
     videoUrl?: string;
     error?: Error;
@@ -101,16 +106,36 @@ export namespace Hardware {
     latitude?: number;
     accuracy?: number;
   }
-  export interface PositionOption { }
-  export interface AudioResponse { }
+  export interface PositionOption {}
+  export interface AudioResponse {}
 
-  export interface VibratorOption { }
-  export interface BluetoothDevice { }
-  export interface SpeechOption { }
-  export interface SpeechResponse { }
+  export interface VibratorOption {}
+  export interface BluetoothDevice {}
+  export interface SpeechOption {}
+  export interface SpeechResponse {}
 
+  // 权限相关
+  export enum PermissionType {
+    Image, //相片
+    Video, // 录像
+    Photo, // 拍照
+    Location, // 地理位置
+    Record, // 录音
+    File, // 文件
+    Bluetooth, // 蓝牙
+  }
+  export interface PermissionOption {
+    type: PermissionType;
+  }
+  export interface PermissionResult {
+    has: boolean;
+    info: any;
+  }
   export interface Permission {
-    // 权限处理
+    // 请求权限
+    requestPermission(option: PermissionOption): Promise<PermissionResult>;
+    // 是否有权限
+    hasPermission(option: PermissionOption): Promise<boolean>;
   }
   export interface PlatformDrive extends Permission {
     // 拍照
@@ -154,7 +179,10 @@ export namespace Hardware {
     scanBluetooth(): Promise<Array<BluetoothDevice>>;
     connectBluetooth(device: BluetoothDevice): Promise<Boolean>;
     bluetoothSendData(data: String): Promise<Boolean>;
-    bluetoothReceiveData(device: BluetoothDevice): Observable<String>;
+    bluetoothReceiveData(
+      device: BluetoothDevice,
+      data?: any
+    ): Observable<String>;
     bluetoothClose(device: BluetoothDevice): Promise<Boolean>;
 
     //语音
@@ -163,9 +191,7 @@ export namespace Hardware {
     stopSpeak(): Promise<SpeechResponse>;
     clearSpeech(): Promise<Boolean>;
   }
-
 }
-
 
 export declare interface PlatformBridgeAble extends Hardware.PlatformDrive {
   // // 硬件相关

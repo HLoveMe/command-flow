@@ -3,6 +3,12 @@ import { Hardware, RunTimeInfo } from "../ConfigTypes";
 
 
 export class HardwareBase implements Hardware.PlatformDrive {
+  requestPermission(option: Hardware.PermissionOption): Promise<Hardware.PermissionResult> {
+    throw new Error("Method not implemented.");
+  }
+  hasPermission(option: Hardware.PermissionOption): Promise<boolean> {
+    throw new Error("Method not implemented.");
+  }
   takePhoto(option: Hardware.TakePhotoOption): Promise<Hardware.ImageResponse> {
     throw new Error("Method not implemented.");
   }
