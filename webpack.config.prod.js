@@ -55,14 +55,14 @@ module.exports = {
     minimizer: [new TerserPlugin()],
   },
   externals: [
-    'axios',
-    'rxjs',
-    'rxjs/operators',
-    'js-base64',
-    'qrcode',
-    'qrcode-generator',
-    'uuid',
-    'open',
-    'lodash'
+//     'axios',
+//     'rxjs',
+//     'rxjs/operators',
+//     'js-base64',
+//     'qrcode',
+//     'qrcode-generator',
+//     'uuid',
+//     'open',
+//     'lodash'
   ],
 };
