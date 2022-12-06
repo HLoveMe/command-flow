@@ -52,15 +52,15 @@ module.exports = {
     extensions: ['.json', '.js', '.jsx', '.ts', '.tsx'],
   },
   externals: [
-    'axios',
-    'rxjs',
-    'rxjs/operators',
-    'js-base64',
-    'qrcode',
-    'qrcode-generator',
-    'uuid',
-    'open',
-    'lodash'
+//     'axios',
+//     'rxjs',
+//     'rxjs/operators',
+//     'js-base64',
+//     'qrcode',
+//     'qrcode-generator',
+//     'uuid',
+//     'open',
+//     'lodash'
   ],
   devtool: 'cheap-module-source-map'
 };
