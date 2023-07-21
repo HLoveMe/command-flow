@@ -30,13 +30,14 @@ import LoadFileWork from "./Works/ExtendsWorks/LoadFileWork";
 import OpenURLWork from "./Works/ExtendsWorks/OpenURLWork";
 import { QRCodeWork } from "./Works/ExtendsWorks/QRCodeWork";
 import FetchWork from "./Works/ExtendsWorks/FetchWork";
+import AwaitActiveWork from './Works/ExtendsWorks/AwaitActiveWork'
 import RunCommandWork from './Works/ExtendsWorks/RunCommandWork'
 import { IntervalWork, TimeoutWork, DelayIntervalWork } from "./Works/ExtendsWorks/UtilWork";
 import { unpackValue, wrapperValue } from './Util/channel-value-util'
 import { isAbleType, decide } from './Object/valueUtil'
 import { registerWork } from './Works/WorkPools'
 import { runCommandFlow } from './FlowOption/launch'
-import { ConsoleLog,FileLog } from './Log'
+import { ConsoleLog, FileLog } from './Log'
 
 export {
   ObjectTarget,
@@ -70,6 +71,7 @@ export {
   IntervalWork,
   TimeoutWork,
   DelayIntervalWork,
+  AwaitActiveWork,
   FetchWork,
   unpackValue,
   wrapperValue,
